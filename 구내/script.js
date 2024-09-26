@@ -1,3 +1,7 @@
+const days = ['mon', 'tue', 'wed', 'thu', 'fri'];
+const dayNames = ['월요일', '화요일', '수요일', '목요일', '금요일'];
+let currentDayIndex = 0;
+
 const menus = {
     강남구: {
         mon: [
@@ -24,16 +28,24 @@ let selectedDistrict = "";
 function selectDistrict(district) {
     selectedDistrict = district;
     document.getElementById("selected-district").textContent = district + " 구내식당 메뉴";
-    document.getElementById("cafeteria-list").innerHTML = "";  // 초기화
+    showMenu();
+}
+
+// 요일 변경
+function changeDay(direction) {
+    currentDayIndex = (currentDayIndex + direction + days.length) % days.length;  // 순환 처리
+    document.getElementById('current-day').textContent = dayNames[currentDayIndex];
+    showMenu();
 }
 
 // 요일별 메뉴를 선택하여 표시
-function showMenu(day) {
+function showMenu() {
     const cafeteriaList = document.getElementById('cafeteria-list');
     cafeteriaList.innerHTML = "";  // 기존 메뉴 초기화
 
-    if (selectedDistrict && menus[selectedDistrict] && menus[selectedDistrict][day]) {
-        menus[selectedDistrict][day].forEach(cafeteria => {
+    const currentDay = days[currentDayIndex];
+    if (selectedDistrict && menus[selectedDistrict] && menus[selectedDistrict][currentDay]) {
+        menus[selectedDistrict][currentDay].forEach(cafeteria => {
             const menuItem = document.createElement('div');
             menuItem.classList.add('menu-item');
 

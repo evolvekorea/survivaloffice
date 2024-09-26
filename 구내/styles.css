@@ -54,13 +54,21 @@ h2#selected-district {
     margin-bottom: 20px;
 }
 
-.weekdays {
+.weekday-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-bottom: 20px;
 }
 
-.day-btn {
+#current-day {
+    margin: 0 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+button#prev-day, button#next-day {
     padding: 10px 20px;
-    margin: 5px;
     background-color: #28a745;
     color: white;
     border: none;
@@ -68,7 +76,7 @@ h2#selected-district {
     cursor: pointer;
 }
 
-.day-btn:hover {
+button#prev-day:hover, button#next-day:hover {
     background-color: #218838;
 }
 
