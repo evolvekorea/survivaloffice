@@ -1,7 +1,3 @@
-const days = ['mon', 'tue', 'wed', 'thu', 'fri'];
-const dayNames = ['월요일', '화요일', '수요일', '목요일', '금요일'];
-let currentDayIndex = 0;
-
 const menus = {
     강남구: {
         mon: [
@@ -23,29 +19,44 @@ const menus = {
 };
 
 let selectedDistrict = "";
+let currentDayIndex = 0;
+const days = ['mon', 'tue', 'wed', 'thu', 'fri'];
+const dayNames = {
+    mon: '월요일',
+    tue: '화요일',
+    wed: '수요일',
+    thu: '목요일',
+    fri: '금요일'
+};
 
 // 구 선택 시 구내식당 메뉴를 표시할 수 있도록 구를 저장
 function selectDistrict(district) {
     selectedDistrict = district;
     document.getElementById("selected-district").textContent = district + " 구내식당 메뉴";
-    showMenu();
+    showMenu(days[currentDayIndex]);  // 현재 선택된 요일의 메뉴를 표시
 }
 
-// 요일 변경
-function changeDay(direction) {
-    currentDayIndex = (currentDayIndex + direction + days.length) % days.length;  // 순환 처리
-    document.getElementById('current-day').textContent = dayNames[currentDayIndex];
-    showMenu();
+// 이전 요일로 이동
+function prevDay() {
+    currentDayIndex = (currentDayIndex - 1 + days.length) % days.length;
+    showMenu(days[currentDayIndex]);
+}
+
+// 다음 요일로 이동
+function nextDay() {
+    currentDayIndex = (currentDayIndex + 1) % days.length;
+    showMenu(days[currentDayIndex]);
 }
 
 // 요일별 메뉴를 선택하여 표시
-function showMenu() {
+function showMenu(day) {
     const cafeteriaList = document.getElementById('cafeteria-list');
+    const currentDay = document.getElementById('current-day');
+    currentDay.textContent = dayNames[day];  // 현재 요일 표시
     cafeteriaList.innerHTML = "";  // 기존 메뉴 초기화
 
-    const currentDay = days[currentDayIndex];
-    if (selectedDistrict && menus[selectedDistrict] && menus[selectedDistrict][currentDay]) {
-        menus[selectedDistrict][currentDay].forEach(cafeteria => {
+    if (selectedDistrict && menus[selectedDistrict] && menus[selectedDistrict][day]) {
+        menus[selectedDistrict][day].forEach(cafeteria => {
             const menuItem = document.createElement('div');
             menuItem.classList.add('menu-item');
 

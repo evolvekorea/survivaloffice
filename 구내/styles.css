@@ -54,21 +54,17 @@ h2#selected-district {
     margin-bottom: 20px;
 }
 
-.weekday-nav {
+.weekdays {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
 }
 
-#current-day {
-    margin: 0 20px;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-button#prev-day, button#next-day {
-    padding: 10px 20px;
+.nav-btn {
+    padding: 15px 30px; /* 버튼 크기를 키움 */
+    margin: 5px;
+    font-size: 20px; /* 버튼 글씨 크기를 키움 */
     background-color: #28a745;
     color: white;
     border: none;
@@ -76,8 +72,13 @@ button#prev-day, button#next-day {
     cursor: pointer;
 }
 
-button#prev-day:hover, button#next-day:hover {
+.nav-btn:hover {
     background-color: #218838;
+}
+
+#current-day {
+    font-size: 22px; /* 날짜 글씨 크기 조정 */
+    margin: 0 15px;
 }
 
 #cafeteria-list {
@@ -104,4 +105,23 @@ footer {
     position: fixed;
     width: 100%;
     bottom: 0;
+}
+
+/* 모바일 화면을 위한 미디어 쿼리 */
+@media (max-width: 600px) {
+    .nav-btn {
+        padding: 20px; /* 모바일에서는 터치 영역을 더 크게 */
+        font-size: 24px; /* 버튼 글씨 크기 키움 */
+        flex-grow: 1; /* 버튼을 더 넓게 만듦 */
+    }
+
+    .weekdays {
+        flex-direction: row;
+        justify-content: space-between; /* 버튼 간격 조정 */
+    }
+
+    #current-day {
+        font-size: 18px; /* 날짜 글씨 크기 조정 */
+        margin: 0 10px;
+    }
 }
