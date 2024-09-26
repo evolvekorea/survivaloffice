@@ -16,14 +16,15 @@ body {
 }
 
 .sidebar {
-    width: 250px;
+    width: 180px; /* 사이드바 너비 조정 */
     background-color: #007BFF;
     color: white;
     padding: 20px;
 }
 
 .sidebar h2 {
-    margin-bottom: 20px;
+    font-size: 18px; /* 제목 글씨 크기 조정 */
+    margin-bottom: 15px;
 }
 
 .district-list {
@@ -32,12 +33,13 @@ body {
 }
 
 .district-list li {
-    padding: 10px;
+    padding: 8px;
     margin-bottom: 10px;
     background-color: #0056b3;
     cursor: pointer;
     border-radius: 5px;
     text-align: center;
+    font-size: 14px; /* 구 이름 글씨 크기 조정 */
 }
 
 .district-list li:hover {
