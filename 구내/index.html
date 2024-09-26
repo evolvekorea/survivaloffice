@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>서울시 구내식당 메뉴</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 좌측 사이드바 -->
+        <aside class="sidebar">
+            <h2>서울시 구 선택</h2>
+            <ul class="district-list">
+                <li onclick="selectDistrict('강남구')">강남구</li>
+                <li onclick="selectDistrict('종로구')">종로구</li>
+                <li onclick="selectDistrict('마포구')">마포구</li>
+                <li onclick="selectDistrict('서초구')">서초구</li>
+                <!-- 더 많은 구 추가 -->
+            </ul>
+        </aside>
+
+        <!-- 우측 컨텐츠 -->
+        <section class="content">
+            <h2 id="selected-district">구를 선택하세요</h2>
+
+            <!-- 요일 선택 -->
+            <div class="weekdays">
+                <button class="day-btn" onclick="showMenu('mon')">월요일</button>
+                <button class="day-btn" onclick="showMenu('tue')">화요일</button>
+                <button class="day-btn" onclick="showMenu('wed')">수요일</button>
+                <button class="day-btn" onclick="showMenu('thu')">목요일</button>
+                <button class="day-btn" onclick="showMenu('fri')">금요일</button>
+            </div>
+
+            <!-- 구내식당 정보가 표시될 영역 -->
+            <div id="cafeteria-list">
+                <!-- 선택된 요일의 구내식당 정보가 여기에 표시됩니다 -->
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Survival Office. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,99 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #007BFF;
+    color: white;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+}
+
+.district-list {
+    list-style: none;
+    padding: 0;
+}
+
+.district-list li {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #0056b3;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.district-list li:hover {
+    background-color: #003f7f;
+}
+
+.content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+h2#selected-district {
+    margin-bottom: 20px;
+}
+
+.weekdays {
+    margin-bottom: 20px;
+}
+
+.day-btn {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.day-btn:hover {
+    background-color: #218838;
+}
+
+#cafeteria-list {
+    margin-top: 20px;
+}
+
+.menu-item {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.menu-item h3 {
+    margin-bottom: 10px;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
