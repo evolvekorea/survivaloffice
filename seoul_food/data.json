@@ -1,7 +1,57 @@
-{
-    "districts": ["강남구", "서초구", "송파구"],
-    "foods": [
-        { "name": "김밥", "price": 2000 },
-        { "name": "비빔밥", "price": 8000 }
-    ]
-}
+[
+    {
+        "storeName": "맛있는 김밥집",
+        "address": "서울시 강남구 123",
+        "foods": [
+            { "foodName": "김밥", "price": 2000 },
+            { "foodName": "참치김밥", "price": 3000 },
+            { "foodName": "치즈김밥", "price": 3500 },
+            { "foodName": "야채김밥", "price": 2500 },
+            { "foodName": "떡볶이", "price": 4000 }
+        ]
+    },
+    {
+        "storeName": "전통 비빔밥집",
+        "address": "서울시 서초구 456",
+        "foods": [
+            { "foodName": "비빔밥", "price": 7000 },
+            { "foodName": "돌솥비빔밥", "price": 8500 },
+            { "foodName": "제육비빔밥", "price": 9000 },
+            { "foodName": "참치비빔밥", "price": 8000 },
+            { "foodName": "고등어구이", "price": 9500 }
+        ]
+    },
+    {
+        "storeName": "정통 짜장면집",
+        "address": "서울시 종로구 789",
+        "foods": [
+            { "foodName": "짜장면", "price": 5000 },
+            { "foodName": "짬뽕", "price": 6000 },
+            { "foodName": "탕수육", "price": 12000 },
+            { "foodName": "볶음밥", "price": 7000 },
+            { "foodName": "군만두", "price": 5000 }
+        ]
+    },
+    {
+        "storeName": "라면 전문점",
+        "address": "서울시 강남구 321",
+        "foods": [
+            { "foodName": "라면", "price": 4000 },
+            { "foodName": "치즈라면", "price": 4500 },
+            { "foodName": "짜파구리", "price": 6000 },
+            { "foodName": "비빔라면", "price": 5000 },
+            { "foodName": "참치라면", "price": 5500 }
+        ]
+    },
+    {
+        "storeName": "한식당",
+        "address": "서울시 송파구 987",
+        "foods": [
+            { "foodName": "불고기", "price": 12000 },
+            { "foodName": "갈비찜", "price": 15000 },
+            { "foodName": "김치찌개", "price": 8000 },
+            { "foodName": "된장찌개", "price": 7000 },
+            { "foodName": "비빔밥", "price": 7000 }
+        ]
+    }
+]
