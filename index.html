@@ -5,8 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Survival Office</title>
+    <meta property="og:title" content="Survival Office" />
+    <meta property="og:description" content="Survival Office는 직장인을 위한 유용한 정보와 웹 도구를 제공합니다." />
+    <meta property="og:url" content="https://www.survivaloffice.com/" />
+    <meta property="og:type" content="website" />
+
+
     <link rel="stylesheet" href="styles.css">
     <meta name="naver-site-verification" content="8178bc04eb942dda668089047e1d5fb0ae7ba6ce" />
+    
+    <!-- Open Graph Meta Tags for Social Media Sharing -->
+    <meta property="og:title" content="Survival Office" />
+    <meta property="og:description" content="Survival Office는 직장인을 위한 유용한 정보와 웹 도구를 제공합니다." />
+    <meta property="og:url" content="https://www.survivaloffice.com/" />
+    <meta property="og:image" content="https://www.survivaloffice.com/path-to-image.jpg" />
+    <meta property="og:type" content="website" />
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
     <script>
@@ -23,7 +36,7 @@
     </header>
 
     <main>
-        <section class="navigation-section">
+        <nav class="navigation-section" aria-label="Main navigation">
             <div class="nav-item">
                 <a href="/bot/">유용한 Bot (엑셀함수, SQL 등)</a> <!-- /bot/index.html로 이동 -->
             </div>
@@ -33,7 +46,7 @@
             <div class="nav-item">
                 <a href="/회식/">오늘 뭐 먹지?</a> <!-- /회식/index.html로 이동 -->
             </div>
-        </section>
+        </nav>
 
         <!-- 본문 끝에 쿠팡 파트너스 배너 추가 -->
         <section class="banner-section">
@@ -46,47 +59,7 @@
         </section>
     </main>
 
-    <!-- 배너와 푸터를 구분하기 위한 스타일 추가 -->
     <footer>
-        <style>
-            /* 배너 구역 스타일 */
-            .banner-section {
-                margin-bottom: 30px; /* 푸터와 배너 구분을 위한 여백 */
-                padding-top: 10px; /* 상단 여백 줄이기 */
-                text-align: center;
-            }
-
-            #coupang-banner {
-                display: block;
-                width: 728px;
-                height: 90px;
-                margin: 0 auto;
-                max-width: 100%;
-                padding-bottom: 20px; /* 푸터와의 여백 추가 */
-            }
-
-            @media screen and (max-width: 768px) {
-                #coupang-banner {
-                    width: 100%;
-                    height: auto;
-                    max-width: 728px; /* 배너가 지나치게 줄어들지 않도록 설정 */
-                    margin-bottom: 20px;
-                }
-            }
-
-            /* 푸터 스타일 */
-            footer {
-                background-color: #565656; /* 푸터와 본문을 구분할 수 있는 배경색 추가 */
-                padding: 10px 0; /* 위아래 패딩 줄이기 */
-                text-align: center;
-                font-size: 14px; /* 푸터 텍스트 크기 줄이기 */
-            }
-
-            footer p {
-                margin: 0;
-            }
-        </style>
-
         <p>&copy; 2024 Survival Office. All rights reserved.</p>
     </footer>
 
