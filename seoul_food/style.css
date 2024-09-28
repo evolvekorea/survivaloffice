@@ -84,6 +84,11 @@ input[type="text"], input[type="number"] {
     width: 100%;
 }
 
+#selected-min-price, #selected-max-price {
+    font-weight: bold; /* 값의 가독성을 높이기 위해 굵게 표시 */
+    color: #333; /* 텍스트 색상 */
+}
+
 @media only screen and (max-width: 768px) {
     input[type="text"], input[type="number"], button {
         width: 90%;

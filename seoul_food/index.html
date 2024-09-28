@@ -61,7 +61,7 @@
             background-color: #ff6347;
         }
 
-        input[type="text"], input[type="number"] {
+        input[type="text"], input[type="range"] {
             padding: 10px;
             font-size: 1.2em;
             margin: 10px auto;
@@ -91,7 +91,7 @@
 
         /* 모바일 화면 대응 */
         @media only screen and (max-width: 768px) {
-            input[type="text"], input[type="number"], button {
+            input[type="text"], input[type="range"], button {
                 width: 90%;
                 max-width: 400px;
             }
@@ -140,9 +140,15 @@
 
         <!-- 세 번째 질문: 가격 검색 화면 -->
         <div class="question-step" id="step-3-price">
-            <label for="price">가격을 적어주세요 (00000원 이하):</label>
-            <input type="number" id="price" placeholder="예: 10000" oninput="toggleButton('search-btn-price', this)">
-            <button id="search-btn-price" onclick="showResult('price')" disabled>검색하기</button>
+            <label for="min-price-range">최소 가격을 선택해주세요 (최대 100,000원):</label>
+            <input type="range" id="min-price-range" min="1000" max="100000" step="1000" value="10000" oninput="updateMinPrice(this.value)">
+            <p>최소 가격: <span id="selected-min-price">10,000</span>원 이상</p>
+
+            <label for="max-price-range">최대 가격을 선택해주세요 (최대 100,000원):</label>
+            <input type="range" id="max-price-range" min="1000" max="100000" step="1000" value="50000" oninput="updateMaxPrice(this.value)">
+            <p>최대 가격: <span id="selected-max-price">50,000</span>원 이하</p>
+
+            <button id="search-btn-price" onclick="showResult('price')">검색하기</button>
             <button class="back-button" onclick="goBack('step-2')">뒤로가기</button>
         </div>
 
@@ -161,6 +167,8 @@
         let currentStep = 'step-1';
         let searchType = '';
         let selectedDistrict = ''; // 사용자가 입력한 구를 저장할 변수
+        let minPrice = 10000; // 최소 가격 초기값
+        let maxPrice = 50000; // 최대 가격 초기값
 
         // 화면 전환 함수
         function goToStep(step, type) {
@@ -194,14 +202,25 @@
             }
         }
 
+        // 슬라이더 값 업데이트 함수
+        function updateMinPrice(value) {
+            minPrice = parseInt(value, 10);
+            document.getElementById('selected-min-price').innerText = minPrice.toLocaleString();
+        }
+
+        function updateMaxPrice(value) {
+            maxPrice = parseInt(value, 10);
+            document.getElementById('selected-max-price').innerText = maxPrice.toLocaleString();
+        }
+
         // 검색 결과 보여주는 함수
         function showResult(type) {
-            let searchValue = '';
+            let searchValue;
 
             if (type === 'food') {
                 searchValue = document.getElementById('food-name').value.trim();
             } else if (type === 'price') {
-                searchValue = parseInt(document.getElementById('price').value, 10);
+                searchValue = parseInt(document.getElementById('max-price-range').value, 10); // 최대 가격 사용
             }
 
             fetch('data.json')
@@ -218,7 +237,7 @@
                         );
                     } else if (type === 'price') {
                         filteredStores = districtStores.filter(store =>
-                            store.foods.some(food => food.price <= searchValue)
+                            store.foods.some(food => food.price >= minPrice && food.price <= maxPrice)
                         );
                     }
 
@@ -229,9 +248,9 @@
                             <div class="result-item">
                                 <p><strong>가게명:</strong> ${store.storeName}</p>
                                 <p><strong>주소:</strong> ${store.address}</p>
-                                ${store.foods.filter(food => (type === 'food' ? food.foodName === searchValue : food.price <= searchValue)).map(food => `
+                                ${store.foods.map(food => `
                                     <p><strong>음식명:</strong> ${food.foodName}</p>
-                                    <p><strong>가격:</strong> ${food.price}원</p>
+                                    <p><strong>가격:</strong> ${food.price.toLocaleString()}원</p>
                                 `).join('')}
                             </div>
                         `).join('');
