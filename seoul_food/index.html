@@ -14,6 +14,7 @@
             flex-direction: column;
             min-height: 100vh;
             align-items: center;
+            overflow-x: hidden; /* 가로 스크롤 방지 */
         }
 
         .container {
@@ -47,6 +48,7 @@
             cursor: pointer;
             display: block;
             margin: 10px auto;
+            min-width: 200px; /* 버튼 최소 너비 추가 */
         }
 
         button:disabled {
@@ -65,6 +67,8 @@
             margin: 10px auto;
             display: block;
             text-align: center;
+            width: 80%; /* 입력 필드 넓이 설정 */
+            max-width: 500px;
         }
 
         .result-item {
@@ -74,49 +78,26 @@
             padding: 10px;
             border-radius: 5px;
             background-color: #f9f9f9;
+            width: 80%; /* 결과 항목 넓이 설정 */
+            max-width: 900px;
+            margin: 10px auto;
         }
 
-        /* 결과 페이지에 스크롤 추가 */
         #result-content {
-            max-height: 400px;
-            overflow-y: auto;
-            padding: 10px;
             margin-top: 20px;
             text-align: center;
+            width: 100%;
         }
 
         /* 모바일 화면 대응 */
         @media only screen and (max-width: 768px) {
-            /* 모바일에서는 화면 크기에 맞게 조정 */
-            input[type="text"], input[type="number"] {
+            input[type="text"], input[type="number"], button {
                 width: 90%;
+                max-width: 400px;
             }
 
             .result-item {
                 width: 90%;
-            }
-
-            button {
-                width: 90%;
-            }
-        }
-
-        /* PC 화면 대응 */
-        @media only screen and (min-width: 769px) {
-            /* PC에서는 화면을 넓게 활용 */
-            .container {
-                width: 80%; /* 화면을 넓게 사용 */
-                max-width: 1200px; /* PC 화면에서는 최대 1200px까지 사용 */
-            }
-
-            input[type="text"], input[type="number"], .result-item {
-                width: 80%; /* 화면의 80%를 사용 */
-                max-width: 900px; /* 입력 필드 및 결과 항목의 최대 너비 설정 */
-            }
-
-            button {
-                width: 50%;
-                max-width: 300px; /* 버튼의 최대 너비 */
             }
         }
 
@@ -167,7 +148,7 @@
 
         <!-- 결과 화면 -->
         <div class="question-step" id="result">
-            <div id="result-content"></div> <!-- 결과: 제거 -->
+            <div id="result-content"></div>
             <button class="back-button" onclick="goBack('step-2')">뒤로가기</button>
         </div>
     </div>
@@ -202,57 +183,48 @@
         // 입력값 없으면 버튼 비활성화, 있으면 활성화
         function toggleButton(buttonId, input) {
             const button = document.getElementById(buttonId);
-            if (input.value.trim() === '') {
-                button.disabled = true; // 입력값이 없으면 버튼 비활성화
-            } else {
-                button.disabled = false; // 입력값이 있으면 버튼 활성화
-            }
+            button.disabled = input.value.trim() === ''; // 입력값이 없으면 버튼 비활성화
         }
 
         // 사용자가 입력한 구 저장 함수
         function saveDistrict() {
-            selectedDistrict = document.getElementById('district').value.trim(); // 사용자가 입력한 구를 저장
-            if (selectedDistrict !== '') { // 구가 입력된 경우에만 다음 단계로 이동
-                goToStep('step-2');
+            selectedDistrict = document.getElementById('district').value.trim();
+            if (selectedDistrict !== '') {
+                goToStep('step-2'); // 구가 입력된 경우에만 다음 단계로 이동
             }
         }
 
         // 검색 결과 보여주는 함수
         function showResult(type) {
-            let searchValue;
+            let searchValue = '';
 
             if (type === 'food') {
-                searchValue = document.getElementById('food-name').value.trim(); // 음식명으로 검색
+                searchValue = document.getElementById('food-name').value.trim();
             } else if (type === 'price') {
-                searchValue = parseInt(document.getElementById('price').value); // 가격으로 검색
+                searchValue = parseInt(document.getElementById('price').value, 10);
             }
 
-            // data.json 파일에서 데이터를 가져와서 필터링
             fetch('data.json')
                 .then(response => response.json())
                 .then(data => {
                     let filteredStores;
 
                     // 사용자가 입력한 구에 해당하는 가게만 필터링
-                    let districtStores = data.filter(store => store.address.includes(selectedDistrict));
+                    const districtStores = data.filter(store => store.address.includes(selectedDistrict));
 
                     if (type === 'food') {
-                        // 음식명에 해당하는 가게 필터링
                         filteredStores = districtStores.filter(store =>
                             store.foods.some(food => food.foodName === searchValue)
                         );
                     } else if (type === 'price') {
-                        // 가격 이하의 가게 필터링
                         filteredStores = districtStores.filter(store =>
                             store.foods.some(food => food.price <= searchValue)
                         );
                     }
 
-                    // 검색된 결과가 없을 경우 처리
                     if (filteredStores.length === 0) {
                         document.getElementById('result-content').innerHTML = "해당 조건에 맞는 결과가 없습니다.";
                     } else {
-                        // 검색된 결과를 화면에 출력
                         document.getElementById('result-content').innerHTML = filteredStores.map(store => `
                             <div class="result-item">
                                 <p><strong>가게명:</strong> ${store.storeName}</p>
@@ -265,10 +237,12 @@
                         `).join('');
                     }
 
-                    // 결과 화면으로 이동
-                    goToStep('result');
+                    goToStep('result'); // 결과 화면으로 이동
                 })
-                .catch(error => console.error('Error fetching data:', error));
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    document.getElementById('result-content').innerHTML = "데이터를 불러오는 중 오류가 발생했습니다.";
+                });
         }
 
         // 첫 질문 화면을 처음부터 보여주기 위해 설정
