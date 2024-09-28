@@ -1,4 +1,45 @@
 const menus = {
+    종로구: {
+        mon: [
+            { name: "롯데카드 구내식당(올반)", address: "서울 중구 새문안로 76 콘코디언 빌딩", price: "₩9,000", 
+                menu: ["육개장", "흑미밥", "생선까스", "두부구이", "고추지무침", "깍두기", "그린샐러드", "미숫가루"] },
+            { name: "롯데카드 구내식당(고메)", address: "서울 중구 새문안로 76 콘코디언 빌딩", price: "₩9,000", 
+                menu: ["비빔국수", "유부장국", "후리가께밥", "데리야끼닭강정", "단무지", "그린샐러드", "미숫가루"] }
+        ],
+        tue: [
+            { name: "롯데카드 구내식당(올반)", address: "서울 중구 새문안로 76 콘코디언 빌딩", price: "₩9,000", 
+                menu: ["육개장", "흑미밥", "생선까스", "두부구이", "고추지무침", "깍두기", "그린샐러드", "미숫가루"] },
+            { name: "롯데카드 구내식당(고메)", address: "서울 중구 새문안로 76 콘코디언 빌딩", price: "₩9,000", 
+                menu: ["비빔국수", "유부장국", "후리가께밥", "데리야끼닭강정", "단무지", "그린샐러드", "미숫가루"] }
+        ],
+        wed: [
+            { name: "롯데카드 구내식당(올반)", address: "서울 중구 새문안로 76 콘코디언 빌딩", price: "₩9,000", 
+                menu: ["육개장", "흑미밥", "생선까스", "두부구이", "고추지무침", "깍두기", "그린샐러드", "미숫가루"] },
+            { name: "롯데카드 구내식당(고메)", address: "서울 중구 새문안로 76 콘코디언 빌딩", price: "₩9,000", 
+                menu: ["비빔국수", "유부장국", "후리가께밥", "데리야끼닭강정", "단무지", "그린샐러드", "미숫가루"] }       
+        ],
+        thu: [
+            { name: "롯데카드 구내식당(올반)", address: "서울 중구 새문안로 76 콘코디언 빌딩", price: "₩9,000", 
+                menu: ["육개장", "흑미밥", "생선까스", "두부구이", "고추지무침", "깍두기", "그린샐러드", "미숫가루"] },
+            { name: "롯데카드 구내식당(고메)", address: "서울 중구 새문안로 76 콘코디언 빌딩", price: "₩9,000", 
+                menu: ["비빔국수", "유부장국", "후리가께밥", "데리야끼닭강정", "단무지", "그린샐러드", "미숫가루"] }        
+        ],
+        fri: [
+            { name: "롯데카드 구내식당(올반)", address: "서울 중구 새문안로 76 콘코디언 빌딩", price: "₩9,000", 
+                menu: ["육개장", "흑미밥", "생선까스", "두부구이", "고추지무침", "깍두기", "그린샐러드", "미숫가루"] },
+            { name: "롯데카드 구내식당(고메)", address: "서울 중구 새문안로 76 콘코디언 빌딩", price: "₩9,000", 
+                menu: ["비빔국수", "유부장국", "후리가께밥", "데리야끼닭강정", "단무지", "그린샐러드", "미숫가루"] }        
+        ]
+    },    
+    중구: {
+        mon: [
+            { name: "롯데카드 구내식당", address: "서울 중구 새문안로 76 콘코디언 빌딩", price: "₩9,000", menu: ["육개장", "흑미밥", "생선까스", "두부구이", "고추지무침", "깍두기"] },
+            { name: "강남구 구내식당 B", address: "서울 강남구", price: "₩9,000", menu: ["칼국수", "제육볶음", "냉면", "볶음밥"] }
+        ],
+        tue: [
+            { name: "강남구 구내식당 A", address: "서울 강남구", price: "₩10,000", menu: ["된장찌개", "라면", "김밥", "돈까스"] }
+        ]
+    },
     강남구: {
         mon: [
             { name: "강남구 구내식당 A", address: "서울 강남구", price: "₩10,000", menu: ["김치찌개", "불고기", "비빔밥", "돈까스"] },
@@ -7,15 +48,7 @@ const menus = {
         tue: [
             { name: "강남구 구내식당 A", address: "서울 강남구", price: "₩10,000", menu: ["된장찌개", "라면", "김밥", "돈까스"] }
         ]
-        // 더 많은 요일별 데이터 추가
-    },
-    종로구: {
-        mon: [
-            { name: "종로구 구내식당 A", address: "서울 종로구", price: "₩8,500", menu: ["불고기", "짬뽕", "제육볶음", "오므라이스"] }
-        ]
-        // 요일별 데이터 추가
-    },
-    // 다른 구별 데이터 추가
+    }
 };
 
 let selectedDistrict = "";
@@ -61,7 +94,7 @@ function showMenu(day) {
             menuItem.classList.add('menu-item');
 
             const name = document.createElement('h3');
-            name.textContent = `구내식당명: ${cafeteria.name}`;
+            name.textContent = `${cafeteria.name}`;
 
             const address = document.createElement('p');
             address.textContent = `주소: ${cafeteria.address}`;
@@ -70,9 +103,9 @@ function showMenu(day) {
             price.textContent = `금액: ${cafeteria.price}`;
 
             const menuList = document.createElement('ul');
-            cafeteria.menu.forEach((menu, index) => {
+            cafeteria.menu.forEach(menu => {
                 const menuItem = document.createElement('li');
-                menuItem.textContent = `${index + 1}. ${menu}`;
+                menuItem.textContent = menu;  // 숫자 없이 메뉴명만 표시
                 menuList.appendChild(menuItem);
             });
 
