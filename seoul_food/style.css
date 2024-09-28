@@ -1,0 +1,43 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff; /* 하늘색 배경 */
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+.question-step {
+    display: none;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.question-step.active {
+    display: block;
+    opacity: 1;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #00bfff; /* 하늘색 버튼 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #1e90ff;
+}
