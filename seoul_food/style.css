@@ -98,6 +98,17 @@ input[type="text"], input[type="number"] {
     width: 100%;
 }
 
+.banner-section {
+    width: 100%; /* 섹션 전체 너비 */
+    margin: 0; /* 불필요한 여백 제거 */
+    padding: 0; /* 불필요한 패딩 제거 */
+}
+
+#coupang-banner {
+    width: 100%; /* 배너의 너비를 전체 화면으로 */
+    height: auto; /* 배너의 높이를 자동으로 조정 */
+}
+
 #selected-min-price, #selected-max-price {
     font-weight: bold; /* 값의 가독성을 높이기 위해 굵게 표시 */
     color: #333; /* 텍스트 색상 */
@@ -121,6 +132,9 @@ footer {
     text-align: center;
     font-size: 14px;
     margin-top: auto;
+    width: 100%; /* 좌우 전체에 나오도록 설정 */
+    position: relative;
+    left: 0;
 }
 
 footer p {

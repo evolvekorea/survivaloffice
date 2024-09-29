@@ -6,112 +6,6 @@
     <title>질문 및 결과 페이지</title>
     <link rel="stylesheet" href="style.css">
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            align-items: center;
-            overflow-x: hidden; /* 가로 스크롤 방지 */
-        }
-
-        .container {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            text-align: center;
-            width: 100%;
-            padding: 20px;
-        }
-
-        .question-step {
-            display: none;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        .question-step.active {
-            display: block;
-            opacity: 1;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 1.2em;
-            background-color: #00bfff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            display: block;
-            margin: 10px auto;
-            min-width: 200px;
-        }
-
-        button:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-        }
-
-        .back-button {
-            margin-top: 20px;
-            background-color: #ff6347;
-        }
-
-        input[type="text"], input[type="range"] {
-            padding: 10px;
-            font-size: 1.2em;
-            margin: 10px auto;
-            display: block;
-            text-align: center;
-            width: 80%;
-            max-width: 500px;
-        }
-
-        .result-item {
-            margin-top: 20px;
-            text-align: center;
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            width: 80%;
-            max-width: 900px;
-            margin: 10px auto;
-        }
-
-        #result-content {
-            margin-top: 20px;
-            text-align: center;
-            width: 100%;
-        }
-
-        @media only screen and (max-width: 768px) {
-            input[type="text"], input[type="range"], button {
-                width: 90%;
-                max-width: 400px;
-            }
-
-            .result-item {
-                width: 90%;
-            }
-        }
-
-        footer {
-            background-color: #f1f1f1;
-            padding: 20px 0;
-            text-align: center;
-            font-size: 14px;
-            margin-top: auto;
-        }
-
-        footer p {
-            margin: 0;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -157,6 +51,15 @@
             <button class="back-button" onclick="goBack('step-2')">뒤로가기</button>
         </div>
     </div>
+
+    <section class="banner-section">
+        <div id="coupang-banner">
+            <script src="https://ads-partners.coupang.com/g.js"></script>
+            <script>
+                new PartnersCoupang.G({"id":810614,"template":"carousel","trackingCode":"AF4453761","width":"100%","height":"auto","tsource":""});
+            </script>
+        </div>
+    </section>
 
     <footer>
         <p>&copy; 2024 Survival Office. All rights reserved.</p>
