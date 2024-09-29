@@ -1,4 +1,15 @@
+@font-face {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 페이지 전체 폰트 크기 및 bold 설정 */
 body {
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+    font-size: 22px; /* 페이지 폰트 크기를 22px로 설정 */
+    font-weight: bold; /* 페이지 텍스트를 bold로 설정 */
     margin: 0;
     padding: 0;
     display: flex;
@@ -29,9 +40,12 @@ body {
     opacity: 1;
 }
 
+/* 버튼 폰트 크기 및 bold 설정 */
 button {
     padding: 10px 20px;
-    font-size: 1.2em;
+    font-size: 22px; /* 버튼 폰트 크기 */
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif; /* 버튼에 동일 폰트 적용 */
+    font-weight: bold; /* 버튼 텍스트도 bold로 설정 */
     background-color: #00bfff;
     color: white;
     border: none;
