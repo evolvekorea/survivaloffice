@@ -24,5 +24,19 @@
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
+    </url>
+        <url>
+        <loc>http://www.survivaloffice.com/fire</loc>
+        <lastmod>2024-10-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    </url>
+        <url>
+        <loc>http://www.survivaloffice.com/roulette</loc>
+        <lastmod>2024-10-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
     <!-- 여기에 더 많은 페이지 추가 -->
 </urlset>
