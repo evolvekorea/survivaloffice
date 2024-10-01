@@ -1,3 +1,39 @@
+@font-face {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+nav {
+    background-color: #f4f4f4;
+    padding: 10px;
+  }
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav ul li {
+    display: inline;
+  }
+  
+  nav ul li a {
+    color: rgb(62, 62, 62);
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif; /* 네비게이션 항목에도 폰트 적용 */
+  }
+  
+  nav ul li a:hover {
+    background-color: #555;
+  }  
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,7 +41,7 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif; 
     background-color: #f9f9f9;
     color: #333;
 }
@@ -26,6 +62,7 @@ body {
 .sidebar h2 {
     font-size: 18px;
     margin-bottom: 15px;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif; 
 }
 
 .district-list {
@@ -41,6 +78,7 @@ body {
     border-radius: 5px;
     text-align: center;
     font-size: 14px;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif; 
 }
 
 .district-list li:hover {
@@ -74,6 +112,7 @@ h2#selected-district {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif; 
 }
 
 .nav-btn:hover {
@@ -120,6 +159,7 @@ h2#selected-district {
 .menu-price {
     font-size: 18px;
     padding-bottom: 5px;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif; 
 }
 
 /* 숫자 제거 */

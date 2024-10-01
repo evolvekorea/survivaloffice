@@ -5,6 +5,35 @@
     font-style: normal;
 }
 
+nav {
+    background-color: #f4f4f4;
+    padding: 10px;
+  }
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav ul li {
+    display: inline;
+  }
+  
+  nav ul li a {
+    color: rgb(62, 62, 62);
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif; /* 네비게이션 항목에도 폰트 적용 */
+  }
+  
+  nav ul li a:hover {
+    background-color: #555;
+  }  
+
 /* 페이지 전체 폰트 크기 및 bold 설정 */
 body {
     font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
@@ -46,6 +75,7 @@ h1 {
     font-weight: bold;
     color: #333;
     flex-shrink: 0;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
 }
 
 /* 버튼을 한 줄에 배치 */
@@ -60,6 +90,7 @@ button {
     margin: 10px;
     display: inline-block;
     white-space: nowrap; /* 줄바꿈 방지 */
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
 }
 
 button:hover {
