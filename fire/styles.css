@@ -28,8 +28,8 @@ h1 {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
-    width: 100%; /* 전체 너비 사용 */
-    overflow-x: auto; /* 넘칠 경우 스크롤 생김 */
+    width: 100%;
+    overflow-x: auto;
 }
 
 .slot, .saved-slot {
@@ -45,9 +45,10 @@ h1 {
     margin: 0 5px;
     font-weight: bold;
     color: #333;
-    flex-shrink: 0; /* 공간이 부족할 때도 크기가 줄어들지 않도록 설정 */
+    flex-shrink: 0;
 }
 
+/* 버튼을 한 줄에 배치 */
 button {
     padding: 10px 20px;
     font-size: 16px;
@@ -57,10 +58,20 @@ button {
     border-radius: 5px;
     cursor: pointer;
     margin: 10px;
+    display: inline-block;
+    white-space: nowrap; /* 줄바꿈 방지 */
 }
 
 button:hover {
     background-color: #0056b3;
+}
+
+#button-container {
+    display: flex; /* 버튼이 한 줄로 나오도록 설정 */
+    justify-content: center;
+    gap: 10px; /* 버튼 간격 설정 */
+    width: 100%; /* 버튼 컨테이너가 가로 전체를 차지하도록 설정 */
+    max-width: 400px; /* 적당한 너비로 제한 */
 }
 
 #saved-numbers-list {
@@ -88,15 +99,16 @@ footer {
     width: 100%;
     position: relative;
     z-index: 100;
+    margin: 0; /* 배너와 푸터 사이 여백 제거 */
 }
 
 /* 쿠팡 파트너스 배너 */
 #coupang-banner {
     width: 100%; /* 배너가 전체 너비에 맞게 */
     text-align: center;
-    padding: 5px 0;
+    padding: 0; /* 불필요한 패딩 제거 */
     background-color: #fff;
-    position: relative;
+    position: relative; /* 고정 해제, 푸터 위에 위치 */
     z-index: 90;
 }
 
@@ -104,68 +116,26 @@ footer {
 /* 모바일 */
 @media (max-width: 600px) {
     .slot-machine {
-        flex-wrap: nowrap; /* 숫자가 한 줄로 나오게 설정 */
+        flex-wrap: nowrap;
         justify-content: center;
-        width: 100%; /* 가로 너비 전체 사용 */
+        width: 100%;
     }
 
     .slot, .saved-slot {
-        width: 50px; /* 모바일에서 숫자의 크기를 줄여서 맞춤 */
+        width: 50px;
         height: 50px;
-        font-size: 20px; /* 숫자 크기 줄임 */
+        font-size: 20px;
     }
 
     button {
-        width: auto; /* 버튼이 좌우 전체를 차지하지 않게 설정 */
+        width: auto;
     }
 
     #saved-numbers-list {
-        width: 100%; /* 모바일에서 좌우가 잘리지 않게 설정 */
+        width: 100%;
     }
 
     #coupang-banner {
-        width: 100%; /* 쿠팡 파트너스 배너가 전체 화면 너비에 맞게 */
-    }
-}
-
-/* 태블릿 */
-@media (min-width: 601px) and (max-width: 1024px) {
-    header {
-        padding: 15px 0;
-    }
-
-    main {
-        padding: 0;
-    }
-
-    section {
-        margin-top: 15px;
-    }
-
-    .nav-item {
-        width: 150px;
-    }
-
-    #coupang-banner {
-        width: 100%; /* 태블릿에서도 배너가 전체 가로 폭을 차지하도록 설정 */
-    }
-}
-
-/* 데스크탑 */
-@media (min-width: 1025px) {
-    header {
-        padding: 20px 0;
-    }
-
-    main {
-        padding: 0;
-    }
-
-    .nav-item {
-        width: 200px;
-    }
-
-    #coupang-banner {
-        width: 100%; /* 데스크탑에서도 배너가 전체 가로 폭을 차지하도록 설정 */
+        width: 100%;
     }
 }
