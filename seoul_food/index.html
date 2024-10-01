@@ -37,13 +37,14 @@
         </ul>
       </nav>
     <div class="container">
+        <br><br><br><br>
         <!-- 첫 번째 질문: 구 선택 -->
         <div class="question-step active" id="step-1">
             <label for="district">구를 적어주세요:</label>
             <input type="text" id="district" placeholder="예: 강남구" oninput="toggleButton('next-btn-1', this)">
             <button id="next-btn-1" onclick="saveDistrict()" disabled>다음</button>
         </div>
-
+   
         <!-- 두 번째 질문: 음식명 또는 가격 선택 -->
         <div class="question-step" id="step-2">
             <button onclick="goToStep('step-3-food', 'food')">음식명으로 검색하기</button>
@@ -79,15 +80,17 @@
             <button class="back-button" onclick="goBack('step-2')">뒤로가기</button>
         </div>
     </div>
+    <br><br><br><br><br> 
 
-    <section class="banner-section">
-        <div id="coupang-banner">
-            <script src="https://ads-partners.coupang.com/g.js"></script>
-            <script>
-                new PartnersCoupang.G({"id":810614,"template":"carousel","trackingCode":"AF4453761","width":"100%","height":"auto","tsource":""});
-            </script>
-        </div>
-    </section>
+        <!-- 본문 끝에 쿠팡 파트너스 배너 추가 -->
+        <section class="banner-section">
+            <div id="coupang-banner">
+                <script src="https://ads-partners.coupang.com/g.js"></script>
+                <script>
+                    new PartnersCoupang.G({"id":810614,"template":"carousel","trackingCode":"AF4453761","width":"100%","height":"auto","tsource":""});
+                </script>
+            </div>
+        </section>
 
     <footer>
         <p>&copy; 2024 Survival Office. All rights reserved.</p>

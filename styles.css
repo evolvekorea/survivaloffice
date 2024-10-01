@@ -81,12 +81,6 @@ header img {
     margin-bottom: 0; /* 이미지 밑 공백 제거 */
 }
 
-/* 모바일 화면에서 상단 배너 */
-@media (max-width: 768px) {
-    header img {
-        max-height: 300px; /* 모바일 기준 상단 배너 높이 */
-    }
-}
 
 main {
     padding: 0; /* 공백 제거 */
@@ -99,7 +93,7 @@ section {
 }
 
 footer {
-    background-color: #333;
+    background-color: #353535;
     color: white;
     text-align: center;
     padding: 10px;
