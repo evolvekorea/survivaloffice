@@ -1,7 +1,22 @@
+@font-face {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 페이지 전체 폰트 크기 및 bold 설정 */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f4f4f9;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+    overflow-x: hidden;
 }
 
 h1 {
@@ -13,6 +28,8 @@ h1 {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
+    width: 100%; /* 전체 너비 사용 */
+    overflow-x: auto; /* 넘칠 경우 스크롤 생김 */
 }
 
 .slot, .saved-slot {
@@ -28,6 +45,7 @@ h1 {
     margin: 0 5px;
     font-weight: bold;
     color: #333;
+    flex-shrink: 0; /* 공간이 부족할 때도 크기가 줄어들지 않도록 설정 */
 }
 
 button {
@@ -50,10 +68,104 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 100%;
+    overflow-x: auto;
 }
 
 .saved-number-row {
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
+    flex-shrink: 0;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    width: 100%;
+    position: relative;
+    z-index: 100;
+}
+
+/* 쿠팡 파트너스 배너 */
+#coupang-banner {
+    width: 100%; /* 배너가 전체 너비에 맞게 */
+    text-align: center;
+    padding: 5px 0;
+    background-color: #fff;
+    position: relative;
+    z-index: 90;
+}
+
+/* 반응형 웹페이지 위한 미디어 쿼리 */
+/* 모바일 */
+@media (max-width: 600px) {
+    .slot-machine {
+        flex-wrap: nowrap; /* 숫자가 한 줄로 나오게 설정 */
+        justify-content: center;
+        width: 100%; /* 가로 너비 전체 사용 */
+    }
+
+    .slot, .saved-slot {
+        width: 50px; /* 모바일에서 숫자의 크기를 줄여서 맞춤 */
+        height: 50px;
+        font-size: 20px; /* 숫자 크기 줄임 */
+    }
+
+    button {
+        width: auto; /* 버튼이 좌우 전체를 차지하지 않게 설정 */
+    }
+
+    #saved-numbers-list {
+        width: 100%; /* 모바일에서 좌우가 잘리지 않게 설정 */
+    }
+
+    #coupang-banner {
+        width: 100%; /* 쿠팡 파트너스 배너가 전체 화면 너비에 맞게 */
+    }
+}
+
+/* 태블릿 */
+@media (min-width: 601px) and (max-width: 1024px) {
+    header {
+        padding: 15px 0;
+    }
+
+    main {
+        padding: 0;
+    }
+
+    section {
+        margin-top: 15px;
+    }
+
+    .nav-item {
+        width: 150px;
+    }
+
+    #coupang-banner {
+        width: 100%; /* 태블릿에서도 배너가 전체 가로 폭을 차지하도록 설정 */
+    }
+}
+
+/* 데스크탑 */
+@media (min-width: 1025px) {
+    header {
+        padding: 20px 0;
+    }
+
+    main {
+        padding: 0;
+    }
+
+    .nav-item {
+        width: 200px;
+    }
+
+    #coupang-banner {
+        width: 100%; /* 데스크탑에서도 배너가 전체 가로 폭을 차지하도록 설정 */
+    }
 }
