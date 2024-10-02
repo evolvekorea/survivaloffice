@@ -46,7 +46,7 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden; /* 좌우 넘침 방지 */
-    width: 100vw; /* 화면 전체 너비 */
+    width: 100%; /* 화면 전체 너비 */
 }
 
 .container {
