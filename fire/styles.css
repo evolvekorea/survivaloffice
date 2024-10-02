@@ -50,8 +50,10 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    width: 100%; /* max-width 대신 width를 100%로 설정 */
     align-items: center;
-    overflow-x: hidden;
+    overflow-x: hidden; /* 좌우 넘침 방지 */
+    box-sizing: border-box;
 }
 
 h1 {
@@ -64,7 +66,9 @@ h1 {
     justify-content: center;
     margin-bottom: 20px;
     width: 100%;
-    overflow-x: auto;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 .slot, .saved-slot {
@@ -82,6 +86,7 @@ h1 {
     color: #333;
     flex-shrink: 0;
     font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+    box-sizing: border-box;
 }
 
 /* 버튼을 한 줄에 배치 */
@@ -97,6 +102,7 @@ button {
     display: inline-block;
     white-space: nowrap; /* 줄바꿈 방지 */
     font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+    box-sizing: border-box;
 }
 
 button:hover {
@@ -109,6 +115,7 @@ button:hover {
     gap: 10px; /* 버튼 간격 설정 */
     width: 100%; /* 버튼 컨테이너가 가로 전체를 차지하도록 설정 */
     max-width: 400px; /* 적당한 너비로 제한 */
+    box-sizing: border-box;
 }
 
 #saved-numbers-list {
@@ -117,7 +124,8 @@ button:hover {
     flex-direction: column;
     align-items: center;
     max-width: 100%;
-    overflow-x: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 .saved-number-row {
@@ -125,6 +133,7 @@ button:hover {
     justify-content: center;
     margin-bottom: 10px;
     flex-shrink: 0;
+    box-sizing: border-box;
 }
 
 footer {
@@ -135,6 +144,7 @@ footer {
     width: 100%;
     position: relative; /* fixed에서 relative로 변경하여 문제 해결 */
     bottom: 0;
+    box-sizing: border-box;
 }
 
 footer p {
@@ -143,6 +153,7 @@ footer p {
     font-size: 16px; /* 글자 크기 명시 */
     color: white; /* 글자 색상 명시 */
     font-weight: normal;
+    box-sizing: border-box;
 }
 
 .banner-section {
@@ -193,16 +204,21 @@ footer p {
 }
 
 /* 데스크탑 */
-@media (min-width: 1025px) {
-    header {
-        padding: 20px 0;
-    }
-
-    main {
+@media (max-width: 600px) {
+    header, main, section {
+        width: 100%; /* 모바일에서는 모든 섹션의 너비를 100%로 */
         padding: 0;
+        margin: 0; /* 불필요한 여백 제거 */
     }
 
-    .nav-item {
-        width: 200px;
+    .slot-machine, #button-container {
+        width: 100%;
+        margin: 0; /* 좌우 마진 제거 */
+    }
+}
+
+@media (max-width: 600px) {
+    .slot, .saved-slot {
+        margin: 0 1px; /* 모바일에서 좌우 여백을 최소화 */
     }
 }
