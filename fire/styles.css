@@ -43,7 +43,7 @@ nav {
 /* 페이지 전체 폰트 크기 및 bold 설정 */
 body {
     font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
     margin: 0;
     padding: 0;
@@ -68,12 +68,12 @@ h1 {
 }
 
 .slot, .saved-slot {
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     background-color: #ddd;
     border: 2px solid #333;
     border-radius: 10px;
-    font-size: 24px;
+    font-size: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -140,6 +140,9 @@ footer {
 footer p {
     margin: 0; /* 기본 여백 제거 */
     padding: 0; /* 기본 패딩 제거 */
+    font-size: 16px; /* 글자 크기 명시 */
+    color: white; /* 글자 색상 명시 */
+    font-weight: normal;
 }
 
 .banner-section {
