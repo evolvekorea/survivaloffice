@@ -33,6 +33,7 @@ nav {
     padding: 8px 12px;
     font-size: 14px;
     font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif; /* 네비게이션 항목에도 폰트 적용 */
+    font-weight: normal;
   }
   
   nav ul li a:hover {
