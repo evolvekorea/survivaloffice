@@ -42,7 +42,13 @@ body {
     color: #333;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* 좌우 넘침 방지 */
+    width: 100vw; /* 화면 전체 너비 */
 }
+
 .container {
     flex-grow: 1;
     display: flex;
@@ -52,6 +58,7 @@ body {
     text-align: center;
     width: 100%;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .question-step {
@@ -78,6 +85,7 @@ button {
     display: block;
     margin: 10px auto;
     min-width: 200px; /* 버튼 최소 너비 */
+    box-sizing: border-box;
 }
 
 button:disabled {
@@ -135,11 +143,13 @@ footer {
     width: 100%;
     position: relative; /* fixed에서 relative로 변경하여 문제 해결 */
     bottom: 0;
+    box-sizing: border-box;
 }
 
 footer p {
     margin: 0; /* 기본 여백 제거 */
     padding: 0; /* 기본 패딩 제거 */
+    box-sizing: border-box;
 }
 
 /* 반응형 웹페이지 위한 미디어 쿼리 */
