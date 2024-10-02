@@ -110,7 +110,7 @@ input[type="text"], input[type="number"] {
 
 .result-item {
     margin-top: 20px;
-    text-align: left; /* 결과 항목 왼쪽 정렬 */
+    text-align: center; /* 결과 항목 왼쪽 정렬 */
     border: 1px solid #ddd;
     padding: 20px; /* 내부 여백을 더 추가하여 항목을 분리 */
     border-radius: 5px;
@@ -118,6 +118,7 @@ input[type="text"], input[type="number"] {
     width: 100%; /* 가로 너비를 100%로 설정하여 페이지의 대부분을 차지하도록 */
     max-width: 1400px; /* 최대 너비를 1400px로 확장 */
     margin: 20px auto;
+    box-sizing: border-box; /* padding과 border가 너비에 포함되도록 설정 */
 }
 
 .result-item p {
