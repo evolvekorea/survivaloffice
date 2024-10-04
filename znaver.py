@@ -1,63 +1,89 @@
-import requests
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
 import json
+from bs4 import BeautifulSoup
 
-# 발급받은 Client ID와 Client Secret
-client_id = '4mu8HhRbZgqEM7bNbTRn'  # 여기에 발급받은 Client ID를 입력
-client_secret = 'b5h8e3bE7R'  # 여기에 발급받은 Client Secret을 입력
+# 크롬 드라이버 설정 (사용자의 드라이버 경로 설정)
+service = Service('C:\\Users\\ohno4\\Desktop\\Evolve\\기타자료\\chromedriver-win64\\chromedriver.exe')
+driver = webdriver.Chrome(service=service)
 
-# 요청 헤더 설정
-headers = {
-    'X-Naver-Client-Id': client_id,
-    'X-Naver-Client-Secret': client_secret
-}
+# 네이버 지도 접속
+driver.get('https://map.naver.com/')
 
-# 네이버 지역 검색 API URL 및 파라미터 설정
-url = 'https://openapi.naver.com/v1/search/local.json'
-params = {
-    'query': '서울 강남구 음식점',  # 검색 키워드
-    'display': 5,  # 가져올 검색 결과 수
-    'start': 1,  # 검색 시작 위치
-    'sort': 'random'  # 정렬 방식
-}
+# Explicit Wait 설정
+wait = WebDriverWait(driver, 20)
 
-# API 요청 보내기
-response = requests.get(url, headers=headers, params=params)
+# 검색창 대기 후 검색어 입력
+try:
+    search_box = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'input.input_search')))
+    search_box.send_keys('서울시 종로구 음식점')
+    search_box.send_keys(Keys.RETURN)
+except Exception as e:
+    print(f"검색창을 찾는 중 오류 발생: {e}")
+    driver.quit()
 
-# 상태 코드 확인 및 에러 처리
-if response.status_code == 200:
-    # 응답 데이터 JSON 파싱
-    data = response.json()
+# searchIframe으로 전환하여 음식점 목록을 탐색 및 첫 번째 음식점 선택
+try:
+    wait.until(EC.frame_to_be_available_and_switch_to_it((By.ID, 'searchIframe')))
+    
+    # 새로운 CSS 셀렉터를 사용하여 첫 번째 음식점 클릭
+    first_restaurant = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#_pcmap_list_scroll_container > ul > li:nth-child(1) > div.CHC5F > a.tzwk0 > div > div > span.place_bluelink.TYaxT')))
+    first_restaurant.click()
+    print("음식점 선택 완료")
+except Exception as e:
+    print(f"음식점 선택 중 오류 발생: {e}")
+    driver.quit()
 
-    # 결과를 저장할 리스트
-    store_data = []
+# entryIframe으로 전환하여 세부 정보 크롤링
+try:
+    # 음식점 세부 정보가 표시되는 iframe으로 전환
+    driver.switch_to.default_content()  # 기본 페이지로 돌아가기
+    wait.until(EC.frame_to_be_available_and_switch_to_it((By.ID, 'entryIframe')))
+    
+    # 음식점 이름과 주소 가져오기
+    restaurant_name = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '.place_section_header h2'))).text
+    address = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '.address'))).text
 
-    # API에서 가져온 검색 결과를 파싱해서 원하는 형식으로 저장
-    for item in data['items']:
-        store = {
-            "storeName": item['title'].replace('<b>', '').replace('</b>', ''),  # HTML 태그 제거
-            "address": item['roadAddress'],
-        }
+    print(f"음식점 이름: {restaurant_name}, 주소: {address}")
 
-        # 샘플 음식 데이터를 추가 (API에는 음식 이름과 가격이 없으므로 임의로 추가)
-        food_list = [
-            {"foodName": "김밥", "price": 2000},
-            {"foodName": "참치김밥", "price": 3000},
-            {"foodName": "치즈김밥", "price": 3500}
-        ]
+except Exception as e:
+    print(f"음식점 정보 가져오는 중 오류 발생: {e}")
+    driver.quit()
 
-        # 음식 정보를 store 데이터에 추가
-        for food in food_list:
-            store_entry = store.copy()  # 매번 독립적인 딕셔너리를 저장하기 위해 복사
-            store_entry.update(food)
-            store_data.append(store_entry)
+# 메뉴 정보 추출
+try:
+    menu_button = driver.find_element(By.CSS_SELECTOR, '._3U7S1')
+    menu_button.click()
+    time.sleep(2)
 
-    # 결과 출력
-    print(json.dumps(store_data, indent=2, ensure_ascii=False))
+    # BeautifulSoup으로 메뉴 파싱
+    soup = BeautifulSoup(driver.page_source, 'html.parser')
+    menu_items = soup.select('.menu_item')
 
-    # 데이터를 파일로 저장 (naver.json)
-    with open('naver.json', 'w', encoding='utf-8') as f:
-        json.dump(store_data, f, ensure_ascii=False, indent=2)
+    food_name = menu_items[0].select_one('.name').text
+    price = menu_items[0].select_one('.price').text
 
-    print("데이터가 naver.json 파일에 저장되었습니다.")
-else:
-    print(f"Error: API 요청에 실패했습니다. 상태 코드: {response.status_code}")
+    # JSON 형식으로 데이터 저장
+    restaurant_data = {
+        "storeName": restaurant_name,
+        "address": address,
+        "foodName": food_name,
+        "price": price
+    }
+
+    # 결과를 JSON 파일에 저장
+    with open('data.json', 'w', encoding='utf-8') as f:
+        json.dump(restaurant_data, f, ensure_ascii=False, indent=4)
+
+except Exception as e:
+    print(f"메뉴 정보를 가져오는 중 오류 발생: {e}")
+
+# 브라우저 종료
+driver.quit()
+
+print("크롤링이 완료되었습니다.")
