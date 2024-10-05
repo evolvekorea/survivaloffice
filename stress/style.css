@@ -53,12 +53,19 @@ body {
     text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* center 변경 */
     align-items: center;
-    height: 100vh;
+    min-height: 100vh; /* height: 100vh 변경 */
     margin: 0;
     position: relative;
     padding-top: 60px; /* 네비게이션 높이만큼 padding 추가 */
+}
+
+/* 날짜 표시 스타일 */
+#dateDisplay {
+    margin-bottom: 20px; /* 날짜 아래에 공간 추가 */
+    font-size: 20px;
+    font-weight: bold;
 }
 
 /* 버튼을 중앙에 크게, 동그랗게 설정 */
@@ -86,9 +93,13 @@ body {
     font-size: 20px;
 }
 
+#saveDataButton {
+    margin-top: 10px;
+    font-size: 16px;
+    padding: 8px 12px;
+}
+
 #counter {
-    position: relative;
-    top: -30px; /* 버튼 위쪽으로 이동 */
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px; /* 버튼과의 간격 조정 */
@@ -102,6 +113,7 @@ footer {
     padding: 10px;
     width: 100%;
     position: relative; /* 푸터를 고정하지 않고, 페이지 내용과 함께 움직이게 변경 */
+    margin-top: auto; /* 푸터를 하단으로 고정 */
 }
 
 /* 배너 섹션 스타일 */

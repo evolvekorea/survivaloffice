@@ -1,12 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys  # Keys 클래스 임포트
 import time
-import json
-from bs4 import BeautifulSoup
 
 # 크롬 드라이버 설정 (사용자의 드라이버 경로 설정)
 service = Service('C:\\Users\\ohno4\\Desktop\\Evolve\\기타자료\\chromedriver-win64\\chromedriver.exe')
@@ -22,38 +20,26 @@ wait = WebDriverWait(driver, 20)
 try:
     search_box = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'input.input_search')))
     search_box.send_keys('서울시 종로구 음식점')
-    search_box.send_keys(Keys.RETURN)
+    search_box.send_keys(Keys.RETURN)  # Enter 키 입력
 except Exception as e:
     print(f"검색창을 찾는 중 오류 발생: {e}")
     driver.quit()
 
 # searchIframe으로 전환하여 음식점 목록을 탐색 및 첫 번째 음식점 선택
 try:
+    # iframe 전환 (검색 결과가 나오는 프레임)
     wait.until(EC.frame_to_be_available_and_switch_to_it((By.ID, 'searchIframe')))
     
-    # 새로운 CSS 셀렉터를 사용하여 첫 번째 음식점 클릭
+    # 음식점명 클릭
     first_restaurant = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#_pcmap_list_scroll_container > ul > li:nth-child(1) > div.CHC5F > a.tzwk0 > div > div > span.place_bluelink.TYaxT')))
-    first_restaurant.click()
-    print("음식점 선택 완료")
+    print("음식점 요소 찾음")
+    first_restaurant.click()  # 음식점 클릭
+    print("음식점 클릭 완료")
+    
 except Exception as e:
     print(f"음식점 선택 중 오류 발생: {e}")
     driver.quit()
 
-# entryIframe으로 전환하여 세부 정보 크롤링
-try:
-    # 음식점 세부 정보가 표시되는 iframe으로 전환
-    driver.switch_to.default_content()  # 기본 페이지로 돌아가기
-    wait.until(EC.frame_to_be_available_and_switch_to_it((By.ID, 'entryIframe')))
-    
-    # 음식점 이름과 주소 가져오기
-    restaurant_name = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '.place_section_header h2'))).text
-    address = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '.address'))).text
-
-    print(f"음식점 이름: {restaurant_name}, 주소: {address}")
-
-except Exception as e:
-    print(f"음식점 정보 가져오는 중 오류 발생: {e}")
-    driver.quit()
 
 # 메뉴 정보 추출
 try:
@@ -62,6 +48,7 @@ try:
     time.sleep(2)
 
     # BeautifulSoup으로 메뉴 파싱
+    from bs4 import BeautifulSoup
     soup = BeautifulSoup(driver.page_source, 'html.parser')
     menu_items = soup.select('.menu_item')
 

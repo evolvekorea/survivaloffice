@@ -1,72 +1,146 @@
-// HTML 요소들을 자바스크립트로 가져오기
+// Firebase 설정 및 초기화
+const firebaseConfig = {
+    apiKey: "AIzaSyAzCVvSMhEPviumJZKi1RadieG4UfR_hAo",
+    authDomain: "stressgame-4ccaa.firebaseapp.com",
+    projectId: "stressgame-4ccaa",
+    storageBucket: "stressgame-4ccaa.appspot.com",
+    messagingSenderId: "986046565225",
+    appId: "1:986046565225:web:a350a6b3513ed3269b8bf8"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// HTML 요소 가져오기
 const button = document.getElementById('pressButton');
 const counterDisplay = document.getElementById('counter');
 const viewRecordsButton = document.getElementById('viewRecords');
 const recordList = document.getElementById('recordList');
 const recordListItems = document.getElementById('recordListItems');
+const nicknameInput = document.getElementById('nickname');
+const saveNicknameButton = document.getElementById('saveNickname');
+const dateDisplay = document.getElementById('dateDisplay');
+const saveDataButton = document.getElementById('saveDataButton');
 
-// 현재 누른 횟수, localStorage에서 불러오거나 없으면 0으로 시작
-let pressCount = localStorage.getItem('pressCount') || 0;
+// 클릭 수, 닉네임 및 날짜 데이터 초기화
+let pressCount = parseInt(localStorage.getItem('pressCount')) || 0;
 let lastReset = localStorage.getItem('lastReset') || new Date().toDateString();
+let nickname = localStorage.getItem('nickname') || '';
 let records = JSON.parse(localStorage.getItem('records')) || [];
 
-// 화면에 현재 횟수를 업데이트하는 함수
+// 클릭 수 업데이트
 function updateCounter() {
-    counterDisplay.textContent = `${pressCount}번 눌렀습니다`;
+    if (nickname) {
+        counterDisplay.textContent = `${nickname} 님, ${pressCount}번 눌렀습니다`;
+    } else {
+        counterDisplay.textContent = `${pressCount}번 눌렀습니다`;
+    }
 }
 
-// 버튼을 눌렀을 때 횟수를 증가시키고 저장하는 함수
+// 현재 날짜 업데이트
+function updateDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = ('0' + (today.getMonth() + 1)).slice(-2);
+    const day = ('0' + today.getDate()).slice(-2);
+    dateDisplay.textContent = `${year}년 ${month}월 ${day}일`;
+}
+
+// 클릭 수 저장
 function savePressCount() {
     localStorage.setItem('pressCount', pressCount);
 }
 
-// 하루마다 기록을 초기화하고 저장하는 함수
-function resetDaily() {
-    const today = new Date().toDateString();
-    if (lastReset !== today) {
-        // 어제의 기록을 저장하고, 기록 리스트를 정렬 후 상위 10개만 저장
-        records.push({ date: lastReset, count: pressCount });
-        records.sort((a, b) => b.count - a.count);
-        records = records.slice(0, 10);
-        localStorage.setItem('records', JSON.stringify(records));
-
-        // 새로운 하루 시작
-        pressCount = 0;
-        lastReset = today;
-        localStorage.setItem('lastReset', lastReset);
-        savePressCount();
+// 닉네임 저장
+function saveNickname() {
+    nickname = nicknameInput.value.trim();
+    if (nickname) {
+        localStorage.setItem('nickname', nickname);
+        alert('닉네임이 저장되었습니다!');
+        updateCounter();
+    } else {
+        alert('닉네임을 입력해주세요.');
     }
 }
 
-// 기록을 화면에 표시하는 함수
-function displayRecords() {
-    recordListItems.innerHTML = records.map(record => 
-        `<li>${record.date}: ${record.count}번</li>`
-    ).join('');
-    recordList.style.display = 'block'; // 기록 리스트를 보여줍니다
+// 닉네임 불러오기
+function loadNickname() {
+    if (nickname) {
+        nicknameInput.value = nickname;
+    }
 }
 
-// 버튼 클릭 이벤트 처리
+// Firestore에 데이터 저장
+function saveRecordToFirestore(date, nickname, count) {
+    db.collection('pressRecords').add({
+        date: date,
+        nickname: nickname || 'Unknown',
+        count: count
+    }).then(() => {
+        console.log("데이터가 저장되었습니다.");
+    }).catch((error) => {
+        console.error("Error saving data: ", error);
+    });
+}
+
+// Firestore에서 기록 불러오기
+function displayRecordsFromFirestore() {
+    db.collection('pressRecords').orderBy('count', 'desc').limit(10).get().then((querySnapshot) => {
+        recordListItems.innerHTML = '';
+        querySnapshot.forEach((doc) => {
+            const record = doc.data();
+            const date = new Date(record.date);
+            const formattedDate = `${date.getFullYear()}년 ${('0' + (date.getMonth() + 1)).slice(-2)}월 ${('0' + date.getDate()).slice(-2)}일`;
+            recordListItems.innerHTML += `<li>${formattedDate} - ${record.nickname}: ${record.count}번</li>`;
+        });
+        recordList.style.display = 'block';
+    }).catch((error) => {
+        console.error("Error fetching records: ", error);
+    });
+}
+
+// 24시가 지나면 클릭 수 초기화 (날짜가 바뀌면)
+function resetDaily() {
+    const today = new Date().toDateString();
+    if (lastReset !== today) {
+        saveRecordToFirestore(lastReset, nickname, pressCount); // Firestore에 기록 저장
+        pressCount = 0; // 클릭 수 초기화
+        lastReset = today;
+        localStorage.setItem('lastReset', lastReset);
+        savePressCount();
+        updateCounter();
+    }
+}
+
+// 버튼 클릭 시 클릭 수 증가
 button.addEventListener('click', () => {
     pressCount++;
     savePressCount();
     updateCounter();
 });
 
-// 기록 보기 버튼 클릭 이벤트 처리
+// 기록 보기 버튼 클릭 이벤트 처리: 토글 기능 추가
 viewRecordsButton.addEventListener('click', () => {
     if (recordList.style.display === 'none' || recordList.style.display === '') {
-        // 기록이 보이지 않으면 표시
-        displayRecords();
-        recordList.style.display = 'block';
-        viewRecordsButton.textContent = '기록 숨기기';  // 버튼 텍스트 변경
+        displayRecordsFromFirestore();
+        viewRecordsButton.textContent = 'TOP10 숨기기';
     } else {
-        // 기록이 보이면 숨김
         recordList.style.display = 'none';
-        viewRecordsButton.textContent = '기록 보기';  // 버튼 텍스트 변경
+        viewRecordsButton.textContent = 'TOP10 보기';
     }
 });
 
-// 초기 실행 시 현재 횟수와 기록을 불러옵니다
+// 닉네임 저장 버튼 클릭 이벤트 처리
+saveNicknameButton.addEventListener('click', saveNickname);
+
+// 수동으로 데이터 저장 버튼 클릭 시 Firestore에 데이터 저장
+saveDataButton.addEventListener('click', () => {
+    const today = new Date().toDateString();
+    saveRecordToFirestore(today, nickname, pressCount); // 현재 날짜, 닉네임, 클릭 수 저장
+});
+
+// 페이지 로딩 시 초기화
 updateCounter();
-resetDaily();
+updateDate();
+loadNickname();
+resetDaily(); // 24시가 지났는지 확인하고 초기화

@@ -5,54 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>스트레스 버튼 게임</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Firebase SDK v8 사용 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
-    <!-- 검색 엔진용 키워드 추가 -->
-    <meta name="keywords" content="스트레스측정, 스트레스해소, 직장스트레스, 스트레스게임">
+        <!-- 검색 엔진용 키워드 추가 -->
+        <meta name="keywords" content="스트레스측정, 스트레스해소, 직장스트레스, 스트레스게임">
 
 
-    <!-- SEO를 위한 Open Graph 설정 -->
-    <meta property="og:title" content="스트레스 받을때 누르는 게임" />
-    <meta property="og:description" content="스트레스 받을때 누르는 게임." />
-    <meta property="og:url" content="https://www.survivaloffice.com/stress" />
-    <meta property="og:image" content="https://www.survivaloffice.com/path-to-image.jpg" />
-    <meta property="og:type" content="website" />
-
+        <!-- SEO를 위한 Open Graph 설정 -->
+        <meta property="og:title" content="스트레스 받을때 누르는 게임" />
+        <meta property="og:description" content="스트레스 받을때 누르는 게임." />
+        <meta property="og:url" content="https://www.survivaloffice.com/stress" />
+        <meta property="og:image" content="https://www.survivaloffice.com/path-to-image.jpg" />
+        <meta property="og:type" content="website" />
 </head>
 <body>
     <nav>
         <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/roulette">Roulette</a></li>
-          <li><a href="/seoul_food">Food</a></li>
-          <li><a href="/seoul_menu">Menu</a></li>
-          <li><a href="/fire">Lotto</a></li>
-          <li><a href="/stress">Game</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/roulette">Roulette</a></li>
+            <li><a href="/seoul_food">Food</a></li>
+            <li><a href="/seoul_menu">Menu</a></li>
+            <li><a href="/fire">Lotto</a></li>
+            <li><a href="/stress">Game</a></li>
         </ul>
-      </nav>
-      <br><br><br><br>
+    </nav>
+
+    <div id="dateDisplay"></div>
     <div id="counter">0번 눌렀습니다</div>
-    <button id="pressButton">눌러주세요</button>
-    <br>    
-    <button id="viewRecords">기록 보기</button>
+
+    <label for="nickname">닉네임: </label>
+    <input type="text" id="nickname" placeholder="닉네임을 입력하세요">
+    <button id="saveNickname">닉네임 저장</button>
+
+    <button id="pressButton">스트레스 받으면<br>눌러주세요</button>
+    <button id="viewRecords">TOP10 보기</button>
+    <button id="saveDataButton">데이터 저장</button>
+
     <div id="recordList" style="display: none;">
-        <h2>TOP 10 기록</h2>
+        <h2>스트레스가 많은 TOP 10</h2>
         <ul id="recordListItems"></ul>
     </div>
-    <script src="script.js"></script>
-    <br><br><br><br><br>
-        <!-- 본문 끝에 쿠팡 파트너스 배너 추가 -->
-        <section class="banner-section">
-            <div id="coupang-banner">
-                <script src="https://ads-partners.coupang.com/g.js"></script>
-                <script>
-                    new PartnersCoupang.G({"id":810614,"template":"carousel","trackingCode":"AF4453761","width":"100%","height":"auto","tsource":""});
-                </script>
-            </div>
-        </section>
-    </main>
+
+    <section class="banner-section">
+        <div id="coupang-banner">
+            <script src="https://ads-partners.coupang.com/g.js"></script>
+            <script>
+                new PartnersCoupang.G({"id":810614,"template":"carousel","trackingCode":"AF4453761","width":"100%","height":"auto","tsource":""});
+            </script>
+        </div>
+    </section>
 
     <footer>
         <p>&copy; 2024 Survival Office. All rights reserved.</p>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
