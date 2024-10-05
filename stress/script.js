@@ -72,26 +72,76 @@ function loadNickname() {
 
 // Firestore에 데이터 저장
 function saveRecordToFirestore(date, nickname, count) {
-    db.collection('pressRecords').add({
-        date: date,
-        nickname: nickname || 'Unknown',
-        count: count
-    }).then(() => {
-        console.log("데이터가 저장되었습니다.");
-    }).catch((error) => {
-        console.error("Error saving data: ", error);
-    });
+    db.collection('pressRecords')
+        .where('date', '==', date)
+        .where('nickname', '==', nickname || 'Unknown')
+        .get()
+        .then((querySnapshot) => {
+            if (!querySnapshot.empty) {
+                // 모든 업데이트 작업을 Promise 배열에 저장
+                const updatePromises = [];
+                querySnapshot.forEach((doc) => {
+                    const existingRecord = doc.data();
+                    if (count > existingRecord.count) {
+                        // 현재 클릭 수가 더 크면 업데이트
+                        const updatePromise = db.collection('pressRecords').doc(doc.id).update({
+                            count: count
+                        });
+                        updatePromises.push(updatePromise);
+                    }
+                });
+
+                // 모든 업데이트 작업이 완료되면 팝업 표시
+                if (updatePromises.length > 0) {
+                    Promise.all(updatePromises)
+                        .then(() => {
+                            alert('기록이 업데이트되었습니다.');
+                        })
+                        .catch((error) => {
+                            console.error("Error updating data: ", error);
+                        });
+                }
+            } else {
+                // 동일한 닉네임과 날짜가 없을 경우 새로 추가
+                db.collection('pressRecords').add({
+                    date: date,
+                    nickname: nickname || 'Unknown',
+                    count: count
+                }).then(() => {
+                    alert('저장되었습니다.');
+                }).catch((error) => {
+                    console.error("Error saving data: ", error);
+                });
+            }
+        }).catch((error) => {
+            console.error("Error checking existing records: ", error);
+        });
 }
 
-// Firestore에서 기록 불러오기
+// Firestore에서 기록 불러오기 (중복 닉네임, 날짜는 최대 값으로 합쳐서 불러옴)
 function displayRecordsFromFirestore() {
-    db.collection('pressRecords').orderBy('count', 'desc').limit(10).get().then((querySnapshot) => {
-        recordListItems.innerHTML = '';
+    db.collection('pressRecords').get().then((querySnapshot) => {
+        const recordMap = {}; // 닉네임-날짜를 키로 하고 최대 클릭 수를 저장할 객체
         querySnapshot.forEach((doc) => {
             const record = doc.data();
             const date = new Date(record.date);
             const formattedDate = `${date.getFullYear()}년 ${('0' + (date.getMonth() + 1)).slice(-2)}월 ${('0' + date.getDate()).slice(-2)}일`;
-            recordListItems.innerHTML += `<li>${formattedDate} - ${record.nickname}: ${record.count}번</li>`;
+            const key = `${record.nickname}-${formattedDate}`;
+
+            if (!recordMap[key] || record.count > recordMap[key].count) {
+                // 동일한 닉네임과 날짜가 없거나, 더 큰 값이 있으면 업데이트
+                recordMap[key] = {
+                    nickname: record.nickname,
+                    date: formattedDate,
+                    count: record.count
+                };
+            }
+        });
+
+        // 기록을 화면에 표시
+        recordListItems.innerHTML = '';
+        Object.values(recordMap).sort((a, b) => b.count - a.count).slice(0, 10).forEach((record) => {
+            recordListItems.innerHTML += `<li>${record.date} - ${record.nickname}: ${record.count}번</li>`;
         });
         recordList.style.display = 'block';
     }).catch((error) => {

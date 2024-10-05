@@ -127,6 +127,7 @@ footer {
 
 /* 반응형 웹페이지 위한 미디어 쿼리 */
 /* 모바일 */
+
 @media (max-width: 600px) {
     header {
         padding: 10px 0;
