@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do 리스트</title>
+    <meta property="og:title" content="Survival Office To-do" />
+    <meta property="og:description" content="간단한 TO-DO 리스트" />
+    <meta property="og:url" content="https://www.survivaloffice.com/todo" />
+    <meta property="og:type" content="website" />
+    <meta name="keywords" content="todo리스트, todo, 계획짜기, 직장인todo"> 
+    <link rel="stylesheet" href="styles.css">
+    <meta name="naver-site-verification" content="8178bc04eb942dda668089047e1d5fb0ae7ba6ce" />
+    <meta name="google-adsense-account" content="ca-pub-4957586937754537">
+    
+    <!-- Open Graph Meta Tags for Social Media Sharing -->
+    <meta property="og:image" content="https://www.survivaloffice.com/images/head_image.jpg" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Survival Office To-do">
+    <meta name="twitter:description" content="간단한 TO-DO 리스트">
+    <meta name="twitter:image" content="https://www.survivaloffice.com/images/head_image.jpg">
+</head>
+<body>
+    <!-- 네비게이션이 상단으로 이동 -->
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/roulette">Roulette</a></li>
+            <li><a href="/seoul_food">Food</a></li>
+            <li><a href="/seoul_menu">Menu</a></li>
+            <li><a href="/fire">Lotto</a></li>
+            <li><a href="/stress">Game</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <input type="text" id="yearInput" maxlength="4" placeholder="2024"> <!-- 4글자 입력 가능 -->
+            <span id="yearDisplay"></span> 년
+            <input type="text" id="dayTypeInput" maxlength="4" placeholder="한 날"> <!-- 4글자 입력 가능 -->
+            <span id="dayTypeDisplay"></span>
+            <span class="status-label gray">한 날</span>
+            <span class="status-label" style="margin-left: 20px;">안 한 날</span> <!-- 더 많은 간격 -->
+
+            <!-- 페이지 선택 버튼 추가 -->
+            <div class="page-selector">
+                <button class="page-btn" data-page="1">Page 1</button>
+                <button class="page-btn" data-page="2">Page 2</button>
+                <button class="page-btn" data-page="3">Page 3</button>
+    </div>
+        </div>
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th>6</th>
+                    <th>7</th>
+                    <th>8</th>
+                    <th>9</th>
+                    <th>10</th>
+                    <th>11</th>
+                    <th>12</th>
+                </tr>
+            </thead>
+            <tbody id="calendar-body">
+                <!-- JavaScript로 동적으로 생성될 내용 -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 본문 끝에 쿠팡 파트너스 배너 추가 -->
+    <section class="banner-section">
+        <div id="coupang-banner">
+            <script src="https://ads-partners.coupang.com/g.js"></script>
+            <script>
+                new PartnersCoupang.G({"id":810614,"template":"carousel","trackingCode":"AF4453761","width":"100%","height":"auto","tsource":""});
+            </script>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Survival Office. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
