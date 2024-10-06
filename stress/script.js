@@ -78,12 +78,10 @@ function saveRecordToFirestore(date, nickname, count) {
         .get()
         .then((querySnapshot) => {
             if (!querySnapshot.empty) {
-                // 모든 업데이트 작업을 Promise 배열에 저장
                 const updatePromises = [];
                 querySnapshot.forEach((doc) => {
                     const existingRecord = doc.data();
                     if (count > existingRecord.count) {
-                        // 현재 클릭 수가 더 크면 업데이트
                         const updatePromise = db.collection('pressRecords').doc(doc.id).update({
                             count: count
                         });
@@ -91,7 +89,6 @@ function saveRecordToFirestore(date, nickname, count) {
                     }
                 });
 
-                // 모든 업데이트 작업이 완료되면 팝업 표시
                 if (updatePromises.length > 0) {
                     Promise.all(updatePromises)
                         .then(() => {
@@ -102,7 +99,6 @@ function saveRecordToFirestore(date, nickname, count) {
                         });
                 }
             } else {
-                // 동일한 닉네임과 날짜가 없을 경우 새로 추가
                 db.collection('pressRecords').add({
                     date: date,
                     nickname: nickname || 'Unknown',
@@ -118,10 +114,10 @@ function saveRecordToFirestore(date, nickname, count) {
         });
 }
 
-// Firestore에서 기록 불러오기 (중복 닉네임, 날짜는 최대 값으로 합쳐서 불러옴)
+// Firestore에서 기록 불러오기
 function displayRecordsFromFirestore() {
     db.collection('pressRecords').get().then((querySnapshot) => {
-        const recordMap = {}; // 닉네임-날짜를 키로 하고 최대 클릭 수를 저장할 객체
+        const recordMap = {};
         querySnapshot.forEach((doc) => {
             const record = doc.data();
             const date = new Date(record.date);
@@ -129,7 +125,6 @@ function displayRecordsFromFirestore() {
             const key = `${record.nickname}-${formattedDate}`;
 
             if (!recordMap[key] || record.count > recordMap[key].count) {
-                // 동일한 닉네임과 날짜가 없거나, 더 큰 값이 있으면 업데이트
                 recordMap[key] = {
                     nickname: record.nickname,
                     date: formattedDate,
@@ -138,7 +133,6 @@ function displayRecordsFromFirestore() {
             }
         });
 
-        // 기록을 화면에 표시
         recordListItems.innerHTML = '';
         Object.values(recordMap).sort((a, b) => b.count - a.count).slice(0, 10).forEach((record) => {
             recordListItems.innerHTML += `<li>${record.date} - ${record.nickname}: ${record.count}번</li>`;
@@ -153,13 +147,20 @@ function displayRecordsFromFirestore() {
 function resetDaily() {
     const today = new Date().toDateString();
     if (lastReset !== today) {
-        saveRecordToFirestore(lastReset, nickname, pressCount); // Firestore에 기록 저장
+        saveRecordToFirestore(lastReset, nickname, pressCount);
         pressCount = 0; // 클릭 수 초기화
         lastReset = today;
         localStorage.setItem('lastReset', lastReset);
         savePressCount();
         updateCounter();
     }
+}
+
+// 자정을 체크하는 함수
+function checkForMidnight() {
+    setInterval(() => {
+        resetDaily();
+    }, 60000); // 1분마다 resetDaily 함수 호출
 }
 
 // 버튼 클릭 시 클릭 수 증가
@@ -169,7 +170,7 @@ button.addEventListener('click', () => {
     updateCounter();
 });
 
-// 기록 보기 버튼 클릭 이벤트 처리: 토글 기능 추가
+// 기록 보기 버튼 클릭 이벤트 처리
 viewRecordsButton.addEventListener('click', () => {
     if (recordList.style.display === 'none' || recordList.style.display === '') {
         displayRecordsFromFirestore();
@@ -186,7 +187,7 @@ saveNicknameButton.addEventListener('click', saveNickname);
 // 수동으로 데이터 저장 버튼 클릭 시 Firestore에 데이터 저장
 saveDataButton.addEventListener('click', () => {
     const today = new Date().toDateString();
-    saveRecordToFirestore(today, nickname, pressCount); // 현재 날짜, 닉네임, 클릭 수 저장
+    saveRecordToFirestore(today, nickname, pressCount);
 });
 
 // 페이지 로딩 시 초기화
@@ -194,3 +195,4 @@ updateCounter();
 updateDate();
 loadNickname();
 resetDaily(); // 24시가 지났는지 확인하고 초기화
+checkForMidnight(); // 자정 체크 함수 호출
