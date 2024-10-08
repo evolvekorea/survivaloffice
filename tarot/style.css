@@ -1,0 +1,141 @@
+@font-face {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+body {
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+    display: flex;
+    flex-direction: column; /* 세로 방향 정렬 */
+    justify-content: space-between; /* 페이지 내용과 푸터 사이의 공간을 조정 */
+    align-items: center;
+    height: 100vh;
+    background-image: url('images/back.jpg');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1; /* 컨텐츠가 화면을 꽉 채우도록 설정 */
+}
+
+.fortune-button {
+    margin-top: 50px;
+}
+
+button {
+    font-size: 1.5rem;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #f0c808;
+    border: none;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+}
+
+.card-scroll {
+    display: none; /* 기본적으로 숨김 */
+    overflow-x: auto; /* 가로 스크롤을 허용 */
+    white-space: nowrap; /* 카드가 한 줄로 정렬됨 */
+    margin-top: 30px;
+    height: 200px;
+    justify-content: center; /* 카드들이 중앙에 배치되도록 설정 */
+}
+
+.card {
+    display: inline-block;
+    width: 100px;
+    height: 150px;
+    margin-right: 10px;
+    background-size: cover; /* 이미지가 깨지지 않게 맞춤 */
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.selected-card {
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.selected-card img {
+    width: 200px;
+    height: 300px;
+    border: 5px solid gold;
+}
+
+
+.fortune-description h2, .fortune-description p {
+    text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+    body {
+        background-size: 80%; /* 모바일에서는 이미지 크기를 줄임 */
+    }
+}
+
+
+footer {
+    background-color: #353535;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    position: relative; /* fixed에서 relative로 변경하여 문제 해결 */
+    bottom: 0;
+    box-sizing: border-box;
+}
+
+footer p {
+    margin: 0; /* 기본 여백 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    font-size: 16px; /* 글자 크기 명시 */
+    color: white; /* 글자 색상 명시 */
+    font-weight: normal;
+    box-sizing: border-box;
+}
+
+nav {
+    align-self: stretch; /* 네비게이션은 부모 요소의 너비에 맞추도록 설정 */
+    display: flex;
+    justify-content: flex-end; /* 네비게이션을 우측 정렬 */
+    background-color: #f4f4f4;
+    padding: 10px;
+}
+
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav ul li {
+    display: inline;
+  }
+  
+  nav ul li a {
+    color: rgb(62, 62, 62);
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif; /* 네비게이션 항목에도 폰트 적용 */
+    font-weight: normal;
+  }
+  
+  nav ul li a:hover {
+    background-color: #555;
+  }  
