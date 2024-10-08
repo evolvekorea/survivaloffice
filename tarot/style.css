@@ -15,7 +15,7 @@ body {
     height: 100vh;
     background-image: url('images/back.jpg');
     background-position: center;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     margin: 0;
 }
@@ -75,13 +75,27 @@ button {
 }
 
 
-.fortune-description h2, .fortune-description p {
+.fortune-description h2 {
     text-align: center;
+    color: #f6ff77; /* 글자색 */
+    background-color: rgba(0, 0, 0, 0.8); /* 글자 배경 */
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 2rem; /* 제목(h2)의 폰트 크기를 키움 */
+}
+
+.fortune-description p {
+    text-align: center;
+    color: #f6ff77;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1.2rem; /* 설명(p)의 폰트 크기를 키움 */
 }
 
 @media only screen and (max-width: 768px) {
     body {
-        background-size: 80%; /* 모바일에서는 이미지 크기를 줄임 */
+        background-size: cover; /* 모바일에서는 이미지 크기를 줄임 */
     }
 }
 
