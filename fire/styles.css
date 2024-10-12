@@ -137,15 +137,15 @@ button:hover {
     box-sizing: border-box;
 }
 
+/* 푸터 스타일 */
 footer {
     background-color: #353535;
     color: white;
     text-align: center;
     padding: 10px;
     width: 100%;
-    position: relative; /* fixed에서 relative로 변경하여 문제 해결 */
-    bottom: 0;
-    box-sizing: border-box;
+    position: relative; /* 푸터를 고정하지 않고, 페이지 내용과 함께 움직이게 변경 */
+    margin-top: auto; /* 푸터를 하단으로 고정 */
 }
 
 footer p {
