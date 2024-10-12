@@ -35,6 +35,8 @@ nav {
   nav ul li a:hover {
     background-color: #555;
   }  
+
+
   /* 기본 body 설정 */
   body {
     font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
@@ -43,6 +45,7 @@ nav {
     color: #333;
     display: flex;
     flex-direction: column;
+    min-height: 100vh; /* 최소 높이를 뷰포트 높이에 맞춤 */
 }
 
 /* Global Styles */
@@ -56,6 +59,7 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%; /* 페이지 전체 높이 사용 */
+    overflow-x: hidden; /* 좌우 스크롤 방지 */
 }
 
 /* 헤더 */
@@ -106,8 +110,8 @@ footer {
     text-align: center;
     padding: 10px;
     width: 100%;
+    margin-top: auto; /* 푸터가 하단으로 밀리게 설정 */
     position: relative; /* fixed에서 relative로 변경하여 문제 해결 */
-    bottom: 0;
 }
 
 .navigation-section {

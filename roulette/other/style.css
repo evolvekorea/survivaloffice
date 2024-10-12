@@ -52,6 +52,8 @@ body {
   color: #333;
   display: flex;
   flex-direction: column;
+  min-height: 100vh; /* 전체 화면 높이에 맞추도록 설정 */
+  margin: 0;
 }
 
 /* 룰렛 관련 스타일 */
@@ -156,8 +158,12 @@ color: white;
 text-align: center;
 padding: 10px;
 width: 100%;
+margin-top: auto; /* 푸터가 하단으로 밀리게 설정 */
 position: relative; /* fixed에서 relative로 변경하여 문제 해결 */
-bottom: 0;
+}
+
+main {
+flex-grow: 1; /* 본문 영역이 푸터 위쪽을 차지하도록 설정 */
 }
 
 /* 반응형 웹페이지 위한 미디어 쿼리 */

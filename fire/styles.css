@@ -55,6 +55,11 @@ body {
     align-items: center;
     overflow-x: hidden; /* 좌우 넘침 방지 */
     box-sizing: border-box;
+    min-height: 100vh; /* 뷰포트 높이(화면 전체 높이)를 최소 높이로 설정 */
+}
+
+main {
+    flex: 1; /* 본문 영역이 푸터 위에 자동으로 공간을 차지하게 함 */
 }
 
 h1 {
@@ -100,7 +105,7 @@ button {
     border-radius: 5px;
     cursor: pointer;
     margin: 10px;
-    display: inline-block;
+    display: block;
     white-space: nowrap; /* 줄바꿈 방지 */
     font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
     box-sizing: border-box;
@@ -146,6 +151,7 @@ footer {
     width: 100%;
     position: relative; /* 푸터를 고정하지 않고, 페이지 내용과 함께 움직이게 변경 */
     margin-top: auto; /* 푸터를 하단으로 고정 */
+    box-sizing: border-box;
 }
 
 footer p {
