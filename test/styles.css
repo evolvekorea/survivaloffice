@@ -1,0 +1,222 @@
+@font-face {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+}
+
+nav {
+    background-color: #f4f4f4;
+    padding: 10px;
+}
+  
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+}
+  
+nav ul li {
+    display: inline;
+}
+  
+nav ul li a {
+    color: rgb(62, 62, 62);
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+}
+  
+nav ul li a:hover {
+    background-color: #555;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* 페이지 전체 높이 사용 */
+}
+
+body {
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: #f4f4f4;
+    color: white;
+    padding: 0; /* 공백 제거 */
+    text-align: center;
+    position: relative;
+    margin-bottom: 0; /* 헤더와 본문 사이 여백 제거 */
+}
+
+header h1 {
+    margin-bottom: 10px;
+}
+
+header img {
+    width: 100%;
+    height: auto;
+    max-height: 500px; /* PC 기준 상단 배너 높이 */
+    object-fit: cover; /* 이미지 비율 유지하면서 전체 화면 채우기 */
+    margin-bottom: 0;
+}
+
+main {
+    padding: 0;
+    text-align: center;
+    flex-grow: 1;
+}
+
+section {
+    margin-top: 20px;
+}
+
+footer {
+    background-color: #353535;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+}
+
+/* 네비게이션 섹션을 플렉스 박스로 설정 */
+.navigation-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* 네비게이션 항목 스타일 */
+.nav-item {
+    background-color: #e0e0e0;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 0px;
+    flex: 1 1 auto;
+    min-width: 120px;
+    max-width: 250px;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+}
+
+.nav-item:hover {
+    background-color: #d3d3d3;
+    transform: scale(1.05);
+}
+
+/* 반응형 웹페이지 위한 미디어 쿼리 */
+/* 모바일 */
+@media (max-width: 600px) {
+    .nav-item {
+        width: auto; /* 모바일에서 버튼이 한 줄에 두 개씩 나오도록 설정 */
+        padding: 0px;
+    }
+
+    .blog-section {
+        width: 100%;
+    }
+}
+
+/* 태블릿 */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .nav-item {
+        width: 30%; /* 태블릿에서 버튼이 세 개씩 나오도록 설정 */
+    }
+}
+
+/* 데스크탑 */
+@media (min-width: 1025px) {
+    .nav-item {
+        width: 23%; /* 데스크탑에서 버튼이 네 개씩 나오도록 설정 */
+    }
+
+    /* 블로그 섹션을 가로로 나란히 배치 */
+    .blog-section {
+        width: 30%;
+        float: left;
+        margin: 20px;
+    }
+}
+
+/* 블로그 섹션 스타일 추가 */
+.blog-section {
+    margin-top: 50px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+#login-btn, #logout-btn {
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+#login-btn:hover, #logout-btn:hover {
+    background-color: #555;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input, textarea {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+.post {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.post h2 {
+    margin-top: 0;
+}

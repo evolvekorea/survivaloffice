@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Survival Office</title>
+    <meta property="og:title" content="Survival Office" />
+    <meta property="og:description" content="Survival Office는 직장인을 위한 유용한 정보와 웹 도구를 제공합니다." />
+    <meta property="og:url" content="https://www.survivaloffice.com/" />
+    <meta property="og:type" content="website" />
+
+    <!-- 검색 엔진용 키워드 추가 -->
+    <meta name="keywords" content="서울시 구내식당, 서울 구내식당 메뉴, 구내식당 정보, 광화문 구내식당, 구내식당 추천, 광화문구내식당, 
+    광화문 직원식당, 광화문직원식당, 직장인, 엑셀함수짜기, SAS쿼리짜기, SQL짜기, 서바이벌오피스"> 
+
+    <link rel="stylesheet" href="styles.css">
+    <meta name="naver-site-verification" content="8178bc04eb942dda668089047e1d5fb0ae7ba6ce" />
+    <meta name="google-adsense-account" content="ca-pub-4957586937754537">
+    
+    <!-- Open Graph Meta Tags for Social Media Sharing -->
+    <meta property="og:title" content="Survival Office" />
+    <meta property="og:description" content="근처 음식점, 구내식당 검색, 로또 번호 생성, 엑셀함수, SQL, SAS 쿼리 Bot 등 직장인을 위한 사이트" />
+    <meta property="og:url" content="https://www.survivaloffice.com/" />
+    <meta property="og:image" content="https://www.survivaloffice.com/images/head_image.jpg" />
+    <meta property="og:type" content="website" />
+    
+    <!-- 트위터 카드 메타 태그 -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Survival Office">
+    <meta name="twitter:description" content="직장인을 위한 유용한 정보와 도구들을 제공합니다.">
+    <meta name="twitter:image" content="https://www.survivaloffice.com/images/head_image.jpg">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-G4TPWGLYLY');
+    </script>
+
+</head>
+<body>
+
+    <!-- Firebase 모듈 -->
+    <script type="module">
+        // Firebase SDKs import
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+      
+        // Firebase 설정
+        const firebaseConfig = {
+          apiKey: "AIzaSyBU64Ad2ywQ2rTPFk4Do-PjApjLGXaiX3w",
+          authDomain: "survivaloffice-blog.firebaseapp.com",
+          projectId: "survivaloffice-blog",
+          storageBucket: "survivaloffice-blog.appspot.com",
+          messagingSenderId: "260169940492",
+          appId: "1:260169940492:web:00ffac5d2600658b85b829"
+        };
+      
+    // Firebase 초기화
+    const app = initializeApp(firebaseConfig);
+      
+      // Firestore와 Auth 초기화
+      const db = getFirestore(app);
+      const auth = getAuth(app);
+    
+      // Google 로그인
+      const provider = new GoogleAuthProvider();
+    
+      const loginBtn = document.getElementById('login-btn');
+      const logoutBtn = document.getElementById('logout-btn');
+      const postForm = document.getElementById('post-form');
+    
+      // 로그인 버튼 클릭 시 Google 로그인
+      loginBtn.addEventListener('click', () => {
+        signInWithPopup(auth, provider)
+          .then((result) => {
+            console.log('로그인 성공:', result.user);
+          })
+          .catch((error) => {
+            console.error('로그인 실패:', error);
+          });
+      });
+    
+      // 로그아웃 기능
+      logoutBtn.addEventListener('click', () => {
+        auth.signOut()
+          .then(() => {
+            console.log('로그아웃 성공');
+          })
+          .catch((error) => {
+            console.error('로그아웃 실패:', error);
+          });
+      });
+    </script>
+
+  <nav>
+      <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/tarot">tarot</a></li>
+          <li><a href="/todo">To-do</a></li>
+          <li><a href="/stress">Game</a></li>
+          <li><a href="/roulette">Roulette</a></li>
+          <li><a href="/fire">Lotto</a></li>
+      </ul>
+  </nav>
+    
+  <header>
+      <img src="images/head_image.jpg" alt="Office soldiers image">
+  </header>
+
+  <main>
+      <nav class="navigation-section" aria-label="Main navigation">
+          <div class="nav-item">
+              <a href="/tarot/">시바타로 - 오늘의운세</a> 
+          </div>
+          <div class="nav-item">
+              <a href="/todo/">To-do List</a> 
+          </div>
+          <div class="nav-item">
+              <a href="/stress/">스트레스 측정기</a> 
+          </div>
+          <div class="nav-item">
+              <a href="/roulette/">돌려 돌려 돌림판(음식)</a>
+          </div>
+          <div class="nav-item">
+              <a href="/fire/">로또 번호 생성기</a>
+          </div>
+      </nav>
+
+      <!-- 블로그 섹션 1 -->
+      <section class="blog-section" id="blogSection1">
+          <h2>블로그 섹션 1</h2>
+          <button id="login-btn">로그인</button>
+          <button id="logout-btn" style="display:none;">로그아웃</button>
+
+          <form id="post-form" style="display:none;">
+              <input type="text" id="title" placeholder="제목" required>
+              <textarea id="content" placeholder="내용" required></textarea>
+              <button type="submit">글 올리기</button>
+          </form>
+
+          <div id="blogSection1Posts"></div> <!-- ID 변경 -->
+      </section>
+
+      <!-- 블로그 섹션 2 -->
+      <section class="blog-section" id="blogSection2">
+          <h2>블로그 섹션 2</h2>
+          <div id="blogSection2Posts"></div> <!-- ID 변경 -->
+      </section>
+
+      <!-- 블로그 섹션 3 -->
+      <section class="blog-section" id="blogSection3">
+          <h2>블로그 섹션 3</h2>
+          <div id="blogSection3Posts"></div> <!-- ID 변경 -->
+      </section>
+  </main>
+
+  <footer>
+      <p>&copy; 2024 Survival Office. All rights reserved.</p>
+  </footer>
+
+  <script defer src="script.js"></script>
+</body>
+</html>
