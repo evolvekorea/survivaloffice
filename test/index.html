@@ -49,6 +49,8 @@
                 loginBtn.style.display = 'none';
                 logoutBtn.style.display = 'inline';
                 document.getElementById('login-status').innerText = `로그인 된 이메일: ${result.user.email}`;
+                // 로그인 후 글 작성 폼 보이기
+                document.getElementById('post-form').style.display = 'block';
             })
             .catch((error) => {
                 console.error('로그인 실패:', error);
@@ -58,6 +60,11 @@
         logoutBtn.addEventListener('click', () => {
             auth.signOut().then(() => {
                 console.log('로그아웃 성공');
+                loginBtn.style.display = 'inline';
+                logoutBtn.style.display = 'none';
+                document.getElementById('login-status').innerText = '';
+                // 로그아웃 후 글 작성 폼 숨기기
+                document.getElementById('post-form').style.display = 'none';
             }).catch((error) => {
                 console.error('로그아웃 실패:', error);
             });
@@ -89,6 +96,28 @@
             loadTopPosts('one', 'oneTopPosts');  // 블로그 섹션 1
             loadTopPosts('two', 'twoTopPosts');  // 블로그 섹션 2
             loadTopPosts('three', 'threeTopPosts');  // 블로그 섹션 3
+        });
+
+        // 글 작성 폼 제출 이벤트 처리
+        postForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+
+            db.collection('one').add({
+                title: title,
+                content: content,
+                likes: 0,  // 추천 수 필드 추가
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                author: auth.currentUser.email
+            }).then(() => {
+                alert('글이 성공적으로 작성되었습니다!');
+                postForm.reset();
+                loadTopPosts('one', 'oneTopPosts');  // 최신 글 목록 다시 불러오기
+            }).catch((error) => {
+                console.error('글 작성 오류:', error);
+            });
         });
     </script>   
 
@@ -154,6 +183,17 @@
 
       <hr> <!-- 네비게이션과 블로그 섹션 사이에 줄 추가 -->
       <div id="login-status" style="text-align: right; margin-bottom: 10px;"></div>
+      <div style="text-align: right;">
+          <button id="login-btn">로그인</button>
+          <button id="logout-btn" style="display:none;">로그아웃</button>
+      </div>
+
+      <!-- 글 작성 폼 추가 -->
+      <form id="post-form" style="display:none; margin-bottom: 20px;">
+          <input type="text" id="title" placeholder="제목" required>
+          <textarea id="content" placeholder="내용" required></textarea>
+          <button type="submit">글 올리기</button>
+      </form>
 
     <!-- 블로그 섹션별 추천 글 5개씩 표시 -->
     <section class="blog-section">
