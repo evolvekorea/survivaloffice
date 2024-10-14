@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>블로그 섹션 3</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Firebase와 Firestore를 연결하기 위한 스크립트 -->
+    <script defer src="script.js"></script>
+</head>
+<body>
+
+    <!-- 로그인 상태를 표시하는 부분 -->
+    <div id="login-status" style="text-align: right; margin-bottom: 10px;"></div>
+
+    <!-- 블로그 섹션 3 -->
+    <section>
+        <h2>블로그 섹션 3 (three)</h2>
+        <div style="text-align: right;">
+            <button id="login-btn">로그인</button>
+            <button id="logout-btn" style="display:none;">로그아웃</button>
+        </div>
+        <form id="post-form" style="display:none;">
+            <input type="text" id="title" placeholder="제목" required>
+            <textarea id="content" placeholder="내용" required></textarea>
+            <button type="submit">글 올리기</button>
+        </form>
+        <div id="posts"></div> <!-- Firestore에서 불러온 글을 여기에 표시 -->
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Survival Office. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

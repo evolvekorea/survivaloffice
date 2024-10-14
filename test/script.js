@@ -1,14 +1,39 @@
-// 페이지가 로드되었을 때 기본 UI 로드 확인
+// 페이지 로드 시 콘솔에 메시지 출력
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Survival Office 웹사이트가 로드되었습니다.");
+    
+    // 각 블로그 섹션의 추천순 상위 5개 글 불러오기
+    loadTopPosts('one', 'oneTopPosts');  // 블로그 섹션 1 (One)
+    loadTopPosts('two', 'twoTopPosts');  // 블로그 섹션 2 (Two)
+    loadTopPosts('three', 'threeTopPosts');  // 블로그 섹션 3 (Three)
 });
 
-// 블로그 섹션별 글 불러오기
+// Firestore에서 추천순으로 상위 5개의 글 불러오기
+function loadTopPosts(section, elementId) {
+    const postsDiv = document.getElementById(elementId);
+    postsDiv.innerHTML = '';
+
+    db.collection(section).orderBy('likes', 'desc').limit(5).get().then(snapshot => {
+        snapshot.forEach(doc => {
+            const post = doc.data();
+            postsDiv.innerHTML += `<div class="post">
+                <h3>${post.title}</h3>
+                <p>${post.content}</p>
+                <small>추천 수: ${post.likes}</small><br>
+                <small>작성자: ${post.author}</small><br>
+                <small>${post.timestamp?.toDate()}</small>
+            </div>`;
+        });
+    }).catch(error => {
+        console.error('Firestore 불러오기 오류:', error);
+    });
+}
+
+// Firestore에서 전체 글 불러오기
 function loadPosts(section, elementId) {
     const postsDiv = document.getElementById(elementId);
-    postsDiv.innerHTML = ''; // 이전 내용을 지움
+    postsDiv.innerHTML = '';
 
-    // Firestore에서 섹션별로 글 불러오기
     db.collection(section).orderBy('timestamp', 'desc').get().then(snapshot => {
         snapshot.forEach(doc => {
             const post = doc.data();
@@ -24,19 +49,17 @@ function loadPosts(section, elementId) {
     });
 }
 
-// 블로그 섹션 1의 글 불러오기
+// 섹션별로 전체 글을 불러오는 버튼 이벤트
 document.getElementById('blogSection1').addEventListener('click', () => {
-    loadPosts('blogSection1', 'blogSection1Posts');
+    loadPosts('one', 'blogSection1Posts');
 });
 
-// 블로그 섹션 2의 글 불러오기
 document.getElementById('blogSection2').addEventListener('click', () => {
-    loadPosts('blogSection2', 'blogSection2Posts');
+    loadPosts('two', 'blogSection2Posts');
 });
 
-// 블로그 섹션 3의 글 불러오기
 document.getElementById('blogSection3').addEventListener('click', () => {
-    loadPosts('blogSection3', 'blogSection3Posts');
+    loadPosts('three', 'blogSection3Posts');
 });
 
 // 글 작성 폼 처리
@@ -46,15 +69,14 @@ postForm.addEventListener('submit', function(e) {
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;
 
-    // Firestore에 현재 블로그 섹션에 글 저장
-    db.collection('blogSection1').add({
+    db.collection('one').add({
         title: title,
         content: content,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        author: auth.currentUser.email // 작성자 이메일 저장
+        author: auth.currentUser.email
     }).then(() => {
         alert('글이 성공적으로 작성되었습니다!');
         postForm.reset();
-        loadPosts('blogSection1'); // 새로 작성한 글을 반영하기 위해 다시 불러옴
+        loadPosts('one');  // 새로운 글을 반영하기 위해 다시 불러옴
     });
 });

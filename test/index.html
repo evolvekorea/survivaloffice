@@ -17,7 +17,81 @@
     <link rel="stylesheet" href="styles.css">
     <meta name="naver-site-verification" content="8178bc04eb942dda668089047e1d5fb0ae7ba6ce" />
     <meta name="google-adsense-account" content="ca-pub-4957586937754537">
-    
+
+    <!-- Firebase 모듈 -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+      
+        const firebaseConfig = {
+          apiKey: "AIzaSyBU64Ad2ywQ2rTPFk4Do-PjApjLGXaiX3w",
+          authDomain: "survivaloffice-blog.firebaseapp.com",
+          projectId: "survivaloffice-blog",
+          storageBucket: "survivaloffice-blog.appspot.com",
+          messagingSenderId: "260169940492",
+          appId: "1:260169940492:web:00ffac5d2600658b85b829"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        const loginBtn = document.getElementById('login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const postForm = document.getElementById('post-form');
+
+        loginBtn.addEventListener('click', () => {
+            signInWithPopup(auth, provider)
+            .then((result) => {
+                console.log('로그인 성공:', result.user);
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'inline';
+                document.getElementById('login-status').innerText = `로그인 된 이메일: ${result.user.email}`;
+            })
+            .catch((error) => {
+                console.error('로그인 실패:', error);
+            });
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            auth.signOut().then(() => {
+                console.log('로그아웃 성공');
+            }).catch((error) => {
+                console.error('로그아웃 실패:', error);
+            });
+        });
+
+        // Firestore에서 상위 5개의 추천 글 가져오기
+        function loadTopPosts(section, elementId) {
+            const postsDiv = document.getElementById(elementId);
+            postsDiv.innerHTML = '';
+
+            db.collection(section).orderBy('likes', 'desc').limit(5).get().then(snapshot => {
+                snapshot.forEach(doc => {
+                    const post = doc.data();
+                    postsDiv.innerHTML += `<div class="post">
+                        <h3>${post.title}</h3>
+                        <p>${post.content}</p>
+                        <small>추천 수: ${post.likes}</small><br>
+                        <small>작성자: ${post.author}</small><br>
+                        <small>${post.timestamp?.toDate()}</small>
+                    </div>`;
+                });
+            }).catch(error => {
+                console.error('Firestore 불러오기 오류:', error);
+            });
+        }
+
+        // 페이지 로드 시 상위 5개의 추천 글을 불러오기
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTopPosts('one', 'oneTopPosts');  // 블로그 섹션 1
+            loadTopPosts('two', 'twoTopPosts');  // 블로그 섹션 2
+            loadTopPosts('three', 'threeTopPosts');  // 블로그 섹션 3
+        });
+    </script>   
+
     <!-- Open Graph Meta Tags for Social Media Sharing -->
     <meta property="og:title" content="Survival Office" />
     <meta property="og:description" content="근처 음식점, 구내식당 검색, 로또 번호 생성, 엑셀함수, SQL, SAS 쿼리 Bot 등 직장인을 위한 사이트" />
@@ -41,61 +115,8 @@
     </script>
 
 </head>
-<body>
 
-    <!-- Firebase 모듈 -->
-    <script type="module">
-        // Firebase SDKs import
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-      
-        // Firebase 설정
-        const firebaseConfig = {
-          apiKey: "AIzaSyBU64Ad2ywQ2rTPFk4Do-PjApjLGXaiX3w",
-          authDomain: "survivaloffice-blog.firebaseapp.com",
-          projectId: "survivaloffice-blog",
-          storageBucket: "survivaloffice-blog.appspot.com",
-          messagingSenderId: "260169940492",
-          appId: "1:260169940492:web:00ffac5d2600658b85b829"
-        };
-      
-    // Firebase 초기화
-    const app = initializeApp(firebaseConfig);
-      
-      // Firestore와 Auth 초기화
-      const db = getFirestore(app);
-      const auth = getAuth(app);
-    
-      // Google 로그인
-      const provider = new GoogleAuthProvider();
-    
-      const loginBtn = document.getElementById('login-btn');
-      const logoutBtn = document.getElementById('logout-btn');
-      const postForm = document.getElementById('post-form');
-    
-      // 로그인 버튼 클릭 시 Google 로그인
-      loginBtn.addEventListener('click', () => {
-        signInWithPopup(auth, provider)
-          .then((result) => {
-            console.log('로그인 성공:', result.user);
-          })
-          .catch((error) => {
-            console.error('로그인 실패:', error);
-          });
-      });
-    
-      // 로그아웃 기능
-      logoutBtn.addEventListener('click', () => {
-        auth.signOut()
-          .then(() => {
-            console.log('로그아웃 성공');
-          })
-          .catch((error) => {
-            console.error('로그아웃 실패:', error);
-          });
-      });
-    </script>
+<body>
 
   <nav>
       <ul>
@@ -131,32 +152,24 @@
           </div>
       </nav>
 
-      <!-- 블로그 섹션 1 -->
-      <section class="blog-section" id="blogSection1">
-          <h2>블로그 섹션 1</h2>
-          <button id="login-btn">로그인</button>
-          <button id="logout-btn" style="display:none;">로그아웃</button>
+      <hr> <!-- 네비게이션과 블로그 섹션 사이에 줄 추가 -->
+      <div id="login-status" style="text-align: right; margin-bottom: 10px;"></div>
 
-          <form id="post-form" style="display:none;">
-              <input type="text" id="title" placeholder="제목" required>
-              <textarea id="content" placeholder="내용" required></textarea>
-              <button type="submit">글 올리기</button>
-          </form>
+    <!-- 블로그 섹션별 추천 글 5개씩 표시 -->
+    <section class="blog-section">
+        <h2>블로그 섹션 1 추천 글</h2>
+        <div id="oneTopPosts"></div>
+    </section>
 
-          <div id="blogSection1Posts"></div> <!-- ID 변경 -->
-      </section>
+    <section class="blog-section">
+        <h2>블로그 섹션 2 추천 글</h2>
+        <div id="twoTopPosts"></div>
+    </section>
 
-      <!-- 블로그 섹션 2 -->
-      <section class="blog-section" id="blogSection2">
-          <h2>블로그 섹션 2</h2>
-          <div id="blogSection2Posts"></div> <!-- ID 변경 -->
-      </section>
-
-      <!-- 블로그 섹션 3 -->
-      <section class="blog-section" id="blogSection3">
-          <h2>블로그 섹션 3</h2>
-          <div id="blogSection3Posts"></div> <!-- ID 변경 -->
-      </section>
+    <section class="blog-section">
+        <h2>블로그 섹션 3 추천 글</h2>
+        <div id="threeTopPosts"></div>
+    </section>
   </main>
 
   <footer>
