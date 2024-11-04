@@ -23,10 +23,13 @@ const dateDisplay = document.getElementById('dateDisplay');
 const saveDataButton = document.getElementById('saveDataButton');
 
 // 클릭 수, 닉네임 및 날짜 데이터 초기화
-let pressCount = parseInt(sessionStorage.getItem('pressCount')) || 0;
+let pressCount = 0; // 초기 클릭 수를 0으로 설정
 let lastReset = sessionStorage.getItem('lastReset') || new Date().toDateString();
 let nickname = localStorage.getItem('nickname') || '';
 let records = JSON.parse(localStorage.getItem('records')) || [];
+
+// 페이지가 로드될 때 클릭 수 초기화
+sessionStorage.removeItem('pressCount');
 
 // 클릭 수 업데이트
 function updateCounter() {
