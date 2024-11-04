@@ -14,6 +14,7 @@
         <h2>글 작성하기</h2>
         <input type="text" id="post-title" placeholder="제목"><br>
         <div id="editor-container" style="height: 200px;"></div><br>
+        <input type="file" id="image-upload" accept="image/*"><br><br>
         <button id="submit-post">게시글 작성</button>
     </div>
     <div id="posts-container"></div>
@@ -24,6 +25,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, getDocs, query, orderBy, deleteDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
 
         // Firebase 초기화
         const firebaseConfig = {
@@ -38,6 +40,7 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        const storage = getStorage(app);
 
         const provider = new GoogleAuthProvider();
         const loginButton = document.getElementById('login-btn');
@@ -45,6 +48,7 @@
         const writePostDiv = document.getElementById('write-post');
         const postsContainer = document.getElementById('posts-container');
         const submitPostButton = document.getElementById('submit-post');
+        const imageUploadInput = document.getElementById('image-upload');
 
         // Quill 에디터 초기화
         const quill = new Quill('#editor-container', {
@@ -89,36 +93,70 @@
                 logoutButton.style.display = 'none';
                 writePostDiv.style.display = 'none';
             }
-            // 글은 누구나 볼 수 있도록 로그인 여부와 관계없이 항상 불러옴
             loadPosts();
         });
 
-        // 게시글 작성 기능
+        // 이미지 업로드 및 게시글 작성 기능
         submitPostButton.addEventListener('click', async () => {
             const title = document.getElementById('post-title').value.trim();
             const content = quill.root.innerHTML.trim(); // Quill에서 작성한 HTML 내용 가져오기
             const author = auth.currentUser ? auth.currentUser.email : 'Anonymous';
             const timestamp = serverTimestamp();
 
-            if (title && content) {
+            // 이미지 파일이 선택된 경우 처리
+            if (imageUploadInput.files.length > 0) {
+                const file = imageUploadInput.files[0];
+                const storageRef = ref(storage, `images/${file.name}`);
+
                 try {
+                    // Firebase Storage에 이미지 업로드
+                    await uploadBytes(storageRef, file);
+                    // 업로드된 이미지의 다운로드 URL 가져오기
+                    const imageUrl = await getDownloadURL(storageRef);
+
+                    // Quill 에디터 내용에 이미지 추가
+                    quill.insertEmbed(quill.getLength(), 'image', imageUrl);
+
+                    // Firestore에 게시글 저장
                     await addDoc(collection(db, 'one'), {
                         author,
-                        content,
+                        content: quill.root.innerHTML,
                         likes: 0,
                         timestamp,
                         title
                     });
+
                     alert('게시글이 작성되었습니다.');
                     document.getElementById('post-title').value = '';
                     quill.root.innerHTML = ''; // 에디터 내용 비우기
+                    imageUploadInput.value = ''; // 이미지 선택 비우기
                     loadPosts();
                 } catch (error) {
-                    console.error('게시글 작성 오류:', error);
+                    console.error('이미지 업로드 및 게시글 작성 오류:', error);
                     alert(`게시글 작성 실패: ${error.message}`);
                 }
             } else {
-                alert('제목과 내용을 입력하세요.');
+                // 이미지가 없을 경우 게시글만 저장
+                if (title && content) {
+                    try {
+                        await addDoc(collection(db, 'one'), {
+                            author,
+                            content,
+                            likes: 0,
+                            timestamp,
+                            title
+                        });
+                        alert('게시글이 작성되었습니다.');
+                        document.getElementById('post-title').value = '';
+                        quill.root.innerHTML = ''; // 에디터 내용 비우기
+                        loadPosts();
+                    } catch (error) {
+                        console.error('게시글 작성 오류:', error);
+                        alert(`게시글 작성 실패: ${error.message}`);
+                    }
+                } else {
+                    alert('제목과 내용을 입력하세요.');
+                }
             }
         });
 
