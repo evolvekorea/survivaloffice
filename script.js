@@ -12,34 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTopPosts('three', 'threeTopPosts');  // 블로그 섹션 3 (Three)
 });
 
-// Firestore에서 추천순으로 상위 5개의 글 불러오기
-function loadTopPosts(section, elementId) {
-    const postsDiv = document.getElementById(elementId);
-    postsDiv.innerHTML = '';
-
-    db.collection(section).orderBy('likes', 'desc').limit(5).get()
-        .then(snapshot => {
-            if (snapshot.empty) {
-                console.log(`컬렉션 ${section}에 데이터가 없습니다.`);
-            } else {
-                snapshot.forEach(doc => {
-                    const post = doc.data();
-                    console.log(`불러온 데이터:`, post);
-                    postsDiv.innerHTML += `<div class="post">
-                        <h3>${post.title}</h3>
-                        <p>${post.content}</p>
-                        <small>추천 수: ${post.likes}</small><br>
-                        <small>작성자: ${post.author}</small><br>
-                        <small>${post.timestamp?.toDate()}</small>
-                    </div>`;
-                });
-            }
-        })
-        .catch(error => {
-            console.error('Firestore 불러오기 오류:', error);
-        });
-}
-
 // 전체보기 버튼 이벤트 리스너 추가
 document.getElementById('viewAllOne').addEventListener('click', () => {
     window.location.href = '/one';
