@@ -106,7 +106,7 @@
             // 이미지 파일이 선택된 경우 처리
             if (imageUploadInput.files.length > 0) {
                 const file = imageUploadInput.files[0];
-                const storageRef = ref(storage, `images/${file.name}`);
+                const storageRef = ref(storage, `one/${Date.now()}_${file.name}`); // 'one' 폴더에 고유한 이름으로 저장
 
                 try {
                     // Firebase Storage에 이미지 업로드
