@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SurvivalOffice 블로그형 게시판 - ONE</title>
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>블로그형 게시판 - ONE</h1>
@@ -18,13 +19,22 @@
         <button id="submit-post">게시글 작성</button>
     </div>
     <div id="posts-container"></div>
+    <div id="pagination-controls"></div>
+
+    <!-- 모달 창 구조 -->
+    <div id="post-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="modal-post-content"></div>
+        </div>
+    </div>
 
     <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
     <script type="module">
         // Firebase SDK 모듈 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy, deleteDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, startAfter, deleteDoc, doc, serverTimestamp, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
 
         // Firebase 초기화
@@ -49,6 +59,13 @@
         const postsContainer = document.getElementById('posts-container');
         const submitPostButton = document.getElementById('submit-post');
         const imageUploadInput = document.getElementById('image-upload');
+        const modal = document.getElementById('post-modal');
+        const modalContent = document.getElementById('modal-post-content');
+        const closeModalBtn = document.querySelector('.close-btn');
+        const paginationControls = document.getElementById('pagination-controls');
+
+        let lastVisible = null;
+        const POSTS_PER_PAGE = 5;
 
         // Quill 에디터 초기화
         const quill = new Quill('#editor-container', {
@@ -99,96 +116,84 @@
         // 이미지 업로드 및 게시글 작성 기능
         submitPostButton.addEventListener('click', async () => {
             const title = document.getElementById('post-title').value.trim();
-            const content = quill.root.innerHTML.trim(); // Quill에서 작성한 HTML 내용 가져오기
+            const content = quill.root.innerHTML.trim();
             const author = auth.currentUser ? auth.currentUser.email : 'Anonymous';
             const timestamp = serverTimestamp();
 
-            // 이미지 파일이 선택된 경우 처리
+            let imageUrl = '';
+
             if (imageUploadInput.files.length > 0) {
                 const file = imageUploadInput.files[0];
-                const storageRef = ref(storage, `one/${Date.now()}_${file.name}`); // 'one' 폴더에 고유한 이름으로 저장
+                const storageRef = ref(storage, `one/${Date.now()}_${file.name}`);
 
                 try {
-                    // Firebase Storage에 이미지 업로드
                     await uploadBytes(storageRef, file);
-                    // 업로드된 이미지의 다운로드 URL 가져오기
-                    const imageUrl = await getDownloadURL(storageRef);
+                    imageUrl = await getDownloadURL(storageRef);
+                } catch (error) {
+                    console.error('이미지 업로드 오류:', error);
+                    alert(`이미지 업로드 실패: ${error.message}`);
+                }
+            }
 
-                    // Quill 에디터 내용에 이미지 추가
-                    quill.insertEmbed(quill.getLength(), 'image', imageUrl);
-
-                    // Firestore에 게시글 저장
+            if (title && content) {
+                try {
                     await addDoc(collection(db, 'one'), {
                         author,
-                        content: quill.root.innerHTML,
+                        content,
                         likes: 0,
                         timestamp,
-                        title
+                        title,
+                        imageUrl,
+                        pinned: false
                     });
-
                     alert('게시글이 작성되었습니다.');
                     document.getElementById('post-title').value = '';
-                    quill.root.innerHTML = ''; // 에디터 내용 비우기
-                    imageUploadInput.value = ''; // 이미지 선택 비우기
+                    quill.root.innerHTML = '';
+                    imageUploadInput.value = '';
                     loadPosts();
                 } catch (error) {
-                    console.error('이미지 업로드 및 게시글 작성 오류:', error);
+                    console.error('게시글 작성 오류:', error);
                     alert(`게시글 작성 실패: ${error.message}`);
                 }
             } else {
-                // 이미지가 없을 경우 게시글만 저장
-                if (title && content) {
-                    try {
-                        await addDoc(collection(db, 'one'), {
-                            author,
-                            content,
-                            likes: 0,
-                            timestamp,
-                            title
-                        });
-                        alert('게시글이 작성되었습니다.');
-                        document.getElementById('post-title').value = '';
-                        quill.root.innerHTML = ''; // 에디터 내용 비우기
-                        loadPosts();
-                    } catch (error) {
-                        console.error('게시글 작성 오류:', error);
-                        alert(`게시글 작성 실패: ${error.message}`);
-                    }
-                } else {
-                    alert('제목과 내용을 입력하세요.');
-                }
+                alert('제목과 내용을 입력하세요.');
             }
         });
 
         // 게시글 불러오기 기능
         async function loadPosts() {
             postsContainer.innerHTML = '';
+            paginationControls.innerHTML = '';
             try {
-                const q = query(collection(db, 'one'), orderBy('timestamp', 'desc'));
-                const querySnapshot = await getDocs(q);
-                if (querySnapshot.empty) {
-                    console.log('불러올 게시글이 없습니다.');
-                    postsContainer.innerHTML = '<p>게시글이 없습니다.</p>';
-                } else {
-                    querySnapshot.forEach((doc) => {
-                        const post = doc.data();
-                        console.log('불러온 게시글:', post); // 데이터 확인용 콘솔 로그
-                        const postDiv = document.createElement('div');
-                        postDiv.classList.add('post');
+                const pinnedQuery = query(collection(db, 'one'), orderBy('timestamp', 'desc'));
+                const allQuery = query(collection(db, 'one'), orderBy('timestamp', 'desc'), limit(POSTS_PER_PAGE));
+                const pinnedSnapshot = await getDocs(pinnedQuery);
+                const allSnapshot = await getDocs(allQuery);
 
-                        let timestamp = '시간 정보 없음';
-                        if (post.timestamp && post.timestamp.toDate) {
-                            timestamp = post.timestamp.toDate().toLocaleString();
-                        }
+                let pinnedCount = 0;
 
-                        postDiv.innerHTML = `
-                            <h3>${post.title}</h3>
-                            <div>${post.content}</div>
-                            <small>작성자: ${post.author} | 좋아요: ${post.likes} | ${timestamp}</small>
-                            ${auth.currentUser && auth.currentUser.email === 'evolvekorea@gmail.com' ? `<button onclick="deletePost('${doc.id}')">삭제</button>` : ''}
-                        `;
-                        postsContainer.appendChild(postDiv);
-                    });
+                pinnedSnapshot.forEach((doc) => {
+                    const post = doc.data();
+                    if (post.pinned && pinnedCount < 3) {
+                        addPostToPage(doc.id, post, true);
+                        pinnedCount++;
+                    }
+                });
+
+                allSnapshot.forEach((doc) => {
+                    const post = doc.data();
+                    if (!post.pinned) {
+                        addPostToPage(doc.id, post, false);
+                    }
+                });
+
+                lastVisible = allSnapshot.docs[allSnapshot.docs.length - 1];
+
+                if (allSnapshot.docs.length === POSTS_PER_PAGE) {
+                    const nextPageButton = document.createElement('button');
+                    nextPageButton.textContent = '다음 페이지';
+                    nextPageButton.addEventListener('click', loadMorePosts);
+                    paginationControls.appendChild(nextPageButton);
                 }
             } catch (error) {
                 console.error('게시글 불러오기 오류:', error);
@@ -196,17 +201,107 @@
             }
         }
 
-        // 게시글 삭제 기능
-        window.deletePost = async function (postId) {
-            if (confirm('이 게시글을 삭제하시겠습니까?')) {
-                try {
-                    await deleteDoc(doc(db, 'one', postId));
-                    alert('게시글이 삭제되었습니다.');
-                    loadPosts();
-                } catch (error) {
-                    console.error('게시글 삭제 오류:', error);
-                    alert(`게시글 삭제 실패: ${error.message}`);
+        // 추가 게시글 불러오기 기능
+        async function loadMorePosts() {
+            try {
+                const nextQuery = query(collection(db, 'one'), orderBy('timestamp', 'desc'), startAfter(lastVisible), limit(POSTS_PER_PAGE));
+                const nextSnapshot = await getDocs(nextQuery);
+
+                nextSnapshot.forEach((doc) => {
+                    const post = doc.data();
+                    addPostToPage(doc.id, post, false);
+                });
+
+                lastVisible = nextSnapshot.docs[nextSnapshot.docs.length - 1];
+
+                if (nextSnapshot.docs.length < POSTS_PER_PAGE) {
+                    paginationControls.innerHTML = '';
                 }
+            } catch (error) {
+                console.error('추가 게시글 불러오기 오류:', error);
+                alert(`추가 게시글 불러오기 실패: ${error.message}`);
+            }
+        }
+
+        function addPostToPage(postId, post, isPinned) {
+            const postDiv = document.createElement('div');
+            postDiv.classList.add('post');
+
+            let timestamp = '시간 정보 없음';
+            if (post.timestamp && post.timestamp.toDate) {
+                timestamp = post.timestamp.toDate().toLocaleString();
+            }
+
+            const imageTag = post.imageUrl ? `<img src="${post.imageUrl}" alt="게시글 이미지" class="post-image">` : '';
+
+            postDiv.innerHTML = `
+                <div class="post-content">
+                    <div class="post-title" onclick="showModal('${postId}')">${post.title}</div>
+                    <div class="post-body" id="post-body-${postId}">${post.content.substring(0, 100)}...</div>
+                    <div class="post-meta">
+                        <small>작성자: ${post.author} | ${timestamp}</small>
+                        <button class="like-button" onclick="likePost('${postId}')">좋아요 (${post.likes})</button>
+                    </div>
+                </div>
+            `;
+            postsContainer.appendChild(postDiv);
+        }
+
+        async function likePost(postId) {
+            try {
+                const postRef = doc(db, 'one', postId);
+                const postSnap = await getDoc(postRef);
+                if (postSnap.exists()) {
+                    const currentLikes = postSnap.data().likes || 0;
+                    const likedPosts = JSON.parse(localStorage.getItem('likedPosts')) || [];
+                    if (!likedPosts.includes(postId)) {
+                        await updateDoc(postRef, { likes: currentLikes + 1 });
+                        likedPosts.push(postId);
+                        localStorage.setItem('likedPosts', JSON.stringify(likedPosts));
+                        alert('추천했습니다.');
+                        loadPosts();
+                    } else {
+                        alert('이미 추천한 게시글입니다.');
+                    }
+                }
+            } catch (error) {
+                console.error('좋아요 기능 오류:', error);
+            }
+        }
+
+        window.showModal = async function (postId) {
+            try {
+                const postRef = doc(db, 'one', postId);
+                const postSnap = await getDoc(postRef);
+
+                if (postSnap.exists()) {
+                    const post = postSnap.data();
+                    let timestamp = '시간 정보 없음';
+                    if (post.timestamp && post.timestamp.toDate) {
+                        timestamp = post.timestamp.toDate().toLocaleString();
+                    }
+
+                    modalContent.innerHTML = `
+                        <h2>${post.title}</h2>
+                        ${post.imageUrl ? `<img src="${post.imageUrl}" alt="게시글 이미지" style="max-width: 100%; height: auto;">` : ''}
+                        <div>${post.content}</div>
+                        <small>작성자: ${post.author} | 좋아요: ${post.likes} | ${timestamp}</small>
+                    `;
+                    modal.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('모달 열기 오류:', error);
+                alert(`게시글 불러오기 실패: ${error.message}`);
+            }
+        }
+
+        closeModalBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
             }
         }
     </script>
