@@ -23,8 +23,8 @@ const dateDisplay = document.getElementById('dateDisplay');
 const saveDataButton = document.getElementById('saveDataButton');
 
 // 클릭 수, 닉네임 및 날짜 데이터 초기화
-let pressCount = parseInt(localStorage.getItem('pressCount')) || 0;
-let lastReset = localStorage.getItem('lastReset') || new Date().toDateString();
+let pressCount = parseInt(sessionStorage.getItem('pressCount')) || 0;
+let lastReset = sessionStorage.getItem('lastReset') || new Date().toDateString();
 let nickname = localStorage.getItem('nickname') || '';
 let records = JSON.parse(localStorage.getItem('records')) || [];
 
@@ -48,7 +48,7 @@ function updateDate() {
 
 // 클릭 수 저장
 function savePressCount() {
-    localStorage.setItem('pressCount', pressCount);
+    sessionStorage.setItem('pressCount', pressCount);
 }
 
 // 닉네임 저장
@@ -150,7 +150,7 @@ function resetDaily() {
         saveRecordToFirestore(lastReset, nickname, pressCount);
         pressCount = 0; // 클릭 수 초기화
         lastReset = today;
-        localStorage.setItem('lastReset', lastReset);
+        sessionStorage.setItem('lastReset', lastReset);
         savePressCount();
         updateCounter();
     }
