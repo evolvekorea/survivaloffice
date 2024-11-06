@@ -150,6 +150,9 @@ footer {
     transform: scale(1.05);
 }
 
+h3 a {
+    text-decoration: none; /* 링크 밑줄 제거 */
+}
 
 /* 반응형 웹페이지 위한 미디어 쿼리 */
 /* 모바일 */
