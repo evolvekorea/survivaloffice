@@ -3,158 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Survival Office</title>
-    <meta property="og:title" content="Survival Office" />
-    <meta property="og:description" content="Survival Office는 직장인을 위한 유용한 정보와 웹 도구를 제공합니다." />
-    <meta property="og:url" content="https://www.survivaloffice.com/" />
-    <meta property="og:type" content="website" />
-
-    <!-- 검색 엔진용 키워드 추가 -->
-    <meta name="keywords" content="서울시 구내식당, 서울 구내식당 메뉴, 구내식당 정보, 광화문 구내식당, 구내식당 추천, 광화문구내식당, 
-    광화문 직원식당, 광화문직원식당, 직장인, 엑셀함수짜기, SAS쿼리짜기, SQL짜기, 서바이벌오피스"> 
-
     <link rel="stylesheet" href="styles.css">
-    <meta name="naver-site-verification" content="8178bc04eb942dda668089047e1d5fb0ae7ba6ce" />
-    <meta name="google-adsense-account" content="ca-pub-4957586937754537">
-
-    <!-- Firebase 모듈 -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-      
-        const firebaseConfig = {
-          apiKey: "AIzaSyBU64Ad2ywQ2rTPFk4Do-PjApjLGXaiX3w",
-          authDomain: "survivaloffice-blog.firebaseapp.com",
-          projectId: "survivaloffice-blog",
-          storageBucket: "survivaloffice-blog.appspot.com",
-          messagingSenderId: "260169940492",
-          appId: "1:260169940492:web:00ffac5d2600658b85b829"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-
-        // DOMContentLoaded 이후 이벤트 처리
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log("Firebase 앱 초기화됨:", app);
-            console.log("Firestore 데이터베이스 초기화됨:", db);
-
-            const loginBtn = document.getElementById('login-btn');
-            const logoutBtn = document.getElementById('logout-btn');
-            const postForm = document.getElementById('post-form');
-
-            loginBtn.addEventListener('click', () => {
-                signInWithPopup(auth, provider)
-                .then((result) => {
-                    console.log('로그인 성공:', result.user);
-                    loginBtn.style.display = 'none';
-                    logoutBtn.style.display = 'inline';
-                    document.getElementById('login-status').innerText = `로그인 된 이메일: ${result.user.email}`;
-                    // 로그인 후 글 작성 폼 보이기
-                    postForm.style.display = 'block';
-                })
-                .catch((error) => {
-                    console.error('로그인 실패:', error);
-                });
-            });
-
-            logoutBtn.addEventListener('click', () => {
-                auth.signOut().then(() => {
-                    console.log('로그아웃 성공');
-                    loginBtn.style.display = 'inline';
-                    logoutBtn.style.display = 'none';
-                    document.getElementById('login-status').innerText = '';
-                    // 로그아웃 후 글 작성 폼 숨기기
-                    postForm.style.display = 'none';
-                }).catch((error) => {
-                    console.error('로그아웃 실패:', error);
-                });
-            });
-
-            // Firestore에서 상위 5개의 추천 글 가져오기
-            async function loadTopPosts(section, elementId) {
-                const postsDiv = document.getElementById(elementId);
-                postsDiv.innerHTML = '';
-
-                try {
-                    const q = query(collection(db, section), orderBy('likes', 'desc'), limit(5));
-                    const querySnapshot = await getDocs(q);
-                    
-                    if (querySnapshot.empty) {
-                        console.log(`컬렉션 ${section}에 데이터가 없습니다.`);
-                    } else {
-                        querySnapshot.forEach(doc => {
-                            const post = doc.data();
-                            postsDiv.innerHTML += `<div class="post">
-                                <h3>${post.title}</h3>
-                                <p>${post.content}</p>
-                                <small>추천 수: ${post.likes}</small><br>
-                                <small>작성자: ${post.author}</small><br>
-                                <small>${post.timestamp ? post.timestamp.toDate() : ''}</small>
-                            </div>`;
-                        });
-                    }
-                } catch (error) {
-                    console.error('Firestore 불러오기 오류:', error);
-                }
-            }
-
-            // 페이지 로드 시 상위 5개의 추천 글을 불러오기
-            loadTopPosts('one', 'oneTopPosts');
-            loadTopPosts('two', 'twoTopPosts');
-            loadTopPosts('three', 'threeTopPosts');
-
-            // 글 작성 폼 제출 이벤트 처리
-            postForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-
-                const title = document.getElementById('title').value;
-                const content = document.getElementById('content').value;
-
-                try {
-                    await addDoc(collection(db, 'one'), {
-                        title: title,
-                        content: content,
-                        likes: 0,  // 추천 수 필드 추가
-                        timestamp: serverTimestamp(),
-                        author: auth.currentUser.email
-                    });
-                    alert('글이 성공적으로 작성되었습니다!');
-                    postForm.reset();
-                    loadTopPosts('one', 'oneTopPosts');  // 최신 글 목록 다시 불러오기
-                } catch (error) {
-                    console.error('글 작성 오류:', error);
-                }
-            });
-        });
-    </script>   
-
-    <!-- Open Graph Meta Tags for Social Media Sharing -->
-    <meta property="og:title" content="Survival Office" />
-    <meta property="og:description" content="근처 음식점, 구내식당 검색, 로또 번호 생성, 엑셀함수, SQL, SAS 쿼리 Bot 등 직장인을 위한 사이트" />
-    <meta property="og:url" content="https://www.survivaloffice.com/" />
-    <meta property="og:image" content="https://www.survivaloffice.com/images/head_image.jpg" />
-    <meta property="og:type" content="website" />
-    
-    <!-- 트위터 카드 메타 태그 -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Survival Office">
-    <meta name="twitter:description" content="직장인을 위한 유용한 정보와 도구들을 제공합니다.">
-    <meta name="twitter:image" content="https://www.survivaloffice.com/images/head_image.jpg">
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-G4TPWGLYLY');
-    </script>
-
 </head>
 
 <body>
@@ -175,54 +25,39 @@
   </header>
 
   <main>
-      <nav class="navigation-section" aria-label="Main navigation">
-          <div class="nav-item">
-              <a href="/tarot/">시바타로 - 오늘의운세</a> 
+      <section class="navigation-section" aria-label="Main navigation">
+          <div class="nav-category">
+              <h3>일</h3>
+              <div class="nav-item">
+                <a href="/tarot/">오늘의운세(타로)</a> 
+            </div>
+              <div class="nav-item">
+                  <a href="/todo/">To-do List</a> 
+              </div>
+              <div class="nav-item">
+                <a href="/stress/">스트레스 측정기</a> 
+            </div>
+            <div class="nav-item">
+                <a href="/roulette/">돌려 돌려 돌림판(음식)</a>
+            </div>
           </div>
-          <div class="nav-item">
-              <a href="/todo/">To-do List</a> 
-          </div>
-          <div class="nav-item">
-              <a href="/stress/">스트레스 측정기</a> 
-          </div>
-          <div class="nav-item">
-              <a href="/roulette/">돌려 돌려 돌림판(음식)</a>
-          </div>
-          <div class="nav-item">
-              <a href="/fire/">로또 번호 생성기</a>
-          </div>
-      </nav>
+          <div class="nav-category">
+              <h3>휴식</h3>
 
-      <hr>
 
-    <!-- 블로그 섹션별 추천 글 5개씩 표시 -->
-    <section class="blog-section">
-        <div class="blog-header">
-            <h2>블로그 섹션 1 추천 글</h2>
+          </div>
+          <div class="nav-category">
+              <h3>그 외</h3>
+              <div class="nav-item">
+                  <a href="/fire/">로또 번호 생성기</a>
+              </div>
+          </div>
+    <!-- 자유게시판 추천 글 10개씩 표시 -->
+          <div class="nav-category">
+            <h3>자유게시판</h3>
             <button class="view-all-btn" id="viewAllOne">전체보기</button>
         </div>
-        <div id="oneTopPosts"></div>
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                loadTopPosts('one', 'oneTopPosts'); // Firestore의 'one' 컬렉션에서 상위 5개 글 불러오기
-            });
-        </script>
-    </section>
-    
-    <section class="blog-section">
-        <div class="blog-header">
-            <h2>블로그 섹션 2 추천 글</h2>
-            <button class="view-all-btn" id="viewAllTwo">전체보기</button>
-        </div>
-        <div id="twoTopPosts"></div>
-    </section>
-    <section class="blog-section">
-        <div class="blog-header">
-            <h2>블로그 섹션 3 추천 글</h2>
-            <button class="view-all-btn" id="viewAllThree">전체보기</button>
-        </div>
-        <div id="threeTopPosts"></div>
-    </section>
+      </section>
   </main>
 
   <footer>
