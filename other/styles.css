@@ -187,3 +187,25 @@ h3 a {
     max-width: 100%; /* 부모 요소보다 커지지 않도록 설정 */
     border-radius: 5px; /* 선택 사항: 이미지에 둥근 모서리 적용 */
 }
+
+/* PC에서만 Flexbox 적용 */
+@media (min-width: 1025px) {
+    .navigation-section {
+        display: flex;
+        flex-wrap: wrap; /* 화면에 맞춰 줄바꿈 허용 */
+        gap: 20px; /* 카드 간의 간격 설정 */
+        justify-content: space-around; /* 각 카드가 동일한 공간을 차지 */
+    }
+
+    /* 각 nav-category의 너비를 30%로 설정하여 한 줄에 3개 표시 */
+    .nav-category {
+        flex: 1 1 30%; /* 너비를 30%로 설정 */
+        max-width: 30%;
+        margin: 0;
+        padding: 15px;
+        background-color: #fafafa;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+}
