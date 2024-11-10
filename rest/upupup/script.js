@@ -46,7 +46,7 @@ function createStair(step, lastGrid) {
 
 function setInitialPosition() {
     currentGrid = stairPositions[0].grid;
-    character.style.left = `${(currentGrid - 1) * 100 + 50}px`;
+    character.style.left = `${(currentGrid - 1) * 100 + 30}px`;
     character.style.bottom = '0px';
 }
 
@@ -74,7 +74,7 @@ function moveCharacter(direction) {
             character.style.bottom = `${5 * 60}px`; // 캐릭터 고정
         }
 
-        character.style.left = `${(currentGrid - 1) * 100 + 50}px`;
+        character.style.left = `${(currentGrid - 1) * 100 + 30}px`;
         increaseScore();
     } else {
         gameOver();
@@ -126,6 +126,8 @@ document.addEventListener('keydown', (event) => {
         moveCharacter('right');
     }
 });
+
+
 
 leftButton.addEventListener('click', () => moveCharacter('left'));
 rightButton.addEventListener('click', () => moveCharacter('right'));
