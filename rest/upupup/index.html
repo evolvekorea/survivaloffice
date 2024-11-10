@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>퇴사의 계단</title>
+    <title>탈출의 계단</title>
 
     <!-- 소셜 공유 시 깔끔한 미리보기 -->
     <meta property="og:title" content="탈출의 계단 게임" />
@@ -16,6 +16,12 @@
 </head>
 <body>
     <div id="game-container">
+        <!-- 시작 화면 -->
+        <div id="start-screen">
+            <button id="start-btn">Start</button>
+        </div>
+
+        <!-- 게임 화면 -->
         <div id="score">점수: <span id="score-value">0</span></div>
         <div id="timer">남은 시간: <span id="time">100</span>초</div>
         <div id="character"></div>
@@ -25,6 +31,7 @@
             <button id="right-btn">→</button>
         </div>
     </div>
+
     <script src="script.js" defer></script>
 </body>
 </html>

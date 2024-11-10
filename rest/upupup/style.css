@@ -12,27 +12,7 @@ body {
     background-color: #f0f0f0;
 }
 
-/* 초기 화면 스타일 */
-#start-screen {
-    width: 100%;
-    height: 100%;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#start-btn {
-    padding: 20px 40px;
-    font-size: 24px;
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-
+/* 게임 컨테이너 */
 #game-container {
     width: 400px;
     height: 600px;
@@ -42,6 +22,35 @@ body {
     overflow: hidden;
 }
 
+/* 시작 화면 */
+#start-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+#start-btn {
+    width: 200px;
+    height: 60px;
+    font-size: 24px;
+    background-color: #ffff00;
+    color: #1100ff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 점수 및 타이머 */
 #score {
     position: absolute;
     top: 10px;
@@ -60,6 +69,7 @@ body {
     font-weight: bold;
 }
 
+/* 캐릭터 스타일 */
 #character {
     width: 40px;
     height: 40px;
@@ -69,6 +79,7 @@ body {
     transition: all 0.2s;
 }
 
+/* 계단 컨테이너 */
 #stairs-container {
     position: absolute;
     width: 100%;
@@ -76,6 +87,7 @@ body {
     bottom: 0;
 }
 
+/* 계단 스타일 */
 .stair {
     width: 100px;
     height: 20px;
@@ -84,22 +96,23 @@ body {
     position: absolute;
 }
 
+/* 버튼 스타일 */
 #buttons {
     position: absolute;
     bottom: 20px;
     width: 100%;
     display: flex;
-    justify-content: center;
-    gap: 20px;
-    opacity: 0.8;
+    justify-content: space-between;
+    opacity: 0.2;
 }
 
 button {
     width: 80px;
     height: 50px;
     font-size: 18px;
-    background-color: #4caf50;
-    color: #fff;
+    background-color: #818181;
+    color: #ffffff;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
 }
