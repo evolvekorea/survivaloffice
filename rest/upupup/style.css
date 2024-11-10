@@ -33,7 +33,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 10;
+    z-index: 1000; /* z-index 값을 높여서 버튼이 최상단에 표시되도록 수정 */
 }
 
 #start-btn {

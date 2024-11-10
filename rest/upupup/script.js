@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function gameOver() {
         alert(`게임 오버! 최종 점수: ${score}`);
-        resetGame();
+        location.reload(); // 페이지 새로고침
     }
 
     function resetGame() {
