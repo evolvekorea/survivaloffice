@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const rightButton = document.getElementById('right-btn');
     const startScreen = document.getElementById('start-screen');
     const startBtn = document.getElementById('start-btn');
+    const background = document.getElementById('background');
+    const gameContainer = document.getElementById('game-container');
 
     let timeLeft = 100;
     let score = 0;
@@ -14,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentGrid = 2;
     let scrollPosition = 0;
     const gridWidth = 4;
-    const TOTAL_STAIRS = 100;
+    const TOTAL_STAIRS = 101;
     const stairPositions = [];
 
     // 게임 시작
@@ -23,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         createInitialStairs();
         setInitialPosition();
         setInterval(decreaseTime, 1000);
+        updateBackground(score);
     });
 
     // 키보드 입력 처리
@@ -36,6 +39,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     leftButton.addEventListener('click', () => moveCharacter('left'));
     rightButton.addEventListener('click', () => moveCharacter('right'));
+
+    // 배경 변경 함수
+    function updateBackground(score) {
+        if (score >= 1 && score <= 30) {
+            background.style.backgroundImage = "https://www.survivaloffice.com/images/UPA.jpg";
+        } else if (score >= 31 && score <= 70) {
+            background.style.backgroundImage = "https://www.survivaloffice.com/images/UPB.jpg";
+        } else if (score >= 71 && score <= 99) {
+            background.style.backgroundImage = "https://www.survivaloffice.com/images/UPC.jpg";
+        } else if (score === 100) {
+            background.style.backgroundImage = "https://www.survivaloffice.com/images/UPD.jpg";
+        }
+    }
 
     // 계단 생성
     function createInitialStairs() {
@@ -95,15 +111,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function increaseScore() {
         score++;
         scoreElement.textContent = score;
+        updateBackground(score);
         if (score % 10 === 0) {
             timeLeft += 1;
             timeElement.textContent = timeLeft;
 
-        // 시간 증가 효과
-        timeElement.style.color = '#4caf50'; // 텍스트 색상을 초록색으로 변경
-        setTimeout(() => {
-            timeElement.style.color = '#000'; // 원래 색상으로 복귀
-        }, 500);    
+            // 시간 증가 효과
+            timeElement.style.color = '#4caf50';
+            setTimeout(() => {
+                timeElement.style.color = '#000';
+            }, 500);
         }
     }
 
@@ -115,18 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function gameOver() {
         alert(`게임 오버! 최종 점수: ${score}`);
-        location.reload(); // 페이지 새로고침
-    }
-
-    function resetGame() {
-        startScreen.style.display = 'flex';
-        timeLeft = 100;
-        score = 0;
-        currentStep = 0;
-        currentGrid = 2;
-        scrollPosition = 0;
-        stairsContainer.style.transform = 'translateY(0px)';
-        stairPositions.length = 0;
-        stairsContainer.innerHTML = '';
+        location.reload();
     }
 });
