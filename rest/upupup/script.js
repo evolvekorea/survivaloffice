@@ -19,6 +19,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const TOTAL_STAIRS = 101;
     const stairPositions = [];
 
+// 미리 로드할 이미지 URL 목록
+const imageUrls = [
+    "https://www.survivaloffice.com/images/UPA.jpg",
+    "https://www.survivaloffice.com/images/UPB.jpg",
+    "https://www.survivaloffice.com/images/UPC.jpg",
+    "https://www.survivaloffice.com/images/UPD.jpg",
+    "https://www.survivaloffice.com/images/start.png"
+];
+
+// 이미지 미리 로드 함수
+function preloadImages(callback) {
+    let loadedImages = 0;
+
+    imageUrls.forEach((url) => {
+        const img = new Image();
+        img.src = url;
+        img.onload = () => {
+            loadedImages++;
+            // 모든 이미지가 로드된 경우 콜백 호출
+            if (loadedImages === imageUrls.length) {
+                callback();
+            }
+        };
+        img.onerror = () => {
+            loadedImages++;
+            if (loadedImages === imageUrls.length) {
+                callback();
+            }
+        };
+    });
+}
+
+// 게임 시작 준비
+preloadImages(() => {
+    // 모든 이미지 로드 완료 후 Start 버튼 활성화
+    document.getElementById('start-btn').disabled = false;
+});
+
     // 게임 시작
     startBtn.addEventListener('click', () => {
         startScreen.style.display = 'none';
