@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -43,10 +50,29 @@ body {
     background-image: url('https://www.survivaloffice.com/images/upmain.jpg'); /* 시작 화면 배경 이미지 */
     background-size: cover; /* 화면에 맞게 이미지 확대/축소 */
     background-position: center; /* 이미지를 화면 중앙에 배치 */
-    display: flex;
-    justify-content: center;
+    flex-direction: column;
+    display: flex; /* 수직 방향으로 정렬 */
+    justify-content: space-between;
     align-items: center;
+    padding-bottom: 50px;
     z-index: 10;
+}
+
+#start-title {
+    font-family: 'GangwonEduSaeeum_OTFMediumA', sans-serif; /* 폰트 적용 */
+    font-size: 50px; /* 제목 크기 */
+    color: #333333;  /* 제목 색상 */
+    text-align: center;
+    padding-top: 50px;
+    margin-top: 0;
+    animation: blink 1s step-start infinite; /* 깜박거리는 애니메이션 적용 */
+}
+
+/* 깜박거리는 애니메이션 */
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
 }
 
 #start-btn {
@@ -65,20 +91,22 @@ body {
 
 /* 점수 및 타이머 */
 #score {
+    font-family: 'GangwonEduSaeeum_OTFMediumA', sans-serif;
     position: absolute;
     top: 10px;
     left: 10px;
     color: #000;
-    font-size: 20px;
+    font-size: 30px;
     font-weight: bold;
 }
 
 #timer {
+    font-family: 'GangwonEduSaeeum_OTFMediumA', sans-serif;
     position: absolute;
     top: 10px;
     right: 10px;
     color: #000;
-    font-size: 20px;
+    font-size: 30px;
     font-weight: bold;
 }
 
@@ -112,7 +140,7 @@ body {
 /* 버튼 컨테이너 */
 #buttons {
     position: absolute;
-    bottom: 20px;
+    bottom: 80px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -122,8 +150,8 @@ body {
 /* 버튼 스타일 */
 button {
     width: 80px;
-    height: 50px;
-    font-size: 18px;
+    height: 80px;
+    font-size: 25px;
     background-color: #818181;
     color: #ffffff;
     border: none;
