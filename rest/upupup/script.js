@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const closeButton = document.querySelector('#result-popup button');
+    closeButton.addEventListener('click', closePopup);
     const stairsContainer = document.getElementById('stairs-container');
     const character = document.getElementById('character');
     const timeElement = document.getElementById('time');
@@ -19,45 +21,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const TOTAL_STAIRS = 101;
     const stairPositions = [];
 
-// 미리 로드할 이미지 URL 목록
-const imageUrls = [
-    "https://www.survivaloffice.com/images/UPA.jpg",
-    "https://www.survivaloffice.com/images/UPB.jpg",
-    "https://www.survivaloffice.com/images/UPC.jpg",
-    "https://www.survivaloffice.com/images/UPD.jpg",
-    "https://www.survivaloffice.com/images/start.png"
-];
+    // 미리 로드할 이미지 URL 목록
+    const imageUrls = [
+        "https://www.survivaloffice.com/images/UPA.jpg",
+        "https://www.survivaloffice.com/images/UPB.jpg",
+        "https://www.survivaloffice.com/images/UPC.jpg",
+        "https://www.survivaloffice.com/images/UPD.jpg",
+        "https://www.survivaloffice.com/images/start.png"
+    ];
 
-// 이미지 미리 로드 함수
-function preloadImages(callback) {
-    let loadedImages = 0;
+    // 이미지 미리 로드 함수
+    function preloadImages(callback) {
+        let loadedImages = 0;
 
-    imageUrls.forEach((url) => {
-        const img = new Image();
-        img.src = url;
-        img.onload = () => {
-            loadedImages++;
-            // 모든 이미지가 로드된 경우 콜백 호출
-            if (loadedImages === imageUrls.length) {
-                callback();
-            }
-        };
-        img.onerror = () => {
-            loadedImages++;
-            if (loadedImages === imageUrls.length) {
-                callback();
-            }
-        };
+        imageUrls.forEach((url) => {
+            const img = new Image();
+            img.src = url;
+            img.onload = () => {
+                loadedImages++;
+                if (loadedImages === imageUrls.length) {
+                    callback();
+                }
+            };
+            img.onerror = () => {
+                loadedImages++;
+                if (loadedImages === imageUrls.length) {
+                    callback();
+                }
+            };
+        });
+    }
+
+    // 게임 시작 준비
+    preloadImages(() => {
+        document.getElementById('start-btn').disabled = false;
     });
-}
 
-// 게임 시작 준비
-preloadImages(() => {
-    // 모든 이미지 로드 완료 후 Start 버튼 활성화
-    document.getElementById('start-btn').disabled = false;
-});
-
-    // 게임 시작
     startBtn.addEventListener('click', () => {
         startScreen.style.display = 'none';
         createInitialStairs();
@@ -66,7 +65,6 @@ preloadImages(() => {
         updateBackground(score);
     });
 
-    // 키보드 입력 처리
     window.addEventListener('keydown', (event) => {
         if (event.key === 'ArrowLeft') {
             moveCharacter('left');
@@ -78,7 +76,6 @@ preloadImages(() => {
     leftButton.addEventListener('click', () => moveCharacter('left'));
     rightButton.addEventListener('click', () => moveCharacter('right'));
 
-// 배경 변경 함수 (currentStep 기준)
     function updateBackground(currentStep) {
         if (currentStep >= 0 && currentStep <= 30) {
             background.style.backgroundImage = "url('https://www.survivaloffice.com/images/UPA.jpg')";
@@ -91,7 +88,6 @@ preloadImages(() => {
         }
     }
 
-    // 계단 생성
     function createInitialStairs() {
         let lastGrid = 2;
         for (let i = 0; i < TOTAL_STAIRS; i++) {
@@ -136,13 +132,14 @@ preloadImages(() => {
                 character.style.bottom = `${5 * 60}px`;
             }
             character.style.left = `${(currentGrid - 1) * 100 + 30}px`;
-        // 계단을 올라갈 때마다 배경 업데이트
-        updateBackground(currentStep);
-        increaseScore();
-    } else {
-        gameOver();
+
+            updateBackground(currentStep);
+            increaseScore();
+            checkIfGameFinished();
+        } else {
+            gameOver();
+        }
     }
-}
 
     function isOnStair(grid, step) {
         return stairPositions.some(pos => pos.step === step && pos.grid === grid);
@@ -151,12 +148,8 @@ preloadImages(() => {
     function increaseScore() {
         score++;
         scoreElement.textContent = score;
-        updateBackground(score);
         if (score % 10 === 0) {
             timeLeft += 1;
-            timeElement.textContent = timeLeft;
-
-            // 시간 증가 효과
             timeElement.style.color = '#4caf50';
             setTimeout(() => {
                 timeElement.style.color = '#000';
@@ -170,8 +163,31 @@ preloadImages(() => {
         timeElement.textContent = timeLeft;
     }
 
+    // 팝업 창을 표시하는 함수
+    function showPopup(message) {
+        const popup = document.getElementById('result-popup');
+        const resultMessage = document.getElementById('result-message');
+        resultMessage.innerHTML = `${message}<br>최종 점수: ${score}`; // 줄바꿈을 추가하여 메시지 표시
+        popup.style.display = 'block';
+    }
+
+    function closePopup() {
+        const popup = document.getElementById('result-popup');
+        popup.style.display = 'none';
+        window.location.reload(); // 즉시 새로고침
+    }
+
+    // 게임 종료 시 호출되는 함수 (예: 타임아웃 등)
     function gameOver() {
-        alert(`게임 오버! 최종 점수: ${score}`);
-        location.reload();
+        showPopup("게임 오버! 다시 도전하세요.");
+        clearInterval(timeInterval); // 타이머 정지
+    }
+
+    // 끝까지 올라갔을 때 메시지 표시
+    function checkIfGameFinished() {
+        if (currentStep >= 100) { // 게임의 최종 단계에 도달했을 때
+            showPopup("축하합니다. 자유입니다.");
+            clearInterval(timeInterval); // 타이머 정지
+        }
     }
 });

@@ -19,7 +19,6 @@ body {
     background-color: #f0f0f0;
 }
 
-/* 게임 컨테이너 */
 #game-container {
     position: relative;
     width: 400px;
@@ -28,7 +27,6 @@ body {
     overflow: hidden;
 }
 
-/* 배경 스타일 */
 #background {
     position: absolute;
     top: 0;
@@ -40,18 +38,17 @@ body {
     z-index: 0;
 }
 
-/* 시작 화면 */
 #start-screen {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('https://www.survivaloffice.com/images/upmain.jpg'); /* 시작 화면 배경 이미지 */
-    background-size: cover; /* 화면에 맞게 이미지 확대/축소 */
-    background-position: center; /* 이미지를 화면 중앙에 배치 */
+    background-image: url('https://www.survivaloffice.com/images/upmain.jpg');
+    background-size: cover;
+    background-position: center;
     flex-direction: column;
-    display: flex; /* 수직 방향으로 정렬 */
+    display: flex;
     justify-content: space-between;
     align-items: center;
     padding-bottom: 50px;
@@ -59,16 +56,15 @@ body {
 }
 
 #start-title {
-    font-family: 'GangwonEduSaeeum_OTFMediumA', sans-serif; /* 폰트 적용 */
-    font-size: 50px; /* 제목 크기 */
-    color: #333333;  /* 제목 색상 */
+    font-family: 'GangwonEduSaeeum_OTFMediumA', sans-serif;
+    font-size: 50px;
+    color: #333333;
     text-align: center;
     padding-top: 50px;
     margin-top: 0;
-    animation: blink 1s step-start infinite; /* 깜박거리는 애니메이션 적용 */
+    animation: blink 1s step-start infinite;
 }
 
-/* 깜박거리는 애니메이션 */
 @keyframes blink {
     50% {
         opacity: 0;
@@ -76,43 +72,39 @@ body {
 }
 
 #start-btn {
-    width: 150px; /* 이미지의 너비에 맞게 설정 */
-    height: auto; /* 높이를 자동으로 조정하여 비율 유지 */
+    width: 150px;
+    height: auto;
     cursor: pointer;
-    background: none; /* 배경 제거 */
-    border: none; /* 테두리 제거 */
-    display: inline-block; /* 버튼 크기를 이미지 크기에 맞춤 */
-    padding: 0; /* 기본 패딩 제거 */
-    margin: 0; /* 기본 마진 제거 */
+    background: none;
+    border: none;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
     position: absolute;
     bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
-    animation: blink 1s step-start infinite; /* 깜박거리는 애니메이션 적용 */
+    animation: blink 1s step-start infinite;
 }
 
-/* 점수 및 타이머 */
-#score {
+#score, #timer {
     font-family: 'GangwonEduSaeeum_OTFMediumA', sans-serif;
     position: absolute;
-    top: 10px;
-    left: 10px;
     color: #000;
     font-size: 30px;
     font-weight: bold;
+}
+
+#score {
+    top: 10px;
+    left: 10px;
 }
 
 #timer {
-    font-family: 'GangwonEduSaeeum_OTFMediumA', sans-serif;
-    position: absolute;
     top: 10px;
     right: 10px;
-    color: #000;
-    font-size: 30px;
-    font-weight: bold;
 }
 
-/* 캐릭터 스타일 */
 #character {
     width: 40px;
     height: 40px;
@@ -122,7 +114,6 @@ body {
     transition: all 0.2s;
 }
 
-/* 계단 컨테이너 */
 #stairs-container {
     position: absolute;
     width: 100%;
@@ -130,7 +121,6 @@ body {
     bottom: 0;
 }
 
-/* 계단 스타일 */
 .stair {
     width: 100px;
     height: 20px;
@@ -139,7 +129,6 @@ body {
     position: absolute;
 }
 
-/* 버튼 컨테이너 */
 #buttons {
     position: absolute;
     bottom: 80px;
@@ -149,7 +138,6 @@ body {
     opacity: 0.8;
 }
 
-/* 버튼 스타일 */
 button {
     width: 80px;
     height: 80px;
@@ -166,11 +154,52 @@ button:hover {
     opacity: 1;
 }
 
-/* 버튼 텍스트 */
 #left-btn {
     margin-left: 10px;
 }
 
 #right-btn {
     margin-right: 10px;
+}
+
+#result-popup {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    display: none;
+    position: absolute;
+    bottom: 20px; /* game-container 내에서 하단에 위치 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%; /* game-container 내부 크기에 맞게 설정 */
+    max-width: 300px; /* 최대 크기 제한 */
+    padding: 15px;
+    background-color: white;
+    border: 2px solid #333;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    z-index: 100;
+}
+
+#result-popup h2 {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+#result-popup p {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+#result-popup button {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    height: 30px; /* 원하는 높이 설정 */
+    padding: 4px 10px; /* 패딩을 줄여 버튼 크기 축소 */
+    font-size: 20px; /* 글자 크기 */
+    cursor: pointer;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
 }
