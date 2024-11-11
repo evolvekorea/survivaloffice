@@ -40,16 +40,16 @@ document.addEventListener('DOMContentLoaded', () => {
     leftButton.addEventListener('click', () => moveCharacter('left'));
     rightButton.addEventListener('click', () => moveCharacter('right'));
 
-    // 배경 변경 함수
-    function updateBackground(score) {
-        if (score >= 1 && score <= 30) {
-            background.style.backgroundImage = "https://www.survivaloffice.com/images/UPA.jpg";
-        } else if (score >= 31 && score <= 70) {
-            background.style.backgroundImage = "https://www.survivaloffice.com/images/UPB.jpg";
-        } else if (score >= 71 && score <= 99) {
-            background.style.backgroundImage = "https://www.survivaloffice.com/images/UPC.jpg";
-        } else if (score === 100) {
-            background.style.backgroundImage = "https://www.survivaloffice.com/images/UPD.jpg";
+// 배경 변경 함수 (currentStep 기준)
+    function updateBackground(currentStep) {
+        if (currentStep >= 0 && currentStep <= 30) {
+            background.style.backgroundImage = "url('https://www.survivaloffice.com/images/UPA.jpg')";
+        } else if (currentStep >= 31 && currentStep <= 70) {
+            background.style.backgroundImage = "url('https://www.survivaloffice.com/images/UPB.jpg')";
+        } else if (currentStep >= 71 && currentStep <= 99) {
+            background.style.backgroundImage = "url('https://www.survivaloffice.com/images/UPC.jpg')";
+        } else if (currentStep >= 100) {
+            background.style.backgroundImage = "url('https://www.survivaloffice.com/images/UPD.jpg')";
         }
     }
 
@@ -98,11 +98,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 character.style.bottom = `${5 * 60}px`;
             }
             character.style.left = `${(currentGrid - 1) * 100 + 30}px`;
-            increaseScore();
-        } else {
-            gameOver();
-        }
+        // 계단을 올라갈 때마다 배경 업데이트
+        updateBackground(currentStep);
+        increaseScore();
+    } else {
+        gameOver();
     }
+}
 
     function isOnStair(grid, step) {
         return stairPositions.some(pos => pos.step === step && pos.grid === grid);
