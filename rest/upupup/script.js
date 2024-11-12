@@ -120,8 +120,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function moveCharacter(direction) {
         const nextStep = currentStep + 1;
 
-        if (direction === 'left' && currentGrid > 1) currentGrid--;
-        else if (direction === 'right' && currentGrid < gridWidth) currentGrid++;
+        // 방향에 맞는 이미지 변경
+        if (direction === 'left' && currentGrid > 1) {
+            currentGrid--;
+            character.style.backgroundImage = "url('https://www.survivaloffice.com/images/left.png')";
+        } else if (direction === 'right' && currentGrid < gridWidth) {
+            currentGrid++;
+            character.style.backgroundImage = "url('https://www.survivaloffice.com/images/right.png')";
+        }
 
         if (isOnStair(currentGrid, nextStep)) {
             currentStep++;
@@ -179,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 게임 종료 시 호출되는 함수 (예: 타임아웃 등)
     function gameOver() {
+        character.style.backgroundImage = "url('https://www.survivaloffice.com/images/end.png')";    
         showPopup("게임 오버! 다시 도전하세요.");
         clearInterval(timeInterval); // 타이머 정지
     }
@@ -186,6 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 끝까지 올라갔을 때 메시지 표시
     function checkIfGameFinished() {
         if (currentStep >= 100) { // 게임의 최종 단계에 도달했을 때
+            character.style.backgroundImage = "url('https://www.survivaloffice.com/images/goal.png')";            
             showPopup("축하합니다. 자유입니다.");
             clearInterval(timeInterval); // 타이머 정지
         }
