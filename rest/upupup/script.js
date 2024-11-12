@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeButton = document.querySelector('#result-popup button');
     closeButton.addEventListener('click', closePopup);
     const stairsContainer = document.getElementById('stairs-container');
-    const character = document.getElementById('character');
+    const character = document.getElementById('character'); 
     const timeElement = document.getElementById('time');
     const scoreElement = document.getElementById('score-value');
     const leftButton = document.getElementById('left-btn');
@@ -27,7 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
         "https://www.survivaloffice.com/images/UPB.jpg",
         "https://www.survivaloffice.com/images/UPC.jpg",
         "https://www.survivaloffice.com/images/UPD.jpg",
-        "https://www.survivaloffice.com/images/start.png"
+        "https://www.survivaloffice.com/images/start.png",
+        "https://www.survivaloffice.com/images/left.png",
+        "https://www.survivaloffice.com/images/right.png",
+        "https://www.survivaloffice.com/images/end.png",
+        "https://www.survivaloffice.com/images/goal.png"
     ];
 
     // 이미지 미리 로드 함수
@@ -61,6 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
         startScreen.style.display = 'none';
         createInitialStairs();
         setInitialPosition();
+
+        // 이동 키를 누르기 전 기본 캐릭터 이미지 설정
+        character.style.backgroundImage = "url('https://www.survivaloffice.com/images/right.png')";
+
         setInterval(decreaseTime, 1000);
         updateBackground(score);
     });
@@ -90,12 +98,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createInitialStairs() {
         let lastGrid = 2;
+        stairPositions.length = 0; // 이전 데이터를 초기화
         for (let i = 0; i < TOTAL_STAIRS; i++) {
             createStair(i, lastGrid);
             lastGrid = currentGrid;
         }
+    
+        // 첫 번째 계단 위치 로그
+        console.log("First stair position - grid:", stairPositions[0].grid, "step:", stairPositions[0].step);
     }
-
     function createStair(step, lastGrid) {
         const stair = document.createElement('div');
         stair.classList.add('stair');
@@ -112,9 +123,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function setInitialPosition() {
-        currentGrid = stairPositions[0].grid;
+        const firstStair = stairPositions[0];
+        currentGrid = firstStair.grid;
+    
+        // 초기 위치 설정
         character.style.left = `${(currentGrid - 1) * 100 + 30}px`;
-        character.style.bottom = '0px';
+        character.style.bottom = `${firstStair.step * 60}px`;
+        character.style.display = 'block'; // 캐릭터 표시
+    
+        // 디버깅 로그
+        console.log("Initial Position - left:", character.style.left, "bottom:", character.style.bottom);
+    
+        // 계단 컨테이너의 스크롤 위치 초기화
+        stairsContainer.style.transform = 'translateY(0px)';
+        scrollPosition = 0;
     }
 
     function moveCharacter(direction) {

@@ -205,4 +205,6 @@ button:hover {
     background-size: cover;
     background-repeat: no-repeat;
     transition: all 0.3s;
+    display: block; /* 캐릭터가 항상 보이도록 설정 */
+    opacity: 1; /* 캐릭터가 투명하지 않도록 설정 */
 }
