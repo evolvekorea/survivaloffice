@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const gridWidth = 4;
     const TOTAL_STAIRS = 101;
     const stairPositions = [];
+    let timeInterval;
 
     // 미리 로드할 이미지 URL 목록
     const imageUrls = [
@@ -60,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     preloadImages(() => {
         document.getElementById('start-btn').disabled = false;
     });
-
+    
     startBtn.addEventListener('click', () => {
         startScreen.style.display = 'none';
         createInitialStairs();
@@ -69,7 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // 이동 키를 누르기 전 기본 캐릭터 이미지 설정
         character.style.backgroundImage = "url('https://www.survivaloffice.com/images/right.png')";
 
-        setInterval(decreaseTime, 1000);
+        // [수정] 타이머 시작 시 반환 값을 변수에 저장
+        timeInterval = setInterval(decreaseTime, 1000);
         updateBackground(score);
     });
 
@@ -199,10 +201,13 @@ document.addEventListener('DOMContentLoaded', () => {
         popup.style.display = 'block';
     }
 
+    // 닫기 버튼 클릭 시
+    document.getElementById('closePopupButton').addEventListener('click', closePopup);
+
     function closePopup() {
         const popup = document.getElementById('result-popup');
         popup.style.display = 'none';
-        window.location.reload(); // 즉시 새로고침
+        window.location.reload(); // 화면 새로고침
     }
 
     // 게임 종료 시 호출되는 함수 (예: 타임아웃 등)
@@ -220,4 +225,46 @@ document.addEventListener('DOMContentLoaded', () => {
             clearInterval(timeInterval); // 타이머 정지
         }
     }
+
+    // Firebase 설정 값
+    const firebaseConfig = {
+    apiKey: "AIzaSyCK4Zdkhlc0cnjqC3TpmUJmLAt8Xrh8VOw",
+    authDomain: "upupup-e4c2c.firebaseapp.com",
+    projectId: "upupup-e4c2c",
+    storageBucket: "upupup-e4c2c.appspot.app", 
+    messagingSenderId: "877963060151",
+    appId: "1:877963060151:web:e70751cb30638880767e32",
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Firestore에서 점수 저장 함수
+    function saveScore(nickname, score) {
+    const timestamp = firebase.firestore.FieldValue.serverTimestamp(); // 현재 서버 시간
+
+    // Firestore의 'scores' 컬렉션에 새로운 문서 추가
+    db.collection("scores").add({
+        nickname: nickname,  // 사용자 닉네임 (String)
+        score: Number(score), // 점수 (Number)
+        date: timestamp      // 등록 시간 (Timestamp)
+    }).then(() => {
+        alert("점수가 성공적으로 Firestore에 등록되었습니다!");
+    }).catch((error) => {
+        alert("Firestore에 점수 등록에 실패했습니다: " + error.message);
+    });
+    
+    // "점수 등록" 버튼 클릭 이벤트 수정
+    document.getElementById('saveScoreButton').addEventListener('click', (event) => {
+        event.preventDefault(); // 새로고침 방지
+
+        const nickname = document.getElementById('nicknameInput').value;
+        if (nickname.trim() === "") {
+            alert("닉네임을 입력해주세요.");
+            return;
+        }
+
+        saveScore(nickname, score);
+    });
+}
 });
