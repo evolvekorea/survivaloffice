@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
     apiKey: "AIzaSyCK4Zdkhlc0cnjqC3TpmUJmLAt8Xrh8VOw",
     authDomain: "upupup-e4c2c.firebaseapp.com",
     projectId: "upupup-e4c2c",
-    storageBucket: "upupup-e4c2c.appspot.app", 
+    storageBucket: "upupup-e4c2c.appspot.com", 
     messagingSenderId: "877963060151",
     appId: "1:877963060151:web:e70751cb30638880767e32",
     };
