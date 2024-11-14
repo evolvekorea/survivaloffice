@@ -237,34 +237,38 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Firebase 초기화
-    firebase.initializeApp(firebaseConfig);
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+
     const db = firebase.firestore();
 
     async function saveScore(nickname, score) {
         try {
-            // Firestore에서 'scores' 컬렉션에 문서 추가
+            console.log("Attempting to save score:", nickname, score);
             await db.collection("scores").add({
-                nickname: nickname,         // 사용자 닉네임
-                score: Number(score),       // 점수
-                date: firebase.firestore.FieldValue.serverTimestamp() // 서버 시간
+                nickname: nickname,
+                score: Number(score),
+                date: firebase.firestore.FieldValue.serverTimestamp()
             });
             alert("점수가 성공적으로 Firestore에 등록되었습니다!");
+            console.log("Data saved successfully.");
         } catch (error) {
             alert("Firestore에 점수 등록에 실패했습니다: " + error.message);
+            console.error("Firestore Error:", error);
         }
     }
     });
     
     // "점수 등록" 버튼 클릭 이벤트 수정
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('saveScoreButton').addEventListener('click', (event) => {
-            event.preventDefault();
-            const nickname = document.getElementById('nicknameInput').value;
-            if (nickname.trim() === "") {
-                alert("닉네임을 입력해주세요.");
-                return;
-            }
-            saveScore(nickname, score);
-        });
+    document.getElementById('saveScoreButton').addEventListener('click', (event) => {
+        event.preventDefault();
+        const nickname = document.getElementById('nicknameInput').value;
+        if (nickname.trim() === "") {
+            alert("닉네임을 입력해주세요.");
+            return;
+        }
+        saveScore(nickname, score);
     });
+
 
