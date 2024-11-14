@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const startBtn = document.getElementById('start-btn');
     const background = document.getElementById('background');
     const gameContainer = document.getElementById('game-container');
+    const app = window.firebaseApp;
+    const db = window.firebaseDB;
 
     let timeLeft = 100;
     let score = 0;
@@ -59,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 게임 시작 준비
     preloadImages(() => {
-        document.getElementById('start-btn').disabled = false;
+        startBtn.disabled = false;
     });
     
     startBtn.addEventListener('click', () => {
@@ -70,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 이동 키를 누르기 전 기본 캐릭터 이미지 설정
         character.style.backgroundImage = "url('https://www.survivaloffice.com/images/right.png')";
 
-        // [수정] 타이머 시작 시 반환 값을 변수에 저장
+        // 타이머 시작
         timeInterval = setInterval(decreaseTime, 1000);
         updateBackground(score);
     });
@@ -105,10 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
             createStair(i, lastGrid);
             lastGrid = currentGrid;
         }
-    
-        // 첫 번째 계단 위치 로그
-        console.log("First stair position - grid:", stairPositions[0].grid, "step:", stairPositions[0].step);
     }
+
     function createStair(step, lastGrid) {
         const stair = document.createElement('div');
         stair.classList.add('stair');
@@ -132,9 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
         character.style.left = `${(currentGrid - 1) * 100 + 30}px`;
         character.style.bottom = `${firstStair.step * 60}px`;
         character.style.display = 'block'; // 캐릭터 표시
-    
-        // 디버깅 로그
-        console.log("Initial Position - left:", character.style.left, "bottom:", character.style.bottom);
     
         // 계단 컨테이너의 스크롤 위치 초기화
         stairsContainer.style.transform = 'translateY(0px)';
@@ -193,74 +190,82 @@ document.addEventListener('DOMContentLoaded', () => {
         timeElement.textContent = timeLeft;
     }
 
-    // 팝업 창을 표시하는 함수
     function showPopup(message) {
         const popup = document.getElementById('result-popup');
         const resultMessage = document.getElementById('result-message');
-        resultMessage.innerHTML = `${message}<br>최종 점수: ${score}`; // 줄바꿈을 추가하여 메시지 표시
+        resultMessage.innerHTML = `${message}<br>최종 점수: ${score}`;
         popup.style.display = 'block';
     }
-
-    // 닫기 버튼 클릭 시
-    document.getElementById('closePopupButton').addEventListener('click', closePopup);
 
     function closePopup() {
         const popup = document.getElementById('result-popup');
         popup.style.display = 'none';
-        window.location.reload(); // 화면 새로고침
+        window.location.reload();
     }
 
-    // 게임 종료 시 호출되는 함수 (예: 타임아웃 등)
     function gameOver() {
         character.style.backgroundImage = "url('https://www.survivaloffice.com/images/end.png')";    
         showPopup("게임 오버! 다시 도전하세요.");
         clearInterval(timeInterval); // 타이머 정지
     }
 
-    // 끝까지 올라갔을 때 메시지 표시
     function checkIfGameFinished() {
-        if (currentStep >= 100) { // 게임의 최종 단계에 도달했을 때
+        if (currentStep >= 100) {
             character.style.backgroundImage = "url('https://www.survivaloffice.com/images/goal.png')";            
             showPopup("축하합니다. 자유입니다.");
             clearInterval(timeInterval); // 타이머 정지
         }
     }
 
-    // Firebase 설정 값
-    const firebaseConfig = {
-    apiKey: "AIzaSyCK4Zdkhlc0cnjqC3TpmUJmLAt8Xrh8VOw",
-    authDomain: "upupup-e4c2c.firebaseapp.com",
-    projectId: "upupup-e4c2c",
-    storageBucket: "upupup-e4c2c.appspot.com", 
-    messagingSenderId: "877963060151",
-    appId: "1:877963060151:web:e70751cb30638880767e32",
-    };
+    function saveScore(nickname, score) {
+        const date = new Date().toISOString();
+        console.log("Attempting to save score:", nickname, score);
 
-    // Firebase 초기화
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
+        db.collection('scores')
+            .where('nickname', '==', nickname || 'Unknown')
+            .get()
+            .then((querySnapshot) => {
+                if (!querySnapshot.empty) {
+                    const updatePromises = [];
+                    querySnapshot.forEach((doc) => {
+                        const existingRecord = doc.data();
+                        if (score > existingRecord.score) {
+                            const updatePromise = db.collection('scores').doc(doc.id).update({
+                                score: score,
+                                date: date
+                            });
+                            updatePromises.push(updatePromise);
+                        }
+                    });
 
-    const db = firebase.firestore();
-
-    async function saveScore(nickname, score) {
-        try {
-            console.log("Attempting to save score:", nickname, score);
-            await db.collection("scores").add({
-                nickname: nickname,
-                score: Number(score),
-                date: firebase.firestore.FieldValue.serverTimestamp()
+                    if (updatePromises.length > 0) {
+                        Promise.all(updatePromises)
+                            .then(() => {
+                                alert('기록이 업데이트되었습니다.');
+                            })
+                            .catch((error) => {
+                                console.error("Error updating data: ", error);
+                            });
+                    } else {
+                        alert('기록이 업데이트되지 않았습니다. 기존 점수가 더 높습니다.');
+                    }
+                } else {
+                    db.collection('scores').add({
+                        nickname: nickname || 'Unknown',
+                        score: score,
+                        date: date
+                    }).then(() => {
+                        alert('점수가 성공적으로 저장되었습니다.');
+                    }).catch((error) => {
+                        console.error("Error saving data: ", error);
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error("Error checking existing records: ", error);
             });
-            alert("점수가 성공적으로 Firestore에 등록되었습니다!");
-            console.log("Data saved successfully.");
-        } catch (error) {
-            alert("Firestore에 점수 등록에 실패했습니다: " + error.message);
-            console.error("Firestore Error:", error);
-        }
     }
-    });
-    
-    // "점수 등록" 버튼 클릭 이벤트 수정
+
     document.getElementById('saveScoreButton').addEventListener('click', (event) => {
         event.preventDefault();
         const nickname = document.getElementById('nicknameInput').value;
@@ -270,5 +275,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         saveScore(nickname, score);
     });
-
-
+});

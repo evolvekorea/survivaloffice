@@ -14,8 +14,35 @@
     <meta property="og:type" content="website" />    
 
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:,">
 </head>
 <body>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCK4Zdkhlc0cnjqC3TpmUJmLAt8Xrh8VOw",
+        authDomain: "upupup-e4c2c.firebaseapp.com",
+        projectId: "upupup-e4c2c",
+        storageBucket: "upupup-e4c2c.appspot.com",
+        messagingSenderId: "877963060151",
+        appId: "1:877963060151:web:e70751cb30638880767e32"
+    };
+        // Firebase 초기화
+        const app = initializeApp(firebaseConfig);
+        console.log("Firebase 초기화 완료");
+
+        // Firestore 초기화
+        const db = getFirestore(app);
+        console.log("Firestore 초기화 완료");
+
+        // `firebase`와 Firestore 인스턴스를 전역 객체로 등록
+        window.firebaseApp = app;
+        window.firebaseDB = db;
+    </script>   
+
     <div id="game-container">
         <!-- 배경 요소 추가 -->
         <div id="background"></div>
@@ -46,10 +73,8 @@
         </div>
     </div>
     
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-    <script src="script.js" defer></script>
+<!-- Firebase SDK v8 사용 -->
+<script type="module" src="script.js" defer></script>
 </body>
 </html>
 
