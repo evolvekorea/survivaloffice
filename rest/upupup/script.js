@@ -15,6 +15,9 @@ import { getFirestore, collection, query, where, getDocs, addDoc, updateDoc, doc
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
+    // `db` 인스턴스 확인
+    console.log("Firestore DB 인스턴스 확인:", db);    
+
 document.addEventListener('DOMContentLoaded', () => {
     const closeButton = document.querySelector('#result-popup button');
     closeButton.addEventListener('click', closePopup);
@@ -38,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const TOTAL_STAIRS = 101;
     const stairPositions = [];
     let timeInterval;
+    let isGameOver = false;
 
     // 미리 로드할 이미지 URL 목록
     const imageUrls = [
@@ -154,6 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function moveCharacter(direction) {
+        if (isGameOver) return; // 게임 종료 시 이동 불가
+
         const nextStep = currentStep + 1;
 
         // 방향에 맞는 이미지 변경
@@ -215,10 +221,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function closePopup() {
         const popup = document.getElementById('result-popup');
         popup.style.display = 'none';
-        window.location.reload();
+        setTimeout(() => {
+            window.location.reload(); // 팝업이 닫힌 후 새로고침
+        }, 100); // 100ms 딜레이 후 새로고침
     }
 
     function gameOver() {
+        isGameOver = true; // 게임 종료 상태로 설정
         character.style.backgroundImage = "url('https://www.survivaloffice.com/images/end.png')";    
         showPopup("게임 오버! 다시 도전하세요.");
         clearInterval(timeInterval); // 타이머 정지
@@ -234,38 +243,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // saveScore 함수 (v9 모듈 방식)
     async function saveScore(nickname, score) {
-        const date = new Date().toISOString();
-        const scoresRef = collection(db, 'scores');
-        const q = query(scoresRef, where('nickname', '==', nickname || 'Unknown'));
+    console.log("Firestore에 점수 저장 시도:", nickname, score);
+    const now = new Date();
+    const kstOffset = 9 * 60 * 60 * 1000; // UTC+9 (밀리초)
+    const kstDate = new Date(now.getTime() + kstOffset);
+    const date = kstDate.toISOString().slice(0, 19).replace("T", " ");
 
-        try {
-            const querySnapshot = await getDocs(q);
-            if (!querySnapshot.empty) {
-                for (const document of querySnapshot.docs) {
-                    const existingRecord = document.data();
-                    if (score > existingRecord.score) {
-                        await updateDoc(doc(db, 'scores', document.id), {
-                            score: score,
-                            date: date
-                        });
-                        alert('기록이 업데이트되었습니다.');
-                    } else {
-                        alert('기록이 업데이트되지 않았습니다. 기존 점수가 더 높습니다.');
-                    }
+    const scoresRef = collection(db, 'scores');
+    const q = query(scoresRef, where('nickname', '==', nickname || 'Unknown'));
+
+    try {
+        console.log("쿼리 시작");
+        const querySnapshot = await getDocs(q);
+        console.log("쿼리 결과 개수:", querySnapshot.size); 
+
+        if (!querySnapshot.empty) {
+            console.log("기존 기록 발견, 업데이트 시도 중...");
+            for (const document of querySnapshot.docs) {
+                const existingRecord = document.data();
+                console.log("기존 기록:", existingRecord);
+
+                if (score > existingRecord.score) {
+                    await updateDoc(doc(db, 'scores', document.id), {
+                        score: score,
+                        date: date
+                    });
+                    alert('기록이 업데이트되었습니다.');
+                    console.log("기록 업데이트 성공");
+                    setTimeout(() => {
+                        window.location.reload(); // 업데이트 후 새로고침
+                    }, 100);
+                } else {
+                    alert('기록이 업데이트되지 않았습니다. 기존 점수가 더 높습니다.');
+                    console.log("기존 점수가 더 높음");
+                    setTimeout(() => {
+                        window.location.reload(); // 새로고침
+                    }, 100);
                 }
-            } else {
-                await addDoc(scoresRef, {
-                    nickname: nickname || 'Unknown',
-                    score: score,
-                    date: date
-                });
-                alert('점수가 성공적으로 저장되었습니다.');
             }
-        } catch (error) {
-            console.error("Error saving data: ", error);
-            alert('점수 저장 중 오류가 발생했습니다.');
+        } else {
+            console.log("기존 기록이 없음, 새로운 문서 추가 중...");
+            await addDoc(scoresRef, {
+                nickname: nickname || 'Unknown',
+                score: score,
+                date: date
+            });
+            alert('점수가 성공적으로 저장되었습니다.');
+            console.log("새로운 문서 추가 성공");
+                                setTimeout(() => {
+                        window.location.reload(); // 새로고침
+                    }, 100);
         }
+    } catch (error) {
+        console.error("Error adding data:", error);
+        alert('점수 저장 중 오류가 발생했습니다.');
     }
+}
 
     // 점수 저장 버튼 이벤트 리스너
     document.getElementById('saveScoreButton').addEventListener('click', async (event) => {
