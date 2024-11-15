@@ -221,9 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function closePopup() {
         const popup = document.getElementById('result-popup');
         popup.style.display = 'none';
-        setTimeout(() => {
-            window.location.reload(); // 팝업이 닫힌 후 새로고침
-        }, 100); // 100ms 딜레이 후 새로고침
     }
 
     function gameOver() {
