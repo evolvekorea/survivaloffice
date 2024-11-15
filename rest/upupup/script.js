@@ -1,3 +1,20 @@
+// 모듈 방식으로 Firebase와 Firestore 가져오기 (최상단에 위치)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getFirestore, collection, query, where, getDocs, addDoc, updateDoc, doc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+    // Firebase 초기화
+    const firebaseConfig = {
+        apiKey: "AIzaSyCK4Zdkhlc0cnjqC3TpmUJmLAt8Xrh8VOw",
+        authDomain: "upupup-e4c2c.firebaseapp.com",
+        projectId: "upupup-e4c2c",
+        storageBucket: "upupup-e4c2c.appspot.com",
+        messagingSenderId: "877963060151",
+        appId: "1:877963060151:web:e70751cb30638880767e32"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
 document.addEventListener('DOMContentLoaded', () => {
     const closeButton = document.querySelector('#result-popup button');
     closeButton.addEventListener('click', closePopup);
@@ -11,8 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const startBtn = document.getElementById('start-btn');
     const background = document.getElementById('background');
     const gameContainer = document.getElementById('game-container');
-    const app = window.firebaseApp;
-    const db = window.firebaseDB;
 
     let timeLeft = 100;
     let score = 0;
@@ -217,62 +232,49 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function saveScore(nickname, score) {
+// saveScore 함수 (v9 모듈 방식)
+    async function saveScore(nickname, score) {
         const date = new Date().toISOString();
-        console.log("Attempting to save score:", nickname, score);
+        const scoresRef = collection(db, 'scores');
+        const q = query(scoresRef, where('nickname', '==', nickname || 'Unknown'));
 
-        db.collection('scores')
-            .where('nickname', '==', nickname || 'Unknown')
-            .get()
-            .then((querySnapshot) => {
-                if (!querySnapshot.empty) {
-                    const updatePromises = [];
-                    querySnapshot.forEach((doc) => {
-                        const existingRecord = doc.data();
-                        if (score > existingRecord.score) {
-                            const updatePromise = db.collection('scores').doc(doc.id).update({
-                                score: score,
-                                date: date
-                            });
-                            updatePromises.push(updatePromise);
-                        }
-                    });
-
-                    if (updatePromises.length > 0) {
-                        Promise.all(updatePromises)
-                            .then(() => {
-                                alert('기록이 업데이트되었습니다.');
-                            })
-                            .catch((error) => {
-                                console.error("Error updating data: ", error);
-                            });
+        try {
+            const querySnapshot = await getDocs(q);
+            if (!querySnapshot.empty) {
+                for (const document of querySnapshot.docs) {
+                    const existingRecord = document.data();
+                    if (score > existingRecord.score) {
+                        await updateDoc(doc(db, 'scores', document.id), {
+                            score: score,
+                            date: date
+                        });
+                        alert('기록이 업데이트되었습니다.');
                     } else {
                         alert('기록이 업데이트되지 않았습니다. 기존 점수가 더 높습니다.');
                     }
-                } else {
-                    db.collection('scores').add({
-                        nickname: nickname || 'Unknown',
-                        score: score,
-                        date: date
-                    }).then(() => {
-                        alert('점수가 성공적으로 저장되었습니다.');
-                    }).catch((error) => {
-                        console.error("Error saving data: ", error);
-                    });
                 }
-            })
-            .catch((error) => {
-                console.error("Error checking existing records: ", error);
-            });
+            } else {
+                await addDoc(scoresRef, {
+                    nickname: nickname || 'Unknown',
+                    score: score,
+                    date: date
+                });
+                alert('점수가 성공적으로 저장되었습니다.');
+            }
+        } catch (error) {
+            console.error("Error saving data: ", error);
+            alert('점수 저장 중 오류가 발생했습니다.');
+        }
     }
 
-    document.getElementById('saveScoreButton').addEventListener('click', (event) => {
+    // 점수 저장 버튼 이벤트 리스너
+    document.getElementById('saveScoreButton').addEventListener('click', async (event) => {
         event.preventDefault();
         const nickname = document.getElementById('nicknameInput').value;
         if (nickname.trim() === "") {
             alert("닉네임을 입력해주세요.");
             return;
         }
-        saveScore(nickname, score);
+        await saveScore(nickname, score);
     });
 });
