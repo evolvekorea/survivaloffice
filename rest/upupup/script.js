@@ -19,8 +19,7 @@ import { getFirestore, collection, query, where, getDocs, addDoc, updateDoc, doc
     console.log("Firestore DB 인스턴스 확인:", db);    
 
 document.addEventListener('DOMContentLoaded', () => {
-    const closeButton = document.querySelector('#result-popup button');
-    closeButton.addEventListener('click', closePopup);
+    const closeButton = document.querySelector('closePopupButton');
     const stairsContainer = document.getElementById('stairs-container');
     const character = document.getElementById('character'); 
     const timeElement = document.getElementById('time');
@@ -296,6 +295,15 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('점수 저장 중 오류가 발생했습니다.');
     }
 }
+    // 닫기 버튼이 존재할 경우에만 이벤트 리스너 등록
+    if (closePopupButton) {
+        closePopupButton.addEventListener('click', () => {
+            console.log("닫기 버튼 클릭됨, 새로고침 수행");
+            window.location.reload();
+        });
+    } else {
+        console.error("closePopupButton 요소를 찾을 수 없습니다.");
+    }
 
     // 점수 저장 버튼 이벤트 리스너
     document.getElementById('saveScoreButton').addEventListener('click', async (event) => {
