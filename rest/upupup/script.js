@@ -1,6 +1,6 @@
 // 모듈 방식으로 Firebase와 Firestore 가져오기 (최상단에 위치)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getFirestore, collection, query, where, getDocs, addDoc, updateDoc, doc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import { getFirestore, collection, query, where, getDocs, addDoc, updateDoc, doc, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
     // Firebase 초기화
     const firebaseConfig = {
@@ -30,7 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const startBtn = document.getElementById('start-btn');
     const background = document.getElementById('background');
     const gameContainer = document.getElementById('game-container');
-
+    
+    const rankingList = document.getElementById('ranking-list');
+    if (rankingList) {
+        rankingList.style.display = 'block';
+        rankingList.style.flexDirection = 'column'; // Flex 속성 제거
+    }
+ 
+    
     let timeLeft = 100;
     let score = 0;
     let currentStep = 0;
@@ -315,4 +322,95 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         await saveScore(nickname, score);
     });
-});
+    // 랭킹 보기 버튼 클릭 시
+    const top10RankButton = document.getElementById('top10-rank');
+    const rankingContainer = document.getElementById('ranking-container');
+
+    if (top10RankButton && rankingContainer) {
+    top10RankButton.addEventListener('click', () => {
+        console.log("랭킹 보기 버튼 클릭됨");
+        rankingContainer.style.display = 'block'; // 랭킹 컨테이너 표시
+        loadTop10Rankings(); // 랭킹 데이터 로드
+    });
+    } else {
+        console.error("top10-rank 버튼 또는 ranking-container 요소를 찾을 수 없습니다.");
+    }
+
+    // Firestore에서 Top 10 랭킹 데이터 가져오기
+    async function loadTop10Rankings() {
+        const scoresRef = collection(db, 'scores');
+        const q = query(scoresRef, orderBy('score', 'desc'), orderBy('date', 'desc'), limit(10));
+
+        try {
+            const querySnapshot = await getDocs(q);
+            let rankingsHTML = '<h2>Top 10 랭킹</h2>';
+            let rank = 1;
+
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const nickname = data.nickname || 'Unknown';
+                const score = data.score;
+            
+                let formattedDate;
+            
+                // date 필드가 타임스탬프 형식인지, 문자열 형식인지 확인
+                if (data.date && typeof data.date.toDate === 'function') {
+                    // Firestore 타임스탬프 형식인 경우
+                    const dateObj = data.date.toDate();
+                    const year = dateObj.getFullYear();
+                    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                    const day = String(dateObj.getDate()).padStart(2, '0');
+                    formattedDate = `${year}-${month}-${day}`;
+                } else if (typeof data.date === 'string') {
+                    // 문자열 형식인 경우
+                    formattedDate = data.date.slice(0, 10); // "YYYY-MM-DD" 형식 추출
+                } else {
+                    formattedDate = 'Invalid Date';
+                }
+
+                // 순위에 따른 이모지 및 클래스 추가
+                let rankClass = '';
+                let medalEmoji = '';
+
+                if (rank === 1) {
+                    rankClass = 'first-place';
+                    medalEmoji = '🥇'; // 금메달
+                } else if (rank === 2) {
+                    rankClass = 'second-place';
+                    medalEmoji = '🥈'; // 은메달
+                } else if (rank === 3) {
+                    rankClass = 'third-place';
+                    medalEmoji = '🥉'; // 동메달
+                }  
+
+                // 리스트 아이템 생성
+                rankingsHTML += `
+                <li class="ranking-item ${rankClass}">
+                    ${medalEmoji} ${rank}위 - ${nickname}, ${score}점 <span class="date">${formattedDate}</span>
+                </li>
+                `;
+                rank++;
+            });
+
+            rankingContainer.innerHTML = rankingsHTML;
+
+            // 순차적으로 나타나는 애니메이션
+            const rankingItems = document.querySelectorAll('.ranking-item');
+            rankingItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.style.opacity = 1;
+                item.style.transform = 'translateY(0)';
+            }, index * 300); // 0.2초 간격으로 나타남
+        });
+
+        } catch (error) {
+            console.error('Firestore에서 랭킹 데이터를 가져오는 중 오류 발생:', error);
+            rankingContainer.innerHTML = '<p>랭킹 데이터를 불러오지 못했습니다.</p>';
+        }
+    }
+
+    // 랭킹 컨테이너 클릭 시 닫기
+    rankingContainer.addEventListener('click', () => {
+        rankingContainer.style.display = 'none';
+    });
+ });

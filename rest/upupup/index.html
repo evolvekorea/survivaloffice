@@ -25,6 +25,9 @@
         <div id="start-screen">
             <h1 id="start-title">탈 출 의 계 단</h1>
             <img id="start-btn" src="https://www.survivaloffice.com/images/start.png">
+            <button id="top10-rank">랭킹 보기</button>
+            <div id="ranking-container" style="display: none;"></div>
+
         </div>
 
         <!-- 게임 화면 -->
@@ -45,6 +48,13 @@
             <button id="saveScoreButton" type="button">점수 등록</button>
             <button id="closePopupButton" type="button">다시 하기</button>
         </div>
+
+        <!-- 랭킹 컨테이너 -->
+        <div id="ranking-container" class="ranking-popup">
+            <h2>Top 10 랭킹</h2>
+            <div id="ranking-list"></div>
+        </div>
+
     </div>
     
 <script type="module" src="script.js" defer></script>
