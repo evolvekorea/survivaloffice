@@ -17,45 +17,60 @@
     <link rel="icon" href="data:,">
 </head>
 <body>
-    <div id="game-container">
-        <!-- 배경 요소 추가 -->
-        <div id="background"></div>
-                
-        <!-- 시작 화면 -->
-        <div id="start-screen">
-            <h1 id="start-title">탈 출 의 계 단</h1>
-            <img id="start-btn" src="https://www.survivaloffice.com/images/start.png">
-            <button id="top10-rank">랭킹 보기</button>
-            <div id="ranking-container" style="display: none;"></div>
+    <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/work/">일</a></li>
+          <li><a href="/rest/">휴식</a></li>
+          <li><a href="/other/">그 외</a></li>
+        </ul>
+    </nav>
 
+    <main>
+        <div id="game-container">
+            <!-- 배경 요소 추가 -->
+            <div id="background"></div>
+                    
+            <!-- 시작 화면 -->
+            <div id="start-screen">
+                <h1 id="start-title">탈 출 의 계 단</h1>
+                <img id="start-btn" src="https://www.survivaloffice.com/images/start.png">
+                <button id="top10-rank">랭킹 보기</button>
+                <div id="ranking-container" style="display: none;"></div>
+
+            </div>
+
+            <!-- 게임 화면 -->
+            <div id="score">점수: <span id="score-value">0</span></div>
+            <div id="timer">남은 시간: <span id="time">100</span>초</div>
+            <div id="character"></div>
+            <div id="stairs-container"></div>
+            <div id="buttons">
+                <button id="left-btn">←</button>
+                <button id="right-btn">→</button>
+            </div>
+
+            <!-- 결과 팝업 -->
+            <div id="result-popup">
+                <h2>게임 종료</h2>
+                <p id="result-message">축하합니다. 자유입니다.</p>
+                <input type="text" id="nicknameInput" placeholder="닉네임 입력" />
+                <button id="saveScoreButton" type="button">점수 등록</button>
+                <button id="closePopupButton" type="button">다시 하기</button>
+            </div>
+
+            <!-- 랭킹 컨테이너 -->
+            <div id="ranking-container" class="ranking-popup">
+                <h2>Top 10 랭킹</h2>
+                <div id="ranking-list"></div>
+            </div>
         </div>
+    </main>
 
-        <!-- 게임 화면 -->
-        <div id="score">점수: <span id="score-value">0</span></div>
-        <div id="timer">남은 시간: <span id="time">100</span>초</div>
-        <div id="character"></div>
-        <div id="stairs-container"></div>
-        <div id="buttons">
-            <button id="left-btn">←</button>
-            <button id="right-btn">→</button>
-        </div>
+    <footer>
+        <p>&copy; 2024 Survival Office. All rights reserved.</p>
+    </footer>
 
-        <!-- 결과 팝업 -->
-        <div id="result-popup">
-            <h2>게임 종료</h2>
-            <p id="result-message">축하합니다. 자유입니다.</p>
-            <input type="text" id="nicknameInput" placeholder="닉네임 입력" />
-            <button id="saveScoreButton" type="button">점수 등록</button>
-            <button id="closePopupButton" type="button">다시 하기</button>
-        </div>
-
-        <!-- 랭킹 컨테이너 -->
-        <div id="ranking-container" class="ranking-popup">
-            <h2>Top 10 랭킹</h2>
-            <div id="ranking-list"></div>
-        </div>
-
-    </div>
     
 <script type="module" src="script.js" defer></script>
 </body>

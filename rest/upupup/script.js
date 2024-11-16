@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function checkIfGameFinished() {
-        if (currentStep >= 100) {
+        if (currentStep >= 1000) {
             character.style.backgroundImage = "url('https://www.survivaloffice.com/images/goal.png')";            
             showPopup("축하합니다. 자유입니다.");
             clearInterval(timeInterval); // 타이머 정지

@@ -19,12 +19,65 @@ body {
     background-color: #f0f0f0;
 }
 
+/* 상단 네비게이션 스타일 */
+nav {
+    background-color: #f4f4f4;
+    padding: 10px;
+    width: 100%; /* 전체 너비 사용 */
+    position: fixed; /* 화면 상단에 고정 */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
+}
+
+/* 네비게이션 리스트 스타일 */
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+}
+
+/* 네비게이션 아이템 스타일 */
+nav ul li {
+    display: inline;
+}
+
+/* 네비게이션 링크 스타일 */
+nav ul li a {
+    color: rgb(62, 62, 62);
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+}
+
+/* 네비게이션 링크 호버 효과 */
+nav ul li a:hover {
+    background-color: #555;
+    color: #fff;
+}
+
+/* 기본 게임 컨테이너 스타일 */
 #game-container {
     position: relative;
     width: 400px;
     height: 600px;
     border: 2px solid #333;
     overflow: hidden;
+    max-width: 100%; /* 화면을 넘어가지 않도록 설정 */
+    max-height: 100vh; /* 화면 높이를 넘지 않도록 설정 */
+}
+
+/* 모바일 화면에 대한 반응형 스타일 */
+@media (max-width: 600px) {
+    #game-container {
+        width: 100vw; /* 화면 너비의 90%로 설정 */
+        height: 145vw; /* 비율에 맞게 높이 조정 */
+        max-width: 100%;
+        max-height: 100vh;
+    }
 }
 
 #background {
@@ -328,4 +381,17 @@ button:hover {
     font-size: 14px; /* 글자 크기 조정 (선택 사항) */
     color: #666; /* 날짜 색상 변경 (선택 사항) */
     margin-top: 5px; /* 원하는 만큼 아래로 이동 */
+}
+
+/* 푸터 스타일 수정 */
+footer {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    background-color: #353535;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    position: fixed; /* 하단에 고정 */
+    bottom: 0;
+
 }
