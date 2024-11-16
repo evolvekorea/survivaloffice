@@ -139,6 +139,16 @@ document.addEventListener('DOMContentLoaded', () => {
         stair.classList.add('stair');
         stair.style.bottom = `${step * 60}px`;
 
+        // 계단의 위치에 따른 스타일 적용
+        const stairBottom = step;
+        if (stairBottom >= 0 && stairBottom <= 300) {
+            stair.classList.add('low'); // 0 ~ 300px
+        } else if (stairBottom >= 301 && stairBottom <= 700) {
+            stair.classList.add('mid'); // 301 ~ 700px
+        } else if (stairBottom >= 701 && stairBottom <= 1000) {
+            stair.classList.add('high'); // 701 ~ 1000px
+        }
+
         if (lastGrid === 1) currentGrid = 2;
         else if (lastGrid === 2) currentGrid = Math.random() > 0.5 ? 1 : 3;
         else if (lastGrid === 3) currentGrid = Math.random() > 0.5 ? 2 : 4;

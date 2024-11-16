@@ -191,10 +191,26 @@ nav ul li a:hover {
 .stair {
     width: 100px;
     height: 20px;
-    background-color: #757575;
-    border: 2px solid #333;
+    background-color: #c90303cf;
+    border: 2px solid #ffffff;
+    border-radius: 10px; /* 둥근 모서리 추가 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 추가로 입체감 강화 */
     position: absolute;
 }
+
+/* 구간별 스타일 */
+.low {
+    background-color: #c90303cf; /* 0 ~ 300 */
+}
+
+.mid {
+    background-color: #b9b9b9; /* 301 ~ 700 */
+}
+
+.high {
+    background-color: #408cea; /* 701 ~ 1000 */
+}
+
 
 #buttons {
     position: absolute;
