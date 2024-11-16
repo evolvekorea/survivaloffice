@@ -134,7 +134,7 @@ nav ul li a:hover {
     padding: 0;
     margin: 0;
     position: absolute;
-    bottom: 250px;
+    bottom: 110px;
     left: 50%;
     transform: translateX(-50%);
     animation: blink 1s step-start infinite;
