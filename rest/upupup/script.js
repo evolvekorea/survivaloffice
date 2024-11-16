@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentGrid = 2;
     let scrollPosition = 0;
     const gridWidth = 4;
-    const TOTAL_STAIRS = 101;
+    const TOTAL_STAIRS = 1001;
     const stairPositions = [];
     let timeInterval;
     let isGameOver = false;
@@ -107,13 +107,13 @@ document.addEventListener('DOMContentLoaded', () => {
     rightButton.addEventListener('click', () => moveCharacter('right'));
 
     function updateBackground(currentStep) {
-        if (currentStep >= 0 && currentStep <= 30) {
+        if (currentStep >= 0 && currentStep <= 300) {
             background.style.backgroundImage = "url('https://www.survivaloffice.com/images/UPA.jpg')";
-        } else if (currentStep >= 31 && currentStep <= 70) {
+        } else if (currentStep >= 301 && currentStep <= 700) {
             background.style.backgroundImage = "url('https://www.survivaloffice.com/images/UPB.jpg')";
-        } else if (currentStep >= 71 && currentStep <= 99) {
+        } else if (currentStep >= 701 && currentStep <= 999) {
             background.style.backgroundImage = "url('https://www.survivaloffice.com/images/UPC.jpg')";
-        } else if (currentStep >= 100) {
+        } else if (currentStep >= 1000) {
             background.style.backgroundImage = "url('https://www.survivaloffice.com/images/UPD.jpg')";
         }
     }
