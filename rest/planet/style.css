@@ -1,3 +1,4 @@
+/* 웹폰트 설정 */
 @font-face {
     font-family: 'GangwonEduSaeeum_OTFMediumA';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
@@ -11,111 +12,130 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
+    overflow: hidden;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background-color: #f0f0f0;
-    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+    justify-content: flex-start;
+    background-color: #fafafa;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', sans-serif;
 }
 
 /* 메인 컨테이너 */
 #container {
     width: 100%;
     max-width: 600px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-/* 네비게이션 스타일 */
-nav {
-    width: 100%;
-    background-color: #f4f4f4;
-    padding: 10px 20px;
+    padding: 0 20px;
     box-sizing: border-box;
+}
+
+/* 상단 UI 가로 배치 */
+#game-container {
     display: flex;
-    justify-content: flex-end; /* 우측 정렬 */
-}
-
-/* 네비게이션 리스트 */
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 10px;
-}
-
-nav ul li {
-    display: inline-block;
-}
-
-nav ul li a {
-    color: #3e3e3e;
-    text-decoration: none;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
-}
-
-nav ul li a:hover {
-    background-color: #555;
-    color: white;
-    border-radius: 5px;
-}
-
-/* 푸터 스타일 */
-footer {
-    background-color: #353535;
-    color: white;
-    text-align: center;
-    padding: 10px;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
-    position: relative;
-    bottom: 0;
+    padding: 10px 0;
 }
 
-/* 모바일 반응형 스타일 */
+/* 게임 타이틀 */
+#game-container h1 {
+    flex: 1;
+    text-align: center;
+    font-size: 24px;
+    margin: 0;
+}
+
+/* 점수 표시 */
+#score {
+    flex: 1;
+    font-size: 20px;
+    text-align: center;
+}
+
+/* 다음 행성 미리보기 */
+#next-planet-container {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+
+#next-planet {
+    width: 30px;
+    height: 30px;
+}
+
+/* 행성 영역 */
+#planet-area {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 9 / 16; /* 비율 고정 (모바일 비율) */
+    max-width: 600px;
+    max-height: 100vh;
+    background-color: #2e2e3e;
+    border: 2px solid #fff;
+    box-sizing: border-box;
+}
+
+/* 게임 오버 선 */
+#game-over-line {
+    position: absolute;
+    top: 50px;
+    width: 100%;
+    height: 2px;
+    background-color: red;
+}
+
+/* 행성 스타일 */
+.planet {
+    position: absolute;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    z-index: 1;
+}
+
+/* 행성 크기 및 효과 */
+.planet:hover {
+    transform: scale(1.1);
+}
+
+/* 모바일 반응형 디자인 */
 @media (max-width: 600px) {
-    #container {
-        padding: 0;
+    #game-container h1 {
+        font-size: 20px;
     }
 
-    nav ul li a {
-        font-size: 12px;
-        padding: 6px 10px;
+    #score {
+        font-size: 18px;
     }
 
-    footer {
-        padding: 4px 4px;
-        font-size: 16px;
+    #next-planet-container {
+        padding: 5px;
+    }
+
+    #next-planet {
+        width: 25px;
+        height: 25px;
+    }
+
+    #planet-area {
+        max-width: 100%;
+        max-height: 100%;
+        height: calc(100dvh - 80px);
+        min-height: 400px;
     }
 }
 
-/* 데스크탑 및 큰 태블릿 */
-@media (min-width: 601px) {
-    html, body {
-        justify-content: center;
-        align-items: flex-start;
-    }
-
-    #container {
-        padding: 20px 0;
-    }
-
-    nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-    }
-
-    footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 0px; /* 높이를 줄임 */
-    }
+/* 캔버스 기본 설정 */
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow-clip-margin: content-box;
+    overflow: clip;
 }
