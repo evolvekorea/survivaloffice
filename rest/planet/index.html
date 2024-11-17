@@ -6,28 +6,33 @@
     <title>Planet Evolution</title>
     <meta name="description" content="Planet Evolution 행성 진화 게임">
 
+    <!-- Open Graph 메타태그 -->
     <meta property="og:title" content="Planet Evolution - 행성 진화 게임" />
     <meta property="og:description" content="행성을 합쳐서 태양을 만들자!" />
     <meta property="og:url" content="https://www.survivaloffice.com/rest/planet" />
     <meta property="og:image" content="https://www.survivaloffice.com/images/upupup.jpg" />
     <meta property="og:type" content="website" />
 
+    <!-- CSS 스타일시트 추가 -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- Matter.js 라이브러리 추가 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <!-- Planck.js 라이브러리 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/planck-js@0.3.0/dist/planck.min.js"></script>
 </head>
 <body>
+    <!-- 게임 컨테이너 -->
     <div id="game-container">
         <h1>Planet Evolution</h1>
         <div id="score">Score: 0</div>
         <div id="next-planet-container">
-            <img id="next-planet" src="" alt="Next Planet" />
+            <img id="next-planet" src="" alt="Next Planet">
         </div>
     </div>
+
+    <!-- 행성 영역 -->
     <div id="planet-area"></div>
 
-    <!-- 게임 스크립트 추가 -->
+    <!-- 게임 스크립트 -->
     <script defer src="script.js"></script>
 </body>
 </html>
