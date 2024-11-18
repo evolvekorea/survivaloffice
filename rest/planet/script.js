@@ -215,6 +215,9 @@ world.on('pre-solve', (contact) => {
 // 업데이트 함수 수정 (합쳐질 행성 처리)
 function update() {
     world.step(1 / 60);
+    
+        // 게임 오버 조건 체크
+        checkGameOver();
 
     // 큐에 있는 행성 합치기
     while (mergeQueue.length > 0) {
@@ -251,11 +254,34 @@ function update() {
 
 // 행성 리스트 초기화
 const planetsList = [];
+
 // 클릭으로 행성 생성 (화면 맨 위에서 시작)
 planetArea.addEventListener("click", (event) => {
     const x = (event.clientX - planetArea.getBoundingClientRect().left) / 30;
     planetsList.push(createPlanet(0, x, canvas.height / 30));
 });
+
+let isGameOver = false;
+
+function endGame() {
+    if (isGameOver) return;
+    isGameOver = true;
+    alert("Game Over! 행성이 캔버스 상단을 넘었습니다.");
+}
+
+function checkGameOver() {
+    planetsList.forEach((planet) => {
+        const pos = planet.getPosition();
+        // 행성의 y 좌표가 0 이하인 경우 게임 오버
+        if (pos.y <= 0) {
+            endGame();
+        }
+    });
+}
+
+
+
+
 
 // 초기화 및 렌더링 시작
 updateScore(0);
