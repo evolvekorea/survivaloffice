@@ -12,15 +12,15 @@ canvas.height = planetArea.clientHeight;
 // 행성 데이터 (10개)
 const planets = [
     { name: "명왕성", url: "https://survivaloffice.com/images/1.png", score: 10, baseSize: 0.1 },
-    { name: "수성", url: "https://survivaloffice.com/images/2.png", score: 20, baseSize: 0.12 },
-    { name: "화성", url: "https://survivaloffice.com/images/3.png", score: 30, baseSize: 0.14 },
-    { name: "금성", url: "https://survivaloffice.com/images/4.png", score: 40, baseSize: 0.16 },
-    { name: "지구", url: "https://survivaloffice.com/images/5.png", score: 50, baseSize: 0.18 },
-    { name: "천왕성", url: "https://survivaloffice.com/images/6.png", score: 60, baseSize: 0.2 },
-    { name: "해왕성", url: "https://survivaloffice.com/images/7.png", score: 70, baseSize: 0.22 },
-    { name: "토성", url: "https://survivaloffice.com/images/8.png", score: 80, baseSize: 0.24 },
-    { name: "목성", url: "https://survivaloffice.com/images/9.png", score: 90, baseSize: 0.26 },
-    { name: "태양", url: "https://survivaloffice.com/images/10.png", score: 100, baseSize: 0.28 }
+    { name: "수성", url: "https://survivaloffice.com/images/1.png", score: 20, baseSize: 0.12 },
+    { name: "화성", url: "https://survivaloffice.com/images/1.png", score: 30, baseSize: 0.14 },
+    { name: "금성", url: "https://survivaloffice.com/images/1.png", score: 40, baseSize: 0.16 },
+    { name: "지구", url: "https://survivaloffice.com/images/1.png", score: 50, baseSize: 0.18 },
+    { name: "천왕성", url: "https://survivaloffice.com/images/1.png", score: 60, baseSize: 0.2 },
+    { name: "해왕성", url: "https://survivaloffice.com/images/1.png", score: 70, baseSize: 0.22 },
+    { name: "토성", url: "https://survivaloffice.com/images/1.png", score: 80, baseSize: 0.24 },
+    { name: "목성", url: "https://survivaloffice.com/images/1.png", score: 90, baseSize: 0.26 },
+    { name: "태양", url: "https://survivaloffice.com/images/1.png", score: 100, baseSize: 0.28 }
 ];
 
 // 점수 표시
@@ -102,11 +102,55 @@ function toCanvasCoords(planckPos) {
     };
 }
 
-// 바닥 생성
-const ground = world.createBody();
-ground.createFixture(pl.Edge(Vec2(-10, 0), Vec2(10, 0)), {
-    friction: 0.5,
-    restitution: 0.3
+// 캔버스의 크기에 맞춰 4면 벽 생성 함수 (좌상단 원점 기준)
+function createWalls() {
+    const canvasWidth = canvas.width / 30;
+    const canvasHeight = canvas.height / 30;
+
+    // 이전에 생성된 벽 제거
+    if (world.walls) {
+        world.walls.forEach((wall) => world.destroyBody(wall));
+    }
+
+    // 새로운 벽 생성
+    const walls = [];
+
+    // 왼쪽 벽
+    const leftWall = world.createBody();
+    leftWall.createFixture(pl.Edge(Vec2(0, 0), Vec2(0, canvasHeight)), {
+        friction: 0.5,
+        restitution: 0.3
+    });
+    walls.push(leftWall);
+
+    // 오른쪽 벽
+    const rightWall = world.createBody();
+    rightWall.createFixture(pl.Edge(Vec2(canvasWidth, 0), Vec2(canvasWidth, canvasHeight)), {
+        friction: 0.5,
+        restitution: 0.3
+    });
+    walls.push(rightWall);
+
+    // 바닥
+    const ground = world.createBody();
+    ground.createFixture(pl.Edge(Vec2(0, 0), Vec2(canvasWidth, 0)), {
+        friction: 0.5,
+        restitution: 0.3
+    });
+    walls.push(ground);
+
+    // 생성된 벽 저장
+    world.walls = walls;
+}
+
+// 초기 벽 생성
+createWalls();
+
+// 화면 크기 변경 시 벽 재생성
+window.addEventListener("resize", () => {
+    canvas.width = planetArea.clientWidth;
+    canvas.height = planetArea.clientHeight;
+    createWalls();
 });
 
 // 행성 리스트
