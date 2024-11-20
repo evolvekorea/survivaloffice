@@ -23,9 +23,9 @@ html, body {
 
 /* 메인 컨테이너 */
 #container {
-    width: 100%;
-    max-width: 600px;
-    padding: 0 20px;
+    max-width: 360px; /* 모바일에서 대중적인 너비 */
+    height: 640px;    /* 16:9 비율의 높이 */
+    padding: 0 10px;
     box-sizing: border-box;
 }
 
@@ -73,7 +73,7 @@ html, body {
 #planet-area {
     position: relative;
     width: 100vw;
-    height: calc(100vw * 16 / 9); /* 9:16 비율 고정 */
+    height: 100vh; /* 화면 높이에 맞추기 */
     max-width: 100%;
     max-height: 100vh;
     background-color: #2e2e3e;
@@ -136,8 +136,8 @@ html, body {
 canvas {
     display: block;
     aspect-ratio: 9 / 16;
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%; /* 부모 크기에 맞춤 */
+    height: 100%; /* 부모 크기에 맞춤 */
     object-fit: contain;
 }
 
