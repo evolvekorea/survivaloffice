@@ -1,7 +1,6 @@
-// Planck.js 초기 설정
+// Planck.js 초기 설정 및 공통 변수 설정
 const pl = planck, Vec2 = pl.Vec2;
-const world = pl.World(Vec2(0, -10)); // 중력 방향을 아래로 설정 (위에서 아래로 떨어짐)
-
+const world = pl.World(Vec2(0, -10));
 const planetArea = document.getElementById("planet-area");
 const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d");
@@ -12,15 +11,15 @@ canvas.height = planetArea.clientHeight;
 // 행성 데이터 (10개)
 const planets = [
     { name: "명왕성", url: "https://survivaloffice.com/images/1.png", score: 10, baseSize: 0.1 },
-    { name: "수성", url: "https://survivaloffice.com/images/1.png", score: 20, baseSize: 0.3 },
-    { name: "화성", url: "https://survivaloffice.com/images/1.png", score: 30, baseSize: 0.5 },
-    { name: "금성", url: "https://survivaloffice.com/images/1.png", score: 40, baseSize: 0.7 },
-    { name: "지구", url: "https://survivaloffice.com/images/1.png", score: 50, baseSize: 0.9 },
-    { name: "천왕성", url: "https://survivaloffice.com/images/1.png", score: 60, baseSize: 1.1 },
-    { name: "해왕성", url: "https://survivaloffice.com/images/1.png", score: 70, baseSize: 1.3 },
-    { name: "토성", url: "https://survivaloffice.com/images/1.png", score: 80, baseSize: 1.5 },
-    { name: "목성", url: "https://survivaloffice.com/images/1.png", score: 90, baseSize: 1.7 },
-    { name: "태양", url: "https://survivaloffice.com/images/1.png", score: 100, baseSize: 2.0 }
+    { name: "수성", url: "https://survivaloffice.com/images/1.png", score: 20, baseSize: 0.15 },
+    { name: "화성", url: "https://survivaloffice.com/images/1.png", score: 30, baseSize: 0.3 },
+    { name: "금성", url: "https://survivaloffice.com/images/1.png", score: 40, baseSize: 0.35 },
+    { name: "지구", url: "https://survivaloffice.com/images/1.png", score: 50, baseSize: 0.5 },
+    { name: "천왕성", url: "https://survivaloffice.com/images/1.png", score: 60, baseSize: 0.55 },
+    { name: "해왕성", url: "https://survivaloffice.com/images/1.png", score: 70, baseSize: 0.7 },
+    { name: "토성", url: "https://survivaloffice.com/images/1.png", score: 80, baseSize: 0.75 },
+    { name: "목성", url: "https://survivaloffice.com/images/1.png", score: 90, baseSize: 0.8 },
+    { name: "태양", url: "https://survivaloffice.com/images/1.png", score: 100, baseSize: 0.9 }
 ];
 
 // 점수 표시
@@ -34,41 +33,44 @@ function getPlanetSize(baseSize) {
 }
 
 // 이미지 로딩 함수
-function loadImage(url, callback) {
-    const img = new Image();
-    img.src = url;
-    img.onload = () => {
-        if (typeof callback === 'function') {
-            callback(img); // 유효한 콜백일 때만 호출
-        } else {
-            console.error(`Callback is not a function for image: ${url}`);
-        }
-    };
-    img.onerror = () => {
-        console.error(`Failed to load image: ${url}`);
-        // 기본 이미지 사용
-        const fallbackImg = new Image();
-        fallbackImg.src = "default.png"; // 기본 이미지 경로
-        if (typeof callback === 'function') {
-            callback(fallbackImg);
-        }
-    };
+function loadImage(url, fallbackUrl = "default.png") {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = url;
+
+        img.onload = () => {
+            resolve(img); // 이미지 로드 성공 시 반환
+        };
+
+     img.onerror = () => {
+            console.error(`Failed to load image: ${url}. Using fallback image.`);
+            const fallbackImg = new Image();
+            fallbackImg.src = fallbackUrl;
+
+            fallbackImg.onload = () => {
+                resolve(fallbackImg); // 기본 이미지도 로드 성공 시 반환
+            };
+
+            fallbackImg.onerror = () => {
+                reject(new Error(`Failed to load fallback image: ${fallbackUrl}`));
+            };
+        };
+    });
 }
+
 
 let planetDropCount = 0; // 행성이 떨어진 횟수
 
 function getNextPlanetIndex() {
-    // 첫 20번까지는 명왕성만 반환
     if (planetDropCount < 20) {
-        planetDropCount++; // 행성 생성 횟수 증가
+        planetDropCount++;
         return 0; // 명왕성
     }
 
-    // 확률에 따라 행성 결정
     const random = Math.random() * 100;
-    if (random < 90) return 0; // 90% 확률로 명왕성
-    if (random < 100) return 1; // 10% 확률로 수성
-    return 2; // 5% 확률로 화성
+    if (random < 90) return 0;
+    if (random < 100) return 1;
+    return 2;
 }
 
 // 점수 업데이트 함수
@@ -81,9 +83,8 @@ function createPlanet(index, x, y = canvas.height / 30) {
     const planetData = planets[index];
     const radius = getPlanetSize(planetData.baseSize) / 3.0;
 
-    // 화면 경계 내에서 생성되도록 x 좌표 조정
-    const minX = radius / 30; // 최소 x 좌표
-    const maxX = (canvas.width / 30) - (radius / 30); // 최대 x 좌표
+    const minX = radius / 30;
+    const maxX = (canvas.width / 30) - (radius / 30);
     x = Math.max(minX, Math.min(x, maxX));
 
     const planet = world.createBody({
@@ -100,19 +101,20 @@ function createPlanet(index, x, y = canvas.height / 30) {
     planet.radius = radius;
     planet.label = `planet-${index}`;
 
-    // 이미지 로드
-    loadImage(planetData.url, (img) => {
-        planet.image = img; // 이미지 로드 완료 후 설정
+    // 기존 createPlanet에서 로드 방식 변경
+    loadImage(planetData.url)
+    .then((img) => {
+        planet.image = img; // 로드 완료 후 이미지 설정
+    })
+    .catch((error) => {
+        console.error(error.message);
     });
 
-    // 초기 속도 설정
-    planet.setLinearVelocity(Vec2(0, -30)); // 아래 방향으로 이동
+    planet.setLinearVelocity(Vec2(0, -30));
     return planet;
 }
-
 world.m_tolerance = 0.001;
 
-// 좌표 변환 함수 (y 좌표 반전)
 function toCanvasCoords(planckPos) {
     return {
         x: planckPos.x * 30,
@@ -120,36 +122,30 @@ function toCanvasCoords(planckPos) {
     };
 }
 
-// 캔버스의 크기에 맞춰 4면 벽 생성 함수 (좌상단 원점 기준)
 function createWalls() {
     const canvasWidth = canvas.width / 30;
     const canvasHeight = canvas.height / 30;
 
-    // 이전에 생성된 벽 제거
     if (world.walls) {
         world.walls.forEach((wall) => world.destroyBody(wall));
     }
 
-    // 새로운 벽 생성
     const walls = [];
 
-    // 왼쪽 벽
     const leftWall = world.createBody();
     leftWall.createFixture(pl.Edge(Vec2(0, 0), Vec2(0, canvasHeight)), {
-        friction: 0.3,
+        friction: 0.1,
         restitution: 0.0
     });
     walls.push(leftWall);
 
-    // 오른쪽 벽
     const rightWall = world.createBody();
     rightWall.createFixture(pl.Edge(Vec2(canvasWidth, 0), Vec2(canvasWidth, canvasHeight)), {
-        friction: 0.3,
+        friction: 0.1,
         restitution: 0.0
     });
     walls.push(rightWall);
 
-    // 바닥
     const ground = world.createBody();
     ground.createFixture(pl.Edge(Vec2(0, 0), Vec2(canvasWidth, 0)), {
         friction: 0.1,
@@ -157,21 +153,17 @@ function createWalls() {
     });
     walls.push(ground);
 
-    // 생성된 벽 저장
     world.walls = walls;
 }
 
-// 초기 벽 생성
 createWalls();
 
-// 화면 크기 변경 시 벽 재생성
 window.addEventListener("resize", () => {
     canvas.width = planetArea.clientWidth;
     canvas.height = planetArea.clientHeight;
     createWalls();
 });
 
-// 행성 그리기 함수
 function drawPlanet(planet) {
     const pos = planet.getPosition();
     const canvasPos = {
@@ -181,7 +173,6 @@ function drawPlanet(planet) {
 
     const radius = planet.radius * 30;
 
-    // 이미지 로드 여부 확인
     if (planet.image) {
         ctx.drawImage(
             planet.image,
@@ -192,7 +183,6 @@ function drawPlanet(planet) {
         );
     } else {
         console.warn(`Image not loaded for planet: ${planet.label}`);
-        // 기본 동작: 원을 그려주는 코드 (대체 렌더링)
         ctx.beginPath();
         ctx.arc(canvasPos.x, canvasPos.y, radius, 0, 2 * Math.PI);
         ctx.fillStyle = "gray";
@@ -203,43 +193,108 @@ function drawPlanet(planet) {
 function resizeCanvas() {
     canvas.width = planetArea.clientWidth;
     canvas.height = planetArea.clientHeight;
-    createWalls(); // 벽 크기 재조정
+    createWalls();
 }
 
-// 화면 크기 변경 시 동기화
 window.addEventListener("resize", resizeCanvas);
 
-// 초기화 시 호출
 resizeCanvas();
 
-// 캔버스 렌더링 함수
 function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // 모든 행성 그리기
     planetsList.forEach(drawPlanet);
 
     requestAnimationFrame(render);
 }
 
-// 시뮬레이션 업데이트 함수
-function update() {
-    world.step(1 / 60);
+function applyImpulse(planet, forceMultiplier = 50) {
+    const pos = planet.getPosition();
+    planetsList.forEach((otherPlanet) => {
+        if (otherPlanet === planet) return;
 
-    // 행성 리스트 업데이트 (디버그용)
-    planetsList.forEach((planet) => {
-        if (planet.getPosition().y < 0) {
-            world.destroyBody(planet);
+        const otherPos = otherPlanet.getPosition();
+        const dx = otherPos.x - pos.x;
+        const dy = otherPos.y - pos.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < planet.radius + otherPlanet.radius) {
+            const forceX = (dx / distance) * forceMultiplier;
+            const forceY = (dy / distance) * forceMultiplier;
+            otherPlanet.applyLinearImpulse(Vec2(forceX, forceY), otherPlanet.getWorldCenter());
         }
     });
+}
+let lastPlanetDropTime = 0; // 마지막으로 행성이 떨어진 시간
+const planetDropDelay = 500; // 행성이 떨어질 딜레이 (0.5초)
 
-    requestAnimationFrame(update);
+// 클릭 이벤트 수정
+planetArea.addEventListener("click", (event) => {
+    const currentTime = Date.now();
+    if (currentTime - lastPlanetDropTime < planetDropDelay) {
+        return; // 딜레이 시간 내에 클릭 무시
+    }
+
+    const x = (event.clientX - planetArea.getBoundingClientRect().left) / 30;
+    const index = getNextPlanetIndex(); // 첫 20번은 명왕성, 이후 확률에 따라 결정
+    planetsList.push(createPlanet(index, x, canvas.height / 30));
+    lastPlanetDropTime = currentTime; // 마지막 드랍 시간 갱신
+});
+
+// 합쳐진 행성이 주변을 밀어내도록 수정
+    function mergePlanets(planetA, planetB, nextIndex) {
+    const position = planetA.getPosition();
+
+    // 새로운 행성 생성
+    const newPlanet = createPlanet(nextIndex, position.x, position.y);
+
+    // 기존 행성 제거
+    world.destroyBody(planetA);
+    world.destroyBody(planetB);
+
+    // 행성 리스트에서 제거
+    planetsList.splice(planetsList.indexOf(planetA), 1);
+    planetsList.splice(planetsList.indexOf(planetB), 1);
+
+    // 새 행성 추가
+    planetsList.push(newPlanet);
+
+    // 주변 행성을 밀어내는 충격 적용
+    applyImpulse(newPlanet);
+
+    // 점수 업데이트
+    updateScore(planets[nextIndex].score);
 }
 
-// 합쳐질 행성들을 저장할 큐
-const mergeQueue = [];
+// 태양 이미지 추가 함수
+function addSunToNextContainer() {
+    nextPlanetContainer.innerHTML = ""; // 기존 내용 제거
+    const sunImg = document.createElement("img");
+    sunImg.src = planets[planets.length - 1].url; // 태양 이미지
+    sunImg.alt = "태양";
+    sunImg.style.maxWidth = "100%"; // 컨테이너에 맞게 조정
+    sunImg.style.maxHeight = "100%";
+    nextPlanetContainer.appendChild(sunImg);
+}
+
+
+// 게임 오버 조건 수정 (전체가 넘어갔는지 판단)
+function checkGameOver() {
+    const gameOverLine = canvas.height; // 게임 오버 라인 (캔버스 상단)
+    planetsList.forEach((planet) => {
+        const pos = planet.getPosition();
+        const canvasPos = toCanvasCoords(pos);
+        const radius = planet.radius * 30;
+
+        // 행성의 전체가 넘어갔는지 확인
+        if (canvasPos.y + radius <= 0) {
+            endGame();
+        }
+    });
+}
 
 // 충돌 핸들러 수정 (큐에 합쳐질 행성 추가)
+const mergeQueue = [];
 world.on('pre-solve', (contact) => {
     const bodyA = contact.getFixtureA().getBody();
     const bodyB = contact.getFixtureB().getBody();
@@ -248,93 +303,61 @@ world.on('pre-solve', (contact) => {
         const planetA = bodyA;
         const planetB = bodyB;
 
-        // 같은 행성인지 확인 (라벨을 사용)
-        if (planetA.label === planetB.label) {
-            const index = parseInt(planetA.label.split('-')[1], 10);
+         // 이미 합성 중인 행성은 무시
+         if (planetA.isMerging || planetB.isMerging) return;
 
-            // 태양끼리 합쳐질 경우 별도로 처리
-            if (index === planets.length - 1) { // 태양의 인덱스
-                mergeQueue.push({ planetA, planetB, nextIndex: null });
-            } else if (index < planets.length - 1) {
-                // 태양이 아닌 경우 합치기 처리
-                mergeQueue.push({ planetA, planetB, nextIndex: index + 1 });
-            }
-        }
-    }
-});
+         if (planetA.label === planetB.label) {
+             const index = parseInt(planetA.label.split('-')[1], 10);
+ 
+             // 플래그 설정 (합성 중 표시)
+             planetA.isMerging = true;
+             planetB.isMerging = true;
+ 
+             if (index === planets.length - 1) {
+                 mergeQueue.push({ planetA, planetB, nextIndex: null });
+             } else if (index < planets.length - 1) {
+                 mergeQueue.push({ planetA, planetB, nextIndex: index + 1 });
+             }
+         }
+     }
+ });
 
 // 업데이트 함수 수정 (합쳐질 행성 처리)
 function update() {
     world.step(1 / 60);
 
-    // 큐에 있는 행성 합치기
     while (mergeQueue.length > 0) {
         const { planetA, planetB, nextIndex } = mergeQueue.shift();
 
         if (nextIndex === null) {
-            // 태양끼리 합쳐진 경우
-            // 기존 태양 제거
             world.destroyBody(planetA);
             world.destroyBody(planetB);
 
-            // 행성 리스트에서 제거
             planetsList.splice(planetsList.indexOf(planetA), 1);
             planetsList.splice(planetsList.indexOf(planetB), 1);
 
-            // next-planet-container에 태양 추가
-            const nextPlanetContainer = document.getElementById("next-planet-container");
-            if (!nextPlanetContainer) {
-                console.error("next-planet-container not found in the DOM");
-                continue;
-            }
-            const sunImg = document.createElement("img");
-            sunImg.src = planets[planets.length - 1].url;
-            sunImg.alt = "태양";
-            sunImg.style.width = "50px";
-            sunImg.style.height = "50px";
-            nextPlanetContainer.appendChild(sunImg);
+            addSunToNextContainer(); // 태양 이미지를 next-planet-container에 추가
+
         } else {
-            // 기존 합성 처리
-            const position = planetA.getPosition();
-
-            // 새로운 행성 생성
-            const newPlanet = createPlanet(nextIndex, position.x, position.y);
-
-            // 기존 행성 제거
-            world.destroyBody(planetA);
-            world.destroyBody(planetB);
-
-            // 행성 리스트에서 제거
-            planetsList.splice(planetsList.indexOf(planetA), 1);
-            planetsList.splice(planetsList.indexOf(planetB), 1);
-
-            // 새 행성 추가
-            planetsList.push(newPlanet);
-
-            // 점수 업데이트
-            updateScore(planets[nextIndex].score);
+            mergePlanets(planetA, planetB, nextIndex);
         }
+                // 플래그 해제 (합성 완료)
+                planetA.isMerging = false;
+                planetB.isMerging = false;
     }
 
-    // 행성 리스트 업데이트 (디버깅)
     planetsList.forEach((planet) => {
         if (planet.getPosition().y < 0) {
             world.destroyBody(planet);
         }
     });
 
+    checkGameOver(); // 게임 오버 조건 체크
+
     requestAnimationFrame(update);
 }
 
-// 행성 리스트 초기화
 const planetsList = [];
-
-// 클릭으로 행성 생성 (화면 맨 위에서 시작)
-planetArea.addEventListener("click", (event) => {
-    const x = (event.clientX - planetArea.getBoundingClientRect().left) / 30;
-    const index = getNextPlanetIndex(); // 첫 20번은 명왕성, 이후 확률에 따라 결정
-    planetsList.push(createPlanet(index, x, canvas.height / 30));
-});
 
 let isGameOver = false;
 
@@ -342,16 +365,6 @@ function endGame() {
     if (isGameOver) return;
     isGameOver = true;
     alert("Game Over! 행성이 캔버스 상단을 넘었습니다.");
-}
-
-function checkGameOver() {
-    planetsList.forEach((planet) => {
-        const pos = planet.getPosition();
-        // 행성의 y 좌표가 0 이하인 경우 게임 오버
-        if (pos.y <= 0) {
-            endGame();
-        }
-    });
 }
 
 // 초기화 및 렌더링 시작
