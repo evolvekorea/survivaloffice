@@ -138,8 +138,8 @@ function createPlanet(index, x, y = canvas.height / 30) {
 
     planet.createFixture(pl.Circle(radius), {
         density: 2.0,
-        friction: 0.1,
-        restitution: 0.3
+        friction: 0.2,
+        restitution: 0.1
     });
 
     planet.radius = radius;
@@ -179,21 +179,21 @@ function createWalls() {
 
     const leftWall = world.createBody();
     leftWall.createFixture(pl.Edge(Vec2(0, 0), Vec2(0, canvasHeight)), {
-        friction: 0.1,
+        friction: 0.2,
         restitution: 0.1
     });
     walls.push(leftWall);
 
     const rightWall = world.createBody();
     rightWall.createFixture(pl.Edge(Vec2(canvasWidth, 0), Vec2(canvasWidth, canvasHeight)), {
-        friction: 0.1,
+        friction: 0.2,
         restitution: 0.1
     });
     walls.push(rightWall);
 
     const ground = world.createBody();
     ground.createFixture(pl.Edge(Vec2(0, 0), Vec2(canvasWidth, 0)), {
-        friction: 0.1,
+        friction: 0.2,
         restitution: 0.1
     });
     walls.push(ground);
