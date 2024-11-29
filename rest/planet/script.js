@@ -15,7 +15,7 @@ const planets = [
     { name: "화성", url: "https://survivaloffice.com/images/3.png", score: 30, baseSize: 0.2 },
     { name: "금성", url: "https://survivaloffice.com/images/4.png", score: 40, baseSize: 0.25 },
     { name: "지구", url: "https://survivaloffice.com/images/5.png", score: 50, baseSize: 0.3 },
-    { name: "천왕성", url: "https://survivaloffice.com/images/9.png", score: 60, baseSize: 0.35 },
+    { name: "천왕성", url: "https://survivaloffice.com/images/6.png", score: 60, baseSize: 0.35 },
     { name: "해왕성", url: "https://survivaloffice.com/images/9.png", score: 70, baseSize: 0.4 },
     { name: "토성", url: "https://survivaloffice.com/images/9.png", score: 80, baseSize: 0.5 },
     { name: "목성", url: "https://survivaloffice.com/images/9.png", score: 90, baseSize: 0.6 },
