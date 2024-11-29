@@ -12,14 +12,14 @@ canvas.height = planetArea.clientHeight;
 const planets = [
     { name: "명왕성", url: "https://survivaloffice.com/images/1.png", score: 10, baseSize: 0.1 },
     { name: "수성", url: "https://survivaloffice.com/images/2.png", score: 20, baseSize: 0.15 },
-    { name: "화성", url: "https://survivaloffice.com/images/3.png", score: 40, baseSize: 0.2 },
-    { name: "금성", url: "https://survivaloffice.com/images/4.png", score: 80, baseSize: 0.25 },
-    { name: "지구", url: "https://survivaloffice.com/images/5.png", score: 200, baseSize: 0.3 },
-    { name: "천왕성", url: "https://survivaloffice.com/images/6.png", score: 300, baseSize: 0.35 },
-    { name: "해왕성", url: "https://survivaloffice.com/images/7.png", score: 400, baseSize: 0.4 },
-    { name: "토성", url: "https://survivaloffice.com/images/8.png", score: 700, baseSize: 0.5 },
-    { name: "목성", url: "https://survivaloffice.com/images/9.png", score: 1000, baseSize: 0.6 },
-    { name: "태양", url: "https://survivaloffice.com/images/10.png", score: 2000, baseSize: 0.7 }
+    { name: "화성", url: "https://survivaloffice.com/images/3.png", score: 40, baseSize: 0.25 },
+    { name: "금성", url: "https://survivaloffice.com/images/4.png", score: 80, baseSize: 0.3 },
+    { name: "지구", url: "https://survivaloffice.com/images/5.png", score: 120, baseSize: 0.4 },
+    { name: "천왕성", url: "https://survivaloffice.com/images/6.png", score: 200, baseSize: 0.45 },
+    { name: "해왕성", url: "https://survivaloffice.com/images/7.png", score: 400, baseSize: 0.5 },
+    { name: "토성", url: "https://survivaloffice.com/images/8.png", score: 600, baseSize: 0.6 },
+    { name: "목성", url: "https://survivaloffice.com/images/9.png", score: 1000, baseSize: 0.7 },
+    { name: "태양", url: "https://survivaloffice.com/images/10.png", score: 2000, baseSize: 0.8 }
 ];
 
 // 점수 표시
