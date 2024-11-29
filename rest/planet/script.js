@@ -16,10 +16,10 @@ const planets = [
     { name: "금성", url: "https://survivaloffice.com/images/4.png", score: 80, baseSize: 0.25 },
     { name: "지구", url: "https://survivaloffice.com/images/5.png", score: 200, baseSize: 0.3 },
     { name: "천왕성", url: "https://survivaloffice.com/images/6.png", score: 300, baseSize: 0.35 },
-    { name: "해왕성", url: "https://survivaloffice.com/images/9.png", score: 400, baseSize: 0.4 },
-    { name: "토성", url: "https://survivaloffice.com/images/9.png", score: 700, baseSize: 0.5 },
+    { name: "해왕성", url: "https://survivaloffice.com/images/7.png", score: 400, baseSize: 0.4 },
+    { name: "토성", url: "https://survivaloffice.com/images/8.png", score: 700, baseSize: 0.5 },
     { name: "목성", url: "https://survivaloffice.com/images/9.png", score: 1000, baseSize: 0.6 },
-    { name: "태양", url: "https://survivaloffice.com/images/9.png", score: 2000, baseSize: 0.7 }
+    { name: "태양", url: "https://survivaloffice.com/images/10.png", score: 2000, baseSize: 0.7 }
 ];
 
 // 점수 표시
