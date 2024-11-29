@@ -10,16 +10,16 @@ canvas.height = planetArea.clientHeight;
 
 // 행성 데이터 (10개)
 const planets = [
-    { name: "명왕성", url: "https://survivaloffice.com/images/1.png", score: 10, baseSize: 0.2 },
-    { name: "수성", url: "https://survivaloffice.com/images/1.png", score: 20, baseSize: 0.25 },
-    { name: "화성", url: "https://survivaloffice.com/images/1.png", score: 30, baseSize: 0.4 },
-    { name: "금성", url: "https://survivaloffice.com/images/1.png", score: 40, baseSize: 0.45 },
-    { name: "지구", url: "https://survivaloffice.com/images/1.png", score: 50, baseSize: 0.6 },
-    { name: "천왕성", url: "https://survivaloffice.com/images/1.png", score: 60, baseSize: 0.65 },
-    { name: "해왕성", url: "https://survivaloffice.com/images/1.png", score: 70, baseSize: 0.8 },
-    { name: "토성", url: "https://survivaloffice.com/images/1.png", score: 80, baseSize: 0.85 },
-    { name: "목성", url: "https://survivaloffice.com/images/1.png", score: 90, baseSize: 0.9 },
-    { name: "태양", url: "https://survivaloffice.com/images/1.png", score: 100, baseSize: 1.0 }
+    { name: "명왕성", url: "https://survivaloffice.com/images/1.png", score: 10, baseSize: 0.1 },
+    { name: "수성", url: "https://survivaloffice.com/images/5.png", score: 20, baseSize: 0.3 },
+    { name: "화성", url: "https://survivaloffice.com/images/5.png", score: 30, baseSize: 0.35 },
+    { name: "금성", url: "https://survivaloffice.com/images/5.png", score: 40, baseSize: 0.4 },
+    { name: "지구", url: "https://survivaloffice.com/images/5.png", score: 50, baseSize: 0.45 },
+    { name: "천왕성", url: "https://survivaloffice.com/images/5.png", score: 60, baseSize: 0.5 },
+    { name: "해왕성", url: "https://survivaloffice.com/images/5.png", score: 70, baseSize: 0.55 },
+    { name: "토성", url: "https://survivaloffice.com/images/5.png", score: 80, baseSize: 0.6 },
+    { name: "목성", url: "https://survivaloffice.com/images/5.png", score: 90, baseSize: 0.7 },
+    { name: "태양", url: "https://survivaloffice.com/images/5.png", score: 100, baseSize: 0.8 }
 ];
 
 // 점수 표시
@@ -58,6 +58,50 @@ function loadImage(url, fallbackUrl = "default.png") {
     });
 }
 
+function drawRotatingPlanet(planet) {
+    const pos = planet.getPosition();
+    const canvasPos = {
+        x: pos.x * 30,
+        y: canvas.height - pos.y * 30
+    };
+
+    const radius = planet.radius * 30;
+
+    if (planet.image) {
+        ctx.save();
+
+        // 원형 마스크 설정
+        ctx.beginPath();
+        ctx.arc(canvasPos.x, canvasPos.y, radius, 0, 2 * Math.PI);
+        ctx.clip();
+
+        // 중심으로 이동하여 회전
+        ctx.translate(canvasPos.x, canvasPos.y);
+        ctx.rotate(planet.rotationAngle);
+
+        // 이미지 그리기 (중심 기준으로 회전)
+        ctx.drawImage(
+            planet.image,
+            -radius, // 중심 기준 위치
+            -radius,
+            radius * 2.07,
+            radius * 2.07
+        );
+
+        ctx.restore();
+
+        // 회전 각도 업데이트
+        if (planet.rotationAngle < 2 * Math.PI) { // 360도 이하일 때만 회전
+            planet.rotationAngle += 0.05; // 회전 속도
+        }
+    } else {
+        // 이미지가 없을 경우 기본 원으로 표시
+        ctx.beginPath();
+        ctx.arc(canvasPos.x, canvasPos.y, radius, 0, 2 * Math.PI);
+        ctx.fillStyle = "gray";
+        ctx.fill();
+    }
+}
 
 let planetDropCount = 0; // 행성이 떨어진 횟수
 
@@ -81,7 +125,7 @@ function updateScore(points) {
 
 function createPlanet(index, x, y = canvas.height / 30) {
     const planetData = planets[index];
-    const radius = getPlanetSize(planetData.baseSize) / 3.0;
+    const radius = getPlanetSize(planetData.baseSize) / 3.2;
 
     const minX = radius / 30;
     const maxX = (canvas.width / 30) - (radius / 30);
@@ -95,11 +139,12 @@ function createPlanet(index, x, y = canvas.height / 30) {
     planet.createFixture(pl.Circle(radius), {
         density: 2.0,
         friction: 0.1,
-        restitution: 0.0
+        restitution: 0.3
     });
 
     planet.radius = radius;
     planet.label = `planet-${index}`;
+    planet.rotationAngle = 0; // 초기 회전 각도
 
     // 기존 createPlanet에서 로드 방식 변경
     loadImage(planetData.url)
@@ -135,21 +180,21 @@ function createWalls() {
     const leftWall = world.createBody();
     leftWall.createFixture(pl.Edge(Vec2(0, 0), Vec2(0, canvasHeight)), {
         friction: 0.1,
-        restitution: 0.0
+        restitution: 0.1
     });
     walls.push(leftWall);
 
     const rightWall = world.createBody();
     rightWall.createFixture(pl.Edge(Vec2(canvasWidth, 0), Vec2(canvasWidth, canvasHeight)), {
         friction: 0.1,
-        restitution: 0.0
+        restitution: 0.1
     });
     walls.push(rightWall);
 
     const ground = world.createBody();
     ground.createFixture(pl.Edge(Vec2(0, 0), Vec2(canvasWidth, 0)), {
         friction: 0.1,
-        restitution: 0.0
+        restitution: 0.1
     });
     walls.push(ground);
 
@@ -176,13 +221,12 @@ function drawPlanet(planet) {
     if (planet.image) {
         ctx.drawImage(
             planet.image,
-            canvasPos.x - radius,
+            canvasPos.x - radius, // 이미지 중심 위치 맞춤
             canvasPos.y - radius,
-            radius * 2,
-            radius * 2
+            radius * 2.07, // 이미지 크기를 충돌 범위와 동일하게 설정
+            radius * 2.07
         );
     } else {
-        console.warn(`Image not loaded for planet: ${planet.label}`);
         ctx.beginPath();
         ctx.arc(canvasPos.x, canvasPos.y, radius, 0, 2 * Math.PI);
         ctx.fillStyle = "gray";
@@ -203,7 +247,9 @@ resizeCanvas();
 function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    planetsList.forEach(drawPlanet);
+    planetsList.forEach((planet) => {
+        drawRotatingPlanet(planet); // 원형 유지 회전
+    });
 
     requestAnimationFrame(render);
 }
@@ -269,7 +315,7 @@ function mergePlanets(planetA, planetB, nextIndex) {
             // 점수 업데이트
             updateScore(planets[nextIndex].score);
         }
-    }, 1000); // 1초 딜레이
+    }, 100); // 1초 딜레이
 }
 
 function createEffect(x, y) {
