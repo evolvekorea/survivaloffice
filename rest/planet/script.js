@@ -10,7 +10,7 @@ canvas.height = planetArea.clientHeight;
 
 // 행성 데이터 (10개)
 const planets = [
-    { name: "명왕성", url: "https://survivaloffice.com/images/10.png", score: 10, baseSize: 0.1 },
+    { name: "명왕성", url: "https://survivaloffice.com/images/1.png", score: 10, baseSize: 0.1 },
     { name: "수성", url: "https://survivaloffice.com/images/2.png", score: 20, baseSize: 0.15 },
     { name: "화성", url: "https://survivaloffice.com/images/3.png", score: 40, baseSize: 0.25 },
     { name: "금성", url: "https://survivaloffice.com/images/4.png", score: 80, baseSize: 0.3 },
