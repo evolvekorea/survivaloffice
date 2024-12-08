@@ -94,7 +94,7 @@ async function loadTop10Rankings() {
             // HTML 리스트 아이템 생성
             rankingsHTML += `
                 <li class="ranking-item">
-                    ${medalEmoji} ${rank}위 - ${nickname}, ${score}점 <span class="date">(${formattedDate})</span>
+                    ${medalEmoji} ${rank}위 - ${nickname}, ${score}점 <span class="date">${formattedDate}</span>
                 </li>
             `;
             rank++;
@@ -109,7 +109,7 @@ async function loadTop10Rankings() {
             setTimeout(() => {
                 item.style.opacity = 1;
                 item.style.transform = 'translateY(0)';
-            }, index * 300); // 0.3초 간격
+            }, index * 500); // 0.3초 간격
         });
 
     } catch (error) {
@@ -120,10 +120,8 @@ async function loadTop10Rankings() {
 
 // 랭킹 컨테이너 클릭 시 닫기 이벤트 등록
 if (rankingContainer) {
-    rankingContainer.addEventListener('click', (event) => {
-        if (event.target === rankingContainer) {
-            rankingContainer.style.display = 'none'; // 컨테이너 닫기
-        }
+    rankingContainer.addEventListener('click', () => {
+        rankingContainer.style.display = 'none'; // 컨테이너 닫기
     });
 } else {
     console.error("ranking-container 요소를 찾을 수 없습니다.");
