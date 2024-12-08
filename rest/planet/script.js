@@ -5,8 +5,8 @@ const planetArea = document.getElementById("planet-area");
 const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d");
 planetArea.appendChild(canvas);
-canvas.width = planetArea.clientWidth;
-canvas.height = planetArea.clientHeight;
+canvas.width = 360;
+canvas.height = 640;
 
 // 행성 데이터 (10개)
 const planets = [
@@ -137,7 +137,7 @@ function createPlanet(index, x, y = canvas.height / 30) {
     });
 
     planet.createFixture(pl.Circle(radius), {
-        density: 2.0,
+        density: 3.0,
         friction: 0.2,
         restitution: 0.1
     });
@@ -204,8 +204,8 @@ function createWalls() {
 createWalls();
 
 window.addEventListener("resize", () => {
-    canvas.width = planetArea.clientWidth;
-    canvas.height = planetArea.clientHeight;
+    canvas.width = 360;
+    canvas.height = 640;
     createWalls();
 });
 
@@ -254,7 +254,7 @@ function render() {
     requestAnimationFrame(render);
 }
 
-function applyImpulse(planet, forceMultiplier = 50) {
+function applyImpulse(planet, forceMultiplier = 20) {
     const pos = planet.getPosition();
     planetsList.forEach((otherPlanet) => {
         if (otherPlanet === planet) return;

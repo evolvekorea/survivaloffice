@@ -12,21 +12,32 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: #fafafa;
     font-family: 'GangwonEduSaeeum_OTFMediumA', sans-serif;
+    overflow: hidden; /* 스크롤 방지 */
 }
 
 /* 메인 컨테이너 */
 #container {
-    max-width: 360px; /* 모바일에서 대중적인 너비 */
-    height: 640px;    /* 16:9 비율의 높이 */
-    padding: 0 10px;
+    width: 360px;
+    height: 640px;
+    padding: 0;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fafafa; /* 배경색 추가 */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* PC 화면에서 구분 */
+    border-radius: 10px; /* 경계선 둥글게 */
+    position: absolute; /* 화면 중앙 고정을 위한 절대 위치 */
+    top: 50%; /* 화면 중앙으로 이동 */
+    left: 50%;
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
 }
 
 /* 상단 UI 가로 배치 */
@@ -35,7 +46,10 @@ html, body {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    max-width: 360px; /* 모바일처럼 폭 제한 */
+    margin: 0 auto; /* 중앙 정렬 */
     padding: 10px 0;
+    gap: 10px; /* 요소 간 간격 */
 }
 
 /* 게임 타이틀 */
@@ -51,6 +65,7 @@ html, body {
     flex: 1;
     font-size: 20px;
     text-align: center;
+    margin-right: 10px; /* 추가 간격 */
 }
 
 /* 태양 합쳐졌을때 공간 */
@@ -60,7 +75,7 @@ html, body {
     justify-content: flex-end;
     align-items: center;
     padding: 5px;
-    margin-right: 80px; /* 미리보기와 겹치지 않도록 공간 확보 */
+   
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 10px;
 }
@@ -70,17 +85,38 @@ html, body {
     height: 30px;
 }
 
+/* 다음 행성 미리보기 (화면 상단 고정) */
+#next-planet-preview {
+    position: static; /* 고정 위치 해제 */
+    margin-left: 10px; /* 이전 요소와의 간격 추가 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px; /* 크기 축소 */
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    order: 3; /* game-container 내에서 위치 조정 */
+}
+
+#next-planet-preview img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+
 /* 행성 영역 */
 #planet-area {
     position: relative;
-    width: 100vw;
-    height: 100vh; /* 화면 높이에 맞추기 */
-    max-width: 100%;
-    max-height: 100vh;
+    width: 100%;
+    height: calc(100% - 80px); /* 화면에서 상단 UI 제외한 영역 */
     background-color: #2e2e3e;
     border: 2px solid #fff;
     box-sizing: border-box;
     overflow: hidden;
+    margin: 0 auto; /* 중앙 정렬 */
 }
 
 /* 행성 스타일 */
@@ -97,32 +133,6 @@ html, body {
     transform: scale(1.1);
 }
 
-/* 모바일 반응형 디자인 */
-@media (max-width: 600px) {
-    #game-container h1 {
-        font-size: 20px;
-    }
-
-    #score {
-        font-size: 18px;
-    }
-
-    #next-planet-container {
-        padding: 10px;
-    }
-
-    #next-planet {
-        width: 25px;
-        height: 25px;
-    }
-
-    #planet-area {
-        max-width: 100%;
-        max-height: 100%;
-        height: calc(100dvh - 80px);
-        min-height: 400px;
-    }
-}
 
 /* 캔버스 기본 설정 */
 canvas {
@@ -136,28 +146,5 @@ canvas {
 /* Planck.js 충돌 객체 스타일 */
 .collision {
     border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-}
-
-/* 다음 행성 미리보기 (화면 상단 고정) */
-#next-planet-preview {
-    position: absolute;
-    top: 10px;
-    right: 10px; /* 왼쪽 대신 오른쪽 위치 설정 */
-    transform: none; /* 중앙 정렬(transform) 제거 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 60px;
-    height: 60px;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    z-index: 10;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-#next-planet-preview img {
-    width: 50px;
-    height: 50px;
     border-radius: 50%;
 }
