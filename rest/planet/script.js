@@ -1,3 +1,21 @@
+// 모듈 방식으로 Firebase와 Firestore 가져오기
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getFirestore, collection, query, where, getDocs, addDoc, updateDoc, doc, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+// Firebase 초기화
+const firebaseConfig = {
+    apiKey: "AIzaSyCK4Zdkhlc0cnjqC3TpmUJmLAt8Xrh8VOw",
+    authDomain: "upupup-e4c2c.firebaseapp.com",
+    projectId: "upupup-e4c2c",
+    storageBucket: "upupup-e4c2c.appspot.com",
+    messagingSenderId: "877963060151",
+    appId: "1:877963060151:web:e70751cb30638880767e32"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
 // Planck.js 초기 설정 및 공통 변수 설정
 const pl = planck, Vec2 = pl.Vec2;
 const world = pl.World(Vec2(0, -10));
@@ -21,6 +39,48 @@ const planets = [
     { name: "목성", url: "https://survivaloffice.com/images/9.png", score: 1000, baseSize: 0.7 },
     { name: "태양", url: "https://survivaloffice.com/images/10.png", score: 2000, baseSize: 0.8 }
 ];
+
+// Firestore에서 Top 10 랭킹 데이터 가져오기
+async function loadTop10Rankings(rankingContainer) {
+    const scoresRef = collection(db, 'planet'); // Firebase 'planet' 컬렉션 사용
+    const q = query(scoresRef, orderBy('score', 'desc'), limit(10));
+
+    try {
+        const querySnapshot = await getDocs(q);
+        let rankingsHTML = '<h2>Top 10 랭킹</h2><ul>';
+
+        let rank = 1;
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const nickname = data.nickname || 'Unknown'; // 닉네임
+            const score = data.score || 0; // 점수
+            const formattedDate = data.date
+                ? data.date.toDate().toISOString().split("T")[0]
+                : '날짜 없음'; // 날짜 포맷
+
+            // 순위별 메달 추가
+            let medalEmoji = '';
+            if (rank === 1) medalEmoji = '🥇';
+            else if (rank === 2) medalEmoji = '🥈';
+            else if (rank === 3) medalEmoji = '🥉';
+
+            // HTML 생성
+            rankingsHTML += `
+                <li>
+                    ${medalEmoji} ${rank}위 - ${nickname}, ${score}점 <span>(${formattedDate})</span>
+                </li>
+            `;
+            rank++;
+        });
+
+        rankingsHTML += '</ul>';
+        rankingContainer.innerHTML = rankingsHTML;
+
+    } catch (error) {
+        console.error('Firestore에서 랭킹 데이터를 가져오는 중 오류 발생:', error);
+        rankingContainer.innerHTML = '<p>랭킹 데이터를 불러오지 못했습니다.</p>';
+    }
+}
 
 // 점수 표시
 let score = 0;
