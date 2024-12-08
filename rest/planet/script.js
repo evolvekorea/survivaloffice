@@ -112,8 +112,8 @@ function getNextPlanetIndex() {
     }
 
     const random = Math.random() * 100;
-    if (random < 90) return 0;
-    if (random < 100) return 1;
+    if (random < 60) return 0;
+    if (random < 90) return 1;
     return 2;
 }
 
@@ -272,9 +272,25 @@ function applyImpulse(planet, forceMultiplier = 50) {
     });
 }
 let lastPlanetDropTime = 0; // 마지막으로 행성이 떨어진 시간
-const planetDropDelay = 1000; // 행성이 떨어질 딜레이 (1초)
+const planetDropDelay = 200; // 행성이 떨어질 딜레이 (1초)
 
-// 클릭 이벤트 수정
+let currentPlanetIndex; // 선언
+currentPlanetIndex = getNextPlanetIndex(); // 초기화
+updateNextPlanetPreview(); // 초기 미리보기 업데이트
+
+function updateNextPlanetPreview() {
+    const nextPlanetPreview = document.getElementById("next-planet-preview");
+    nextPlanetPreview.innerHTML = ""; // 기존 내용을 제거
+
+    const nextPlanetData = planets[currentPlanetIndex];
+
+    const nextPlanetImg = document.createElement("img");
+    nextPlanetImg.src = nextPlanetData.url;
+    nextPlanetImg.alt = nextPlanetData.name;
+
+    nextPlanetPreview.appendChild(nextPlanetImg);
+}
+
 planetArea.addEventListener("click", (event) => {
     const currentTime = Date.now();
 
@@ -283,11 +299,18 @@ planetArea.addEventListener("click", (event) => {
     }
 
     const x = (event.clientX - planetArea.getBoundingClientRect().left) / 30;
-    const index = getNextPlanetIndex(); // 첫 20번은 명왕성, 이후 확률에 따라 결정
-    planetsList.push(createPlanet(index, x, canvas.height / 30));
+
+    planetsList.push(createPlanet(currentPlanetIndex, x, canvas.height / 30));
+
+    // 다음 행성 인덱스 업데이트
+    currentPlanetIndex = getNextPlanetIndex();
+
+    // 다음 행성 미리보기 업데이트
+    updateNextPlanetPreview();
 
     lastPlanetDropTime = currentTime; // 마지막 드랍 시간 갱신
 });
+
 
 // 합쳐진 행성이 주변을 밀어내도록 수정
 function mergePlanets(planetA, planetB, nextIndex) {
