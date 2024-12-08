@@ -205,15 +205,16 @@ canvas {
 }
 
 #result-popup button {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
     padding: 10px 20px;
     margin: 5px;
     border: none;
     border-radius: 5px;
-    background-color: #4CAF50;
+    background-color: #333;
     color: white;
     cursor: pointer;
 }
 
 #result-popup button:hover {
-    background-color: #45a049;
+    background-color: #333;
 }

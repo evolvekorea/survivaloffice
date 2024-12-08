@@ -15,7 +15,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
 // Planck.js 초기 설정 및 공통 변수 설정
 const pl = planck, Vec2 = pl.Vec2;
 const world = pl.World(Vec2(0, -10));
@@ -40,46 +39,94 @@ const planets = [
     { name: "태양", url: "https://survivaloffice.com/images/10.png", score: 2000, baseSize: 0.8 }
 ];
 
+// 랭킹 보기 버튼과 컨테이너 요소 가져오기
+const top10RankButton = document.getElementById('top10-rank');
+const rankingContainer = document.getElementById('ranking-container');
+
+// 버튼과 컨테이너가 존재하는지 확인
+if (top10RankButton && rankingContainer) {
+    // 랭킹 보기 버튼 클릭 이벤트 등록
+    top10RankButton.addEventListener('click', () => {
+        console.log("랭킹 보기 버튼 클릭됨");
+        rankingContainer.style.display = 'block'; // 랭킹 컨테이너 표시
+        rankingContainer.innerHTML = '<p>로딩 중...</p>'; // 로딩 중 메시지
+        loadTop10Rankings(); // Firestore에서 랭킹 데이터 로드
+    });
+} else {
+    console.error("top10-rank 버튼 또는 ranking-container 요소를 찾을 수 없습니다.");
+}
+
 // Firestore에서 Top 10 랭킹 데이터 가져오기
-async function loadTop10Rankings(rankingContainer) {
-    const scoresRef = collection(db, 'planet'); // Firebase 'planet' 컬렉션 사용
-    const q = query(scoresRef, orderBy('score', 'desc'), limit(10));
+async function loadTop10Rankings() {
+    const scoresRef = collection(db, 'planet'); // 'planet' 컬렉션 사용
+    const q = query(scoresRef, orderBy('score', 'desc'), orderBy('date', 'desc'), limit(10));
 
     try {
         const querySnapshot = await getDocs(q);
-        let rankingsHTML = '<h2>Top 10 랭킹</h2><ul>';
 
+        if (querySnapshot.empty) {
+            rankingContainer.innerHTML = '<p>랭킹 데이터가 없습니다.</p>';
+            return;
+        }
+
+        let rankingsHTML = '<h2>Top 10 랭킹</h2><ul>';
         let rank = 1;
+
         querySnapshot.forEach((doc) => {
             const data = doc.data();
-            const nickname = data.nickname || 'Unknown'; // 닉네임
-            const score = data.score || 0; // 점수
-            const formattedDate = data.date
-                ? data.date.toDate().toISOString().split("T")[0]
-                : '날짜 없음'; // 날짜 포맷
+            const nickname = data.nickname || 'Unknown'; // 닉네임 기본값
+            const score = data.score || 0; // 점수 기본값
+            let formattedDate;
 
-            // 순위별 메달 추가
+            // 날짜 필드 처리
+            if (typeof data.date === 'string') {
+                formattedDate = data.date.slice(0, 10); // "YYYY-MM-DD" 형식
+            } else {
+                formattedDate = '날짜 없음';
+            }
+
+            // 순위에 따른 메달 이모지 추가
             let medalEmoji = '';
             if (rank === 1) medalEmoji = '🥇';
             else if (rank === 2) medalEmoji = '🥈';
             else if (rank === 3) medalEmoji = '🥉';
 
-            // HTML 생성
+            // HTML 리스트 아이템 생성
             rankingsHTML += `
-                <li>
-                    ${medalEmoji} ${rank}위 - ${nickname}, ${score}점 <span>(${formattedDate})</span>
+                <li class="ranking-item">
+                    ${medalEmoji} ${rank}위 - ${nickname}, ${score}점 <span class="date">(${formattedDate})</span>
                 </li>
             `;
             rank++;
         });
 
         rankingsHTML += '</ul>';
-        rankingContainer.innerHTML = rankingsHTML;
+        rankingContainer.innerHTML = rankingsHTML; // HTML 업데이트
+
+        // 순차적으로 나타나는 애니메이션
+        const rankingItems = document.querySelectorAll('.ranking-item');
+        rankingItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.style.opacity = 1;
+                item.style.transform = 'translateY(0)';
+            }, index * 300); // 0.3초 간격
+        });
 
     } catch (error) {
         console.error('Firestore에서 랭킹 데이터를 가져오는 중 오류 발생:', error);
         rankingContainer.innerHTML = '<p>랭킹 데이터를 불러오지 못했습니다.</p>';
     }
+}
+
+// 랭킹 컨테이너 클릭 시 닫기 이벤트 등록
+if (rankingContainer) {
+    rankingContainer.addEventListener('click', (event) => {
+        if (event.target === rankingContainer) {
+            rankingContainer.style.display = 'none'; // 컨테이너 닫기
+        }
+    });
+} else {
+    console.error("ranking-container 요소를 찾을 수 없습니다.");
 }
 
 // 점수 저장 함수
@@ -88,7 +135,7 @@ async function saveScore(nickname, score) {
     const now = new Date();
     const kstOffset = 9 * 60 * 60 * 1000; // UTC+9 (밀리초)
     const kstDate = new Date(now.getTime() + kstOffset);
-    const date = kstDate.toISOString().slice(0, 19).replace("T", " ");
+    const date = kstDate.toISOString().split("T")[0]; // "YYYY-MM-DD" 형식
 
     const scoresRef = collection(db, 'planet');
     const q = query(scoresRef, where('nickname', '==', nickname || 'Unknown'));
@@ -128,8 +175,8 @@ async function saveScore(nickname, score) {
         alert('점수 저장 중 오류가 발생했습니다.');
     }
 
-    // 저장 후 새로고침
-    window.location.reload();
+    rankingContainer.style.display = "none"; // 팝업 닫기
+    alert("점수가 성공적으로 저장되었습니다.");
 }
 
 // 팝업 닫기 및 다시 시작 버튼
