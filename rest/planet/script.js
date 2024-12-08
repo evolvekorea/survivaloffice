@@ -82,6 +82,79 @@ async function loadTop10Rankings(rankingContainer) {
     }
 }
 
+// 점수 저장 함수
+async function saveScore(nickname, score) {
+    console.log("Firestore에 점수 저장 시도:", nickname, score);
+    const now = new Date();
+    const kstOffset = 9 * 60 * 60 * 1000; // UTC+9 (밀리초)
+    const kstDate = new Date(now.getTime() + kstOffset);
+    const date = kstDate.toISOString().slice(0, 19).replace("T", " ");
+
+    const scoresRef = collection(db, 'planet');
+    const q = query(scoresRef, where('nickname', '==', nickname || 'Unknown'));
+
+    try {
+        console.log("쿼리 시작");
+        const querySnapshot = await getDocs(q);
+        console.log("쿼리 결과 개수:", querySnapshot.size);
+
+        if (!querySnapshot.empty) {
+            console.log("기존 기록 발견, 업데이트 시도 중...");
+            for (const document of querySnapshot.docs) {
+                const existingRecord = document.data();
+                console.log("기존 기록:", existingRecord);
+
+                if (score > existingRecord.score) {
+                    await updateDoc(doc(db, 'planet', document.id), {
+                        score: score,
+                        date: date
+                    });
+                    alert('기록이 업데이트되었습니다.');
+                } else {
+                    alert('기록이 업데이트되지 않았습니다. 기존 점수가 더 높습니다.');
+                }
+            }
+        } else {
+            console.log("기존 기록이 없음, 새로운 문서 추가 중...");
+            await addDoc(scoresRef, {
+                nickname: nickname || 'Unknown',
+                score: score,
+                date: date
+            });
+            alert('점수가 성공적으로 저장되었습니다.');
+        }
+    } catch (error) {
+        console.error("Error adding data:", error);
+        alert('점수 저장 중 오류가 발생했습니다.');
+    }
+
+    // 저장 후 새로고침
+    window.location.reload();
+}
+
+// 팝업 닫기 및 다시 시작 버튼
+document.getElementById('closePopupButton').addEventListener('click', () => {
+    console.log("닫기 버튼 클릭됨");
+    window.location.reload();
+});
+
+// 점수 저장 버튼
+document.getElementById('saveScoreButton').addEventListener('click', async (event) => {
+    event.preventDefault();
+    const nickname = document.getElementById('nicknameInput').value;
+    if (nickname.trim() === "") {
+        alert("닉네임을 입력해주세요.");
+        return;
+    }
+    await saveScore(nickname, score);
+});
+
+// 게임 종료 팝업 표시 함수
+function showGameOverPopup() {
+    const popup = document.getElementById('result-popup');
+    popup.style.display = 'block';
+}
+
 // 점수 표시
 let score = 0;
 const scoreDisplay = document.getElementById("score");
@@ -524,7 +597,9 @@ let isGameOver = false;
 function endGame() {
     if (isGameOver) return;
     isGameOver = true;
-    alert("Game Over! 행성이 캔버스 상단을 넘었습니다.");
+
+    // 점수 저장 팝업 표시
+    showGameOverPopup();
 }
 
 // 초기화 및 렌더링 시작
