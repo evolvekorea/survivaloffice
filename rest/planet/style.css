@@ -276,3 +276,18 @@ nav ul li a:hover {
 nav ul li:last-child a {
     padding-right: 20px; /* 오른쪽에 추가 패딩 */
 }
+
+/* 배너 컨테이너 */
+#banner {
+    width: 360px; /* planet-area와 동일한 폭 */
+    margin: 10px auto; /* 중앙 정렬 및 위아래 간격 */
+    text-align: center; /* 이미지 중앙 정렬 */
+}
+
+/* 배너 이미지 */
+#banner img {
+    width: 100%; /* 배너 컨테이너 폭에 맞춤 */
+    height: auto; /* 비율 유지 */
+    border-radius: 10px; /* 선택 사항: 모서리 둥글게 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 선택 사항: 그림자 */
+}
