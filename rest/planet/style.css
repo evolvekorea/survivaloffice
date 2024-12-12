@@ -48,7 +48,7 @@ html, body {
     justify-content: space-between;
     width: 100%;
     max-width: 360px; /* 모바일처럼 폭 제한 */
-    margin: 0 auto; /* 중앙 정렬 */
+    margin: 70px auto 0; /* 상단 여백, 중앙 정렬 */
     padding: 10px 0;
     gap: 10px; /* 요소 간 간격 */
 }
