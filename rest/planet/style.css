@@ -42,13 +42,12 @@ html, body {
 
 /* 상단 UI 가로 배치 */
 #game-container {
-    margin-top: 70px; /* 네비게이션 높이 + 추가 공간 */
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     max-width: 360px; /* 모바일처럼 폭 제한 */
-    margin: 70px auto 0; /* 상단 여백, 중앙 정렬 */
+    margin: 0 auto; /* 중앙 정렬 */
     padding: 10px 0;
     gap: 10px; /* 요소 간 간격 */
 }
@@ -290,5 +289,4 @@ nav ul li:last-child a {
     width: 100%; /* 배너 컨테이너 폭에 맞춤 */
     height: auto; /* 비율 유지 */
     border-radius: 10px; /* 선택 사항: 모서리 둥글게 */
-
 }
