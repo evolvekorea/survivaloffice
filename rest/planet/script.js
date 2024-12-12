@@ -502,7 +502,16 @@ function mergePlanets(planetA, planetB, nextIndex) {
     // 충돌 이펙트 생성
     const canvasPos = toCanvasCoords(position);
     createEffect(canvasPos.x, canvasPos.y);
+    
+    // 태양끼리 합쳐졌는지 확인
+    if (nextIndex === null) {
+        // 점수 추가 (예: 태양 합성 시 5000점 추가)
+        updateScore(5000);
 
+        // 효과 (선택 사항)
+        const canvasPos = toCanvasCoords(position);
+        createEffect(canvasPos.x, canvasPos.y);
+    }    
     // 딜레이 후 새 행성 생성
     setTimeout(() => {
         if (nextIndex !== null) {
@@ -612,8 +621,6 @@ function update() {
 
             planetsList.splice(planetsList.indexOf(planetA), 1);
             planetsList.splice(planetsList.indexOf(planetB), 1);
-
-            addSunToNextContainer(); // 태양 이미지를 next-planet-container에 추가
 
         } else {
             mergePlanets(planetA, planetB, nextIndex);
