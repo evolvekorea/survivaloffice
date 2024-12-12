@@ -290,5 +290,5 @@ nav ul li:last-child a {
     width: 100%; /* 배너 컨테이너 폭에 맞춤 */
     height: auto; /* 비율 유지 */
     border-radius: 10px; /* 선택 사항: 모서리 둥글게 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 선택 사항: 그림자 */
+
 }
