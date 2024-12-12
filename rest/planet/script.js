@@ -23,7 +23,7 @@ const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d");
 planetArea.appendChild(canvas);
 canvas.width = 360;
-canvas.height = 500;
+canvas.height = 600;
 
 // 행성 데이터 (10개)
 const planets = [
