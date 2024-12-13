@@ -200,7 +200,7 @@ canvas {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     text-align: center;
-    z-index: 1000;
+    z-index: 1100;
 }
 
 #result-popup h2 {
@@ -209,9 +209,8 @@ canvas {
 }
 
 #result-popup input {
-    width: 80%;
+    width: 50%;
     padding: 10px;
-    margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -228,7 +227,21 @@ canvas {
 }
 
 #result-popup button:hover {
-    background-color: #333;
+    background-color: #555;
+}
+
+#result-popup div:first-of-type {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#result-popup div:last-of-type {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 /* 상단 네비게이션 스타일 */

@@ -48,10 +48,17 @@
 
     <div id="result-popup" style="display: none;">
         <h2>게임 종료</h2>
-        <input type="text" id="nicknameInput" placeholder="닉네임 입력" />
-        <button id="saveScoreButton" type="button">점수 등록</button>
-        <button id="closePopupButton" type="button">다시 하기</button>
-    </div>    
+        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px;">
+            <input type="text" id="nicknameInput" placeholder="닉네임 입력" />
+            <button id="saveScoreButton" type="button">점수 등록</button>
+        </div>
+        <div>
+            <button id="closePopupButton" type="button">다시 하기</button>
+            <button id="playOtherGamesButton" type="button" onclick="location.href='https://survivaloffice.com/rest'">
+                다른 게임 하기
+            </button>
+        </div>
+    </div>
 
     <!-- 게임 스크립트 -->
     <script type="module" src="script.js"></script>
