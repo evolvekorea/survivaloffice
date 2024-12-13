@@ -303,3 +303,16 @@ nav ul li:last-child a {
     height: auto; /* 비율 유지 */
     border-radius: 10px; /* 선택 사항: 모서리 둥글게 */
 }
+
+#saveScoreButton {
+    background-color: #007bff !important; /* 우선순위를 높이기 위해 !important 사용 */
+    color: white !important;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#saveScoreButton:hover {
+    background-color: #0056b3 !important; /* 호버 상태에서도 우선순위 높이기 */
+}
