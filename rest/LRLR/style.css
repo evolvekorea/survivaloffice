@@ -285,21 +285,17 @@ canvas {
 #arrows {
     position: absolute;
     bottom: 10%;
-    width: 100%;
+    width: 90%;
     display: flex;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 15px;
 }
 
 #arrows button {
-    font-size: 2rem;
-    background-color: #f1f1f1;
+    font-size: 3rem;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;
 }
 
-#arrows button:hover {
-    background-color: #ddd;
-}
