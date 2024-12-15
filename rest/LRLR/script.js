@@ -15,6 +15,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+
+document.addEventListener("DOMContentLoaded", () => {
 // 랭킹 보기 버튼과 컨테이너 요소 가져오기
 const top10RankButton = document.getElementById('top10-rank');
 const rankingContainer = document.getElementById('ranking-container');
@@ -185,16 +187,34 @@ const rightAnimal = document.getElementById("right-animal");
 const startButton = document.getElementById("start-button");
 
 // 동물 목록
-const animals = ["🐶", "🐱", "🐰", "🐵", "🐼", "🦊", "🐸"];
+const animals = ["🐶", "🐱", "🐰", "🐵", "🐷", "🦁", "🐮"];
 
-// 게임 시작 함수
+// 기존 게임 시작 함수에 추가 기능 포함
 startButton.addEventListener("click", startGame);
 
 function startGame() {
-  score = 0;
-  scoreDisplay.textContent = score;
-  isGameRunning = true;
-  generateAnimals();
+    // 1. 초기화 로직
+    score = 0;
+    scoreDisplay.textContent = score;
+    isGameRunning = true;
+
+    // 2. 새로운 동작 추가
+    // 스타트 버튼 숨기기
+    startButton.style.display = "none";
+
+    // 게임 영역에서 배경 이미지 제거 및 검은색 배경 설정
+    LRLRArea.style.setProperty("background-image", "none", "important");
+    LRLRArea.style.setProperty("background-color", "black", "important");
+
+    // 게임 UI 표시
+    centerAnimal.style.display = "block";
+    leftAnimal.style.display = "block";
+    rightAnimal.style.display = "block";
+    timerContainer.style.display = "block";
+
+    // 3. 기존 동작 실행
+    generateAnimals(); // 동물 생성 함수 실행
+    console.log("게임이 시작되었습니다!");
 }
 
 // 동물 생성 함수
@@ -272,5 +292,5 @@ function endGame() {
 // 게임 시작 시 타이머 시작
 startButton.addEventListener("click", () => {
     startTimer(); // 타이머 시작
+})
 });
-

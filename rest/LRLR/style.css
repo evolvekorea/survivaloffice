@@ -81,9 +81,8 @@ html, body {
     font-family: 'GangwonEduSaeeum_OTFMediumA', sans-serif;
 }
 
-/* 행성 영역 */
+/* 게임 영역 */
 #LRLR-area {
-    background-image: url('https://www.survivaloffice.com/rest/lion'); /* 이미지 URL 설정 */
     background-size: cover; /* 이미지를 영역에 맞게 채우기 */
     background-position: center; /* 중앙 정렬 */
     background-repeat: no-repeat; /* 반복 없음 */
