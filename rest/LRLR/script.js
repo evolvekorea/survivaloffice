@@ -44,8 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let remainingTime = 30;
     let timerInterval;
     const availableAnimals = ["🐶", "🐱", "🐰", "🐵", "🐷", "🦁", "🐮"];
-    let dynamicAnimals = [];
-    
+    let dynamicAnimals = ["🐶", "🐱"];
 
     // 스타트 버튼 클릭 이벤트
     startButton.addEventListener("click", () => {
