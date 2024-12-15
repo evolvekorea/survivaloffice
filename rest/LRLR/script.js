@@ -43,7 +43,16 @@ document.addEventListener("DOMContentLoaded", () => {
     let isGameRunning = false;
     let remainingTime = 30;
     let timerInterval;
-    const availableAnimals = ["🐶", "🐱", "🐰", "🐵", "🐷", "🦁", "🐮"];
+    const availableAnimals = [
+        "https://survivaloffice.com/images/a.png", // 예시 이미지 경로
+        "https://survivaloffice.com/images/b.png",
+        "https://survivaloffice.com/images/c.png",
+        "https://survivaloffice.com/images/d.png",
+        "https://survivaloffice.com/images/e.png",
+        "https://survivaloffice.com/images/f.png",
+        "https://survivaloffice.com/images/g.png",
+        "https://survivaloffice.com/images/h.png"
+    ];
 
 
     // 스타트 버튼 클릭 이벤트
@@ -92,33 +101,41 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     function assignRandomAnimals() {
-        const [leftAnimalChar, rightAnimalChar] = getRandomAnimals();
+        const [leftAnimalImg, rightAnimalImg] = getRandomAnimals();
     
-        // 좌우 화살표 동물 설정
-        leftAnimal.textContent = leftAnimalChar;
-        rightAnimal.textContent = rightAnimalChar;
+        // 좌측 동물 렌더링
+        leftAnimal.innerHTML = ""; // 기존 내용 초기화
+        renderAnimal(leftAnimal, leftAnimalImg);
+    
+        // 우측 동물 렌더링
+        rightAnimal.innerHTML = ""; // 기존 내용 초기화
+        renderAnimal(rightAnimal, rightAnimalImg);
     
         // 중앙 동물 리스트와 동기화
         renderInitialAnimals();
+    }
+
+    function renderAnimal(container, imagePath) {
+        const img = document.createElement("img"); // img 태그 생성
+        img.src = imagePath; // 이미지 경로 설정
+        img.alt = "Animal"; // 접근성 설정
+        img.className = "animal-img"; // CSS 클래스 추가
+    
+        container.appendChild(img); // 컨테이너에 추가
     }
 
     function renderInitialAnimals() {
         centerAnimal.innerHTML = ""; // 초기화
         animalQueue.length = 0; // 기존 큐 초기화
     
-        // 좌우 화살표 동물 리스트 생성
-        const leftOptions = leftAnimal.textContent.split(" ");
-        const rightOptions = rightAnimal.textContent.split(" ");
+        const leftOptions = Array.from(leftAnimal.children).map(img => img.src);
+        const rightOptions = Array.from(rightAnimal.children).map(img => img.src);
         const allOptions = [...leftOptions, ...rightOptions];
     
         for (let i = 0; i < 5; i++) {
             const randomAnimal = allOptions[Math.floor(Math.random() * allOptions.length)];
             animalQueue.push(randomAnimal);
-    
-            const animalElement = document.createElement("div");
-            animalElement.textContent = randomAnimal;
-            animalElement.className = "center-animal-item";
-            centerAnimal.appendChild(animalElement);
+            renderAnimal(centerAnimal, randomAnimal); // 이미지 렌더링
         }
     }
 
@@ -133,24 +150,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const animalQueue = [];
 
     function generateInitialAnimals() {
-        while (animalQueue.length < 10) {
+        animalQueue.length = 0; // 큐 초기화
+    
+        for (let i = 0; i < 10; i++) {
             const randomAnimal = availableAnimals[Math.floor(Math.random() * availableAnimals.length)];
-            animalQueue.push(randomAnimal);
+            animalQueue.push(randomAnimal); // 이미지 경로 추가
         }
         renderCenterAnimals();
     }
 
     function renderCenterAnimals() {
-        centerAnimal.innerHTML = ""; // 기존 요소 초기화
+        centerAnimal.innerHTML = ""; // 기존 내용 초기화
     
-        // 중앙에 표시할 동물 5개를 가져옴
-        const visibleAnimals = animalQueue.slice(0, 5);
+        const visibleAnimals = animalQueue.slice(0, 5); // 상위 5개만 표시
     
-        visibleAnimals.forEach((animal) => {
-            const animalElement = document.createElement("div");
-            animalElement.textContent = animal;
-            animalElement.className = "center-animal-item";
-            centerAnimal.appendChild(animalElement); // 기존 순서대로 추가 (위에서 아래로)
+        visibleAnimals.forEach((animalImg) => {
+            renderAnimal(centerAnimal, animalImg); // 이미지 추가
         });
     }
 
@@ -173,24 +188,22 @@ document.addEventListener("DOMContentLoaded", () => {
             score += 10;
             combo += 1;
     
-            // 200점마다 새로운 동물 추가
             if (score % 200 === 0) {
                 const remainingAnimals = availableAnimals.filter(animal => {
-                    const currentAnimals = [
-                        ...leftAnimal.textContent.split(" "),
-                        ...rightAnimal.textContent.split(" "),
+                    const currentImages = [
+                        ...Array.from(leftAnimal.children).map(child => child.src),
+                        ...Array.from(rightAnimal.children).map(child => child.src)
                     ];
-                    return !currentAnimals.includes(animal);
+                    return !currentImages.includes(animal);
                 });
     
                 if (remainingAnimals.length > 0) {
-                    const newAnimal = remainingAnimals[Math.floor(Math.random() * remainingAnimals.length)];
+                    const newAnimalImg = remainingAnimals[Math.floor(Math.random() * remainingAnimals.length)];
     
-                    // 랜덤으로 좌우 화살표에 동물을 추가
                     if (Math.random() < 0.5) {
-                        leftAnimal.textContent += `${newAnimal}`; // 왼쪽에 추가
+                        renderAnimal(leftAnimal, newAnimalImg); // 왼쪽에 추가
                     } else {
-                        rightAnimal.textContent += `${newAnimal}`; // 오른쪽에 추가
+                        renderAnimal(rightAnimal, newAnimalImg); // 오른쪽에 추가
                     }
                 }
             }
@@ -213,8 +226,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function moveAnimal(direction) {
         const lastAnimal = animalQueue[animalQueue.length - 1]; // 맨 아래 동물
-        const leftOptions = leftAnimal.textContent.split(", ");
-        const rightOptions = rightAnimal.textContent.split(", ");
+        const leftOptions = Array.from(leftAnimal.children).map(img => img.src);
+        const rightOptions = Array.from(rightAnimal.children).map(img => img.src);
+    
         const isCorrect =
             (direction === "left" && leftOptions.includes(lastAnimal)) ||
             (direction === "right" && rightOptions.includes(lastAnimal));
@@ -222,19 +236,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (isCorrect) {
             updateScore(true); // 점수 상승
     
-            // 맨 아래 동물 제거
-            animalQueue.pop();
-    
-            // 새로운 동물 추가 (맨 위에 추가)
+            // 중앙 동물 큐 업데이트
+            animalQueue.pop(); // 맨 아래 동물 제거
             const allOptions = [...leftOptions, ...rightOptions];
             const newAnimal = allOptions[Math.floor(Math.random() * allOptions.length)];
-            animalQueue.unshift(newAnimal);
+            animalQueue.unshift(newAnimal); // 새로운 동물을 맨 위에 추가
     
-            // 중앙 동물 리스트 UI 갱신
-            const animalElements = centerAnimal.children;
-            for (let i = 0; i < animalQueue.length; i++) {
-                animalElements[i].textContent = animalQueue[i];
-            }
+            // UI 동기화
+            renderCenterAnimals();
         } else {
             updateScore(false); // 점수 초기화
         }
