@@ -237,24 +237,50 @@ canvas {
     z-index: 1;
     pointer-events: none; /* 클릭 이벤트 무시 */
 }
+
+/* 중앙 동물: 세로 방향으로 정렬 */
 #center-animal {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px; /* 간격 */
+    flex-direction: column-reverse;
+    align-items: center; /* 가로 중앙 정렬 */
+    top: 20%; /* 중앙 맞춤 */
+    position: absolute; /* 위치 조정을 위해 absolute 사용 */
+    left: 50%; 
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
+
 }
 
-  .center-animal-item {
+/* 개별 중앙 동물 스타일 */
+.center-animal-item {
     font-size: 3rem;
     color: black;
-}  
-  
+}
+
+/* 좌우 동물: 고정된 위치 */
 #left-animal, #right-animal {
-    font-size: 3rem;
+    display: flex; /* Flexbox 활성화 */
+    flex-direction: column; /* 세로 방향 정렬 */
+    font-size: 2.5rem;
     color: gray;
     cursor: pointer;
-    display: none;
-  }
+    position: absolute; /* 절대 위치 */
+    top: 65%; /* 중앙 맞춤 */
+    transform: translateY(-50%); /* 세로 정렬 보정 */
+    align-items: center; /* 가로 중앙 정렬 */
+    justify-content: center; /* 세로 중앙 정렬 (선택 사항) */
+}
+
+/* 왼쪽 동물 위치 */
+#left-animal {
+    left: 10%; /* 화면 왼쪽 10% 위치 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+/* 오른쪽 동물 위치 */
+#right-animal {
+    right: 10%; /* 화면 오른쪽 10% 위치 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
 
   #start-button {
     position: absolute; /* 부모 기준으로 위치 조정 가능 */
