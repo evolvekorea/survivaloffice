@@ -81,30 +81,13 @@ html, body {
     font-family: 'GangwonEduSaeeum_OTFMediumA', sans-serif;
 }
 
-/* 다음 행성 미리보기 (화면 상단 고정) */
-#next-planet-preview {
-    position: static; /* 고정 위치 해제 */
-    margin-left: 10px; /* 이전 요소와의 간격 추가 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px; /* 크기 축소 */
-    height: 50px;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    order: 3; /* game-container 내에서 위치 조정 */
-}
-
-#next-planet-preview img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-}
-
-
 /* 행성 영역 */
-#planet-area {
+#LRLR-area {
+    background-image: url('https://www.survivaloffice.com/rest/lion'); /* 이미지 URL 설정 */
+    background-size: cover; /* 이미지를 영역에 맞게 채우기 */
+    background-position: center; /* 중앙 정렬 */
+    background-repeat: no-repeat; /* 반복 없음 */
+    display: block; /* 항상 표시 */
     position: relative;
     width: 100%;
     height: calc(100% - 80px); /* 화면에서 상단 UI 제외한 영역 */
@@ -115,21 +98,6 @@ html, body {
     margin: 0 auto; /* 중앙 정렬 */
 }
 
-/* 행성 스타일 */
-.planet {
-    position: absolute;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    z-index: 1;
-}
-
-/* 행성 크기 및 효과 */
-.planet:hover {
-    transform: scale(1.1);
-}
-
-
 /* 캔버스 기본 설정 */
 canvas {
     display: block;
@@ -137,12 +105,6 @@ canvas {
     width: 100%; /* 부모 크기에 맞춤 */
     height: 100%; /* 부모 크기에 맞춤 */
     object-fit: contain;
-}
-
-/* Planck.js 충돌 객체 스타일 */
-.collision {
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
 }
 
 /* 랭킹 컨테이너 */
@@ -177,7 +139,6 @@ canvas {
     transition: all 0.3s ease-in-out;
 }
 
-
 /* 날짜 공통 스타일 */
 .ranking-item .date {
     float: right; /* 우측 정렬 */
@@ -186,7 +147,6 @@ canvas {
     margin-top: 2px; /* 위아래 간격 */
     width: 100px; /* 고정 폭 설정 */
     text-align: right; /* 텍스트 우측 정렬 */
-  
 }
 
 #result-popup {
@@ -244,75 +204,60 @@ canvas {
     margin-top: 10px;
 }
 
-/* 상단 네비게이션 스타일 */
-nav {
-    background-color: #f4f4f4;
-    padding: 10px;
-    width: 100%; /* 전체 너비 사용 */
-    position: fixed; /* 화면 상단에 고정 */
-    top: 0;
-    left: 0;
-    z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
+/* 타이머 컨테이너 (화면 가장 아래 위치) */
+#timer-container {
+    width: 360px;
+    height: 30px;
+    background-color: #ddd;
+    position: absolute; /* 절대 위치 지정 */
+    bottom: 0; /* 화면의 맨 아래로 이동 */
+    left: 50%; /* 화면 중앙 정렬 */
+    transform: translateX(-50%); /* 중앙 정렬 보정 */
+    overflow: hidden;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
-/* 네비게이션 리스트 스타일 */
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: flex-end;
-    margin: 0;
-    padding: 0;
+/* 타이머 바 */
+#timer-bar {
+    position: relative; /* 자식 요소 기준점 설정 */
+    height: 100%; /* 부모 높이에 맞춤 */
+    background-color: #76c7c0;
+    transition: width 1s linear; /* 애니메이션 */
+    width: 100%; /* 부모 폭에 맞춤 */
+    display: flex; /* 자식 요소 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: center; /* 가로 중앙 정렬 */
 }
 
-/* 네비게이션 아이템 스타일 */
-nav ul li {
-    display: inline;
+/* 타이머 텍스트 */
+#timer-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    z-index: 1;
+    pointer-events: none; /* 클릭 이벤트 무시 */
 }
+#center-animal {
+    font-size: 3rem;
+    color: black;
+  }
+  
+#left-animal, #right-animal {
+    font-size: 3rem;
+    color: gray;
+    cursor: pointer;
+  }
 
-/* 네비게이션 링크 스타일 */
-nav ul li a {
-    color: rgb(62, 62, 62);
-    text-decoration: none;
-    padding: 8px 12px;
-    font-size: 14px;
-    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
-}
-
-/* 네비게이션 링크 호버 효과 */
-nav ul li a:hover {
-    background-color: #555;
-    color: #fff;
-}
-
-/* 네비게이션 가장 우측 아이템에만 추가 패딩 */
-nav ul li:last-child a {
-    padding-right: 20px; /* 오른쪽에 추가 패딩 */
-}
-
-/* 배너 컨테이너 */
-#banner {
-    width: 360px; /* planet-area와 동일한 폭 */
-    margin: 10px auto; /* 중앙 정렬 및 위아래 간격 */
-    text-align: center; /* 이미지 중앙 정렬 */
-}
-
-/* 배너 이미지 */
-#banner img {
-    width: 100%; /* 배너 컨테이너 폭에 맞춤 */
-    height: auto; /* 비율 유지 */
-    border-radius: 10px; /* 선택 사항: 모서리 둥글게 */
-}
-
-#saveScoreButton {
-    background-color: #007bff !important; /* 우선순위를 높이기 위해 !important 사용 */
-    color: white !important;
-    border: none;
+  #start-button {
+    position: absolute; /* 부모 기준으로 위치 조정 가능 */
+    top: 70%; /* 부모 요소의 60% 높이에서 위치 */
+    left: 50%; /* 부모 요소의 중앙 */
+    transform: translate(-50%, -50%); /* 정확한 중앙 정렬 보정 */
     padding: 10px 20px;
+    font-size: 1rem;
+    background: #007bff;
+    color: white;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-
-#saveScoreButton:hover {
-    background-color: #0056b3 !important; /* 호버 상태에서도 우선순위 높이기 */
 }

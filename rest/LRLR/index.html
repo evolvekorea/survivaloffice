@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>우왕좌왕 동물 게임</title>
+    <meta name="description" content="우왕좌왕 동물 게임">
+    <meta name="keywords" content="우왕좌왕, 동물게임, 이쪽저쪽게임, 미니게임">
+    
+    <!-- Google Adsense 코드 -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537"
+    crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-4957586937754537">  
+    
+    <!-- Google Analytics 코드 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-G4TPWGLYLY');
+    </script>    
+
+    <!-- Open Graph 메타태그 -->
+    <meta property="og:title" content="우왕좌왕 동물 게임" />
+    <meta property="og:description" content="우왕좌왕 동물 게임" />
+    <meta property="og:url" content="https://www.survivaloffice.com/rest/LRLR" />
+    <meta property="og:image" content="https://www.survivaloffice.com/images/LRLR" />
+    <meta property="og:type" content="website" />
+
+    <!-- CSS 스타일시트 추가 -->
+    <link rel="stylesheet" href="style.css">
+
+    <body oncontextmenu="return false">
+
+        <!-- 게임 컨테이너 -->
+        <div id="game-container">
+            <h1><a href="/">우왕좌왕 <BR> 동물게임</a></h1>
+            <div id="score">SCORE <BR> 0</div>
+            <button id="top10-rank">랭킹 보기</button>
+            <div id="next-planet-preview"></div>               
+        </div>
+    
+        <!-- 게임 영역 -->
+        <div id="LRLR-area" style="width: 360px; height: 500px;">
+            <div id="center-animal">🐶</div>
+            <div id="left-animal">🐱</div>
+            <div id="right-animal">🐰</div>
+            <button id="start-button">Start Game</button>
+            <div id="timer-container">
+                <div id="timer-bar">
+                    <span id="timer-text">30초</span>
+                </div>
+            </div>    
+        </div>        
+
+        <div id="ranking-container" style="display: none;">
+            <h2>Top 10 랭킹</h2>
+            <ul id="ranking-list"></ul>
+        </div>
+    
+        <div id="result-popup" style="display: none;">
+            <h2>게임 종료</h2>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px;">
+                <input type="text" id="nicknameInput" placeholder="닉네임 입력" />
+                <button id="saveScoreButton" type="button">점수 등록</button>
+            </div>
+            <div>
+                <button id="closePopupButton" type="button">다시 하기</button>
+                <button id="playOtherGamesButton" type="button" onclick="location.href='https://survivaloffice.com/rest'">
+                    다른 게임 하기
+                </button>
+            </div>
+        </div>
+    
+
+
+        <!-- 게임 스크립트 -->
+        <script type="module" src="script.js"></script>
+        <script>
+            document.addEventListener('contextmenu', (event) => {
+                event.preventDefault(); // 우클릭 방지
+            });
+        </script>
+    
+        <footer>
+    
+            <script src="https://ads-partners.coupang.com/g.js"></script>
+            <script>
+                new PartnersCoupang.G({"id":810614,"trackingCode":"AF4453761","subId":null,"template":"carousel","width":"360","height":"50"});
+            </script>
+      </footer>      
+    </body>
+</html>
