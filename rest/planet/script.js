@@ -1,1 +1,664 @@
-const _0xbe53ca=_0x179c;(function(_0x328e50,_0x176149){const _0xc16416=_0x179c,_0x599a7d=_0x328e50();while(!![]){try{const _0x339811=-parseInt(_0xc16416(0x1ba))/0x1+-parseInt(_0xc16416(0x1a5))/0x2*(-parseInt(_0xc16416(0x1a4))/0x3)+parseInt(_0xc16416(0x1f4))/0x4+-parseInt(_0xc16416(0x1e6))/0x5+parseInt(_0xc16416(0x1de))/0x6+-parseInt(_0xc16416(0x17d))/0x7+-parseInt(_0xc16416(0x17e))/0x8*(-parseInt(_0xc16416(0x166))/0x9);if(_0x339811===_0x176149)break;else _0x599a7d['push'](_0x599a7d['shift']());}catch(_0x21c277){_0x599a7d['push'](_0x599a7d['shift']());}}}(_0x5563,0x23f31));import{initializeApp}from'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';import{getFirestore,collection,query,where,getDocs,addDoc,updateDoc,doc,orderBy,limit}from'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';const firebaseConfig={'apiKey':'AIzaSyCK4Zdkhlc0cnjqC3TpmUJmLAt8Xrh8VOw','authDomain':_0xbe53ca(0x163),'projectId':_0xbe53ca(0x1c6),'storageBucket':_0xbe53ca(0x18d),'messagingSenderId':'877963060151','appId':_0xbe53ca(0x1e8)},app=initializeApp(firebaseConfig),db=getFirestore(app),pl=planck,Vec2=pl['Vec2'],world=pl[_0xbe53ca(0x1ad)](Vec2(0x0,-0xa)),planetArea=document[_0xbe53ca(0x18e)](_0xbe53ca(0x1a7)),canvas=document[_0xbe53ca(0x1c1)](_0xbe53ca(0x1d9)),ctx=canvas[_0xbe53ca(0x1f1)]('2d');planetArea[_0xbe53ca(0x170)](canvas),canvas[_0xbe53ca(0x188)]=0x168,canvas['height']=0x1c2;const planets=[{'name':_0xbe53ca(0x16b),'url':_0xbe53ca(0x1d2),'score':0xa,'baseSize':0.1},{'name':'수성','url':'https://survivaloffice.com/images/2.png','score':0x14,'baseSize':0.12},{'name':'화성','url':_0xbe53ca(0x1c0),'score':0x28,'baseSize':0.2},{'name':'금성','url':_0xbe53ca(0x19f),'score':0x50,'baseSize':0.22},{'name':'지구','url':_0xbe53ca(0x1b2),'score':0x78,'baseSize':0.3},{'name':_0xbe53ca(0x1b0),'url':_0xbe53ca(0x195),'score':0xc8,'baseSize':0.35},{'name':_0xbe53ca(0x1bc),'url':_0xbe53ca(0x1b6),'score':0x190,'baseSize':0.41},{'name':'토성','url':'https://survivaloffice.com/images/8.png','score':0x258,'baseSize':0.47},{'name':'목성','url':_0xbe53ca(0x16e),'score':0x3e8,'baseSize':0.52},{'name':'태양','url':_0xbe53ca(0x1cc),'score':0x7d0,'baseSize':0.65}],top10RankButton=document['getElementById'](_0xbe53ca(0x171)),rankingContainer=document['getElementById']('ranking-container');top10RankButton&&rankingContainer?top10RankButton[_0xbe53ca(0x177)]('click',()=>{const _0x3ecbbc=_0xbe53ca;console[_0x3ecbbc(0x1a9)](_0x3ecbbc(0x186)),rankingContainer['style'][_0x3ecbbc(0x1c8)]=_0x3ecbbc(0x178),rankingContainer[_0x3ecbbc(0x1d8)]=_0x3ecbbc(0x1c9),loadTop10Rankings();}):console['error'](_0xbe53ca(0x1f0));async function loadTop10Rankings(){const _0x10769e=_0xbe53ca,_0x4aecb7=collection(db,'planet'),_0x1a4e74=query(_0x4aecb7,orderBy('score',_0x10769e(0x1c2)),orderBy(_0x10769e(0x1b3),'desc'),limit(0xa));try{const _0x448972=await getDocs(_0x1a4e74);if(_0x448972[_0x10769e(0x196)]){rankingContainer[_0x10769e(0x1d8)]=_0x10769e(0x181);return;}let _0xcda556='<h2>Top\x2010\x20랭킹</h2><ul>',_0x368e99=0x1;_0x448972[_0x10769e(0x16a)](_0x3f463f=>{const _0x9f84a8=_0x10769e,_0x3b6200=_0x3f463f['data'](),_0x29781e=_0x3b6200[_0x9f84a8(0x190)]||'Unknown',_0x14bb17=_0x3b6200[_0x9f84a8(0x1e1)]||0x0;let _0x4ba89c;typeof _0x3b6200[_0x9f84a8(0x1b3)]==='string'?_0x4ba89c=_0x3b6200[_0x9f84a8(0x1b3)]['slice'](0x0,0xa):_0x4ba89c=_0x9f84a8(0x1e9);let _0x2549ef='';if(_0x368e99===0x1)_0x2549ef='🥇';else{if(_0x368e99===0x2)_0x2549ef='🥈';else{if(_0x368e99===0x3)_0x2549ef='🥉';}}_0xcda556+=_0x9f84a8(0x1dd)+_0x2549ef+'\x20'+_0x368e99+_0x9f84a8(0x1d1)+_0x29781e+',\x20'+_0x14bb17+_0x9f84a8(0x1df)+_0x4ba89c+'</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</li>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',_0x368e99++;}),_0xcda556+=_0x10769e(0x1b8),rankingContainer[_0x10769e(0x1d8)]=_0xcda556;const _0x2f2e16=document[_0x10769e(0x17a)](_0x10769e(0x189));_0x2f2e16[_0x10769e(0x16a)]((_0x5620b6,_0xde5385)=>{setTimeout(()=>{const _0x13fab2=_0x179c;_0x5620b6['style'][_0x13fab2(0x1e4)]=0x1,_0x5620b6[_0x13fab2(0x1ea)]['transform']='translateY(0)';},_0xde5385*0x1f4);});}catch(_0x55d9be){console['error']('Firestore에서\x20랭킹\x20데이터를\x20가져오는\x20중\x20오류\x20발생:',_0x55d9be),rankingContainer[_0x10769e(0x1d8)]=_0x10769e(0x168);}}rankingContainer?rankingContainer[_0xbe53ca(0x177)](_0xbe53ca(0x1d5),()=>{const _0x217062=_0xbe53ca;rankingContainer[_0x217062(0x1ea)][_0x217062(0x1c8)]='none';}):console[_0xbe53ca(0x1d6)]('ranking-container\x20요소를\x20찾을\x20수\x20없습니다.');async function saveScore(_0x505e28,_0x256d9d){const _0x493a3c=_0xbe53ca;console[_0x493a3c(0x1a9)](_0x493a3c(0x18f),_0x505e28,_0x256d9d);const _0x782d47=new Date(),_0x48c30f=0x9*0x3c*0x3c*0x3e8,_0x1a4ce4=new Date(_0x782d47[_0x493a3c(0x187)]()+_0x48c30f),_0x1d079d=_0x1a4ce4['toISOString']()[_0x493a3c(0x1b7)]('T')[0x0],_0x5c87e0=collection(db,_0x493a3c(0x1e2)),_0x570082=query(_0x5c87e0,where(_0x493a3c(0x190),'==',_0x505e28||_0x493a3c(0x18c)));try{console['log'](_0x493a3c(0x1a8));const _0x109132=await getDocs(_0x570082);console['log'](_0x493a3c(0x1bf),_0x109132[_0x493a3c(0x1ef)]);if(!_0x109132[_0x493a3c(0x196)]){console[_0x493a3c(0x1a9)](_0x493a3c(0x16c));for(const _0x727224 of _0x109132[_0x493a3c(0x1a3)]){const _0xa669ff=_0x727224[_0x493a3c(0x175)]();console[_0x493a3c(0x1a9)](_0x493a3c(0x1f2),_0xa669ff),_0x256d9d>_0xa669ff[_0x493a3c(0x1e1)]?(await updateDoc(doc(db,_0x493a3c(0x1e2),_0x727224['id']),{'score':_0x256d9d,'date':_0x1d079d}),alert(_0x493a3c(0x1db))):alert(_0x493a3c(0x1da));}}else console[_0x493a3c(0x1a9)]('기존\x20기록이\x20없음,\x20새로운\x20문서\x20추가\x20중...'),await addDoc(_0x5c87e0,{'nickname':_0x505e28||_0x493a3c(0x18c),'score':_0x256d9d,'date':_0x1d079d}),alert(_0x493a3c(0x194));}catch(_0x396eee){console[_0x493a3c(0x1d6)](_0x493a3c(0x184),_0x396eee),alert('점수\x20저장\x20중\x20오류가\x20발생했습니다.');};}document['getElementById'](_0xbe53ca(0x1e5))[_0xbe53ca(0x177)](_0xbe53ca(0x1d5),()=>{const _0x35be56=_0xbe53ca;console[_0x35be56(0x1a9)](_0x35be56(0x16d)),window[_0x35be56(0x1a2)][_0x35be56(0x1be)]();}),document[_0xbe53ca(0x18e)](_0xbe53ca(0x1c4))['addEventListener'](_0xbe53ca(0x1d5),async _0x1a5a1e=>{const _0x5e978c=_0xbe53ca;_0x1a5a1e[_0x5e978c(0x174)]();const _0x4cae5a=document[_0x5e978c(0x18e)]('nicknameInput')[_0x5e978c(0x199)];if(_0x4cae5a[_0x5e978c(0x1c3)]===0x0){alert(_0x5e978c(0x1e7));return;}else{if(_0x4cae5a[_0x5e978c(0x1c3)]>0x5){alert(_0x5e978c(0x193));return;}}await saveScore(_0x4cae5a,score);});function showGameOverPopup(){const _0xdaf4aa=_0xbe53ca,_0x450fec=document[_0xdaf4aa(0x18e)](_0xdaf4aa(0x169));_0x450fec[_0xdaf4aa(0x1ea)]['display']=_0xdaf4aa(0x178);}let score=0x0;const scoreDisplay=document[_0xbe53ca(0x18e)](_0xbe53ca(0x1e1));function getPlanetSize(_0x3716e5){const _0x14a05d=_0xbe53ca,_0x2e77a5=Math[_0x14a05d(0x1b4)](canvas[_0x14a05d(0x188)],canvas[_0x14a05d(0x1cf)]);return _0x3716e5*_0x2e77a5*0.05;}function loadImage(_0x8e0258,_0x42fa15=_0xbe53ca(0x1ec)){return new Promise((_0x3c1b0f,_0x4d8609)=>{const _0x3cc143=_0x179c,_0x190a43=new Image();_0x190a43['src']=_0x8e0258,_0x190a43[_0x3cc143(0x1d7)]=()=>{_0x3c1b0f(_0x190a43);},_0x190a43['onerror']=()=>{const _0x11a4a2=_0x3cc143;console[_0x11a4a2(0x1d6)]('Failed\x20to\x20load\x20image:\x20'+_0x8e0258+_0x11a4a2(0x160));const _0x541637=new Image();_0x541637[_0x11a4a2(0x18b)]=_0x42fa15,_0x541637[_0x11a4a2(0x1d7)]=()=>{_0x3c1b0f(_0x541637);},_0x541637['onerror']=()=>{const _0x519c96=_0x11a4a2;_0x4d8609(new Error(_0x519c96(0x179)+_0x42fa15));};};});}function drawRotatingPlanet(_0xd7ec49){const _0x2e007b=_0xbe53ca,_0x2b4275=_0xd7ec49[_0x2e007b(0x1af)](),_0x35e922={'x':_0x2b4275['x']*0x1e,'y':canvas[_0x2e007b(0x1cf)]-_0x2b4275['y']*0x1e},_0x4ae590=_0xd7ec49[_0x2e007b(0x1bd)]*0x1e;_0xd7ec49[_0x2e007b(0x19c)]?(ctx['save'](),ctx[_0x2e007b(0x1ed)](),ctx[_0x2e007b(0x19d)](_0x35e922['x'],_0x35e922['y'],_0x4ae590,0x0,0x2*Math['PI']),ctx[_0x2e007b(0x180)](),ctx[_0x2e007b(0x185)](_0x35e922['x'],_0x35e922['y']),ctx[_0x2e007b(0x197)](_0xd7ec49['rotationAngle']),ctx[_0x2e007b(0x17f)](_0xd7ec49[_0x2e007b(0x19c)],-_0x4ae590,-_0x4ae590,_0x4ae590*2.07,_0x4ae590*2.07),ctx[_0x2e007b(0x19b)](),_0xd7ec49['rotationAngle']<0x2*Math['PI']&&(_0xd7ec49[_0x2e007b(0x1e0)]+=0.05)):(ctx[_0x2e007b(0x1ed)](),ctx[_0x2e007b(0x19d)](_0x35e922['x'],_0x35e922['y'],_0x4ae590,0x0,0x2*Math['PI']),ctx[_0x2e007b(0x1d0)]=_0x2e007b(0x1f3),ctx[_0x2e007b(0x15f)]());}let planetDropCount=0x0;function getNextPlanetIndex(){const _0x54dd74=_0xbe53ca;if(planetDropCount<0x14)return planetDropCount++,0x0;const _0x310c04=Math[_0x54dd74(0x1c7)]()*0x64;if(_0x310c04<0x3c)return 0x0;if(_0x310c04<0x5a)return 0x1;return 0x2;}function _0x5563(){const _0xc01cc6=['5px','rgba(255,\x20255,\x200,\x200.8)','upupup-e4c2c.firebaseapp.com','pre-solve','message','2435247RhieqJ','push','<p>랭킹\x20데이터를\x20불러오지\x20못했습니다.</p>','result-popup','forEach','명왕성','기존\x20기록\x20발견,\x20업데이트\x20시도\x20중...','닫기\x20버튼\x20클릭됨','https://survivaloffice.com/images/9.png','alt','appendChild','top10-rank','baseSize','maxWidth','preventDefault','data','walls','addEventListener','block','Failed\x20to\x20load\x20fallback\x20image:\x20','querySelectorAll','isDynamic','step','672224oMAOUL','8FMDRmt','drawImage','clip','<p>랭킹\x20데이터가\x20없습니다.</p>','indexOf','resize','Error\x20adding\x20data:','translate','랭킹\x20보기\x20버튼\x20클릭됨','getTime','width','.ranking-item','max','src','Unknown','upupup-e4c2c.appspot.com','getElementById','Firestore에\x20점수\x20저장\x20시도:','nickname','stroke','strokeStyle','닉네임은\x205글자\x20이하로\x20입력해주세요.','점수가\x20성공적으로\x20저장되었습니다.','https://survivaloffice.com/images/6.png','empty','rotate','clientWidth','value','url','restore','image','arc','destroyBody','https://survivaloffice.com/images/4.png','textContent','m_tolerance','location','docs','391869FFnkOP','2WAnUBg','getFixtureB','planet-area','쿼리\x20시작','log','img','globalAlpha','createBody','World','name','getPosition','천왕성','Score:\x20','https://survivaloffice.com/images/5.png','date','min','catch','https://survivaloffice.com/images/7.png','split','<h4\x20style=\x22color:\x20red;\x22>📢\x20랭킹은\x20매주\x20월요일\x20초기화됩니다.</h4></ul>','then','212868lHQqTA','createFixture','해왕성','radius','reload','쿼리\x20결과\x20개수:','https://survivaloffice.com/images/3.png','createElement','desc','length','saveScoreButton','margin','upupup-e4c2c','random','display','<p>로딩\x20중...</p>','now','getFixtureA','https://survivaloffice.com/images/10.png','next-planet-preview','planet-','height','fillStyle','위\x20-\x20','https://survivaloffice.com/images/1.png','save','left','click','error','onload','innerHTML','canvas','기록이\x20업데이트되지\x20않았습니다.\x20기존\x20점수가\x20더\x20높습니다.','기록이\x20업데이트되었습니다.','getBody','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<li\x20class=\x22ranking-item\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','874638rbEofj','점\x20<span\x20class=\x22date\x22>','rotationAngle','score','planet','isMerging','opacity','closePopupButton','507775cUIiKq','닉네임을\x20입력해주세요.','1:877963060151:web:e70751cb30638880767e32','날짜\x20없음','style','sqrt','default.png','beginPath','label','size','top10-rank\x20버튼\x20또는\x20ranking-container\x20요소를\x20찾을\x20수\x20없습니다.','getContext','기존\x20기록:','gray','42900RvXDIO','splice','next-planet-container','fill','.\x20Using\x20fallback\x20image.'];_0x5563=function(){return _0xc01cc6;};return _0x5563();}function updateScore(_0x3d6024){const _0x278b7f=_0xbe53ca;score+=_0x3d6024,scoreDisplay[_0x278b7f(0x1a0)]=_0x278b7f(0x1b1)+score;}function createPlanet(_0x337679,_0x153174,_0x3da09c=canvas['height']/0x1e){const _0x12c7c6=_0xbe53ca,_0x3304a3=planets[_0x337679],_0x4d8324=getPlanetSize(_0x3304a3[_0x12c7c6(0x172)])/3.2,_0x40b382=_0x4d8324/0x1e,_0x24a705=canvas[_0x12c7c6(0x188)]/0x1e-_0x4d8324/0x1e;_0x153174=Math[_0x12c7c6(0x18a)](_0x40b382,Math['min'](_0x153174,_0x24a705));const _0x2c60a2=world[_0x12c7c6(0x1ac)]({'type':'dynamic','position':Vec2(_0x153174,_0x3da09c)});return _0x2c60a2[_0x12c7c6(0x1bb)](pl['Circle'](_0x4d8324),{'density':0x3,'friction':0.2,'restitution':0.1}),_0x2c60a2['radius']=_0x4d8324,_0x2c60a2['label']=_0x12c7c6(0x1ce)+_0x337679,_0x2c60a2[_0x12c7c6(0x1e0)]=0x0,loadImage(_0x3304a3['url'])[_0x12c7c6(0x1b9)](_0x4d741c=>{const _0x4552ab=_0x12c7c6;_0x2c60a2[_0x4552ab(0x19c)]=_0x4d741c;})[_0x12c7c6(0x1b5)](_0x49291a=>{const _0x3ffb11=_0x12c7c6;console[_0x3ffb11(0x1d6)](_0x49291a[_0x3ffb11(0x165)]);}),_0x2c60a2['setLinearVelocity'](Vec2(0x0,-0x1e)),_0x2c60a2;}world[_0xbe53ca(0x1a1)]=0.001;function toCanvasCoords(_0x4a7389){const _0x4f4266=_0xbe53ca;return{'x':_0x4a7389['x']*0x1e,'y':canvas[_0x4f4266(0x1cf)]-_0x4a7389['y']*0x1e};}function createWalls(){const _0x512022=_0xbe53ca,_0x11c22d=canvas[_0x512022(0x188)]/0x1e,_0x536dac=canvas['height']/0x1e;world[_0x512022(0x176)]&&world[_0x512022(0x176)][_0x512022(0x16a)](_0x2f650e=>world[_0x512022(0x19e)](_0x2f650e));const _0x22057d=[],_0x5ebc1e=world['createBody']();_0x5ebc1e[_0x512022(0x1bb)](pl['Edge'](Vec2(0x0,0x0),Vec2(0x0,_0x536dac)),{'friction':0.2,'restitution':0.1}),_0x22057d[_0x512022(0x167)](_0x5ebc1e);const _0x46e942=world[_0x512022(0x1ac)]();_0x46e942['createFixture'](pl['Edge'](Vec2(_0x11c22d,0x0),Vec2(_0x11c22d,_0x536dac)),{'friction':0.2,'restitution':0.1}),_0x22057d[_0x512022(0x167)](_0x46e942);const _0x3b8d90=world['createBody']();_0x3b8d90['createFixture'](pl['Edge'](Vec2(0x0,0x0),Vec2(_0x11c22d,0x0)),{'friction':0.2,'restitution':0.1}),_0x22057d['push'](_0x3b8d90),world[_0x512022(0x176)]=_0x22057d;}createWalls(),window[_0xbe53ca(0x177)](_0xbe53ca(0x183),()=>{const _0x4bf5a5=_0xbe53ca;canvas[_0x4bf5a5(0x188)]=0x168,canvas['height']=0x1c2,createWalls();});function drawPlanet(_0x2468fa){const _0x8da0fe=_0xbe53ca,_0x471d56=_0x2468fa[_0x8da0fe(0x1af)](),_0x3a476d={'x':_0x471d56['x']*0x1e,'y':canvas[_0x8da0fe(0x1cf)]-_0x471d56['y']*0x1e},_0x146c40=_0x2468fa[_0x8da0fe(0x1bd)]*0x1e;_0x2468fa[_0x8da0fe(0x19c)]?ctx['drawImage'](_0x2468fa[_0x8da0fe(0x19c)],_0x3a476d['x']-_0x146c40,_0x3a476d['y']-_0x146c40,_0x146c40*2.07,_0x146c40*2.07):(ctx[_0x8da0fe(0x1ed)](),ctx['arc'](_0x3a476d['x'],_0x3a476d['y'],_0x146c40,0x0,0x2*Math['PI']),ctx[_0x8da0fe(0x1d0)]=_0x8da0fe(0x1f3),ctx[_0x8da0fe(0x15f)]());}function resizeCanvas(){const _0x14a364=_0xbe53ca;canvas[_0x14a364(0x188)]=planetArea[_0x14a364(0x198)],canvas[_0x14a364(0x1cf)]=planetArea['clientHeight'],createWalls();}window[_0xbe53ca(0x177)](_0xbe53ca(0x183),resizeCanvas),resizeCanvas();function render(){const _0x49b865=_0xbe53ca;ctx['clearRect'](0x0,0x0,canvas[_0x49b865(0x188)],canvas[_0x49b865(0x1cf)]),planetsList[_0x49b865(0x16a)](_0x2edc7d=>{drawRotatingPlanet(_0x2edc7d);}),requestAnimationFrame(render);}function applyImpulse(_0x28604b,_0x3ec7b1=0x14){const _0x299b2a=_0xbe53ca,_0x293660=_0x28604b[_0x299b2a(0x1af)]();planetsList['forEach'](_0x6c8b99=>{const _0x22cc54=_0x299b2a;if(_0x6c8b99===_0x28604b)return;const _0x56e51d=_0x6c8b99['getPosition'](),_0x255941=_0x56e51d['x']-_0x293660['x'],_0x368487=_0x56e51d['y']-_0x293660['y'],_0x37893e=Math[_0x22cc54(0x1eb)](_0x255941*_0x255941+_0x368487*_0x368487);if(_0x37893e<_0x28604b[_0x22cc54(0x1bd)]+_0x6c8b99[_0x22cc54(0x1bd)]){const _0x124aa9=_0x255941/_0x37893e*_0x3ec7b1,_0x130416=_0x368487/_0x37893e*_0x3ec7b1;_0x6c8b99['applyLinearImpulse'](Vec2(_0x124aa9,_0x130416),_0x6c8b99['getWorldCenter']());}});}let lastPlanetDropTime=0x0;const planetDropDelay=0xc8;let currentPlanetIndex;currentPlanetIndex=getNextPlanetIndex(),updateNextPlanetPreview();function updateNextPlanetPreview(){const _0x1fe26d=_0xbe53ca,_0x4c83d4=document[_0x1fe26d(0x18e)](_0x1fe26d(0x1cd));_0x4c83d4[_0x1fe26d(0x1d8)]='';const _0x487006=planets[currentPlanetIndex],_0x473cf9=document[_0x1fe26d(0x1c1)](_0x1fe26d(0x1aa));_0x473cf9[_0x1fe26d(0x18b)]=_0x487006[_0x1fe26d(0x19a)],_0x473cf9['alt']=_0x487006[_0x1fe26d(0x1ae)],_0x4c83d4[_0x1fe26d(0x170)](_0x473cf9);}planetArea[_0xbe53ca(0x177)](_0xbe53ca(0x1d5),_0x1308d0=>{const _0x507190=_0xbe53ca;if(isGameOver)return;const _0x390b7f=Date[_0x507190(0x1ca)]();if(_0x390b7f-lastPlanetDropTime<planetDropDelay)return;const _0x3fdff0=(_0x1308d0['clientX']-planetArea['getBoundingClientRect']()[_0x507190(0x1d4)])/0x1e;planetsList['push'](createPlanet(currentPlanetIndex,_0x3fdff0,canvas['height']/0x1e)),currentPlanetIndex=getNextPlanetIndex(),updateNextPlanetPreview(),lastPlanetDropTime=_0x390b7f;});function mergePlanets(_0x4f7fac,_0x13964c,_0x387807){const _0x4f95bb=_0xbe53ca,_0x406e0c=_0x4f7fac['getPosition']();world[_0x4f95bb(0x19e)](_0x4f7fac),world[_0x4f95bb(0x19e)](_0x13964c),planetsList['splice'](planetsList[_0x4f95bb(0x182)](_0x4f7fac),0x1),planetsList[_0x4f95bb(0x1f5)](planetsList[_0x4f95bb(0x182)](_0x13964c),0x1);const _0xb4d46c=toCanvasCoords(_0x406e0c);createEffect(_0xb4d46c['x'],_0xb4d46c['y']);if(_0x387807===null){updateScore(0x1388);const _0x5505b9=toCanvasCoords(_0x406e0c);createEffect(_0x5505b9['x'],_0x5505b9['y']);}setTimeout(()=>{const _0xec412b=_0x4f95bb;if(_0x387807!==null){const _0x5bc35a=createPlanet(_0x387807,_0x406e0c['x'],_0x406e0c['y']);planetsList[_0xec412b(0x167)](_0x5bc35a),applyImpulse(_0x5bc35a),updateScore(planets[_0x387807][_0xec412b(0x1e1)]);}},0x64);}function createEffect(_0x5b8cf5,_0x30e927){const _0x1232e2=0x1f4,_0x345aa2=Date['now']();function _0x25a3e2(){const _0xfeba43=_0x179c,_0x4ecc28=Date[_0xfeba43(0x1ca)]()-_0x345aa2;if(_0x4ecc28>_0x1232e2)return;ctx[_0xfeba43(0x1d3)](),ctx[_0xfeba43(0x1ab)]=0x1-_0x4ecc28/_0x1232e2,ctx[_0xfeba43(0x1ed)](),ctx[_0xfeba43(0x19d)](_0x5b8cf5,_0x30e927,0x1e+_0x4ecc28/0xa,0x0,0x2*Math['PI']),ctx[_0xfeba43(0x192)]=_0xfeba43(0x162),ctx['lineWidth']=0x3,ctx[_0xfeba43(0x191)](),ctx[_0xfeba43(0x19b)](),requestAnimationFrame(_0x25a3e2);}_0x25a3e2();}function addSunToNextContainer(){const _0x5c0680=_0xbe53ca,_0x2f0594=document[_0x5c0680(0x18e)](_0x5c0680(0x1f6)),_0x2141f8=document[_0x5c0680(0x1c1)](_0x5c0680(0x1aa));_0x2141f8[_0x5c0680(0x18b)]=planets[planets[_0x5c0680(0x1c3)]-0x1]['url'],_0x2141f8[_0x5c0680(0x16f)]='태양',_0x2141f8[_0x5c0680(0x1ea)][_0x5c0680(0x173)]='50px',_0x2141f8[_0x5c0680(0x1ea)][_0x5c0680(0x1c5)]=_0x5c0680(0x161),_0x2f0594[_0x5c0680(0x170)](_0x2141f8);}function checkGameOver(){const _0x3cd725=_0xbe53ca,_0x578ce7=canvas['height'];planetsList[_0x3cd725(0x16a)](_0x276ed1=>{const _0x51a40c=_0x3cd725,_0x340e64=_0x276ed1['getPosition'](),_0x5c024f=toCanvasCoords(_0x340e64),_0x595097=_0x276ed1[_0x51a40c(0x1bd)]*0x1e;_0x5c024f['y']+_0x595097<=0x0&&endGame();});}const mergeQueue=[];world['on'](_0xbe53ca(0x164),_0x18d4fe=>{const _0x22dc01=_0xbe53ca,_0x58277a=_0x18d4fe[_0x22dc01(0x1cb)]()[_0x22dc01(0x1dc)](),_0x376ad8=_0x18d4fe[_0x22dc01(0x1a6)]()[_0x22dc01(0x1dc)]();if(_0x58277a[_0x22dc01(0x17b)]()&&_0x376ad8[_0x22dc01(0x17b)]()){const _0x16982d=_0x58277a,_0x4b4e14=_0x376ad8;if(_0x16982d[_0x22dc01(0x1e3)]||_0x4b4e14[_0x22dc01(0x1e3)])return;if(_0x16982d[_0x22dc01(0x1ee)]===_0x4b4e14[_0x22dc01(0x1ee)]){const _0x4ca48f=parseInt(_0x16982d[_0x22dc01(0x1ee)][_0x22dc01(0x1b7)]('-')[0x1],0xa);_0x16982d['isMerging']=!![],_0x4b4e14[_0x22dc01(0x1e3)]=!![];if(_0x4ca48f===planets[_0x22dc01(0x1c3)]-0x1)mergeQueue[_0x22dc01(0x167)]({'planetA':_0x16982d,'planetB':_0x4b4e14,'nextIndex':null});else _0x4ca48f<planets[_0x22dc01(0x1c3)]-0x1&&mergeQueue[_0x22dc01(0x167)]({'planetA':_0x16982d,'planetB':_0x4b4e14,'nextIndex':_0x4ca48f+0x1});}}});function update(){const _0x698ab5=_0xbe53ca;world[_0x698ab5(0x17c)](0x1/0x3c);while(mergeQueue[_0x698ab5(0x1c3)]>0x0){const {planetA:_0x1fd7c4,planetB:_0x125bc0,nextIndex:_0x2e110e}=mergeQueue['shift']();_0x2e110e===null?(world[_0x698ab5(0x19e)](_0x1fd7c4),world['destroyBody'](_0x125bc0),planetsList[_0x698ab5(0x1f5)](planetsList[_0x698ab5(0x182)](_0x1fd7c4),0x1),planetsList['splice'](planetsList['indexOf'](_0x125bc0),0x1)):mergePlanets(_0x1fd7c4,_0x125bc0,_0x2e110e),_0x1fd7c4[_0x698ab5(0x1e3)]=![],_0x125bc0[_0x698ab5(0x1e3)]=![];}planetsList[_0x698ab5(0x16a)](_0x447bd1=>{const _0x49b69f=_0x698ab5;_0x447bd1['getPosition']()['y']<0x0&&world[_0x49b69f(0x19e)](_0x447bd1);}),checkGameOver(),requestAnimationFrame(update);}const planetsList=[];function _0x179c(_0xf6f283,_0x49ffec){const _0x5563a3=_0x5563();return _0x179c=function(_0x179ca6,_0x50fdfa){_0x179ca6=_0x179ca6-0x15f;let _0x204862=_0x5563a3[_0x179ca6];return _0x204862;},_0x179c(_0xf6f283,_0x49ffec);}let isGameOver=![];function endGame(){if(isGameOver)return;isGameOver=!![],showGameOverPopup();}updateScore(0x0),render(),update();
+// 모듈 방식으로 Firebase와 Firestore 가져오기
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getFirestore, collection, query, where, getDocs, addDoc, updateDoc, doc, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+// Firebase 초기화
+const firebaseConfig = {
+    apiKey: "AIzaSyCK4Zdkhlc0cnjqC3TpmUJmLAt8Xrh8VOw",
+    authDomain: "upupup-e4c2c.firebaseapp.com",
+    projectId: "upupup-e4c2c",
+    storageBucket: "upupup-e4c2c.appspot.com",
+    messagingSenderId: "877963060151",
+    appId: "1:877963060151:web:e70751cb30638880767e32"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Planck.js 초기 설정 및 공통 변수 설정
+const pl = planck, Vec2 = pl.Vec2;
+const world = pl.World(Vec2(0, -10));
+const planetArea = document.getElementById("planet-area");
+const canvas = document.createElement("canvas");
+const ctx = canvas.getContext("2d");
+planetArea.appendChild(canvas);
+canvas.width = 360;
+canvas.height = 450;
+
+// 행성 데이터 (10개)
+const planets = [
+    { name: "명왕성", url: "https://survivaloffice.com/images/1.png", score: 10, baseSize: 0.10 },
+    { name: "수성", url: "https://survivaloffice.com/images/2.png", score: 20, baseSize: 0.12 },
+    { name: "화성", url: "https://survivaloffice.com/images/3.png", score: 40, baseSize: 0.20 },
+    { name: "금성", url: "https://survivaloffice.com/images/4.png", score: 80, baseSize: 0.22 },
+    { name: "지구", url: "https://survivaloffice.com/images/5.png", score: 120, baseSize: 0.30 },
+    { name: "천왕성", url: "https://survivaloffice.com/images/6.png", score: 200, baseSize: 0.35 },
+    { name: "해왕성", url: "https://survivaloffice.com/images/7.png", score: 400, baseSize: 0.41 },
+    { name: "토성", url: "https://survivaloffice.com/images/8.png", score: 600, baseSize: 0.47 },
+    { name: "목성", url: "https://survivaloffice.com/images/9.png", score: 1000, baseSize: 0.52 },
+    { name: "태양", url: "https://survivaloffice.com/images/10.png", score: 2000, baseSize: 0.65 }
+];
+
+// 랭킹 보기 버튼과 컨테이너 요소 가져오기
+const top10RankButton = document.getElementById('top10-rank');
+const rankingContainer = document.getElementById('ranking-container');
+
+// 버튼과 컨테이너가 존재하는지 확인
+if (top10RankButton && rankingContainer) {
+    // 랭킹 보기 버튼 클릭 이벤트 등록
+    top10RankButton.addEventListener('click', () => {
+        console.log("랭킹 보기 버튼 클릭됨");
+        rankingContainer.style.display = 'block'; // 랭킹 컨테이너 표시
+        rankingContainer.innerHTML = '<p>로딩 중...</p>'; // 로딩 중 메시지
+        loadTop10Rankings(); // Firestore에서 랭킹 데이터 로드
+    });
+} else {
+    console.error("top10-rank 버튼 또는 ranking-container 요소를 찾을 수 없습니다.");
+}
+
+// Firestore에서 Top 10 랭킹 데이터 가져오기
+async function loadTop10Rankings() {
+    const scoresRef = collection(db, 'planet'); // 'planet' 컬렉션 사용
+    const q = query(scoresRef, orderBy('score', 'desc'), orderBy('date', 'desc'), limit(10));
+
+    try {
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+            rankingContainer.innerHTML = '<p>랭킹 데이터가 없습니다.</p>';
+            return;
+        }
+
+        let rankingsHTML = '<h2>Top 10 랭킹</h2><ul>';
+        let rank = 1;
+
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const nickname = data.nickname || 'Unknown'; // 닉네임 기본값
+            const score = data.score || 0; // 점수 기본값
+            let formattedDate;
+
+            // 날짜 필드 처리
+            if (typeof data.date === 'string') {
+                formattedDate = data.date.slice(0, 10); // "YYYY-MM-DD" 형식
+            } else {
+                formattedDate = '날짜 없음';
+            }
+
+            // 순위에 따른 메달 이모지 추가
+            let medalEmoji = '';
+            if (rank === 1) medalEmoji = '🥇';
+            else if (rank === 2) medalEmoji = '🥈';
+            else if (rank === 3) medalEmoji = '🥉';
+
+            // HTML 리스트 아이템 생성
+            rankingsHTML += `
+                <li class="ranking-item">
+                    ${medalEmoji} ${rank}위 - ${nickname}, ${score}점 <span class="date">${formattedDate}</span>
+                </li>
+            `;
+            rank++;
+        });
+
+        rankingsHTML += '<h4 style="color: red;">📢 랭킹은 매주 월요일 초기화됩니다.</h4></ul>';
+        rankingContainer.innerHTML = rankingsHTML; // HTML 업데이트
+
+        // 순차적으로 나타나는 애니메이션
+        const rankingItems = document.querySelectorAll('.ranking-item');
+        rankingItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.style.opacity = 1;
+                item.style.transform = 'translateY(0)';
+            }, index * 500); // 0.3초 간격
+        });
+
+    } catch (error) {
+        console.error('Firestore에서 랭킹 데이터를 가져오는 중 오류 발생:', error);
+        rankingContainer.innerHTML = '<p>랭킹 데이터를 불러오지 못했습니다.</p>';
+    }
+}
+
+// 랭킹 컨테이너 클릭 시 닫기 이벤트 등록
+if (rankingContainer) {
+    rankingContainer.addEventListener('click', () => {
+        rankingContainer.style.display = 'none'; // 컨테이너 닫기
+    });
+} else {
+    console.error("ranking-container 요소를 찾을 수 없습니다.");
+}
+
+// 점수 저장 함수
+async function saveScore(nickname, score) {
+    console.log("Firestore에 점수 저장 시도:", nickname, score);
+    const now = new Date();
+    const kstOffset = 9 * 60 * 60 * 1000; // UTC+9 (밀리초)
+    const kstDate = new Date(now.getTime() + kstOffset);
+    const date = kstDate.toISOString().split("T")[0]; // "YYYY-MM-DD" 형식
+
+    const scoresRef = collection(db, 'planet');
+    const q = query(scoresRef, where('nickname', '==', nickname || 'Unknown'));
+
+    try {
+        console.log("쿼리 시작");
+        const querySnapshot = await getDocs(q);
+        console.log("쿼리 결과 개수:", querySnapshot.size);
+
+        if (!querySnapshot.empty) {
+            console.log("기존 기록 발견, 업데이트 시도 중...");
+            for (const document of querySnapshot.docs) {
+                const existingRecord = document.data();
+                console.log("기존 기록:", existingRecord);
+
+                if (score > existingRecord.score) {
+                    await updateDoc(doc(db, 'planet', document.id), {
+                        score: score,
+                        date: date
+                    });
+                    alert('기록이 업데이트되었습니다.');
+                } else {
+                    alert('기록이 업데이트되지 않았습니다. 기존 점수가 더 높습니다.');
+                }
+            }
+        } else {
+            console.log("기존 기록이 없음, 새로운 문서 추가 중...");
+            await addDoc(scoresRef, {
+                nickname: nickname || 'Unknown',
+                score: score,
+                date: date
+            });
+            alert('점수가 성공적으로 저장되었습니다.');
+        }
+    } catch (error) {
+        console.error("Error adding data:", error);
+        alert('점수 저장 중 오류가 발생했습니다.');
+    };
+}
+
+// 팝업 닫기 및 다시 시작 버튼
+document.getElementById('closePopupButton').addEventListener('click', () => {
+    console.log("닫기 버튼 클릭됨");
+    window.location.reload();
+});
+
+// 점수 저장 버튼
+document.getElementById('saveScoreButton').addEventListener('click', async (event) => {
+    event.preventDefault();
+    const nickname = document.getElementById('nicknameInput').value;
+    
+    // 글자 수 제한 (5글자)
+    if (nickname.length === 0) {
+        alert("닉네임을 입력해주세요.");
+        return;
+    } else if (nickname.length > 5) {
+        alert("닉네임은 5글자 이하로 입력해주세요.");
+        return;
+    }
+    await saveScore(nickname, score);
+});
+
+// 게임 종료 팝업 표시 함수
+function showGameOverPopup() {
+    const popup = document.getElementById('result-popup');
+    popup.style.display = 'block';
+}
+
+// 점수 표시
+let score = 0;
+const scoreDisplay = document.getElementById("score");
+
+// 화면 크기에 맞게 행성 크기 계산
+function getPlanetSize(baseSize) {
+    const maxSize = Math.min(canvas.width, canvas.height);
+    return baseSize * maxSize * 0.05;
+}
+
+// 이미지 로딩 함수
+function loadImage(url, fallbackUrl = "default.png") {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = url;
+
+        img.onload = () => {
+            resolve(img); // 이미지 로드 성공 시 반환
+        };
+
+     img.onerror = () => {
+            console.error(`Failed to load image: ${url}. Using fallback image.`);
+            const fallbackImg = new Image();
+            fallbackImg.src = fallbackUrl;
+
+            fallbackImg.onload = () => {
+                resolve(fallbackImg); // 기본 이미지도 로드 성공 시 반환
+            };
+
+            fallbackImg.onerror = () => {
+                reject(new Error(`Failed to load fallback image: ${fallbackUrl}`));
+            };
+        };
+    });
+}
+
+function drawRotatingPlanet(planet) {
+    const pos = planet.getPosition();
+    const canvasPos = {
+        x: pos.x * 30,
+        y: canvas.height - pos.y * 30
+    };
+
+    const radius = planet.radius * 30;
+
+    if (planet.image) {
+        ctx.save();
+
+        // 원형 마스크 설정
+        ctx.beginPath();
+        ctx.arc(canvasPos.x, canvasPos.y, radius, 0, 2 * Math.PI);
+        ctx.clip();
+
+        // 중심으로 이동하여 회전
+        ctx.translate(canvasPos.x, canvasPos.y);
+        ctx.rotate(planet.rotationAngle);
+
+        // 이미지 그리기 (중심 기준으로 회전)
+        ctx.drawImage(
+            planet.image,
+            -radius, // 중심 기준 위치
+            -radius,
+            radius * 2.07,
+            radius * 2.07
+        );
+
+        ctx.restore();
+
+        // 회전 각도 업데이트
+        if (planet.rotationAngle < 2 * Math.PI) { // 360도 이하일 때만 회전
+            planet.rotationAngle += 0.05; // 회전 속도
+        }
+    } else {
+        // 이미지가 없을 경우 기본 원으로 표시
+        ctx.beginPath();
+        ctx.arc(canvasPos.x, canvasPos.y, radius, 0, 2 * Math.PI);
+        ctx.fillStyle = "gray";
+        ctx.fill();
+    }
+}
+
+let planetDropCount = 0; // 행성이 떨어진 횟수
+
+function getNextPlanetIndex() {
+    if (planetDropCount < 20) {
+        planetDropCount++;
+        return 0; // 명왕성
+    }
+
+    const random = Math.random() * 100;
+    if (random < 60) return 0;
+    if (random < 90) return 1;
+    return 2;
+}
+
+// 점수 업데이트 함수
+function updateScore(points) {
+    score += points;
+    scoreDisplay.textContent = `Score: ${score}`;
+}
+
+function createPlanet(index, x, y = canvas.height / 30) {
+    const planetData = planets[index];
+    const radius = getPlanetSize(planetData.baseSize) / 3.2;
+
+    const minX = radius / 30;
+    const maxX = (canvas.width / 30) - (radius / 30);
+    x = Math.max(minX, Math.min(x, maxX));
+
+    const planet = world.createBody({
+        type: 'dynamic',
+        position: Vec2(x, y)
+    });
+
+    planet.createFixture(pl.Circle(radius), {
+        density: 3.0,
+        friction: 0.2,
+        restitution: 0.1
+    });
+
+    planet.radius = radius;
+    planet.label = `planet-${index}`;
+    planet.rotationAngle = 0; // 초기 회전 각도
+
+    // 기존 createPlanet에서 로드 방식 변경
+    loadImage(planetData.url)
+    .then((img) => {
+        planet.image = img; // 로드 완료 후 이미지 설정
+    })
+    .catch((error) => {
+        console.error(error.message);
+    });
+
+    planet.setLinearVelocity(Vec2(0, -30));
+    return planet;
+}
+world.m_tolerance = 0.001;
+
+function toCanvasCoords(planckPos) {
+    return {
+        x: planckPos.x * 30,
+        y: canvas.height - planckPos.y * 30
+    };
+}
+
+function createWalls() {
+    const canvasWidth = canvas.width / 30;
+    const canvasHeight = canvas.height / 30;
+
+    if (world.walls) {
+        world.walls.forEach((wall) => world.destroyBody(wall));
+    }
+
+    const walls = [];
+
+    const leftWall = world.createBody();
+    leftWall.createFixture(pl.Edge(Vec2(0, 0), Vec2(0, canvasHeight)), {
+        friction: 0.2,
+        restitution: 0.1
+    });
+    walls.push(leftWall);
+
+    const rightWall = world.createBody();
+    rightWall.createFixture(pl.Edge(Vec2(canvasWidth, 0), Vec2(canvasWidth, canvasHeight)), {
+        friction: 0.2,
+        restitution: 0.1
+    });
+    walls.push(rightWall);
+
+    const ground = world.createBody();
+    ground.createFixture(pl.Edge(Vec2(0, 0), Vec2(canvasWidth, 0)), {
+        friction: 0.2,
+        restitution: 0.1
+    });
+    walls.push(ground);
+
+    world.walls = walls;
+}
+
+createWalls();
+
+window.addEventListener("resize", () => {
+    canvas.width = 360;
+    canvas.height = 450;
+    createWalls();
+});
+
+function drawPlanet(planet) {
+    const pos = planet.getPosition();
+    const canvasPos = {
+        x: pos.x * 30,
+        y: canvas.height - pos.y * 30
+    };
+
+    const radius = planet.radius * 30;
+
+    if (planet.image) {
+        ctx.drawImage(
+            planet.image,
+            canvasPos.x - radius, // 이미지 중심 위치 맞춤
+            canvasPos.y - radius,
+            radius * 2.07, // 이미지 크기를 충돌 범위와 동일하게 설정
+            radius * 2.07
+        );
+    } else {
+        ctx.beginPath();
+        ctx.arc(canvasPos.x, canvasPos.y, radius, 0, 2 * Math.PI);
+        ctx.fillStyle = "gray";
+        ctx.fill();
+    }
+}
+
+function resizeCanvas() {
+    canvas.width = planetArea.clientWidth;
+    canvas.height = planetArea.clientHeight;
+    createWalls();
+}
+
+window.addEventListener("resize", resizeCanvas);
+
+resizeCanvas();
+
+function render() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    planetsList.forEach((planet) => {
+        drawRotatingPlanet(planet); // 원형 유지 회전
+    });
+
+    requestAnimationFrame(render);
+}
+
+function applyImpulse(planet, forceMultiplier = 20) {
+    const pos = planet.getPosition();
+    planetsList.forEach((otherPlanet) => {
+        if (otherPlanet === planet) return;
+
+        const otherPos = otherPlanet.getPosition();
+        const dx = otherPos.x - pos.x;
+        const dy = otherPos.y - pos.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < planet.radius + otherPlanet.radius) {
+            const forceX = (dx / distance) * forceMultiplier;
+            const forceY = (dy / distance) * forceMultiplier;
+            otherPlanet.applyLinearImpulse(Vec2(forceX, forceY), otherPlanet.getWorldCenter());
+        }
+    });
+}
+let lastPlanetDropTime = 0; // 마지막으로 행성이 떨어진 시간
+const planetDropDelay = 200; // 행성이 떨어질 딜레이 (1초)
+
+let currentPlanetIndex; // 선언
+currentPlanetIndex = getNextPlanetIndex(); // 초기화
+updateNextPlanetPreview(); // 초기 미리보기 업데이트
+
+function updateNextPlanetPreview() {
+    const nextPlanetPreview = document.getElementById("next-planet-preview");
+    nextPlanetPreview.innerHTML = ""; // 기존 내용을 제거
+
+    const nextPlanetData = planets[currentPlanetIndex];
+
+    const nextPlanetImg = document.createElement("img");
+    nextPlanetImg.src = nextPlanetData.url;
+    nextPlanetImg.alt = nextPlanetData.name;
+
+    nextPlanetPreview.appendChild(nextPlanetImg);
+}
+
+planetArea.addEventListener("click", (event) => {
+    // 게임 종료 시 클릭 무시
+    if (isGameOver) return;
+    const currentTime = Date.now();
+
+    if (currentTime - lastPlanetDropTime < planetDropDelay) {
+        return; // 딜레이 시간 내에 클릭 무시
+    }
+
+    const x = (event.clientX - planetArea.getBoundingClientRect().left) / 30;
+
+    planetsList.push(createPlanet(currentPlanetIndex, x, canvas.height / 30));
+
+    // 다음 행성 인덱스 업데이트
+    currentPlanetIndex = getNextPlanetIndex();
+
+    // 다음 행성 미리보기 업데이트
+    updateNextPlanetPreview();
+
+    lastPlanetDropTime = currentTime; // 마지막 드랍 시간 갱신
+});
+
+
+// 합쳐진 행성이 주변을 밀어내도록 수정
+function mergePlanets(planetA, planetB, nextIndex) {
+    const position = planetA.getPosition();
+
+    // 충돌한 행성 제거
+    world.destroyBody(planetA);
+    world.destroyBody(planetB);
+    planetsList.splice(planetsList.indexOf(planetA), 1);
+    planetsList.splice(planetsList.indexOf(planetB), 1);
+
+    // 충돌 이펙트 생성
+    const canvasPos = toCanvasCoords(position);
+    createEffect(canvasPos.x, canvasPos.y);
+    
+    // 태양끼리 합쳐졌는지 확인
+    if (nextIndex === null) {
+        // 점수 추가 (예: 태양 합성 시 5000점 추가)
+        updateScore(5000);
+
+        // 효과 (선택 사항)
+        const canvasPos = toCanvasCoords(position);
+        createEffect(canvasPos.x, canvasPos.y);
+    }    
+    // 딜레이 후 새 행성 생성
+    setTimeout(() => {
+        if (nextIndex !== null) {
+            const newPlanet = createPlanet(nextIndex, position.x, position.y);
+            planetsList.push(newPlanet);
+
+            // 주변 행성을 밀어내는 충격 적용
+            applyImpulse(newPlanet);
+
+            // 점수 업데이트
+            updateScore(planets[nextIndex].score);
+        }
+    }, 100); // 1초 딜레이
+}
+
+function createEffect(x, y) {
+    const effectDuration = 500; // 0.5초 지속
+    const startTime = Date.now();
+
+    function renderEffect() {
+        const elapsedTime = Date.now() - startTime;
+        if (elapsedTime > effectDuration) return;
+
+        ctx.save();
+        ctx.globalAlpha = 1 - elapsedTime / effectDuration; // 점점 사라지는 효과
+        ctx.beginPath();
+        ctx.arc(x, y, 30 + elapsedTime / 10, 0, 2 * Math.PI);
+        ctx.strokeStyle = "rgba(255, 255, 0, 0.8)"; // 노란색 빛 효과
+        ctx.lineWidth = 3;
+        ctx.stroke();
+        ctx.restore();
+
+        requestAnimationFrame(renderEffect);
+    }
+
+    renderEffect();
+}
+
+
+// 태양 이미지 추가 함수
+function addSunToNextContainer() {
+    const nextPlanetContainer = document.getElementById("next-planet-container");
+    const sunImg = document.createElement("img");
+    sunImg.src = planets[planets.length - 1].url; // 태양 이미지
+    sunImg.alt = "태양";
+    sunImg.style.maxWidth = "50px"; // 크기를 축소
+    sunImg.style.margin = "5px";
+
+    nextPlanetContainer.appendChild(sunImg);
+}
+
+
+// 게임 오버 조건 수정 (전체가 넘어갔는지 판단)
+function checkGameOver() {
+    const gameOverLine = canvas.height; // 게임 오버 라인 (캔버스 상단)
+    planetsList.forEach((planet) => {
+        const pos = planet.getPosition();
+        const canvasPos = toCanvasCoords(pos);
+        const radius = planet.radius * 30;
+
+        // 행성의 전체가 넘어갔는지 확인
+        if (canvasPos.y + radius <= 0) {
+            endGame();
+        }
+    });
+}
+
+// 충돌 핸들러 수정 (큐에 합쳐질 행성 추가)
+const mergeQueue = [];
+world.on('pre-solve', (contact) => {
+    const bodyA = contact.getFixtureA().getBody();
+    const bodyB = contact.getFixtureB().getBody();
+
+    if (bodyA.isDynamic() && bodyB.isDynamic()) {
+        const planetA = bodyA;
+        const planetB = bodyB;
+
+         // 이미 합성 중인 행성은 무시
+         if (planetA.isMerging || planetB.isMerging) return;
+
+         if (planetA.label === planetB.label) {
+             const index = parseInt(planetA.label.split('-')[1], 10);
+ 
+             // 플래그 설정 (합성 중 표시)
+             planetA.isMerging = true;
+             planetB.isMerging = true;
+ 
+             if (index === planets.length - 1) {
+                 mergeQueue.push({ planetA, planetB, nextIndex: null });
+             } else if (index < planets.length - 1) {
+                 mergeQueue.push({ planetA, planetB, nextIndex: index + 1 });
+             }
+         }
+     }
+ });
+
+// 업데이트 함수 수정 (합쳐질 행성 처리)
+function update() {
+    world.step(1 / 60);
+
+    while (mergeQueue.length > 0) {
+        const { planetA, planetB, nextIndex } = mergeQueue.shift();
+
+        if (nextIndex === null) {
+            world.destroyBody(planetA);
+            world.destroyBody(planetB);
+
+            planetsList.splice(planetsList.indexOf(planetA), 1);
+            planetsList.splice(planetsList.indexOf(planetB), 1);
+
+        } else {
+            mergePlanets(planetA, planetB, nextIndex);
+        }
+                // 플래그 해제 (합성 완료)
+                planetA.isMerging = false;
+                planetB.isMerging = false;
+    }
+
+    planetsList.forEach((planet) => {
+        if (planet.getPosition().y < 0) {
+            world.destroyBody(planet);
+        }
+    });
+
+    checkGameOver(); // 게임 오버 조건 체크
+
+    requestAnimationFrame(update);
+}
+
+const planetsList = [];
+
+let isGameOver = false;
+
+function endGame() {
+    if (isGameOver) return;
+    isGameOver = true;
+
+    // 점수 저장 팝업 표시
+    showGameOverPopup();
+}
+
+// 초기화 및 렌더링 시작
+updateScore(0);
+render();
+update();
