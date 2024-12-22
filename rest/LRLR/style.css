@@ -288,13 +288,13 @@ canvas {
 }
 
 .animal-img {
-    width: 50px; /* 이미지 너비 */
-    height: 50px; /* 이미지 높이 */
-    margin: 0; /* 불필요한 여백 제거 */
+    width: 50px; /* 동물 이미지 너비 */
+    height: 50px; /* 동물 이미지 높이 */
+    margin: 5px 0; /* 이미지 간 위아래 간격 */
     object-fit: contain; /* 이미지 비율 유지 */
 }
 
-  #start-button {
+#start-button {
     position: absolute; /* 부모 기준으로 위치 조정 가능 */
     top: 70%; /* 부모 요소의 60% 높이에서 위치 */
     left: 50%; /* 부모 요소의 중앙 */
@@ -339,12 +339,6 @@ canvas {
     background-color: transparent; /* Remove button background color */
 }
 
-.animal-img {
-    width: 50px; /* 동물 이미지 너비 */
-    height: 50px; /* 동물 이미지 높이 */
-    margin: 5px 0; /* 이미지 간 위아래 간격 */
-    object-fit: contain; /* 이미지 비율 유지 */
-}
 
 /* CSS 애니메이션 */
 @keyframes fadeInUp {
@@ -361,4 +355,18 @@ canvas {
 .ranking-item {
     opacity: 0; /* 초기 상태 */
     animation: fadeInUp 0.5s ease forwards; /* 애니메이션 적용 */
+}
+
+/* 화면 흔들림 애니메이션 */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-10px); }
+    100% { transform: translateX(0); }
+}
+
+/* 흔들리는 상태를 위한 클래스 */
+.shake {
+    animation: shake 0.5s ease-in-out; /* 0.5초 동안 흔들림 */
 }

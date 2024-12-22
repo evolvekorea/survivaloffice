@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     timerContainer.style.display = "none";
     leftArrow.style.display = "none";
     rightArrow.style.display = "none";
+    startButton.style.display = "none";
 
     let score = 0;
     let combo = 0;
@@ -54,6 +55,51 @@ document.addEventListener("DOMContentLoaded", () => {
         "https://survivaloffice.com/images/h.png"
     ];
 
+    const loadingMessage = document.getElementById("loading-message");
+    
+    // 이미지 프리로딩 함수
+    function preloadImages(imageUrls, callback) {
+        let loadedCount = 0;
+        const totalImages = imageUrls.length;
+
+        imageUrls.forEach((url) => {
+            const img = new Image();
+            img.src = url;
+
+            img.onload = () => {
+                loadedCount++;
+                loadingMessage.textContent = `이미지 로드 중... (${loadedCount}/${totalImages})`;
+
+                // 모든 이미지가 로드되었을 때 콜백 실행
+                if (loadedCount === totalImages) {
+                    callback();
+                }
+            };
+
+            img.onerror = () => {
+                console.error(`이미지 로드 실패: ${url}`);
+            };
+        });
+    }
+
+    // 이미지 로드 완료 시 실행
+    preloadImages(
+        [
+            "https://survivaloffice.com/images/a.png", // 예시 이미지 경로
+            "https://survivaloffice.com/images/b.png",
+            "https://survivaloffice.com/images/c.png",
+            "https://survivaloffice.com/images/d.png",
+            "https://survivaloffice.com/images/e.png",
+            "https://survivaloffice.com/images/f.png",
+            "https://survivaloffice.com/images/g.png",
+            "https://survivaloffice.com/images/h.png"
+        ],
+        () => {
+            console.log("모든 이미지가 로드되었습니다!");
+            loadingMessage.textContent = ""; // 로딩 메시지 제거
+            startButton.style.display = "block"; // 게임 시작 버튼 표시
+        }
+    );
 
     // 스타트 버튼 클릭 이벤트
     startButton.addEventListener("click", () => {
@@ -228,7 +274,11 @@ function updateScore(isCorrect) {
         if (event.key === "ArrowRight") moveAnimal("right");
     });
 
+    let isButtonDisabled = false; // 버튼 비활성화 상태 추적 변수
+
     function moveAnimal(direction) {
+        if (isButtonDisabled) return; // 버튼이 비활성화 상태면 동작하지 않음
+    
         const lastAnimal = animalQueue[animalQueue.length - 1]; // 맨 아래 동물
         const leftOptions = Array.from(leftAnimal.children).map(img => img.src);
         const rightOptions = Array.from(rightAnimal.children).map(img => img.src);
@@ -250,9 +300,35 @@ function updateScore(isCorrect) {
             renderCenterAnimals();
         } else {
             updateScore(false); // 점수 초기화
+            triggerShakeEffect(); // 흔들림 효과 실행
+            disableButtonsTemporarily(); // 버튼 비활성화
         }
     }
 
+    function triggerShakeEffect() {
+        const gameContainer = document.getElementById("LRLR-area"); // 흔들릴 영역 (게임 전체 영역)
+    
+        gameContainer.classList.add("shake"); // 흔들림 클래스 추가
+    
+        // 0.5초 후에 흔들림 클래스 제거
+        setTimeout(() => {
+            gameContainer.classList.remove("shake");
+        }, 500);
+    }
+
+    function disableButtonsTemporarily() {
+        isButtonDisabled = true; // 버튼 비활성화
+        leftArrow.disabled = true; // 왼쪽 버튼 비활성화
+        rightArrow.disabled = true; // 오른쪽 버튼 비활성화
+    
+        // 2초 후 버튼 활성화
+        setTimeout(() => {
+            isButtonDisabled = false; // 버튼 활성화
+            leftArrow.disabled = false; // 왼쪽 버튼 활성화
+            rightArrow.disabled = false; // 오른쪽 버튼 활성화
+        }, 2000);
+    }
+    
     // 타이머 시작
     function startTimer() {
         if (timerInterval) clearInterval(timerInterval);
