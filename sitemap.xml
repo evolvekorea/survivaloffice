@@ -14,7 +14,32 @@
        <changefreq>daily</changefreq>
        <priority>1.0</priority>
    </url>
-   
+
+   <!-- rest + 하위 페이지 -->
+   <url>
+       <loc>https://www.survivaloffice.com/rest/</loc>
+       <lastmod>2024-11-05</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.7</priority>
+   </url>
+   <url>
+       <loc>https://www.survivaloffice.com/rest/upupup</loc>
+       <lastmod>2024-11-05</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.7</priority>
+   </url>
+   <url>
+       <loc>https://www.survivaloffice.com/rest/planet</loc>
+       <lastmod>2024-12-11</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.7</priority>
+   </url>      
+    <url>
+    <loc>https://www.survivaloffice.com/rest/LRLR</loc>
+    <lastmod>2024-12-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    </url>  
    <!-- work + 하위 페이지 -->
    <url>
        <loc>https://www.survivaloffice.com/work/</loc>
@@ -53,23 +78,5 @@
        <priority>0.6</priority>
    </url>      
    
-   <!-- rest + 하위 페이지 -->
-   <url>
-       <loc>https://www.survivaloffice.com/rest/</loc>
-       <lastmod>2024-11-05</lastmod>
-       <changefreq>monthly</changefreq>
-       <priority>0.7</priority>
-   </url>
-   <url>
-       <loc>https://www.survivaloffice.com/rest/upupup</loc>
-       <lastmod>2024-11-05</lastmod>
-       <changefreq>monthly</changefreq>
-       <priority>0.7</priority>
-   </url>
-   <url>
-       <loc>https://www.survivaloffice.com/rest/planet</loc>
-       <lastmod>2024-12-11</lastmod>
-       <changefreq>monthly</changefreq>
-       <priority>0.7</priority>
-   </url>   
+
 </urlset>
