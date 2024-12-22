@@ -370,3 +370,47 @@ canvas {
 .shake {
     animation: shake 0.5s ease-in-out; /* 0.5초 동안 흔들림 */
 }
+
+#combo-display {
+    display: none; /* 초기에는 숨김 */
+    position: absolute;
+    top: 10%; /* 화면 상단 중앙 */
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-size: 50px;
+    font-weight: bold;
+    color: rgb(255, 251, 0);
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    z-index: 1000; /* 다른 요소보다 위에 표시 */
+    opacity: 0; /* 투명도 초기화 */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* 애니메이션 */
+}
+
+/* 애니메이션 효과 적용 */
+#combo-display.show {
+    opacity: 1; /* 나타나기 */
+    transform: translate(-50%, -20px); /* 약간 위로 이동 */
+    color: rgb(255, 251, 0);
+}
+
+#combo-display.hide {
+    opacity: 0; /* 사라지기 */
+    transform: translate(-50%, 0); /* 원래 위치 */
+    color: rgb(255, 251, 0);
+}
+
+/* 콤보 효과용 애니메이션 */
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -10px);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, 10px);
+    }
+}

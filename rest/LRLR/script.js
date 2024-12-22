@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let isGameRunning = false;
     let remainingTime = 30;
     let timerInterval;
+    let currentSide = "left"; 
     const availableAnimals = [
         "https://survivaloffice.com/images/a.png", // 예시 이미지 경로
         "https://survivaloffice.com/images/b.png",
@@ -56,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     const loadingMessage = document.getElementById("loading-message");
-    
+
     // 이미지 프리로딩 함수
     function preloadImages(imageUrls, callback) {
         let loadedCount = 0;
@@ -134,6 +135,10 @@ document.addEventListener("DOMContentLoaded", () => {
         leftArrow.style.display = "block";
         rightArrow.style.display = "block";
         scoreDisplay.style.display = "block";
+
+        combo = 0; // 콤보 초기화
+        updateComboDisplay(); // 콤보 UI 초기화
+
         startTimer();
         generateInitialAnimals();
         isGameRunning = true;
@@ -229,14 +234,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 // 현재 추가될 위치를 추적하는 상태 변수
-let currentSide = "left"; // "left" -> "right" -> 반복
-
 function updateScore(isCorrect) {
     if (isCorrect) {
         score += 10;
         combo += 1;
-
+        console.log(`정답 처리: 점수 ${score}, 콤보 ${combo}`);
+        updateComboDisplay(); // 콤보 업데이트
+        
         if (score % 200 === 0) {
+            console.log("새로운 동물 추가 조건 충족");
             const remainingAnimals = availableAnimals.filter(animal => {
                 const currentImages = [
                     ...Array.from(leftAnimal.children).map(child => child.src),
@@ -247,24 +253,25 @@ function updateScore(isCorrect) {
 
             if (remainingAnimals.length > 0) {
                 const newAnimalImg = remainingAnimals[Math.floor(Math.random() * remainingAnimals.length)];
-
-                // 좌 > 우 > 좌 > 우 순서로 동물 추가
                 if (currentSide === "left") {
-                    renderAnimal(leftAnimal, newAnimalImg); // 왼쪽에 동물 추가
-                    currentSide = "right"; // 다음은 오른쪽
+                    renderAnimal(leftAnimal, newAnimalImg);
+                    console.log(`왼쪽에 새로운 동물 추가: ${newAnimalImg}`);
+                    currentSide = "right";
                 } else {
-                    renderAnimal(rightAnimal, newAnimalImg); // 오른쪽에 동물 추가
-                    currentSide = "left"; // 다음은 왼쪽
+                    renderAnimal(rightAnimal, newAnimalImg);
+                    console.log(`오른쪽에 새로운 동물 추가: ${newAnimalImg}`);
+                    currentSide = "left";
                 }
             }
         }
     } else {
+        console.log(`오답 처리: 점수 ${score}, 콤보 초기화`);
         combo = 0;
+        updateComboDisplay(); // 콤보 초기화
     }
 
     scoreDisplay.textContent = `SCORE: ${score}`;
 }
-
     // 동물 이동 처리
     leftArrow.addEventListener("click", () => moveAnimal("left"));
     rightArrow.addEventListener("click", () => moveAnimal("right"));
@@ -361,6 +368,48 @@ function updateScore(isCorrect) {
             timerBar.style.backgroundColor = "#76c7c0";
         }
     }
+
+    //콤보 함수 추가
+    function updateComboDisplay() {
+        const comboDisplay = document.getElementById("combo-display");
+    
+        if (combo > 0) {
+            // 콤보 표시 및 애니메이션 적용
+            comboDisplay.textContent = `${combo} 콤보!`;
+            comboDisplay.style.display = "block"; // 요소 보이기
+            comboDisplay.classList.remove("hide"); // 사라지기 클래스 제거
+            comboDisplay.classList.add("show"); // 나타나기 클래스 추가
+    
+            // 특정 콤보 구간에서 색상 변경 효과 추가
+            if ([20, 40, 60, 80, 100].includes(combo)) {
+                console.log(`콤보 효과 적용: ${combo} 콤보!`);
+                const originalColor = comboDisplay.style.color; // 원래 색상 저장
+                comboDisplay.style.color = "red"; // 색상 변경
+                setTimeout(() => {
+                    comboDisplay.style.color = originalColor; // 원래 색상 복구
+                }, 300); // 0.5초 후 원래 색상으로 복구
+            }
+    
+            // 일정 시간 후 사라지기
+            setTimeout(() => {
+                comboDisplay.classList.remove("show"); // 나타나기 클래스 제거
+                comboDisplay.classList.add("hide"); // 사라지기 클래스 추가
+    
+                // 사라진 후 완전히 숨기기
+                setTimeout(() => {
+                    comboDisplay.style.display = "none";
+                }, 300); // 애니메이션 지속 시간과 동일
+            }, 300); // 0.3초 동안 표시 후 사라짐
+        } else {
+            // 콤보 초기화 시 사라지기
+            comboDisplay.classList.remove("show");
+            comboDisplay.classList.add("hide");
+            setTimeout(() => {
+                comboDisplay.style.display = "none";
+            }, 300); // 애니메이션 지속 시간과 동일
+        }
+    }
+
 
     // 게임 종료
     function endGame() {
@@ -594,21 +643,31 @@ function getCurrentWeekRange() {
     const now = new Date(); // 현재 날짜
     const dayOfWeek = now.getDay(); // 요일 (0: 일요일, 1: 월요일, ..., 6: 토요일)
 
-    // 이번 주 월요일 계산
-    const monday = new Date(now);
-    const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // 일요일은 -6, 나머지는 (1 - 요일)
-    monday.setDate(now.getDate() + diffToMonday);
+    console.log(`현재 날짜: ${now}`);
+    console.log(`현재 요일: ${dayOfWeek}`); // 디버깅
+
+    // 오늘 기준으로 주의 시작(월요일) 날짜 계산
+    const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // 일요일(0)은 -6, 나머지는 1 - 요일
+    console.log(`월요일까지의 차이: ${diffToMonday}`); // 디버깅
+
+    const monday = new Date(now); // 현재 날짜 복사
+    monday.setDate(now.getDate() + diffToMonday); // 월요일 날짜 설정
     monday.setHours(0, 0, 0, 0); // 월요일 00:00:00
 
-    // 이번 주 일요일 계산
-    const sunday = new Date(monday);
+    console.log(`계산된 월요일: ${monday}`); // 디버깅
+
+    // 월요일 기준으로 주의 끝(일요일) 날짜 계산
+    const sunday = new Date(monday); // 월요일 날짜 복사
     sunday.setDate(monday.getDate() + 6); // 월요일 + 6일 = 일요일
     sunday.setHours(23, 59, 59, 999); // 일요일 23:59:59
 
-    // YYYY-MM-DD 형식으로 반환
-    const startDate = monday.toISOString().slice(0, 10); // 월요일
-    const endDate = sunday.toISOString().slice(0, 10); // 일요일
+    console.log(`계산된 일요일: ${sunday}`); // 디버깅
 
+    // YYYY-MM-DD 형식으로 반환 (로컬 시간대 기준)
+    const startDate = `${monday.getFullYear()}-${String(monday.getMonth() + 1).padStart(2, '0')}-${String(monday.getDate()).padStart(2, '0')}`;
+    const endDate = `${sunday.getFullYear()}-${String(sunday.getMonth() + 1).padStart(2, '0')}-${String(sunday.getDate()).padStart(2, '0')}`;
+
+    console.log(`이번 주 날짜 범위: ${startDate} ~ ${endDate}`); // 디버그 로그 추가
     return { startDate, endDate };
 }
 

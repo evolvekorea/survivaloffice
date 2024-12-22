@@ -140,21 +140,31 @@ function getCurrentWeekRange() {
     const now = new Date(); // 현재 날짜
     const dayOfWeek = now.getDay(); // 요일 (0: 일요일, 1: 월요일, ..., 6: 토요일)
 
-    // 이번 주 월요일 계산
-    const monday = new Date(now);
-    const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // 일요일은 -6, 나머지는 (1 - 요일)
-    monday.setDate(now.getDate() + diffToMonday);
+    console.log(`현재 날짜: ${now}`);
+    console.log(`현재 요일: ${dayOfWeek}`); // 디버깅
+
+    // 오늘 기준으로 주의 시작(월요일) 날짜 계산
+    const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // 일요일(0)은 -6, 나머지는 1 - 요일
+    console.log(`월요일까지의 차이: ${diffToMonday}`); // 디버깅
+
+    const monday = new Date(now); // 현재 날짜 복사
+    monday.setDate(now.getDate() + diffToMonday); // 월요일 날짜 설정
     monday.setHours(0, 0, 0, 0); // 월요일 00:00:00
 
-    // 이번 주 일요일 계산
-    const sunday = new Date(monday);
+    console.log(`계산된 월요일: ${monday}`); // 디버깅
+
+    // 월요일 기준으로 주의 끝(일요일) 날짜 계산
+    const sunday = new Date(monday); // 월요일 날짜 복사
     sunday.setDate(monday.getDate() + 6); // 월요일 + 6일 = 일요일
     sunday.setHours(23, 59, 59, 999); // 일요일 23:59:59
 
-    // YYYY-MM-DD 형식으로 반환
-    const startDate = monday.toISOString().slice(0, 10); // 월요일
-    const endDate = sunday.toISOString().slice(0, 10); // 일요일
+    console.log(`계산된 일요일: ${sunday}`); // 디버깅
 
+    // YYYY-MM-DD 형식으로 반환 (로컬 시간대 기준)
+    const startDate = `${monday.getFullYear()}-${String(monday.getMonth() + 1).padStart(2, '0')}-${String(monday.getDate()).padStart(2, '0')}`;
+    const endDate = `${sunday.getFullYear()}-${String(sunday.getMonth() + 1).padStart(2, '0')}-${String(sunday.getDate()).padStart(2, '0')}`;
+
+    console.log(`이번 주 날짜 범위: ${startDate} ~ ${endDate}`); // 디버그 로그 추가
     return { startDate, endDate };
 }
 
