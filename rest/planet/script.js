@@ -45,21 +45,40 @@ const rankingContainer = document.getElementById('ranking-container');
 
 // 버튼과 컨테이너가 존재하는지 확인
 if (top10RankButton && rankingContainer) {
-    // 랭킹 보기 버튼 클릭 이벤트 등록
-    top10RankButton.addEventListener('click', () => {
+    top10RankButton.addEventListener('click', async () => {
         console.log("랭킹 보기 버튼 클릭됨");
-        rankingContainer.style.display = 'block'; // 랭킹 컨테이너 표시
-        rankingContainer.innerHTML = '<p>로딩 중...</p>'; // 로딩 중 메시지
-        loadTop10Rankings(); // Firestore에서 랭킹 데이터 로드
+        rankingContainer.style.display = 'block';
+        rankingContainer.innerHTML = '<p>로딩 중...</p>';
+        
+        await loadTop10Rankings(); // 이번 주 랭킹 불러오기
+        await loadAllTimeHighScore(); // 전체 최고 점수 불러오기
     });
 } else {
     console.error("top10-rank 버튼 또는 ranking-container 요소를 찾을 수 없습니다.");
 }
 
 // Firestore에서 Top 10 랭킹 데이터 가져오기
+// Firestore에서 이번 주 월~일 랭킹 가져오기
 async function loadTop10Rankings() {
-    const scoresRef = collection(db, 'planet'); // 'planet' 컬렉션 사용
-    const q = query(scoresRef, orderBy('score', 'desc'), orderBy('date', 'desc'), limit(10));
+    const scoresRef = collection(db, 'planet');
+    const { startDate, endDate } = getCurrentWeekRange();
+    console.log("Start Date:", startDate);
+    console.log("End Date:", endDate);
+
+    const q = query(
+        scoresRef,
+        where("date", ">=", startDate), // 범위 필터
+        where("date", "<=", endDate),  // 범위 필터
+        orderBy("score", "desc"),      // score 내림차순 정렬
+        orderBy("date", "desc"),        // date 내림차순 정렬
+        limit(10)
+    );
+
+    const querySnapshot = await getDocs(q);
+    console.log("쿼리 결과 개수:", querySnapshot.size);
+    querySnapshot.forEach(doc => {
+        console.log(doc.data());
+    });
 
     try {
         const querySnapshot = await getDocs(q);
@@ -92,29 +111,105 @@ async function loadTop10Rankings() {
             else if (rank === 3) medalEmoji = '🥉';
 
             // HTML 리스트 아이템 생성
-            rankingsHTML += `
-                <li class="ranking-item">
+            rankingsHTML += 
+                `<li class="ranking-item">
                     ${medalEmoji} ${rank}위 - ${nickname}, ${score}점 <span class="date">${formattedDate}</span>
-                </li>
-            `;
+                </li>`;
             rank++;
         });
 
-        rankingsHTML += '<h4 style="color: red;">📢 랭킹은 매주 월요일 초기화됩니다.</h4></ul>';
+        rankingsHTML += '</ul><h4 style="color: red;">📢 랭킹은 매주 월요일 초기화됩니다.</h4>';
+        console.log('Before updating:', rankingContainer.innerHTML);
         rankingContainer.innerHTML = rankingsHTML; // HTML 업데이트
+        console.log('After updating:', rankingContainer.innerHTML);
 
         // 순차적으로 나타나는 애니메이션
         const rankingItems = document.querySelectorAll('.ranking-item');
         rankingItems.forEach((item, index) => {
-            setTimeout(() => {
-                item.style.opacity = 1;
-                item.style.transform = 'translateY(0)';
-            }, index * 500); // 0.3초 간격
+            item.style.animationDelay = `${index * 0.5}s`; // 0.5초 간격으로 딜레이 설정
         });
 
     } catch (error) {
         console.error('Firestore에서 랭킹 데이터를 가져오는 중 오류 발생:', error);
         rankingContainer.innerHTML = '<p>랭킹 데이터를 불러오지 못했습니다.</p>';
+    }
+}
+
+// 이번 주 월~일 날짜 계산 함수
+function getCurrentWeekRange() {
+    const now = new Date(); // 현재 날짜
+    const dayOfWeek = now.getDay(); // 요일 (0: 일요일, 1: 월요일, ..., 6: 토요일)
+
+    // 이번 주 월요일 계산
+    const monday = new Date(now);
+    const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // 일요일은 -6, 나머지는 (1 - 요일)
+    monday.setDate(now.getDate() + diffToMonday);
+    monday.setHours(0, 0, 0, 0); // 월요일 00:00:00
+
+    // 이번 주 일요일 계산
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6); // 월요일 + 6일 = 일요일
+    sunday.setHours(23, 59, 59, 999); // 일요일 23:59:59
+
+    // YYYY-MM-DD 형식으로 반환
+    const startDate = monday.toISOString().slice(0, 10); // 월요일
+    const endDate = sunday.toISOString().slice(0, 10); // 일요일
+
+    return { startDate, endDate };
+}
+
+// Firestore에서 전체 최고 점수 가져오기
+async function loadAllTimeHighScore() {
+    const scoresRef = collection(db, 'planet');
+
+    // 최고 점수를 가져오기 위한 쿼리
+    const q = query(scoresRef, orderBy('score', 'desc'), limit(1));
+
+    try {
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+            rankingContainer.innerHTML += '<h3>최고 점수 데이터가 없습니다.</h3>';
+            return;
+        }
+
+        let highScoreHTML = '<h2>🏆역대 최고 기록🏆</h2>';
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const nickname = data.nickname || 'Unknown';
+            const score = data.score || 0;
+
+            let formattedDate;
+
+            // date 필드가 Firestore Timestamp인지 확인 후 처리
+            if (data.date && typeof data.date.toDate === 'function') {
+                const dateObj = data.date.toDate();
+                const year = dateObj.getFullYear();
+                const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const day = String(dateObj.getDate()).padStart(2, '0');
+                formattedDate = `${year}-${month}-${day}`;
+            } else if (typeof data.date === 'string') {
+                formattedDate = data.date.slice(0, 10); // "YYYY-MM-DD" 형식 추출
+            } else {
+                formattedDate = '날짜 없음';
+            }
+
+            highScoreHTML += `
+                <p>
+                    <h3 style="display: flex; justify-content: space-between; align-items: center;">
+                         🎉  ${nickname},  ${score}점
+                        <span class="date" style="margin-left: auto; text-align: right;">${formattedDate}</span>
+                    </h3>
+                </p>
+            `;
+        });
+
+        // 기존 랭킹 컨테이너 하단에 추가
+        rankingContainer.innerHTML += highScoreHTML;
+        
+    } catch (error) {
+        console.error("Firestore에서 최고 점수 데이터를 가져오는 중 오류 발생:", error);
+        rankingContainer.innerHTML += '<p>최고 점수 데이터를 불러오지 못했습니다.</p>';
     }
 }
 
