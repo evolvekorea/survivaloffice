@@ -236,11 +236,31 @@ document.addEventListener("DOMContentLoaded", () => {
 // 현재 추가될 위치를 추적하는 상태 변수
 function updateScore(isCorrect) {
     if (isCorrect) {
-        score += 10;
+        let points = 0;
+
+        // 콤보 구간별 점수 설정
+        if (combo < 20) {
+            points = 10;
+        } else if (combo < 40) {
+            points = 20;
+        } else if (combo < 60) {
+            points = 50;
+        } else if (combo < 80) {
+            points = 100;
+        } else if (combo < 100) {
+            points = 200;
+        } else {
+            points = 500;
+        }
+
+        // 점수 및 콤보 업데이트
         combo += 1;
-        console.log(`정답 처리: 점수 ${score}, 콤보 ${combo}`);
+        score += points;
+
+        console.log(`정답 처리: 점수 ${score}, 콤보 ${combo}, 추가 점수 ${points}`);
         updateComboDisplay(); // 콤보 업데이트
         
+        // 특정 점수 구간에서 새로운 동물 추가
         if (score % 200 === 0) {
             console.log("새로운 동물 추가 조건 충족");
             const remainingAnimals = availableAnimals.filter(animal => {
