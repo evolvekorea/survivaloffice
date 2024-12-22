@@ -219,8 +219,6 @@ function updateScore(isCorrect) {
     scoreDisplay.textContent = `SCORE: ${score}`;
 }
 
-
-
     // 동물 이동 처리
     leftArrow.addEventListener("click", () => moveAnimal("left"));
     rightArrow.addEventListener("click", () => moveAnimal("right"));
@@ -348,11 +346,17 @@ function updateScore(isCorrect) {
         };
     }
 
+    // 점수 저장 버튼
     document.getElementById('saveScoreButton').addEventListener('click', async (event) => {
         event.preventDefault();
         const nickname = document.getElementById('nicknameInput').value;
-        if (nickname.trim() === "") {
+        
+        // 글자 수 제한 (5글자)
+        if (nickname.length === 0) {
             alert("닉네임을 입력해주세요.");
+            return;
+        } else if (nickname.length > 5) {
+            alert("닉네임은 5글자 이하로 입력해주세요.");
             return;
         }
         await saveScore(nickname, score);

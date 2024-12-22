@@ -267,28 +267,31 @@ canvas {
 
 /* 좌우 동물: 고정된 위치 */
 #left-animal, #right-animal {
-    display: flex;
-    flex-direction: column; /* 세로 방향 정렬 */
-    align-items: center; /* 가로 중앙 정렬 */
-    font-size: 2.5rem;
-    color: gray;
-    cursor: pointer;
+    display: flex !important; /* Flexbox 강제 적용 */
+    flex-direction: column-reverse !important; /* 새로운 동물이 위쪽에 추가되도록 설정 */
+    align-items: center !important; /* 가로 중앙 정렬 강제 적용 */
+    justify-content: flex-start; /* 세로 정렬 */
+    gap: 5px; /* 동물 간 간격 */
     position: absolute;
-    top: 80%; /* 중앙에 위치 */
-    transform: translateY(-50%);
-    height: 200px; /* 컨테이너 높이 */
+    bottom: 25%; /* arrows 위로 이동 (arrows와의 간격 설정) */
+    transform: translateY(0); /* Y축 이동 보정 제거 */
 }
 
 /* 왼쪽 동물 위치 */
 #left-animal {
-    left: 10%; /* 화면 왼쪽 10% 위치 */
-    text-align: center; /* 텍스트 중앙 정렬 */
+    left: 10%; /* 화면 왼쪽 */
 }
 
 /* 오른쪽 동물 위치 */
 #right-animal {
-    right: 10%; /* 화면 오른쪽 10% 위치 */
-    text-align: center; /* 텍스트 중앙 정렬 */
+    right: 10%; /* 화면 오른쪽 */
+}
+
+.animal-img {
+    width: 50px; /* 이미지 너비 */
+    height: 50px; /* 이미지 높이 */
+    margin: 0; /* 불필요한 여백 제거 */
+    object-fit: contain; /* 이미지 비율 유지 */
 }
 
   #start-button {
@@ -324,6 +327,7 @@ canvas {
     display: flex;
     justify-content: space-between;
     padding: 0 15px;
+    background-color: transparent; /* Remove background color */
 }
 
 #arrows button {
@@ -332,6 +336,7 @@ canvas {
     border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;
+    background-color: transparent; /* Remove button background color */
 }
 
 .animal-img {
