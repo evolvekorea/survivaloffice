@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const rightOptions = Array.from(rightAnimal.children).map(img => img.src);
         const allOptions = [...leftOptions, ...rightOptions];
     
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 10; i++) {
             const randomAnimal = allOptions[Math.floor(Math.random() * allOptions.length)];
             animalQueue.push(randomAnimal);
             renderAnimal(centerAnimal, randomAnimal); // 이미지 렌더링
@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function generateInitialAnimals() {
         animalQueue.length = 0; // 큐 초기화
     
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 15; i++) {
             const randomAnimal = availableAnimals[Math.floor(Math.random() * availableAnimals.length)];
             animalQueue.push(randomAnimal); // 이미지 경로 추가
         }
@@ -213,13 +213,14 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderCenterAnimals() {
         centerAnimal.innerHTML = ""; // 기존 내용 초기화
     
-        const visibleAnimals = animalQueue.slice(0, 5); // 상위 5개만 표시
-    
+        const visibleAnimals = animalQueue.slice(0, 10); // 상위 5개만 표시
+        console.log("Visible Animals:", visibleAnimals); // 디버깅: 표시 동물 확인
+
         visibleAnimals.forEach((animalImg) => {
             renderAnimal(centerAnimal, animalImg); // 이미지 추가
         });
     }
-
+    console.log("Rendered Center Animals:", centerAnimal.children.length); // 렌더링된 동물 수 확인
     function addAnimalToQueue() {
         const randomAnimal = availableAnimals[Math.floor(Math.random() * availableAnimals.length)];
     
@@ -292,11 +293,23 @@ function updateScore(isCorrect) {
 
     scoreDisplay.textContent = `SCORE: ${score}`;
 }
+
+    let isGameOver = false;
+
     // 동물 이동 처리
-    leftArrow.addEventListener("click", () => moveAnimal("left"));
-    rightArrow.addEventListener("click", () => moveAnimal("right"));
+    leftArrow.addEventListener("click", () => {
+        if (isGameOver) return; // 게임 종료 상태에서는 클릭 무시
+        moveAnimal("left");
+    });
+    
+    rightArrow.addEventListener("click", () => {
+        if (isGameOver) return; // 게임 종료 상태에서는 클릭 무시
+        moveAnimal("right");
+    });
 
     document.addEventListener("keydown", (event) => {
+        if (isGameOver) return; // 게임 종료 상태에서는 방향키 입력 무시
+    
         if (event.key === "ArrowLeft") moveAnimal("left");
         if (event.key === "ArrowRight") moveAnimal("right");
     });
@@ -433,8 +446,10 @@ function updateScore(isCorrect) {
 
     // 게임 종료
     function endGame() {
-        isGameRunning = false;
-        clearInterval(timerInterval);
+        if (isGameOver) return;
+        isGameOver = true;
+    
+        // 점수 저장 팝업 표시
         showGameOverPopup();
     }
 
@@ -442,58 +457,53 @@ function updateScore(isCorrect) {
     function showGameOverPopup() {
         const popup = document.getElementById("result-popup");
         popup.style.display = "block";
+    
+        // 팝업이 표시되면 방향키와 버튼 입력을 모두 막음
+        isGameOver = true;
     }
 
-    // 점수 저장
+    // 점수 저장 함수
     async function saveScore(nickname, score) {
         console.log("Firestore에 점수 저장 시도:", nickname, score);
         const now = new Date();
         const kstOffset = 9 * 60 * 60 * 1000; // UTC+9 (밀리초)
         const kstDate = new Date(now.getTime() + kstOffset);
         const date = kstDate.toISOString().split("T")[0]; // "YYYY-MM-DD" 형식
-    
+
         const scoresRef = collection(db, 'LRLR');
-        const q = query(scoresRef, where('nickname', '==', nickname || 'Unknown'));
-    
+
         try {
-            console.log("쿼리 시작");
-            const querySnapshot = await getDocs(q);
-            console.log("쿼리 결과 개수:", querySnapshot.size);
-    
-            if (!querySnapshot.empty) {
-                console.log("기존 기록 발견, 업데이트 시도 중...");
-                for (const document of querySnapshot.docs) {
-                    const existingRecord = document.data();
-                    console.log("기존 기록:", existingRecord);
-    
-                    if (score > existingRecord.score) {
-                        await updateDoc(doc(db, 'LRLR', document.id), {
-                            score: score,
-                            date: date
-                        });
-                        alert('기록이 업데이트되었습니다.');
-                    } else {
-                        alert('기록이 업데이트되지 않았습니다. 기존 점수가 더 높습니다.');
-                    }
-                }
-            } else {
-                console.log("기존 기록이 없음, 새로운 문서 추가 중...");
-                await addDoc(scoresRef, {
-                    nickname: nickname || 'Unknown',
-                    score: score,
-                    date: date
-                });
-                alert('점수가 성공적으로 저장되었습니다.');
-            }
+            console.log("새로운 점수 저장 중...");
+            await addDoc(scoresRef, {
+                nickname: nickname || 'Unknown',
+                score: score,
+                date: date
+            });
+            alert('점수가 성공적으로 저장되었습니다.');
         } catch (error) {
             console.error("Error adding data:", error);
             alert('점수 저장 중 오류가 발생했습니다.');
         };
     }
 
+    // 팝업 닫기 및 다시 시작 버튼
+    document.getElementById('closePopupButton').addEventListener('click', () => {
+        console.log("닫기 버튼 클릭됨");
+        window.location.reload();
+    });
+
     // 점수 저장 버튼
-    document.getElementById('saveScoreButton').addEventListener('click', async (event) => {
+    const saveScoreButton = document.getElementById('saveScoreButton');
+
+    saveScoreButton.addEventListener('click', async (event) => {
         event.preventDefault();
+
+        // 이미 비활성화된 버튼이라면 실행하지 않음
+        if (saveScoreButton.disabled) {
+            alert("이미 점수가 등록되었습니다.");
+            return;
+        }
+
         const nickname = document.getElementById('nicknameInput').value;
         
         // 글자 수 제한 (5글자)
@@ -504,11 +514,14 @@ function updateScore(isCorrect) {
             alert("닉네임은 5글자 이하로 입력해주세요.");
             return;
         }
-        await saveScore(nickname, score);
-    });
 
-    document.getElementById('closePopupButton').addEventListener('click', () => {
-        window.location.reload();
+        // 점수 저장 로직
+        await saveScore(nickname, score);
+
+        // 버튼 비활성화
+        saveScoreButton.disabled = true;
+        saveScoreButton.style.cursor = "not-allowed";
+        saveScoreButton.textContent = "등록 완료"; // 버튼 텍스트 변경
     });
 
 // 랭킹 보기 버튼과 컨테이너 확인 및 이벤트 등록

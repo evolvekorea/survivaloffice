@@ -246,23 +246,24 @@ canvas {
 #center-animal {
     display: flex;
     flex-direction: column-reverse; /* 아래에서 위로 쌓이도록 설정 */
-    align-items: center; /* 가로 중앙 정렬 */
-    justify-content: flex-start; /* 세로 상단부터 정렬 */
+    align-items: center;
+    justify-content: flex-start;
     position: absolute;
-    top: 45%; /* 화면 중앙 */
+    top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* 정확한 중앙 정렬 */
-    height: 90%; /* 중앙 영역 높이 */
-    width: 15%; /* 가로 전체 영역 */
-    overflow: hidden; /* 초과 영역 숨기기 */
+    transform: translate(-50%, -50%);
+    height: 100%; /* 높이를 충분히 설정 */
+    width: 15%; 
+    overflow-y: hidden; /* 초과 동물 스크롤로 보이게 설정 */
 }
 
 /* 개별 중앙 동물 스타일 */
-.center-animal-item {
+#center-animal .animal-img {
     width: 50px; /* 이미지 너비 고정 */
     height: 50px; /* 이미지 높이 고정 */
-    margin: 0; /* 불필요한 여백 제거 */
+    margin: -20px 0; /* 불필요한 여백 제거 */
     display: block; /* block 요소로 세로 배치 */
+    object-fit: contain; /* 이미지 비율 유지 */
 }
 
 /* 좌우 동물: 고정된 위치 */
@@ -275,6 +276,13 @@ canvas {
     position: absolute;
     bottom: 25%; /* arrows 위로 이동 (arrows와의 간격 설정) */
     transform: translateY(0); /* Y축 이동 보정 제거 */
+}
+
+#left-animal .animal-img,
+#right-animal .animal-img {
+    width: 40px; /* 크기를 조정 (이전: 50px) */
+    height: 40px; /* 크기를 조정 (이전: 50px) */
+    margin: 3px 0; /* 간격 조정 */
 }
 
 /* 왼쪽 동물 위치 */
@@ -413,4 +421,23 @@ canvas {
         opacity: 0;
         transform: translate(-50%, 10px);
     }
+}
+
+button:disabled {
+    background-color: #ccc; /* 비활성화된 색상 */
+    color: #666; /* 텍스트 색상 */
+    cursor: not-allowed;
+}
+
+#saveScoreButton {
+    background-color: #007bff !important; /* 우선순위를 높이기 위해 !important 사용 */
+    color: white !important;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#saveScoreButton:hover {
+    background-color: #0056b3 !important; /* 호버 상태에서도 우선순위 높이기 */
 }

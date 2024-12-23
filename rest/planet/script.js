@@ -57,7 +57,6 @@ if (top10RankButton && rankingContainer) {
     console.error("top10-rank 버튼 또는 ranking-container 요소를 찾을 수 없습니다.");
 }
 
-// Firestore에서 Top 10 랭킹 데이터 가져오기
 // Firestore에서 이번 주 월~일 랭킹 가져오기
 async function loadTop10Rankings() {
     const scoresRef = collection(db, 'planet');
@@ -241,38 +240,15 @@ async function saveScore(nickname, score) {
     const date = kstDate.toISOString().split("T")[0]; // "YYYY-MM-DD" 형식
 
     const scoresRef = collection(db, 'planet');
-    const q = query(scoresRef, where('nickname', '==', nickname || 'Unknown'));
 
     try {
-        console.log("쿼리 시작");
-        const querySnapshot = await getDocs(q);
-        console.log("쿼리 결과 개수:", querySnapshot.size);
-
-        if (!querySnapshot.empty) {
-            console.log("기존 기록 발견, 업데이트 시도 중...");
-            for (const document of querySnapshot.docs) {
-                const existingRecord = document.data();
-                console.log("기존 기록:", existingRecord);
-
-                if (score > existingRecord.score) {
-                    await updateDoc(doc(db, 'planet', document.id), {
-                        score: score,
-                        date: date
-                    });
-                    alert('기록이 업데이트되었습니다.');
-                } else {
-                    alert('기록이 업데이트되지 않았습니다. 기존 점수가 더 높습니다.');
-                }
-            }
-        } else {
-            console.log("기존 기록이 없음, 새로운 문서 추가 중...");
-            await addDoc(scoresRef, {
-                nickname: nickname || 'Unknown',
-                score: score,
-                date: date
-            });
-            alert('점수가 성공적으로 저장되었습니다.');
-        }
+        console.log("새로운 점수 저장 중...");
+        await addDoc(scoresRef, {
+            nickname: nickname || 'Unknown',
+            score: score,
+            date: date
+        });
+        alert('점수가 성공적으로 저장되었습니다.');
     } catch (error) {
         console.error("Error adding data:", error);
         alert('점수 저장 중 오류가 발생했습니다.');
@@ -286,8 +262,17 @@ document.getElementById('closePopupButton').addEventListener('click', () => {
 });
 
 // 점수 저장 버튼
-document.getElementById('saveScoreButton').addEventListener('click', async (event) => {
+const saveScoreButton = document.getElementById('saveScoreButton');
+
+saveScoreButton.addEventListener('click', async (event) => {
     event.preventDefault();
+
+    // 이미 비활성화된 버튼이라면 실행하지 않음
+    if (saveScoreButton.disabled) {
+        alert("이미 점수가 등록되었습니다.");
+        return;
+    }
+
     const nickname = document.getElementById('nicknameInput').value;
     
     // 글자 수 제한 (5글자)
@@ -298,7 +283,14 @@ document.getElementById('saveScoreButton').addEventListener('click', async (even
         alert("닉네임은 5글자 이하로 입력해주세요.");
         return;
     }
+
+    // 점수 저장 로직
     await saveScore(nickname, score);
+
+    // 버튼 비활성화
+    saveScoreButton.disabled = true;
+    saveScoreButton.style.cursor = "not-allowed";
+    saveScoreButton.textContent = "등록 완료"; // 버튼 텍스트 변경
 });
 
 // 게임 종료 팝업 표시 함수
