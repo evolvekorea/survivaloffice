@@ -310,7 +310,7 @@ button:hover {
     top: 10%;
     left: 50%;
     transform: translate(-50%, 0);
-    width: 80%;
+    width: 100%;
     max-width: 400px;
     background-color: white;
     border: 2px solid #333;
@@ -339,4 +339,21 @@ button:hover {
     width: 100px; /* 고정 폭 설정 */
     text-align: right; /* 텍스트 우측 정렬 */
     transition: none !important; /* 애니메이션 제거 */
+}
+
+.ranking-item {
+    opacity: 0; /* 초기 상태를 숨김 */
+    margin-top: 15px; /* 위아래 간격 */
+    animation: fadeInUp 0.5s ease forwards; /* 애니메이션 설정 */
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px); /* 아래에서 위로 이동 */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
