@@ -254,173 +254,263 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-// saveScore 함수 (v9 모듈 방식)
-    async function saveScore(nickname, score) {
+// 랭킹 보기 버튼과 컨테이너 요소 가져오기
+const top10RankButton = document.getElementById('top10-rank');
+const rankingContainer = document.getElementById('ranking-container');
+
+// 버튼과 컨테이너가 존재하는지 확인
+if (top10RankButton && rankingContainer) {
+    top10RankButton.addEventListener('click', async () => {
+        console.log("랭킹 보기 버튼 클릭됨");
+        rankingContainer.style.display = 'block';
+        rankingContainer.innerHTML = '<p>로딩 중...</p>';
+        
+        await loadTop10Rankings(); // 이번 주 랭킹 불러오기
+        await loadAllTimeHighScore(); // 전체 최고 점수 불러오기
+    });
+} else {
+    console.error("top10-rank 버튼 또는 ranking-container 요소를 찾을 수 없습니다.");
+}
+
+// Firestore에서 이번 주 월~일 랭킹 가져오기
+async function loadTop10Rankings() {
+    const scoresRef = collection(db, 'scores');
+    const { startDate, endDate } = getCurrentWeekRange();
+    console.log("Start Date:", startDate);
+    console.log("End Date:", endDate);
+
+    const q = query(
+        scoresRef,
+        where("date", ">=", startDate), // 범위 필터
+        where("date", "<=", endDate),  // 범위 필터
+        orderBy("score", "desc"),      // score 내림차순 정렬
+        orderBy("date", "desc"),        // date 내림차순 정렬
+        limit(10)
+    );
+
+    const querySnapshot = await getDocs(q);
+    console.log("쿼리 결과 개수:", querySnapshot.size);
+    querySnapshot.forEach(doc => {
+        console.log(doc.data());
+    });
+
+    try {
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+            rankingContainer.innerHTML = '<p>랭킹 데이터가 없습니다.</p>';
+            return;
+        }
+
+        let rankingsHTML = '<h2>Top 10 랭킹</h2><ul>';
+        let rank = 1;
+
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const nickname = data.nickname || 'Unknown'; // 닉네임 기본값
+            const score = data.score || 0; // 점수 기본값
+            let formattedDate;
+
+            // 날짜 필드 처리
+            if (typeof data.date === 'string') {
+                formattedDate = data.date.slice(0, 10); // "YYYY-MM-DD" 형식
+            } else {
+                formattedDate = '날짜 없음';
+            }
+
+            // 순위에 따른 메달 이모지 추가
+            let medalEmoji = '';
+            if (rank === 1) medalEmoji = '🥇';
+            else if (rank === 2) medalEmoji = '🥈';
+            else if (rank === 3) medalEmoji = '🥉';
+
+            // HTML 리스트 아이템 생성
+            rankingsHTML += 
+                `<li class="ranking-item">
+                    ${medalEmoji} ${rank}위 - ${nickname}, ${score}점 <span class="date">${formattedDate}</span>
+                </li>`;
+            rank++;
+        });
+
+        rankingsHTML += '</ul><h4 style="color: red;">📢 랭킹은 매주 월요일 초기화됩니다.</h4>';
+        console.log('Before updating:', rankingContainer.innerHTML);
+        rankingContainer.innerHTML = rankingsHTML; // HTML 업데이트
+        console.log('After updating:', rankingContainer.innerHTML);
+
+        // 순차적으로 나타나는 애니메이션
+        const rankingItems = document.querySelectorAll('.ranking-item');
+        rankingItems.forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.5}s`; // 0.5초 간격으로 딜레이 설정
+        });
+
+    } catch (error) {
+        console.error('Firestore에서 랭킹 데이터를 가져오는 중 오류 발생:', error);
+        rankingContainer.innerHTML = '<p>랭킹 데이터를 불러오지 못했습니다.</p>';
+    }
+}
+
+// 이번 주 월~일 날짜 계산 함수
+function getCurrentWeekRange() {
+    const now = new Date(); // 현재 날짜
+    const dayOfWeek = now.getDay(); // 요일 (0: 일요일, 1: 월요일, ..., 6: 토요일)
+
+    console.log(`현재 날짜: ${now}`);
+    console.log(`현재 요일: ${dayOfWeek}`); // 디버깅
+
+    // 오늘 기준으로 주의 시작(월요일) 날짜 계산
+    const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // 일요일(0)은 -6, 나머지는 1 - 요일
+    console.log(`월요일까지의 차이: ${diffToMonday}`); // 디버깅
+
+    const monday = new Date(now); // 현재 날짜 복사
+    monday.setDate(now.getDate() + diffToMonday); // 월요일 날짜 설정
+    monday.setHours(0, 0, 0, 0); // 월요일 00:00:00
+
+    console.log(`계산된 월요일: ${monday}`); // 디버깅
+
+    // 월요일 기준으로 주의 끝(일요일) 날짜 계산
+    const sunday = new Date(monday); // 월요일 날짜 복사
+    sunday.setDate(monday.getDate() + 6); // 월요일 + 6일 = 일요일
+    sunday.setHours(23, 59, 59, 999); // 일요일 23:59:59
+
+    console.log(`계산된 일요일: ${sunday}`); // 디버깅
+
+    // YYYY-MM-DD 형식으로 반환 (로컬 시간대 기준)
+    const startDate = `${monday.getFullYear()}-${String(monday.getMonth() + 1).padStart(2, '0')}-${String(monday.getDate()).padStart(2, '0')}`;
+    const endDate = `${sunday.getFullYear()}-${String(sunday.getMonth() + 1).padStart(2, '0')}-${String(sunday.getDate()).padStart(2, '0')}`;
+
+    console.log(`이번 주 날짜 범위: ${startDate} ~ ${endDate}`); // 디버그 로그 추가
+    return { startDate, endDate };
+}
+
+// Firestore에서 전체 최고 점수 가져오기
+async function loadAllTimeHighScore() {
+    const scoresRef = collection(db, 'scores');
+
+    // 최고 점수를 가져오기 위한 쿼리
+    const q = query(scoresRef, orderBy('score', 'desc'), limit(1));
+
+    try {
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+            rankingContainer.innerHTML += '<h3>최고 점수 데이터가 없습니다.</h3>';
+            return;
+        }
+
+        let highScoreHTML = '<h2>🏆역대 최고 기록🏆</h2>';
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const nickname = data.nickname || 'Unknown';
+            const score = data.score || 0;
+
+            let formattedDate;
+
+            // date 필드가 Firestore Timestamp인지 확인 후 처리
+            if (data.date && typeof data.date.toDate === 'function') {
+                const dateObj = data.date.toDate();
+                const year = dateObj.getFullYear();
+                const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const day = String(dateObj.getDate()).padStart(2, '0');
+                formattedDate = `${year}-${month}-${day}`;
+            } else if (typeof data.date === 'string') {
+                formattedDate = data.date.slice(0, 10); // "YYYY-MM-DD" 형식 추출
+            } else {
+                formattedDate = '날짜 없음';
+            }
+
+            highScoreHTML += `
+                <p>
+                    <h3 style="display: flex; justify-content: space-between; align-items: center;">
+                         🎉  ${nickname},  ${score}점
+                        <span class="date" style="margin-left: auto; text-align: right;">${formattedDate}</span>
+                    </h3>
+                </p>
+            `;
+        });
+
+        // 기존 랭킹 컨테이너 하단에 추가
+        rankingContainer.innerHTML += highScoreHTML;
+        
+    } catch (error) {
+        console.error("Firestore에서 최고 점수 데이터를 가져오는 중 오류 발생:", error);
+        rankingContainer.innerHTML += '<p>최고 점수 데이터를 불러오지 못했습니다.</p>';
+    }
+}
+
+// 랭킹 컨테이너 클릭 시 닫기 이벤트 등록
+if (rankingContainer) {
+    rankingContainer.addEventListener('click', () => {
+        rankingContainer.style.display = 'none'; // 컨테이너 닫기
+    });
+} else {
+    console.error("ranking-container 요소를 찾을 수 없습니다.");
+}
+
+// 점수 저장 함수
+async function saveScore(nickname, score) {
     console.log("Firestore에 점수 저장 시도:", nickname, score);
     const now = new Date();
     const kstOffset = 9 * 60 * 60 * 1000; // UTC+9 (밀리초)
     const kstDate = new Date(now.getTime() + kstOffset);
-    const date = kstDate.toISOString().slice(0, 19).replace("T", " ");
+    const date = kstDate.toISOString().split("T")[0]; // "YYYY-MM-DD" 형식
 
     const scoresRef = collection(db, 'scores');
-    const q = query(scoresRef, where('nickname', '==', nickname || 'Unknown'));
 
     try {
-        console.log("쿼리 시작");
-        const querySnapshot = await getDocs(q);
-        console.log("쿼리 결과 개수:", querySnapshot.size); 
-
-        if (!querySnapshot.empty) {
-            console.log("기존 기록 발견, 업데이트 시도 중...");
-            for (const document of querySnapshot.docs) {
-                const existingRecord = document.data();
-                console.log("기존 기록:", existingRecord);
-
-                if (score > existingRecord.score) {
-                    await updateDoc(doc(db, 'scores', document.id), {
-                        score: score,
-                        date: date
-                    });
-                    alert('기록이 업데이트되었습니다.');
-                    console.log("기록 업데이트 성공");
-                    setTimeout(() => {
-                        window.location.reload(); // 업데이트 후 새로고침
-                    }, 100);
-                } else {
-                    alert('기록이 업데이트되지 않았습니다. 기존 점수가 더 높습니다.');
-                    console.log("기존 점수가 더 높음");
-                    setTimeout(() => {
-                        window.location.reload(); // 새로고침
-                    }, 100);
-                }
-            }
-        } else {
-            console.log("기존 기록이 없음, 새로운 문서 추가 중...");
-            await addDoc(scoresRef, {
-                nickname: nickname || 'Unknown',
-                score: score,
-                date: date
-            });
-            alert('점수가 성공적으로 저장되었습니다.');
-            console.log("새로운 문서 추가 성공");
-                                setTimeout(() => {
-                        window.location.reload(); // 새로고침
-                    }, 100);
-        }
+        console.log("새로운 점수 저장 중...");
+        await addDoc(scoresRef, {
+            nickname: nickname || 'Unknown',
+            score: score,
+            date: date
+        });
+        alert('점수가 성공적으로 저장되었습니다.');
     } catch (error) {
         console.error("Error adding data:", error);
         alert('점수 저장 중 오류가 발생했습니다.');
-    }
+    };
 }
-    // 닫기 버튼이 존재할 경우에만 이벤트 리스너 등록
-    if (closePopupButton) {
-        closePopupButton.addEventListener('click', () => {
-            console.log("닫기 버튼 클릭됨, 새로고침 수행");
-            window.location.reload();
-        });
-    } else {
-        console.error("closePopupButton 요소를 찾을 수 없습니다.");
+
+// 팝업 닫기 및 다시 시작 버튼
+document.getElementById('closePopupButton').addEventListener('click', () => {
+    console.log("닫기 버튼 클릭됨");
+    window.location.reload();
+});
+
+// 점수 저장 버튼
+const saveScoreButton = document.getElementById('saveScoreButton');
+
+saveScoreButton.addEventListener('click', async (event) => {
+    event.preventDefault();
+
+    // 이미 비활성화된 버튼이라면 실행하지 않음
+    if (saveScoreButton.disabled) {
+        alert("이미 점수가 등록되었습니다.");
+        return;
     }
 
-    // 점수 저장 버튼 이벤트 리스너
-    document.getElementById('saveScoreButton').addEventListener('click', async (event) => {
-        event.preventDefault();
-        const nickname = document.getElementById('nicknameInput').value;
-        if (nickname.trim() === "") {
-            alert("닉네임을 입력해주세요.");
-            return;
-        }
-        await saveScore(nickname, score);
-    });
-    // 랭킹 보기 버튼 클릭 시
-    const top10RankButton = document.getElementById('top10-rank');
-    const rankingContainer = document.getElementById('ranking-container');
-
-    if (top10RankButton && rankingContainer) {
-    top10RankButton.addEventListener('click', () => {
-        console.log("랭킹 보기 버튼 클릭됨");
-        rankingContainer.style.display = 'block'; // 랭킹 컨테이너 표시
-        loadTop10Rankings(); // 랭킹 데이터 로드
-    });
-    } else {
-        console.error("top10-rank 버튼 또는 ranking-container 요소를 찾을 수 없습니다.");
+    const nickname = document.getElementById('nicknameInput').value;
+    
+    // 글자 수 제한 (5글자)
+    if (nickname.length === 0) {
+        alert("닉네임을 입력해주세요.");
+        return;
+    } else if (nickname.length > 5) {
+        alert("닉네임은 5글자 이하로 입력해주세요.");
+        return;
     }
 
-    // Firestore에서 Top 10 랭킹 데이터 가져오기
-    async function loadTop10Rankings() {
-        const scoresRef = collection(db, 'scores');
-        const q = query(scoresRef, orderBy('score', 'desc'), orderBy('date', 'desc'), limit(10));
+    // 점수 저장 로직
+    await saveScore(nickname, score);
 
-        try {
-            const querySnapshot = await getDocs(q);
-            let rankingsHTML = '<h2>Top 10 랭킹</h2>';
-            let rank = 1;
+    // 버튼 비활성화
+    saveScoreButton.disabled = true;
+    saveScoreButton.style.cursor = "not-allowed";
+    saveScoreButton.textContent = "등록 완료"; // 버튼 텍스트 변경
+});
 
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                const nickname = data.nickname || 'Unknown';
-                const score = data.score;
-            
-                let formattedDate;
-            
-                // date 필드가 타임스탬프 형식인지, 문자열 형식인지 확인
-                if (data.date && typeof data.date.toDate === 'function') {
-                    // Firestore 타임스탬프 형식인 경우
-                    const dateObj = data.date.toDate();
-                    const year = dateObj.getFullYear();
-                    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-                    const day = String(dateObj.getDate()).padStart(2, '0');
-                    formattedDate = `${year}-${month}-${day}`;
-                } else if (typeof data.date === 'string') {
-                    // 문자열 형식인 경우
-                    formattedDate = data.date.slice(0, 10); // "YYYY-MM-DD" 형식 추출
-                } else {
-                    formattedDate = 'Invalid Date';
-                }
-
-                // 순위에 따른 이모지 및 클래스 추가
-                let rankClass = '';
-                let medalEmoji = '';
-
-                if (rank === 1) {
-                    rankClass = 'first-place';
-                    medalEmoji = '🥇'; // 금메달
-                } else if (rank === 2) {
-                    rankClass = 'second-place';
-                    medalEmoji = '🥈'; // 은메달
-                } else if (rank === 3) {
-                    rankClass = 'third-place';
-                    medalEmoji = '🥉'; // 동메달
-                }  
-
-                // 리스트 아이템 생성
-                rankingsHTML += `
-                <li class="ranking-item ${rankClass}">
-                    ${medalEmoji} ${rank}위 - ${nickname}, ${score}점 <span class="date">${formattedDate}</span>
-                </li>
-                `;
-                rank++;
-            });
-
-            rankingContainer.innerHTML = rankingsHTML;
-
-            // 순차적으로 나타나는 애니메이션
-            const rankingItems = document.querySelectorAll('.ranking-item');
-            rankingItems.forEach((item, index) => {
-            setTimeout(() => {
-                item.style.opacity = 1;
-                item.style.transform = 'translateY(0)';
-            }, index * 300); // 0.2초 간격으로 나타남
-        });
-
-        } catch (error) {
-            console.error('Firestore에서 랭킹 데이터를 가져오는 중 오류 발생:', error);
-            rankingContainer.innerHTML = '<p>랭킹 데이터를 불러오지 못했습니다.</p>';
-        }
-    }
-
-    // 랭킹 컨테이너 클릭 시 닫기
-    rankingContainer.addEventListener('click', () => {
-        rankingContainer.style.display = 'none';
-    });
- });
+// 게임 종료 팝업 표시 함수
+function showGameOverPopup() {
+    const popup = document.getElementById('result-popup');
+    popup.style.display = 'block';
+}
+});
