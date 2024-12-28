@@ -357,3 +357,28 @@ button:hover {
         transform: translateY(0);
     }
 }
+
+#help-btn {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    position: absolute;
+    top: 10px; /* 컨테이너 상단에서 10px 아래 */
+    right: 10px; /* 컨테이너 우측에서 10px 왼쪽 */
+    background-color: #ffffff; /* 버튼 배경색 */
+    color: rgb(2, 2, 2); /* 버튼 텍스트 색 */
+    border: 2px solid #333;
+    border-radius: 10px; /* 모서리 둥글게 */
+    padding: 5px 10px 0px 10px; /* 위쪽 5px, 아래쪽 3px으로 설정 */
+    cursor: pointer; /* 마우스 포인터 변경 */
+    margin-top: 0;
+    font-size: 25px; /* 텍스트 크기 */
+    font-weight: bold;
+    z-index: 200; /* 다른 요소 위에 표시 */
+    transition: background-color 0.3s ease; /* 호버 시 부드러운 색 전환 */
+    width: auto;
+    box-sizing: border-box; /* 패딩이 요소 크기에 포함되도록 설정 */
+    height: auto; /* 높이를 자동으로 조정 */
+}
+
+#help-btn:hover {
+    background-color: #18d394; /* 호버 시 버튼 배경색 */
+}
