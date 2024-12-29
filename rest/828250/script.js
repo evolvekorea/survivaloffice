@@ -132,9 +132,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function endGame() {
-        if (isGameOver) return;
+        if (isGameOver) return; // 이미 게임이 종료되었다면 실행하지 않음
         isGameOver = true;
-
+    
+        clearInterval(gameTimer); // 타이머 중지
+    
         // 점수 저장 팝업 표시
         showGameOverPopup();
     }
