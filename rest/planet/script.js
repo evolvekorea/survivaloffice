@@ -15,10 +15,86 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// Elements
+const loadingMessage = document.getElementById("loading-message");
+const startButton = document.getElementById("start-btn");
+const startScreen = document.getElementById("start-screen");
+const planetArea = document.getElementById("planet-area");
+
+// Image Preloading
+const gameImages = [
+    "https://www.survivaloffice.com/images/1.png",
+    "https://www.survivaloffice.com/images/2.png",
+    "https://www.survivaloffice.com/images/3.png",
+    "https://www.survivaloffice.com/images/4.png",
+    "https://www.survivaloffice.com/images/5.png",
+    "https://www.survivaloffice.com/images/6.png",
+    "https://www.survivaloffice.com/images/7.png",
+    "https://www.survivaloffice.com/images/8.png",
+    "https://www.survivaloffice.com/images/9.png",
+    "https://www.survivaloffice.com/images/10.png",
+    "https://www.survivaloffice.com/images/LRLR.png"
+];
+
+
+function preloadImages(imageUrls, callback) {
+    let loadedCount = 0;
+    const totalImages = imageUrls.length;
+
+    imageUrls.forEach((url) => {
+        const img = new Image();
+        img.src = url;
+
+        img.onload = () => {
+            loadedCount++;
+            loadingMessage.textContent = `이미지 로드 중... (${loadedCount}/${totalImages})`;
+
+            if (loadedCount === totalImages) {
+                callback();
+            }
+        };
+
+        img.onerror = () => console.error(`이미지 로드 실패: ${url}`);
+    });
+}
+
+// Show Start Button After Images Load
+preloadImages(
+    [
+        "https://www.survivaloffice.com/images/1.png",
+        "https://www.survivaloffice.com/images/2.png",
+        "https://www.survivaloffice.com/images/3.png",
+        "https://www.survivaloffice.com/images/4.png",
+        "https://www.survivaloffice.com/images/5.png",
+        "https://www.survivaloffice.com/images/6.png",
+        "https://www.survivaloffice.com/images/7.png",
+        "https://www.survivaloffice.com/images/8.png",
+        "https://www.survivaloffice.com/images/9.png",
+        "https://www.survivaloffice.com/images/10.png",
+        "https://www.survivaloffice.com/images/LRLR.png"
+    ],
+    () => {
+        console.log("모든 이미지가 로드되었습니다!");
+        loadingMessage.textContent = ""; // 로딩 메시지 제거
+        startButton.style.display = "block"; // 게임 시작 버튼 표시
+    }
+);
+
+let isGameStarted = false; // 게임 시작 상태를 나타내는 플래그
+
+// Start Game
+startButton.addEventListener("click", (event) => {
+    event.stopPropagation(); // 클릭 이벤트 전파 방지
+    isGameStarted = true; // 게임이 시작되었음을 표시
+    startScreen.style.display = "none"; // 시작 화면 숨기기
+    planetArea.style.display = "block"; // 게임 화면 표시
+    console.log("게임 시작!");
+});
+
+
 // Planck.js 초기 설정 및 공통 변수 설정
 const pl = planck, Vec2 = pl.Vec2;
 const world = pl.World(Vec2(0, -10));
-const planetArea = document.getElementById("planet-area");
 const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d");
 planetArea.appendChild(canvas);
@@ -569,6 +645,7 @@ function updateNextPlanetPreview() {
 }
 
 planetArea.addEventListener("click", (event) => {
+    if (!isGameStarted) return; // 게임이 시작되지 않았으면 클릭 이벤트 무시
     // 게임 종료 시 클릭 무시
     if (isGameOver) return;
     const currentTime = Date.now();

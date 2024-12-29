@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const scoreDisplay = document.getElementById("score");
     const top10RankButton = document.getElementById("top10-rank");
     const rankingContainer = document.getElementById("ranking-container");
+    const helpButton = document.getElementById("help-btn");
 
     // 초기 상태 설정
     centerAnimal.style.display = "none";
@@ -104,6 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 스타트 버튼 클릭 이벤트
     startButton.addEventListener("click", () => {
+        helpButton.style.display = "none";
         startButton.style.display = "none";
         LRLRArea.style.backgroundImage = "none";
         startCountdown();

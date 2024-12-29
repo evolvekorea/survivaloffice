@@ -35,17 +35,29 @@
     <script src="https://cdn.jsdelivr.net/npm/planck-js@0.3.0/dist/planck.min.js"></script>
 </head>
 <body oncontextmenu="return false">
+    
+
 
     <!-- 게임 컨테이너 -->
     <div id="game-container">
         <h1><a href="/">Planet Evolution</a></h1>
         <div id="score">Score: 0</div>
         <button id="top10-rank">랭킹 보기</button>
-        <div id="next-planet-preview"></div>               
+        <div id="next-planet-preview"></div>
     </div>
 
     <!-- 행성 영역 -->
-    <div id="planet-area" style="width: 360px; height: 450px;"></div>
+    <div id="planet-area" style="width: 360px; height: 450px;">
+        <!-- Start Screen -->
+        <div id="start-screen" style="width: 360px; height: 450px;">
+            <div id="loading-message">이미지 로드 중...</div>
+            <button id="start-btn" style="display: none;">게임 시작</button>
+            <button id="help-btn" onclick="window.open('https://travelerguru.co.kr/%eb%af%b8%eb%8b%88%ea%b2%8c%ec%9e%84-%ec%86%8c%ea%b0%9c-1%ed%83%84-%ed%96%89%ec%84%b1-%eb%a7%8c%eb%93%a4%ea%b8%b0-%ea%b2%8c%ec%9e%84planet-evolution/', '_blank')">
+                게임 방법
+            </button>
+        </div>
+    </div>
+    
     <div id="banner">
         <img src="https://www.survivaloffice.com/images/planetbaner.png" alt="Planet Banner" />
     </div>

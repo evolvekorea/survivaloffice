@@ -305,7 +305,7 @@ canvas {
 #start-button {
     font-family: 'GangwonEduSaeeum_OTFMediumA';
     position: absolute; /* 부모 기준으로 위치 조정 가능 */
-    top: 70%; /* 부모 요소의 60% 높이에서 위치 */
+    top: 80%; /* 부모 요소의 60% 높이에서 위치 */
     left: 50%; /* 부모 요소의 중앙 */
     transform: translate(-50%, -50%); /* 정확한 중앙 정렬 보정 */
     padding: 10px 20px;
