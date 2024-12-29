@@ -368,7 +368,7 @@ function updateScore(isCorrect) {
             isButtonDisabled = false; // 버튼 활성화
             leftArrow.disabled = false; // 왼쪽 버튼 활성화
             rightArrow.disabled = false; // 오른쪽 버튼 활성화
-        }, 2000);
+        }, 1000);
     }
     
     // 타이머 시작
