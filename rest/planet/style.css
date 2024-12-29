@@ -108,7 +108,7 @@ html, body {
     position: relative;
     width: 100%;
     height: calc(100% - 80px); /* 화면에서 상단 UI 제외한 영역 */
-    background-color: #2e2e3e;
+    background-color: #00001a;
     border: 2px solid #fff;
     box-sizing: border-box;
     overflow: hidden;
@@ -326,7 +326,7 @@ button:disabled {
 #start-btn {
     font-family: 'GangwonEduSaeeum_OTFMediumA';
     position: absolute; /* 부모 기준으로 위치 조정 가능 */
-    top: 80%; /* 부모 요소의 60% 높이에서 위치 */
+    top: 55%; /* 부모 요소의 60% 높이에서 위치 */
     left: 50%; /* 부모 요소의 중앙 */
     transform: translate(-50%, -50%); /* 정확한 중앙 정렬 보정 */
     padding: 10px 20px;
