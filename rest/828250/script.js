@@ -172,25 +172,25 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
     
-        await saveScore(nickname, elapsedTime);
+        await saveScore(nickname, elapsedTime); // 고정된 elapsedTime 사용
         saveScoreButton.disabled = true;
         saveScoreButton.style.cursor = "not-allowed";
         saveScoreButton.textContent = "등록 완료";
     });
-
+    
     async function saveScore(nickname, score) {
         console.log("Firestore에 점수 저장 시도:", nickname, score);
         const now = new Date();
         const kstOffset = 9 * 60 * 60 * 1000;
         const kstDate = new Date(now.getTime() + kstOffset);
         const date = kstDate.toISOString().split("T")[0];
-
+    
         const scoresRef = collection(db, '828250');
         console.log("Firestore에 저장할 데이터:", { nickname, score });
         try {
             await addDoc(scoresRef, {
                 nickname: nickname || 'Unknown',
-                score: score,
+                score: score, // 고정된 elapsedTime 값 사용
                 date: date
             });
             alert('점수가 성공적으로 저장되었습니다.');
