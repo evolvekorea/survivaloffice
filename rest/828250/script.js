@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let gameTimer;
     let startTime;
+    let elapsedTime; // 게임 종료 시 경과 시간을 저장하는 변수
     let currentNumber = 1;
     let isGameOver = false;
 
@@ -61,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         scoreDisplay.textContent = "게임시간\n00:00:00";
         scoreDisplay.style.display = "block";
         startTime = new Date();
+        elapsedTime = null; // 초기화
         gameTimer = setInterval(updateTimer, 1000);
         generateGridNumbers();
     }
@@ -136,6 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
         isGameOver = true;
     
         clearInterval(gameTimer); // 타이머 중지
+        elapsedTime = calculateElapsedTime(); // 종료 시점의 시간 저장
+        console.log("종료된 게임 시간:", elapsedTime); // 디버깅용
     
         // 점수 저장 팝업 표시
         showGameOverPopup();
@@ -147,14 +151,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     saveScoreButton.addEventListener('click', async (event) => {
         event.preventDefault();
-
+    
         if (saveScoreButton.disabled) {
             alert("이미 점수가 등록되었습니다.");
             return;
         }
-
+    
         const nickname = document.getElementById('nicknameInput').value;
-
+    
         if (nickname.length === 0) {
             alert("닉네임을 입력해주세요.");
             return;
@@ -162,8 +166,13 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("닉네임은 5글자 이하로 입력해주세요.");
             return;
         }
-
-        await saveScore(nickname, calculateElapsedTime());
+    
+        if (!elapsedTime) {
+            alert("게임이 아직 종료되지 않았습니다!");
+            return;
+        }
+    
+        await saveScore(nickname, elapsedTime);
         saveScoreButton.disabled = true;
         saveScoreButton.style.cursor = "not-allowed";
         saveScoreButton.textContent = "등록 완료";
@@ -192,6 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function calculateElapsedTime() {
+        if (!startTime) return "00:00:00"; // 시작하지 않은 경우 기본값 반환
         const now = new Date();
         const elapsed = new Date(now - startTime);
         const hours = String(elapsed.getUTCHours()).padStart(2, "0");
