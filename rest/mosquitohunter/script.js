@@ -45,9 +45,9 @@ function preloadImages(imageUrls, callback) {
 // Show Start Button After Images Load
 preloadImages(
     [
-        "https://www.survivaloffice.com/images/1.png",
-        "https://www.survivaloffice.com/images/2.png",
-        "https://www.survivaloffice.com/images/3.png",
+        "https://www.survivaloffice.com/images/beeD.png",
+        "https://www.survivaloffice.com/images/beeR.png",
+        "https://www.survivaloffice.com/images/beeL.png",
         "https://www.survivaloffice.com/images/4.png",
         "https://www.survivaloffice.com/images/mosquitoL.png",
         "https://www.survivaloffice.com/images/mosquitoR.png",
@@ -345,26 +345,36 @@ const mosquitoTypes = [
         deadImage: "https://www.survivaloffice.com/images/mosquitodead.png", 
         score: 10, 
         clicksToKill: 1, 
-        probability: 80,
+        probability: 75,
         width: 40, // 모기 크기 (가로)
         height: 40, // 모기 크기 (세로)
         deadWidth: 70, // 죽은 모기 크기 (가로)
         deadHeight: 70 // 죽은 모기 크기 (세로)
     },
     {
-        leftImage: "https://www.survivaloffice.com/images/1.png", 
-        rightImage: "https://www.survivaloffice.com/images/2.png", 
-        deadImage: "https://www.survivaloffice.com/images/9.png", 
-        score: -50, 
+        leftImage: "https://www.survivaloffice.com/images/beeL.png", 
+        rightImage: "https://www.survivaloffice.com/images/beeR.png", 
+        deadImage: "https://www.survivaloffice.com/images/beeD.png", 
+        score: -10, 
         clicksToKill: 1, 
         probability: 10,
         width: 50, // 모기 크기 (가로)
         height: 50 // 모기 크기 (세로)
     },
     {
-        leftImage: "https://www.survivaloffice.com/images/3.png", 
-        rightImage: "https://www.survivaloffice.com/images/4.png", 
-        deadImage: "https://www.survivaloffice.com/images/10.png", 
+        leftImage: "https://www.survivaloffice.com/images/dfL.png", 
+        rightImage: "https://www.survivaloffice.com/images/dfR.png", 
+        deadImage: "https://www.survivaloffice.com/images/dfD.png", 
+        score: -50, 
+        clicksToKill: 1, 
+        probability: 5,
+        width: 50, // 모기 크기 (가로)
+        height: 50 // 모기 크기 (세로)
+    },
+    {
+        leftImage: "https://www.survivaloffice.com/images/mokL.png", 
+        rightImage: "https://www.survivaloffice.com/images/mokR.png", 
+        deadImage: "https://www.survivaloffice.com/images/mokD.png", 
         score: 100, 
         clicksToKill: 3, 
         probability: 10,
