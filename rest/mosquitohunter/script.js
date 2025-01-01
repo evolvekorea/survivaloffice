@@ -358,21 +358,24 @@ function showGameOverPopup() {
 // 모기 종류와 확률 설정
 const mosquitoTypes = [
     {
-        image: "https://www.survivaloffice.com/images/mosquito.png", 
+        leftImage: "https://www.survivaloffice.com/images/mosquitoL.png", 
+        rightImage: "https://www.survivaloffice.com/images/mosquitoR.png", 
         deadImage: "https://www.survivaloffice.com/images/8.png", 
         score: 10, 
         clicksToKill: 1, 
         probability: 80
     },
     {
-        image: "https://www.survivaloffice.com/images/2.png", 
+        leftImage: "https://www.survivaloffice.com/images/2L.png", 
+        rightImage: "https://www.survivaloffice.com/images/2R.png", 
         deadImage: "https://www.survivaloffice.com/images/9.png", 
         score: -50, 
         clicksToKill: 1, 
         probability: 10
     },
     {
-        image: "https://www.survivaloffice.com/images/3.png", 
+        leftImage: "https://www.survivaloffice.com/images/3L.png", 
+        rightImage: "https://www.survivaloffice.com/images/3R.png", 
         deadImage: "https://www.survivaloffice.com/images/10.png", 
         score: 100, 
         clicksToKill: 3, 
@@ -523,6 +526,13 @@ function moveMosquito(mosquito) {
         // 경계에 도달하면 이동 방향 반전
         if (newLeft < boundary.left || newLeft > boundary.right) dx = -dx;
         if (newTop < boundary.top || newTop > boundary.bottom) dy = -dy;
+
+        // 이동 방향에 따라 이미지 변경
+        if (dx > 0) {
+            mosquito.style.backgroundImage = `url(${mosquitoType.rightImage})`;
+        } else if (dx < 0) {
+            mosquito.style.backgroundImage = `url(${mosquitoType.leftImage})`;
+        }
 
         // 위치 업데이트
         mosquito.style.left = `${newLeft}%`;
