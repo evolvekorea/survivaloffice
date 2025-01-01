@@ -188,3 +188,14 @@ footer {
         flex: 1 1 calc(33.33% - 10px); /* 큰 태블릿 및 PC에서도 한 줄에 3개 */
     }
 }
+
+.email-link {
+    color: #ffffff; /* 원하는 색상 (예: 주황색) */
+    text-decoration: none; /* 밑줄 제거 */
+    font-weight: bold; /* 굵게 표시 */
+}
+
+.email-link:hover {
+    color: #29f5e4; /* 마우스 오버 시 색상 변경 */
+    text-decoration: underline; /* 마우스 오버 시 밑줄 추가 */
+}
