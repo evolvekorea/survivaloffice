@@ -51,9 +51,9 @@ preloadImages(
         "https://www.survivaloffice.com/images/dfL.png",
         "https://www.survivaloffice.com/images/dfR.png",
         "https://www.survivaloffice.com/images/dfD.png",
-        "https://www.survivaloffice.com/images/mosquitoL.png",
-        "https://www.survivaloffice.com/images/mosquitoR.png",
-        "https://www.survivaloffice.com/images/mosquitodead.png",
+        "https://www.survivaloffice.com/images/moL.png",
+        "https://www.survivaloffice.com/images/moR.png",
+        "https://www.survivaloffice.com/images/moD.png",
         "https://www.survivaloffice.com/images/mokL.png",
         "https://www.survivaloffice.com/images/mokR.png",
         "https://www.survivaloffice.com/images/mokD.png"
@@ -343,16 +343,15 @@ function showGameOverPopup() {
 // 모기 종류와 확률 설정
 const mosquitoTypes = [
     {
-        leftImage: "https://www.survivaloffice.com/images/mosquitoL.png", 
-        rightImage: "https://www.survivaloffice.com/images/mosquitoR.png", 
-        deadImage: "https://www.survivaloffice.com/images/mosquitodead.png", 
+        leftImage: "https://www.survivaloffice.com/images/moL.png", 
+        rightImage: "https://www.survivaloffice.com/images/moR.png", 
+        deadImage: "https://www.survivaloffice.com/images/moD.png", 
         score: 10, 
         clicksToKill: 1, 
         probability: 75,
-        width: 40, // 모기 크기 (가로)
-        height: 40, // 모기 크기 (세로)
-        deadWidth: 70, // 죽은 모기 크기 (가로)
-        deadHeight: 70 // 죽은 모기 크기 (세로)
+        width: 50, // 모기 크기 (가로)
+        height: 50, // 모기 크기 (세로)
+
     },
     {
         leftImage: "https://www.survivaloffice.com/images/beeL.png", 
@@ -381,8 +380,8 @@ const mosquitoTypes = [
         score: 100, 
         clicksToKill: 3, 
         probability: 10,
-        width: 50, // 모기 크기 (가로)
-        height: 50 // 모기 크기 (세로)
+        width: 70, // 모기 크기 (가로)
+        height: 70 // 모기 크기 (세로)
     }
 ];
 
