@@ -94,6 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "https://survivaloffice.com/images/e.png",
             "https://survivaloffice.com/images/f.png",
             "https://survivaloffice.com/images/g.png",
+            "https://survivaloffice.com/images/LRLRA.png",
             "https://survivaloffice.com/images/h.png"
         ],
         () => {

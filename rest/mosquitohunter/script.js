@@ -56,7 +56,8 @@ preloadImages(
         "https://www.survivaloffice.com/images/moD.png",
         "https://www.survivaloffice.com/images/mokL.png",
         "https://www.survivaloffice.com/images/mokR.png",
-        "https://www.survivaloffice.com/images/mokD.png"
+        "https://www.survivaloffice.com/images/mokD.png",
+        "https://www.survivaloffice.com/images/main.png"        
     ],
     () => {
         console.log("모든 이미지가 로드되었습니다!");
