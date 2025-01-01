@@ -473,9 +473,16 @@ button:disabled {
     margin: 10px auto; /* 광고와 게임 영역 사이의 여백 및 중앙 정렬 */
     text-align: center; /* 광고를 중앙에 정렬 */
     width: 360px; /* 광고 영역의 너비 */
-    height: 50px; /* 높이를 콘텐츠에 맞게 자동 조정 */
+    height: 50px; /* 높이 조정 */
     background-color: #fff; /* 광고 영역 배경색 (필요 시) */
     padding: 5px 0; /* 광고 영역 안쪽 여백 */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 광고 영역에 가벼운 그림자 추가 */
     border-radius: 5px; /* 광고 영역의 모서리를 둥글게 */
+}
+
+@media (max-width: 360px) {
+    #ad-container {
+        width: 100%; /* 모바일에서 가로 크기 조정 */
+        height: 50px; /* 높이 고정 */
+    }
 }
