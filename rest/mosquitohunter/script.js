@@ -21,22 +21,6 @@ const startButton = document.getElementById("start-btn");
 const startScreen = document.getElementById("start-screen");
 const gamearea = document.getElementById("game-area");
 
-// Image Preloading
-const gameImages = [
-    "https://www.survivaloffice.com/images/1.png",
-    "https://www.survivaloffice.com/images/2.png",
-    "https://www.survivaloffice.com/images/3.png",
-    "https://www.survivaloffice.com/images/4.png",
-    "https://www.survivaloffice.com/images/5.png",
-    "https://www.survivaloffice.com/images/6.png",
-    "https://www.survivaloffice.com/images/7.png",
-    "https://www.survivaloffice.com/images/8.png",
-    "https://www.survivaloffice.com/images/9.png",
-    "https://www.survivaloffice.com/images/10.png",
-    "https://www.survivaloffice.com/images/LRLR.png"
-];
-
-
 function preloadImages(imageUrls, callback) {
     let loadedCount = 0;
     const totalImages = imageUrls.length;
@@ -360,7 +344,7 @@ const mosquitoTypes = [
     {
         leftImage: "https://www.survivaloffice.com/images/mosquitoL.png", 
         rightImage: "https://www.survivaloffice.com/images/mosquitoR.png", 
-        deadImage: "https://www.survivaloffice.com/images/8.png", 
+        deadImage: "https://www.survivaloffice.com/images/mosquitodead.png", 
         score: 10, 
         clicksToKill: 1, 
         probability: 80
@@ -451,7 +435,7 @@ function createMosquito(width, height) {
     }
 
     console.debug(`선택된 모기: ${JSON.stringify(mosquitoType)}`);
-    
+
     // 모기 요소 생성
     const mosquito = document.createElement('div');
     mosquito.className = 'mosquito';
