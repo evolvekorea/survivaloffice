@@ -94,10 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "https://survivaloffice.com/images/e.png",
             "https://survivaloffice.com/images/f.png",
             "https://survivaloffice.com/images/g.png",
-            "https://survivaloffice.com/images/LRLRA.png",
-            "https://survivaloffice.com/images/LRLRB.png",
-            "https://survivaloffice.com/images/LRLR2.png"
-
+            "https://survivaloffice.com/images/h.png"
         ],
         () => {
             console.log("모든 이미지가 로드되었습니다!");
@@ -108,23 +105,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 스타트 버튼 클릭 이벤트
     startButton.addEventListener("click", () => {
-    helpButton.style.display = "none"; // 도움말 버튼 숨기기
-    startButton.style.display = "none"; // 시작 버튼 숨기기
-    
-    // 새로운 배경 이미지 설정
-    LRLRArea.style.backgroundImage = "url('https://www.survivaloffice.com/images/LRLRA')"; 
-    LRLRArea.style.backgroundSize = "cover"; // 배경 크기를 화면에 맞게
-    LRLRArea.style.backgroundPosition = "center"; // 배경 위치를 중앙으로
-    LRLRArea.style.backgroundRepeat = "no-repeat"; // 배경 반복 없음
-
-    // 카운트다운 시작
-    startCountdown();
-});
+        helpButton.style.display = "none";
+        startButton.style.display = "none";
+        LRLRArea.style.backgroundImage = "none";
+        startCountdown();
+    });
 
     // 카운트다운 시작
     function startCountdown() {
         countdownContainer.style.display = "block";
-        let countdown = 5;
+        let countdown = 3;
 
         const interval = setInterval(() => {
             countdownContainer.textContent = countdown;
@@ -133,6 +123,13 @@ document.addEventListener("DOMContentLoaded", () => {
             if (countdown < 0) {
                 clearInterval(interval);
                 countdownContainer.style.display = "none";
+
+                // 카운트다운 종료 후 배경 이미지 설정
+                LRLRArea.style.backgroundImage = "url('https://www.survivaloffice.com/images/LRLRA.png')";
+                LRLRArea.style.backgroundSize = "cover"; // 배경 크기를 화면에 맞게
+                LRLRArea.style.backgroundPosition = "center"; // 배경 위치를 중앙으로
+                LRLRArea.style.backgroundRepeat = "no-repeat"; // 배경 반복 없음
+        
                 showGameUI();
             }
         }, 1000);
