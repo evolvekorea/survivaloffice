@@ -427,7 +427,7 @@ let isGameOver = false; // 게임 종료 상태 플래그
 let isInputBlocked = false; // 입력 차단 플래그
 
 // 모기 수 제한
-const maxMosquitoCount = 30; // 화면에 동시에 존재할 수 있는 최대 모기 수
+const maxMosquitoCount = 50; // 화면에 동시에 존재할 수 있는 최대 모기 수
 let currentMosquitoCount = 0; // 현재 화면에 존재하는 모기 수
 
 // "보이지 않는 영역"의 경계 설정
@@ -600,7 +600,7 @@ function showGameUI() {
     document.getElementById('start-screen').style.display = 'none'; // 시작 화면 숨기기
     isGameOver = false; // 게임 종료 상태 초기화
     startTimer(); // 타이머 시작
-    setInterval(() => createMosquito(50, 50), 1000); // 모기 생성 시작
+    setInterval(() => createMosquito(50, 50), 800); // 모기 생성 시작
 }
 
 // 게임 시작 버튼 클릭 이벤트 수정
