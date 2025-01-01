@@ -366,16 +366,16 @@ const mosquitoTypes = [
         probability: 80
     },
     {
-        leftImage: "https://www.survivaloffice.com/images/2L.png", 
-        rightImage: "https://www.survivaloffice.com/images/2R.png", 
+        leftImage: "https://www.survivaloffice.com/images/1.png", 
+        rightImage: "https://www.survivaloffice.com/images/2.png", 
         deadImage: "https://www.survivaloffice.com/images/9.png", 
         score: -50, 
         clicksToKill: 1, 
         probability: 10
     },
     {
-        leftImage: "https://www.survivaloffice.com/images/3L.png", 
-        rightImage: "https://www.survivaloffice.com/images/3R.png", 
+        leftImage: "https://www.survivaloffice.com/images/3.png", 
+        rightImage: "https://www.survivaloffice.com/images/4.png", 
         deadImage: "https://www.survivaloffice.com/images/10.png", 
         score: 100, 
         clicksToKill: 3, 
@@ -383,20 +383,34 @@ const mosquitoTypes = [
     }
 ];
 
+// 디버깅 메시지로 배열 확인
+console.debug("mosquitoTypes 배열 확인:", mosquitoTypes);
+
 // 확률에 따라 모기 타입 선택
 function getRandomMosquitoType() {
-    const random = Math.random() * 100; // 0 ~ 100 사이의 난수
+    if (!mosquitoTypes || mosquitoTypes.length === 0) {
+        console.error("mosquitoTypes 배열이 비어 있습니다.");
+        return null;
+    }
+
+    const random = Math.random() * 100;
     let cumulativeProbability = 0;
 
     for (const type of mosquitoTypes) {
         cumulativeProbability += type.probability;
         if (random <= cumulativeProbability) {
-            console.debug(`선택된 모기: ${type.image}`); // 디버깅
+            // 데이터 유효성 검증
+            if (!type.leftImage || !type.rightImage || !type.deadImage) {
+                console.error("선택된 모기의 이미지 데이터가 유효하지 않습니다.", type);
+                return null;
+            }
+            console.debug(`선택된 모기: ${JSON.stringify(type)}`);
             return type;
         }
     }
-    console.error("모기 타입을 선택하지 못했습니다. 기본 모기를 반환합니다.");
-    return mosquitoTypes[0]; // 기본값: 기존 모기
+
+    console.error("모기 타입 선택 실패: 기본 모기를 반환합니다.");
+    return mosquitoTypes[0]; // 기본 모기 타입 반환
 }
 
 // 점수 관리
@@ -431,7 +445,13 @@ function createMosquito(width, height) {
 
     // 랜덤 타입 선택
     const mosquitoType = getRandomMosquitoType();
+    if (!mosquitoType || !mosquitoType.leftImage || !mosquitoType.rightImage) {
+        console.error("모기 타입 또는 이미지 데이터가 유효하지 않습니다.");
+        return;
+    }
 
+    console.debug(`선택된 모기: ${JSON.stringify(mosquitoType)}`);
+    
     // 모기 요소 생성
     const mosquito = document.createElement('div');
     mosquito.className = 'mosquito';
@@ -473,7 +493,7 @@ function createMosquito(width, height) {
     // 부드럽게 등장 후 이동 시작
     setTimeout(() => {
         mosquito.style.opacity = 1; // 화면에 나타남
-        moveMosquito(mosquito); // 지속적인 이동
+        moveMosquito(mosquito, mosquitoType); // 이동 함수에 mosquitoType 전달
     }, 1000);
 }
 
@@ -504,8 +524,13 @@ function getStartPosition() {
 }
 
 // 모기 지속적인 실시간 이동 함수 (보이지 않는 영역 내에서 반전)
-function moveMosquito(mosquito) {
-    // 모기마다 이동 속도 다양화
+function moveMosquito(mosquito, mosquitoType) {
+
+    if (!mosquitoType || !mosquitoType.leftImage || !mosquitoType.rightImage) {
+        console.error("모기 타입 또는 이미지 데이터가 유효하지 않습니다:", mosquitoType);
+        return;
+    }
+        // 모기마다 이동 속도 다양화
     let dx = Math.random() * 2 - 1; // -1 ~ 1 (랜덤 속도)
     let dy = Math.random() * 2 - 1; // -1 ~ 1 (랜덤 속도)
 
@@ -530,7 +555,7 @@ function moveMosquito(mosquito) {
         // 이동 방향에 따라 이미지 변경
         if (dx > 0) {
             mosquito.style.backgroundImage = `url(${mosquitoType.rightImage})`;
-        } else if (dx < 0) {
+        } else if (dx <= 0) {
             mosquito.style.backgroundImage = `url(${mosquitoType.leftImage})`;
         }
 
@@ -552,7 +577,7 @@ const countdownContainer = document.getElementById("countdown-container");
 // 카운트다운 시작
 function startCountdown() {
     countdownContainer.style.display = "block";
-    let countdown = 5;
+    let countdown = 3;
 
     const interval = setInterval(() => {
         countdownContainer.textContent = countdown; // 카운트다운 업데이트
@@ -582,7 +607,6 @@ document.getElementById('start-btn').addEventListener('click', () => {
 // 타이머 시작
 function startTimer() {
     if (timerInterval) clearInterval(timerInterval); // 기존 타이머 초기화
-    isGameOver = false; // 게임 종료 상태 초기화
     remainingTime = 60; // 초기 시간 설정
     updateTimerUI();
     timerInterval = setInterval(() => {
