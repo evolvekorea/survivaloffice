@@ -87,7 +87,7 @@ html, body {
     width: 100%;
     height: calc(100% - 80px); /* 화면에서 상단 UI 제외한 영역 */
     background-color: #d8f4f5;
-    border: 2px solid #000000;
+    border: 2px solid #ffffff;
     box-sizing: border-box;
     overflow: hidden;
     margin: 0 auto; /* 중앙 정렬 */
