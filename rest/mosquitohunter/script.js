@@ -48,12 +48,15 @@ preloadImages(
         "https://www.survivaloffice.com/images/beeD.png",
         "https://www.survivaloffice.com/images/beeR.png",
         "https://www.survivaloffice.com/images/beeL.png",
-        "https://www.survivaloffice.com/images/4.png",
+        "https://www.survivaloffice.com/images/dfL.png",
+        "https://www.survivaloffice.com/images/dfR.png",
+        "https://www.survivaloffice.com/images/dfD.png",
         "https://www.survivaloffice.com/images/mosquitoL.png",
         "https://www.survivaloffice.com/images/mosquitoR.png",
         "https://www.survivaloffice.com/images/mosquitodead.png",
-        "https://www.survivaloffice.com/images/9.png",
-        "https://www.survivaloffice.com/images/10.png",
+        "https://www.survivaloffice.com/images/mokL.png",
+        "https://www.survivaloffice.com/images/mokR.png",
+        "https://www.survivaloffice.com/images/mokD.png"
     ],
     () => {
         console.log("모든 이미지가 로드되었습니다!");
