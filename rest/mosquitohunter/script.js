@@ -347,7 +347,11 @@ const mosquitoTypes = [
         deadImage: "https://www.survivaloffice.com/images/mosquitodead.png", 
         score: 10, 
         clicksToKill: 1, 
-        probability: 80
+        probability: 80,
+        width: 40, // 모기 크기 (가로)
+        height: 40, // 모기 크기 (세로)
+        deadWidth: 70, // 죽은 모기 크기 (가로)
+        deadHeight: 70 // 죽은 모기 크기 (세로)
     },
     {
         leftImage: "https://www.survivaloffice.com/images/1.png", 
@@ -355,7 +359,9 @@ const mosquitoTypes = [
         deadImage: "https://www.survivaloffice.com/images/9.png", 
         score: -50, 
         clicksToKill: 1, 
-        probability: 10
+        probability: 10,
+        width: 50, // 모기 크기 (가로)
+        height: 50 // 모기 크기 (세로)
     },
     {
         leftImage: "https://www.survivaloffice.com/images/3.png", 
@@ -363,7 +369,9 @@ const mosquitoTypes = [
         deadImage: "https://www.survivaloffice.com/images/10.png", 
         score: 100, 
         clicksToKill: 3, 
-        probability: 10
+        probability: 10,
+        width: 50, // 모기 크기 (가로)
+        height: 50 // 모기 크기 (세로)
     }
 ];
 
@@ -439,9 +447,9 @@ function createMosquito(width, height) {
     // 모기 요소 생성
     const mosquito = document.createElement('div');
     mosquito.className = 'mosquito';
-    mosquito.style.width = `${width}px`;
-    mosquito.style.height = `${height}px`;
-    mosquito.style.backgroundImage = `url(${mosquitoType.image})`;
+    mosquito.style.width = `${mosquitoType.width}px`;
+    mosquito.style.height = `${mosquitoType.height}px`;
+    mosquito.style.backgroundImage = `url(${mosquitoType.leftImage})`;
 
     // 클릭 횟수 추적 (모기2 처리용)
     let clicksLeft = mosquitoType.clicksToKill;
@@ -458,7 +466,9 @@ function createMosquito(width, height) {
 
         clicksLeft--;
         if (clicksLeft <= 0) {
-            mosquito.style.backgroundImage =  `url(${mosquitoType.deadImage})`; // 죽은 모기 이미지
+            mosquito.style.backgroundImage = `url(${mosquitoType.deadImage})`;
+            mosquito.style.width = `${mosquitoType.deadWidth}px`; // 죽은 모기 크기
+            mosquito.style.height = `${mosquitoType.deadHeight}px`; // 죽은 모기 크기
             mosquito.classList.add('dead');
             updateScore(mosquitoType.score); // 점수 업데이트
             setTimeout(() => {
