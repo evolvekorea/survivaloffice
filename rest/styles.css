@@ -97,28 +97,40 @@ footer {
     bottom: 0;
 }
 
-/* 네비게이션 구역 스타일 */
+/* 네비게이션 컨테이너 스타일 */
+.nav-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* 섹션별 카테고리 스타일 */
 .nav-category {
     width: 100%;
-    max-width: 1000px;
-    margin: 0 auto;
     padding: 15px;
     background-color: #fafafa;
     border: 1px solid #ddd;
     border-radius: 10px;
     margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
-/* 구역 제목 스타일 */
+/* 섹션 제목 스타일 */
 .nav-category h3 {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     color: #333;
     margin-bottom: 10px;
-    text-align: center;
+    text-align: left;
 }
 
-/* 구역마다 줄 추가 */
+/* '일', '휴식', '그 외'와 같은 nav-category의 제목 링크 스타일 */
+.nav-category h3 a {
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+/* 각 섹션 구분선 */
 .nav-category hr {
     border: 0;
     height: 1px;
@@ -126,16 +138,30 @@ footer {
     margin: 15px 0;
 }
 
-/* 네비게이션 항목 스타일 */
+/* 각 항목의 스타일 및 정렬 */
+.nav-item-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: flex-start;
+}
+
 .nav-item {
+    flex: 1 1 calc(33.33% - 10px); /* 한 줄에 3개씩 배치 */
+    max-width: calc(33.33% - 10px);
     background-color: #e0e0e0;
     border: 2px solid #ccc;
     border-radius: 5px;
-    padding: 8px 12px;
-    margin: 5px 0;
-    text-align: left; /* 좌측 정렬 */
+    padding: 8px;
+    text-align: center;
     transition: background-color 0.3s ease, transform 0.3s ease;
-    display: inline-block;
+    box-sizing: border-box;
+}
+
+.nav-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
 }
 
 .nav-item a {
@@ -150,62 +176,49 @@ footer {
     transform: scale(1.05);
 }
 
-h3 a {
-    text-decoration: none; /* 링크 밑줄 제거 */
+/* .nav-category 컨테이너 중앙 정렬 */
+.nav-category-wrapper {
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 (선택사항) */
+    padding: 20px; /* 여백 추가 */
+    min-height: 100vh; /* 선택사항: 화면 높이를 기준으로 중앙 정렬 */
+    box-sizing: border-box;
 }
 
 /* 반응형 웹페이지 위한 미디어 쿼리 */
 /* 모바일 */
 @media (max-width: 600px) {
     .nav-item {
-        display: inline-block; /* 글자에 맞게 크기 조정 */
-        padding: 8px; /* 모바일에서도 글자에 맞게 배경 크기 조정 */
-    }
-
-    .blog-section {
-        width: 100%;
+        flex: 1 1 calc(50% - 10px); /* 모바일에서 한 줄에 2개씩 */
+        max-width: calc(50% - 10px);
     }
 }
 
-/* 태블릿 */
-@media (min-width: 601px) and (max-width: 1024px) {
+/* 작은 태블릿 */
+@media (min-width: 601px) and (max-width: 800px) {
     .nav-item {
-        width: 100%; /* 태블릿에서 항목이 전체 너비 사용 */
+        flex: 1 1 calc(33.33% - 10px); /* 작은 태블릿에서 한 줄에 3개 */
+        max-width: calc(33.33% - 10px);
     }
 }
 
-/* 데스크탑 */
-@media (min-width: 1025px) {
-    .nav-category {
-        width: 100%; /* PC에서 전체 너비 사용 */
+/* 큰 태블릿 및 데스크탑 */
+/* .nav-item 한 줄에 4개 */
+@media (min-width: 801px) {
+    .nav-item {
+        flex: 1 1 calc(25% - 15px); /* 한 줄에 4개 */
+        max-width: calc(25% - 15px);
     }
 }
 
-.nav-item img {
-    width: 100%; /* 부모 요소의 너비에 맞게 이미지 크기 조정 */
-    height: auto; /* 비율을 유지하면서 높이 자동 조정 */
-    max-width: 100%; /* 부모 요소보다 커지지 않도록 설정 */
-    border-radius: 5px; /* 선택 사항: 이미지에 둥근 모서리 적용 */
+.email-link {
+    color: #ffffff; /* 원하는 색상 (예: 주황색) */
+    text-decoration: none; /* 밑줄 제거 */
+    font-weight: bold; /* 굵게 표시 */
 }
 
-/* PC에서만 Flexbox 적용 */
-@media (min-width: 1025px) {
-    .navigation-section {
-        display: flex;
-        flex-wrap: wrap; /* 화면에 맞춰 줄바꿈 허용 */
-        gap: 20px; /* 카드 간의 간격 설정 */
-        justify-content: space-around; /* 각 카드가 동일한 공간을 차지 */
-    }
-
-    /* 각 nav-category의 너비를 30%로 설정하여 한 줄에 3개 표시 */
-    .nav-category {
-        flex: 1 1 30%; /* 너비를 30%로 설정 */
-        max-width: 30%;
-        margin: 0;
-        padding: 15px;
-        background-color: #fafafa;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
+.email-link:hover {
+    color: #29f5e4; /* 마우스 오버 시 색상 변경 */
+    text-decoration: underline; /* 마우스 오버 시 밑줄 추가 */
 }
