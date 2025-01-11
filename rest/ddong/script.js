@@ -413,6 +413,8 @@ let isDragging = false; // 드래그 상태
 
 // 캐릭터 부드러운 이동
 function moveCharacter() {
+    if (isGameOver) return; // 게임 종료 상태라면 캐릭터 이동 멈춤
+    
     characterX += (targetX - characterX) * 0.1; // 목표 위치로 점진적 이동
     character.style.left = `${characterX}px`;
     requestAnimationFrame(moveCharacter);
