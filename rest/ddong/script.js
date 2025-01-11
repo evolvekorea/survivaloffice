@@ -397,6 +397,10 @@ function showGameUI() {
     console.log("게임 화면 표시");
 
     isGameOver = false; // 게임 종료 상태 초기화
+
+    // 캐릭터 등장
+    character.style.display = 'block'; // 캐릭터를 보이도록 설정
+    
     gameInterval = requestAnimationFrame(movePoops); // 똥 이동 시작
     poopInterval = setInterval(() => createPoop(), poopSpawnRate); // 똥 생성 시작
     increaseDifficulty(); // 난이도 증가 시작
@@ -506,7 +510,7 @@ function createPoop() {
     const poopObj = {
         element: poop,
         currentY: 0, // 초기 위치
-        speed: Math.random() * (poopSpeed - 2) + 2, // 속도: 기본 속도에서 랜덤
+        speed: Math.random() * (poopSpeed - 1) + 1.5, // 속도: 기본 속도에서 랜덤
     };
 
     poops.push(poopObj); // 배열에 추가
@@ -593,8 +597,8 @@ function increaseDifficulty() {
         }
 
         // 똥 생성 간격 단축
-        if (poopSpawnRate > 500) { // 최소 간격 제한
-            poopSpawnRate -= 50;
+        if (poopSpawnRate > 200) { // 최소 간격 제한
+            poopSpawnRate -= 100;
 
             // 기존 생성 인터벌 초기화 후 새로운 주기로 설정
             clearInterval(poopInterval);
@@ -609,6 +613,9 @@ function increaseDifficulty() {
 function endGame() {
     clearInterval(poopInterval); // 똥 생성 멈춤
     clearInterval(difficultyInterval); // 난이도 증가 멈춤
+
+    // 캐릭터 숨김
+    character.style.display = 'none'; // 캐릭터를 화면에서 숨김    
 
     // 모든 똥 제거
     poops.forEach(poopObj => {

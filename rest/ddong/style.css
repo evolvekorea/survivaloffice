@@ -326,6 +326,7 @@ button:disabled {
 }
 
 #character {
+    display: none; /* 캐릭터 기본적으로 숨김 */    
     position: absolute;
     bottom: 0; /* 바닥에 완전히 붙도록 설정 */
     left: 50%;
