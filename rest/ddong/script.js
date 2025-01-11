@@ -55,7 +55,8 @@ preloadImages(
     [
         "https://www.survivaloffice.com/images/ddong.png",
         "https://www.survivaloffice.com/images/ddong2.png",
-        "https://www.survivaloffice.com/images/ddong3.png"       
+        "https://www.survivaloffice.com/images/ddong3.png",   
+        "https://www.survivaloffice.com/images/zol.png"     
     ],
     () => {
         console.log("모든 이미지가 로드되었습니다!");
@@ -402,7 +403,7 @@ const gameArea = document.getElementById('game-area');
 // 캐릭터 생성
 const character = document.createElement('img');
 character.id = 'character';
-character.src = 'https://www.survivaloffice.com/images/10.png';
+character.src = 'https://www.survivaloffice.com/images/zol.png';
 gameArea.appendChild(character);
 
 let characterX = gameArea.offsetWidth / 2; // 초기 캐릭터 위치
