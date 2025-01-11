@@ -56,7 +56,8 @@ preloadImages(
         "https://www.survivaloffice.com/images/ddong.png",
         "https://www.survivaloffice.com/images/ddong2.png",
         "https://www.survivaloffice.com/images/ddong3.png",   
-        "https://www.survivaloffice.com/images/zol.png"     
+        "https://www.survivaloffice.com/images/zol.png",
+        "https://www.survivaloffice.com/images/zol2.png"    
     ],
     () => {
         console.log("모든 이미지가 로드되었습니다!");
@@ -510,6 +511,8 @@ function createPoop() {
 
 // 똥 이동 및 충돌 처리
 function movePoops() {
+    if (isGameOver) return; // 게임이 종료되었으면 움직임 정지
+    
     for (let i = poops.length - 1; i >= 0; i--) {
         const poopObj = poops[i];
         const poopElement = poopObj.element;
@@ -602,17 +605,21 @@ function increaseDifficulty() {
 
 // 게임 종료 함수 수정
 function endGame() {
-    clearInterval(poopInterval); // 똥 생성 멈춤
-    clearInterval(difficultyInterval); // 난이도 증가 멈춤
+    // 난이도 및 똥 생성 멈춤
+    clearInterval(poopInterval);
+    clearInterval(difficultyInterval);
 
-    // 캐릭터 숨김
-    character.style.display = 'none'; // 캐릭터를 화면에서 숨김    
+    // 화면 멈추기 (모든 requestAnimationFrame 멈춤)
+    isGameOver = true;
 
-    // 모든 똥 제거
+    // 캐릭터 이미지 변경
+    character.src = 'https://www.survivaloffice.com/images/zol2.png'; // zol2 이미지 경로
+
+    // 게임 영역 내 똥을 유지하고 움직임 멈추기
     poops.forEach(poopObj => {
-        poopObj.element.remove(); // 화면에서 제거
+        poopObj.speed = 0; // 속도를 0으로 설정해 멈춤
     });
-    poops.length = 0; // 배열 초기화
 
-    showGameOverPopup(); // 게임 종료 팝업 표시
+    // 게임 종료 팝업 표시
+    showGameOverPopup();
 }
