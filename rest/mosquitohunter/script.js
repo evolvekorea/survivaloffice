@@ -454,10 +454,12 @@ const boundary = {
 
 // 모기 생성 함수
 function createMosquito(width, height) {
+    console.log("createMosquito 함수 호출됨");
     if (isGameOver || currentMosquitoCount >= maxMosquitoCount) {
         console.debug("모기 생성 차단: 게임 종료 또는 최대 모기 수 초과");
         return;
     }
+    console.debug("모기 생성 조건 통과");
 
     // 랜덤 타입 선택
     const mosquitoType = getRandomMosquitoType();
@@ -466,7 +468,8 @@ function createMosquito(width, height) {
         return;
     }
 
-    console.debug(`선택된 모기: ${JSON.stringify(mosquitoType)}`);
+    console.debug(`생성된 모기 타입: ${JSON.stringify(mosquitoType)}`);
+
 
     // 모기 요소 생성
     const mosquito = document.createElement('div');
@@ -609,11 +612,13 @@ function startCountdown() {
 
     const interval = setInterval(() => {
         countdownContainer.textContent = countdown; // 카운트다운 업데이트
+        console.log(`카운트다운 중: ${countdown}`);
         countdown--;
 
         if (countdown < 0) {
             clearInterval(interval); // 카운트다운 종료
             countdownContainer.style.display = "none"; // 카운트다운 숨기기
+            console.log("카운트다운 종료. 게임 UI 표시");
             showGameUI(); // 게임 UI 표시
         }
     }, 1000);
@@ -622,23 +627,40 @@ function startCountdown() {
 // 게임 UI 표시 및 게임 시작
 function showGameUI() {
     document.getElementById('start-screen').style.display = 'none'; // 시작 화면 숨기기
+    console.log("게임 화면 표시");
     isGameOver = false; // 게임 종료 상태 초기화
     startTimer(); // 타이머 시작
     startMosquitoSpawner(); // 모기 생성 시작
 }
 
 let mosquitoSpawnInterval = 500; // 초기 생성 주기
-let mosquitoSpawner; // 모기 생성 타이머 핸들러
+let mosquitoSpawner = null; // 초기값 null 설정
 
 function startMosquitoSpawner() {
-    if (mosquitoSpawner) clearInterval(mosquitoSpawner); // 기존 타이머 제거
-    mosquitoSpawner = setInterval(() => createMosquito(50, 50), mosquitoSpawnInterval);
-    console.log(`모기 생성 주기: ${mosquitoSpawnInterval}ms`);
+    if (!isGameStarted) {
+        console.warn("게임이 시작되지 않았습니다. 모기 생성 타이머를 시작하지 않습니다.");
+        return; // 게임이 시작되지 않았다면 모기 생성 타이머 실행하지 않음
+    }
+
+    if (mosquitoSpawner) {
+        clearInterval(mosquitoSpawner); // 기존 타이머 제거
+        console.log("기존 모기 생성 타이머 제거");
+    }
+    mosquitoSpawner = setInterval(() => {
+        console.log("모기 생성 시작");
+        createMosquito(50, 50);
+    }, mosquitoSpawnInterval);
+    console.log(`모기 생성 타이머 시작: 주기 ${mosquitoSpawnInterval}ms`);
 }
 
 function increaseSpawnSpeed() {
-    if (mosquitoSpawnInterval > 200) { // 최소 간격 제한
-        mosquitoSpawnInterval -= 50; // 간격 감소
+    if (!isGameStarted) {
+        console.warn("게임이 시작되지 않았습니다. 생성 주기를 업데이트하지 않습니다.");
+        return; // 게임이 시작되지 않았다면 생성 주기 업데이트 중단
+    }
+
+    if (mosquitoSpawnInterval > 300) { // 최소 간격 제한
+        mosquitoSpawnInterval -= 20; // 간격 감소
         startMosquitoSpawner(); // 새로운 주기로 타이머 재설정
         console.log(`모기 생성 주기 업데이트: ${mosquitoSpawnInterval}ms`);
     }
