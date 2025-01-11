@@ -1,1 +1,698 @@
-const _0x29c7fd=_0x53aa;(function(_0x4d0237,_0x3e7540){const _0x130f02=_0x53aa,_0x395730=_0x4d0237();while(!![]){try{const _0x4c76e1=-parseInt(_0x130f02(0x90))/0x1+parseInt(_0x130f02(0xee))/0x2*(parseInt(_0x130f02(0xe6))/0x3)+parseInt(_0x130f02(0xd8))/0x4+parseInt(_0x130f02(0x11a))/0x5+-parseInt(_0x130f02(0xac))/0x6*(-parseInt(_0x130f02(0x89))/0x7)+parseInt(_0x130f02(0xfb))/0x8*(-parseInt(_0x130f02(0xf6))/0x9)+-parseInt(_0x130f02(0x11c))/0xa*(-parseInt(_0x130f02(0xb1))/0xb);if(_0x4c76e1===_0x3e7540)break;else _0x395730['push'](_0x395730['shift']());}catch(_0x2447dc){_0x395730['push'](_0x395730['shift']());}}}(_0x2e1b,0x8c8af));import{initializeApp}from'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';function _0x2e1b(){const _0x394293=['Before\x20updating:','log','function','Score:\x20','83500GnQsNt','getElementById','110whBmVq','deadImage','animationDelay','선택된\x20모기:\x20','쿼리\x20결과\x20개수:','disabled','timer-text','deadWidth','https://www.survivaloffice.com/images/beeL.png','saveScoreButton','block','desc','랭킹\x20보기\x20버튼\x20클릭됨','540267rwStfO','preventDefault','점수가\x20성공적으로\x20저장되었습니다.','result-popup','getDate','선택된\x20모기의\x20이미지\x20데이터가\x20유효하지\x20않습니다.','querySelectorAll','910701HcOnAX','height','닉네임은\x205글자\x20이하로\x20입력해주세요.','계산된\x20일요일:\x20','<p>최고\x20점수\x20데이터를\x20불러오지\x20못했습니다.</p>','mosquitoTypes\x20배열\x20확인:','string','upupup-e4c2c','top','backgroundImage','probability','toDate','toISOString','Error\x20adding\x20data:','</ul><h4\x20style=\x22color:\x20red;\x22>📢\x20랭킹은\x20매주\x20월요일\x20초기화됩니다.</h4>','rightImage','getTime','877963060151','date','padStart','game-area','getFullYear','날짜\x20없음','https://www.survivaloffice.com/images/moL.png','deadHeight','add','classList','점\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22date\x22\x20style=\x22margin-left:\x20auto;\x20text-align:\x20right;\x22>','48hZwrKP','size','none','점\x20<span\x20class=\x22date\x22>','nickname','688941YMGAWH','addEventListener','등록\x20완료','error','stopPropagation','<h2>Top\x2010\x20랭킹</h2><ul>','Firestore에서\x20최고\x20점수\x20데이터를\x20가져오는\x20중\x20오류\x20발생:','After\x20updating:','slice','이미지\x20로드\x20실패:\x20','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h3\x20style=\x22display:\x20flex;\x20justify-content:\x20space-between;\x20align-items:\x20center;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20🎉\x20\x20','점수\x20저장\x20중\x20오류가\x20발생했습니다.','이미지\x20로드\x20중...\x20(','start-btn','style','모기\x20타입\x20또는\x20이미지\x20데이터가\x20유효하지\x20않습니다.','이미\x20점수가\x20등록되었습니다.','left','getDay','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</h3>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','forEach','남은\x20클릭\x20수:\x20','모기\x20생성\x20차단:\x20게임\x20종료\x20또는\x20최대\x20모기\x20수\x20초과','reload','https://www.survivaloffice.com/images/mokL.png','cursor','length','onerror','loading-message','mosquito','upupup-e4c2c.appspot.com','url(','data','닫기\x20버튼\x20클릭됨','location','textContent','value','debug','모기\x20타입\x20선택\x20실패:\x20기본\x20모기를\x20반환합니다.','3692380beqHPc','모든\x20이미지가\x20로드되었습니다!','countdown-container','floor','Unknown','nicknameInput','getMonth','stringify','display','setDate','https://www.survivaloffice.com/images/dfR.png','https://www.survivaloffice.com/images/moD.png','setHours','click','15534FnRhXN','현재\x20요일:\x20','Firestore에\x20점수\x20저장\x20시도:','<li\x20class=\x22ranking-item\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','월요일까지의\x20차이:\x20','https://www.survivaloffice.com/images/dfL.png','not-allowed','start-screen','134wdcBSl','<h3>최고\x20점수\x20데이터가\x20없습니다.</h3>','div','backgroundColor','닉네임을\x20입력해주세요.','leftImage','timer-container','width','4980357akXwnU','bottom','right','End\x20Date:','#f39c12','16EyniOa','opacity','mosquitoTypes\x20배열이\x20비어\x20있습니다.','random','https://www.survivaloffice.com/images/mokD.png','게임\x20시작!','ranking-container\x20요소를\x20찾을\x20수\x20없습니다.','https://www.survivaloffice.com/images/dfD.png','appendChild','위\x20-\x20','timer-bar','dead','#e74c3c','empty','score','https://www.survivaloffice.com/images/moR.png','innerHTML','계산된\x20월요일:\x20','https://www.survivaloffice.com/images/beeR.png','모기\x20타입\x20또는\x20이미지\x20데이터가\x20유효하지\x20않습니다:','AIzaSyCK4Zdkhlc0cnjqC3TpmUJmLAt8Xrh8VOw','remove','top10-rank','src','onload','Firestore에서\x20랭킹\x20데이터를\x20가져오는\x20중\x20오류\x20발생:','https://www.survivaloffice.com/images/mokR.png'];_0x2e1b=function(){return _0x394293;};return _0x2e1b();}import{getFirestore,collection,query,where,getDocs,addDoc,updateDoc,doc,orderBy,limit}from'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';const firebaseConfig={'apiKey':_0x29c7fd(0x10f),'authDomain':'upupup-e4c2c.firebaseapp.com','projectId':_0x29c7fd(0x97),'storageBucket':_0x29c7fd(0xcf),'messagingSenderId':_0x29c7fd(0xa1),'appId':'1:877963060151:web:e70751cb30638880767e32'},app=initializeApp(firebaseConfig),db=getFirestore(app),loadingMessage=document['getElementById'](_0x29c7fd(0xcd)),startButton=document[_0x29c7fd(0x11b)](_0x29c7fd(0xbe)),startScreen=document[_0x29c7fd(0x11b)](_0x29c7fd(0xed)),gamearea=document[_0x29c7fd(0x11b)](_0x29c7fd(0xa4));function preloadImages(_0x263504,_0x245015){const _0x5deee6=_0x29c7fd;let _0x4d5111=0x0;const _0x191266=_0x263504[_0x5deee6(0xcb)];_0x263504['forEach'](_0x7aa0bf=>{const _0x106d43=_0x5deee6,_0x597297=new Image();_0x597297[_0x106d43(0x112)]=_0x7aa0bf,_0x597297[_0x106d43(0x113)]=()=>{const _0x154882=_0x106d43;_0x4d5111++,loadingMessage[_0x154882(0xd4)]=_0x154882(0xbd)+_0x4d5111+'/'+_0x191266+')',_0x4d5111===_0x191266&&_0x245015();},_0x597297[_0x106d43(0xcc)]=()=>console[_0x106d43(0xb4)](_0x106d43(0xba)+_0x7aa0bf);});}preloadImages(['https://www.survivaloffice.com/images/beeD.png',_0x29c7fd(0x10d),_0x29c7fd(0x84),_0x29c7fd(0xeb),_0x29c7fd(0xe2),_0x29c7fd(0x102),'https://www.survivaloffice.com/images/moL.png',_0x29c7fd(0x10a),_0x29c7fd(0xe3),_0x29c7fd(0xc9),_0x29c7fd(0x115),_0x29c7fd(0xff),'https://www.survivaloffice.com/images/momain.png'],()=>{const _0xd1edbf=_0x29c7fd;console[_0xd1edbf(0x117)](_0xd1edbf(0xd9)),loadingMessage[_0xd1edbf(0xd4)]='',startButton[_0xd1edbf(0xbf)][_0xd1edbf(0xe0)]=_0xd1edbf(0x86);});let isGameStarted=![];startButton[_0x29c7fd(0xb2)](_0x29c7fd(0xe5),_0x54fa48=>{const _0x57aa23=_0x29c7fd;_0x54fa48[_0x57aa23(0xb5)](),isGameStarted=!![],startScreen[_0x57aa23(0xbf)][_0x57aa23(0xe0)]=_0x57aa23(0xae),gamearea[_0x57aa23(0xbf)]['display']='block',console[_0x57aa23(0x117)](_0x57aa23(0x100));});const top10RankButton=document[_0x29c7fd(0x11b)](_0x29c7fd(0x111)),rankingContainer=document[_0x29c7fd(0x11b)]('ranking-container');top10RankButton&&rankingContainer?top10RankButton[_0x29c7fd(0xb2)](_0x29c7fd(0xe5),async()=>{const _0x78380a=_0x29c7fd;console[_0x78380a(0x117)](_0x78380a(0x88)),rankingContainer['style'][_0x78380a(0xe0)]='block',rankingContainer['innerHTML']='<p>로딩\x20중...</p>',await loadTop10Rankings(),await loadAllTimeHighScore();}):console[_0x29c7fd(0xb4)]('top10-rank\x20버튼\x20또는\x20ranking-container\x20요소를\x20찾을\x20수\x20없습니다.');async function loadTop10Rankings(){const _0x545013=_0x29c7fd,_0x1d5f65=collection(db,_0x545013(0xce)),{startDate:_0x167b80,endDate:_0x346750}=getCurrentWeekRange();console['log']('Start\x20Date:',_0x167b80),console[_0x545013(0x117)](_0x545013(0xf9),_0x346750);const _0x42720f=query(_0x1d5f65,where(_0x545013(0xa2),'>=',_0x167b80),where(_0x545013(0xa2),'<=',_0x346750),orderBy(_0x545013(0x109),_0x545013(0x87)),orderBy(_0x545013(0xa2),_0x545013(0x87)),limit(0xa)),_0x392f37=await getDocs(_0x42720f);console[_0x545013(0x117)](_0x545013(0x80),_0x392f37[_0x545013(0xad)]),_0x392f37[_0x545013(0xc5)](_0x15e2c8=>{const _0x5258b0=_0x545013;console['log'](_0x15e2c8[_0x5258b0(0xd1)]());});try{const _0x4778f4=await getDocs(_0x42720f);if(_0x4778f4[_0x545013(0x108)]){rankingContainer[_0x545013(0x10b)]='<p>랭킹\x20데이터가\x20없습니다.</p>';return;}let _0x1e6e4f=_0x545013(0xb6),_0x120c28=0x1;_0x4778f4[_0x545013(0xc5)](_0x3e02b7=>{const _0x51c139=_0x545013,_0x19b351=_0x3e02b7[_0x51c139(0xd1)](),_0x479c6a=_0x19b351[_0x51c139(0xb0)]||_0x51c139(0xdc),_0x3f6a83=_0x19b351['score']||0x0;let _0x47718b;typeof _0x19b351['date']==='string'?_0x47718b=_0x19b351[_0x51c139(0xa2)][_0x51c139(0xb9)](0x0,0xa):_0x47718b='날짜\x20없음';let _0x5697a3='';if(_0x120c28===0x1)_0x5697a3='🥇';else{if(_0x120c28===0x2)_0x5697a3='🥈';else{if(_0x120c28===0x3)_0x5697a3='🥉';}}_0x1e6e4f+=_0x51c139(0xe9)+_0x5697a3+'\x20'+_0x120c28+_0x51c139(0x104)+_0x479c6a+',\x20'+_0x3f6a83+_0x51c139(0xaf)+_0x47718b+'</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</li>',_0x120c28++;}),_0x1e6e4f+=_0x545013(0x9e),console['log'](_0x545013(0x116),rankingContainer[_0x545013(0x10b)]),rankingContainer[_0x545013(0x10b)]=_0x1e6e4f,console['log'](_0x545013(0xb8),rankingContainer[_0x545013(0x10b)]);const _0x1e4d3c=document[_0x545013(0x8f)]('.ranking-item');_0x1e4d3c[_0x545013(0xc5)]((_0x5e98aa,_0x2a7eaa)=>{const _0x4e86b8=_0x545013;_0x5e98aa[_0x4e86b8(0xbf)][_0x4e86b8(0x11e)]=_0x2a7eaa*0.5+'s';});}catch(_0x387330){console[_0x545013(0xb4)](_0x545013(0x114),_0x387330),rankingContainer[_0x545013(0x10b)]='<p>랭킹\x20데이터를\x20불러오지\x20못했습니다.</p>';}}function getCurrentWeekRange(){const _0x2843aa=_0x29c7fd,_0x127d21=new Date(),_0x3a787c=_0x127d21[_0x2843aa(0xc3)]();console[_0x2843aa(0x117)]('현재\x20날짜:\x20'+_0x127d21),console[_0x2843aa(0x117)](_0x2843aa(0xe7)+_0x3a787c);const _0x8f656=_0x3a787c===0x0?-0x6:0x1-_0x3a787c;console[_0x2843aa(0x117)](_0x2843aa(0xea)+_0x8f656);const _0x2b742d=new Date(_0x127d21);_0x2b742d['setDate'](_0x127d21[_0x2843aa(0x8d)]()+_0x8f656),_0x2b742d[_0x2843aa(0xe4)](0x0,0x0,0x0,0x0),console[_0x2843aa(0x117)](_0x2843aa(0x10c)+_0x2b742d);const _0x1fc425=new Date(_0x2b742d);_0x1fc425[_0x2843aa(0xe1)](_0x2b742d[_0x2843aa(0x8d)]()+0x6),_0x1fc425['setHours'](0x17,0x3b,0x3b,0x3e7),console[_0x2843aa(0x117)](_0x2843aa(0x93)+_0x1fc425);const _0x47e7b7=_0x2b742d[_0x2843aa(0xa5)]()+'-'+String(_0x2b742d[_0x2843aa(0xde)]()+0x1)[_0x2843aa(0xa3)](0x2,'0')+'-'+String(_0x2b742d[_0x2843aa(0x8d)]())['padStart'](0x2,'0'),_0x2c63f6=_0x1fc425[_0x2843aa(0xa5)]()+'-'+String(_0x1fc425['getMonth']()+0x1)[_0x2843aa(0xa3)](0x2,'0')+'-'+String(_0x1fc425['getDate']())['padStart'](0x2,'0');return console[_0x2843aa(0x117)]('이번\x20주\x20날짜\x20범위:\x20'+_0x47e7b7+'\x20~\x20'+_0x2c63f6),{'startDate':_0x47e7b7,'endDate':_0x2c63f6};}async function loadAllTimeHighScore(){const _0x266cb7=_0x29c7fd,_0x6a0eae=collection(db,_0x266cb7(0xce)),_0x597ecf=query(_0x6a0eae,orderBy(_0x266cb7(0x109),_0x266cb7(0x87)),limit(0x1));try{const _0x1c559e=await getDocs(_0x597ecf);if(_0x1c559e[_0x266cb7(0x108)]){rankingContainer[_0x266cb7(0x10b)]+=_0x266cb7(0xef);return;}let _0x5e555e='<h2>🏆역대\x20최고\x20기록🏆</h2>';_0x1c559e[_0x266cb7(0xc5)](_0x167cd8=>{const _0xabcaea=_0x266cb7,_0x24afcf=_0x167cd8[_0xabcaea(0xd1)](),_0xb38471=_0x24afcf['nickname']||_0xabcaea(0xdc),_0x5cda06=_0x24afcf[_0xabcaea(0x109)]||0x0;let _0x16ea9e;if(_0x24afcf[_0xabcaea(0xa2)]&&typeof _0x24afcf[_0xabcaea(0xa2)][_0xabcaea(0x9b)]===_0xabcaea(0x118)){const _0x2ebbbf=_0x24afcf[_0xabcaea(0xa2)][_0xabcaea(0x9b)](),_0x4747e2=_0x2ebbbf[_0xabcaea(0xa5)](),_0x4f4521=String(_0x2ebbbf[_0xabcaea(0xde)]()+0x1)[_0xabcaea(0xa3)](0x2,'0'),_0x28449e=String(_0x2ebbbf[_0xabcaea(0x8d)]())[_0xabcaea(0xa3)](0x2,'0');_0x16ea9e=_0x4747e2+'-'+_0x4f4521+'-'+_0x28449e;}else typeof _0x24afcf[_0xabcaea(0xa2)]===_0xabcaea(0x96)?_0x16ea9e=_0x24afcf[_0xabcaea(0xa2)]['slice'](0x0,0xa):_0x16ea9e=_0xabcaea(0xa6);_0x5e555e+=_0xabcaea(0xbb)+_0xb38471+',\x20\x20'+_0x5cda06+_0xabcaea(0xab)+_0x16ea9e+_0xabcaea(0xc4);}),rankingContainer[_0x266cb7(0x10b)]+=_0x5e555e;}catch(_0x5f29e1){console[_0x266cb7(0xb4)](_0x266cb7(0xb7),_0x5f29e1),rankingContainer[_0x266cb7(0x10b)]+=_0x266cb7(0x94);}}rankingContainer?rankingContainer['addEventListener'](_0x29c7fd(0xe5),()=>{const _0x491848=_0x29c7fd;rankingContainer[_0x491848(0xbf)][_0x491848(0xe0)]='none';}):console['error'](_0x29c7fd(0x101));async function saveScore(_0xc5be9a,_0x88bc86){const _0x3a1973=_0x29c7fd;console[_0x3a1973(0x117)](_0x3a1973(0xe8),_0xc5be9a,_0x88bc86);const _0x3c138c=new Date(),_0x251903=0x9*0x3c*0x3c*0x3e8,_0x5c84f2=new Date(_0x3c138c[_0x3a1973(0xa0)]()+_0x251903),_0x4e5644=_0x5c84f2[_0x3a1973(0x9c)]()['split']('T')[0x0],_0x2ddae6=collection(db,_0x3a1973(0xce));try{console[_0x3a1973(0x117)]('새로운\x20점수\x20저장\x20중...'),await addDoc(_0x2ddae6,{'nickname':_0xc5be9a||_0x3a1973(0xdc),'score':_0x88bc86,'date':_0x4e5644}),alert(_0x3a1973(0x8b));}catch(_0x3842d6){console['error'](_0x3a1973(0x9d),_0x3842d6),alert(_0x3a1973(0xbc));};}document[_0x29c7fd(0x11b)]('closePopupButton')[_0x29c7fd(0xb2)](_0x29c7fd(0xe5),()=>{const _0x438f09=_0x29c7fd;console['log'](_0x438f09(0xd2)),window[_0x438f09(0xd3)][_0x438f09(0xc8)]();});const saveScoreButton=document[_0x29c7fd(0x11b)](_0x29c7fd(0x85));saveScoreButton[_0x29c7fd(0xb2)](_0x29c7fd(0xe5),async _0xcd8ba2=>{const _0x33304c=_0x29c7fd;_0xcd8ba2[_0x33304c(0x8a)]();if(saveScoreButton[_0x33304c(0x81)]){alert(_0x33304c(0xc1));return;}const _0x3c98c5=document['getElementById'](_0x33304c(0xdd))[_0x33304c(0xd5)];if(_0x3c98c5['length']===0x0){alert(_0x33304c(0xf2));return;}else{if(_0x3c98c5[_0x33304c(0xcb)]>0x5){alert(_0x33304c(0x92));return;}}await saveScore(_0x3c98c5,score),saveScoreButton[_0x33304c(0x81)]=!![],saveScoreButton[_0x33304c(0xbf)][_0x33304c(0xca)]=_0x33304c(0xec),saveScoreButton['textContent']=_0x33304c(0xb3);});function showGameOverPopup(){const _0xa24fc8=_0x29c7fd,_0x3fbe8c=document[_0xa24fc8(0x11b)](_0xa24fc8(0x8c));_0x3fbe8c[_0xa24fc8(0xbf)][_0xa24fc8(0xe0)]=_0xa24fc8(0x86),isInputBlocked=!![];}const mosquitoTypes=[{'leftImage':_0x29c7fd(0xa7),'rightImage':'https://www.survivaloffice.com/images/moR.png','deadImage':'https://www.survivaloffice.com/images/moD.png','score':0xa,'clicksToKill':0x1,'probability':0x4b,'width':0x32,'height':0x32},{'leftImage':_0x29c7fd(0x84),'rightImage':_0x29c7fd(0x10d),'deadImage':'https://www.survivaloffice.com/images/beeD.png','score':-0xa,'clicksToKill':0x1,'probability':0xa,'width':0x32,'height':0x32},{'leftImage':_0x29c7fd(0xeb),'rightImage':_0x29c7fd(0xe2),'deadImage':_0x29c7fd(0x102),'score':-0x32,'clicksToKill':0x1,'probability':0x5,'width':0x32,'height':0x32},{'leftImage':'https://www.survivaloffice.com/images/mokL.png','rightImage':_0x29c7fd(0x115),'deadImage':'https://www.survivaloffice.com/images/mokD.png','score':0x64,'clicksToKill':0x3,'probability':0xa,'width':0x46,'height':0x46}];console[_0x29c7fd(0xd6)](_0x29c7fd(0x95),mosquitoTypes);function getRandomMosquitoType(){const _0x382e4e=_0x29c7fd;if(!mosquitoTypes||mosquitoTypes['length']===0x0)return console[_0x382e4e(0xb4)](_0x382e4e(0xfd)),null;const _0x2dcaf2=Math['random']()*0x64;let _0x44bd78=0x0;for(const _0x80c0db of mosquitoTypes){_0x44bd78+=_0x80c0db[_0x382e4e(0x9a)];if(_0x2dcaf2<=_0x44bd78){if(!_0x80c0db[_0x382e4e(0xf3)]||!_0x80c0db[_0x382e4e(0x9f)]||!_0x80c0db[_0x382e4e(0x11d)])return console[_0x382e4e(0xb4)](_0x382e4e(0x8e),_0x80c0db),null;return console['debug'](_0x382e4e(0x11f)+JSON['stringify'](_0x80c0db)),_0x80c0db;}}return console[_0x382e4e(0xb4)](_0x382e4e(0xd7)),mosquitoTypes[0x0];}let score=0x0;const scoreDisplay=document[_0x29c7fd(0x11b)](_0x29c7fd(0x109)),timerContainer=document[_0x29c7fd(0x11b)](_0x29c7fd(0xf4));let remainingTime=0x3c,timerInterval,isGameOver=![],isInputBlocked=![];const maxMosquitoCount=0x32;let currentMosquitoCount=0x0;const boundary={'left':-0x14,'right':0x6e,'top':-0x14,'bottom':0x6e};function createMosquito(_0x389221,_0x6e5052){const _0x56ff0e=_0x29c7fd;if(isGameOver||currentMosquitoCount>=maxMosquitoCount){console[_0x56ff0e(0xd6)](_0x56ff0e(0xc7));return;}const _0x316233=getRandomMosquitoType();if(!_0x316233||!_0x316233[_0x56ff0e(0xf3)]||!_0x316233[_0x56ff0e(0x9f)]){console[_0x56ff0e(0xb4)](_0x56ff0e(0xc0));return;}console['debug'](_0x56ff0e(0x11f)+JSON[_0x56ff0e(0xdf)](_0x316233));const _0x2b6a39=document['createElement'](_0x56ff0e(0xf0));_0x2b6a39['className']=_0x56ff0e(0xce),_0x2b6a39[_0x56ff0e(0xbf)][_0x56ff0e(0xf5)]=_0x316233[_0x56ff0e(0xf5)]+'px',_0x2b6a39[_0x56ff0e(0xbf)][_0x56ff0e(0x91)]=_0x316233['height']+'px',_0x2b6a39['style'][_0x56ff0e(0x99)]=_0x56ff0e(0xd0)+_0x316233[_0x56ff0e(0xf3)]+')';let _0x251496=_0x316233['clicksToKill'];const _0x21c1be=getStartPosition();_0x2b6a39[_0x56ff0e(0xbf)]['left']=_0x21c1be['x']+'%',_0x2b6a39['style'][_0x56ff0e(0x98)]=_0x21c1be['y']+'%',_0x2b6a39[_0x56ff0e(0xbf)][_0x56ff0e(0xfc)]=0x0,_0x2b6a39[_0x56ff0e(0xb2)](_0x56ff0e(0xe5),()=>{const _0x447e2f=_0x56ff0e;if(isInputBlocked)return;_0x251496--,_0x251496<=0x0?(_0x2b6a39[_0x447e2f(0xbf)][_0x447e2f(0x99)]=_0x447e2f(0xd0)+_0x316233[_0x447e2f(0x11d)]+')',_0x2b6a39[_0x447e2f(0xbf)]['width']=_0x316233[_0x447e2f(0x83)]+'px',_0x2b6a39[_0x447e2f(0xbf)][_0x447e2f(0x91)]=_0x316233[_0x447e2f(0xa8)]+'px',_0x2b6a39[_0x447e2f(0xaa)][_0x447e2f(0xa9)](_0x447e2f(0x106)),updateScore(_0x316233[_0x447e2f(0x109)]),setTimeout(()=>{const _0x363da5=_0x447e2f;_0x2b6a39[_0x363da5(0x110)](),currentMosquitoCount--;},0x1f4)):console[_0x447e2f(0xd6)](_0x447e2f(0xc6)+_0x251496);}),document[_0x56ff0e(0x11b)](_0x56ff0e(0xa4))[_0x56ff0e(0x103)](_0x2b6a39),currentMosquitoCount++,setTimeout(()=>{const _0x5869fb=_0x56ff0e;_0x2b6a39[_0x5869fb(0xbf)][_0x5869fb(0xfc)]=0x1,moveMosquito(_0x2b6a39,_0x316233);},0x3e8);}function getStartPosition(){const _0x43d61a=_0x29c7fd,_0xe5c79f=Math[_0x43d61a(0xdb)](Math[_0x43d61a(0xfe)]()*0x4),_0x32771c={'x':0x0,'y':0x0};switch(_0xe5c79f){case 0x0:_0x32771c['x']=Math[_0x43d61a(0xfe)]()*0x64,_0x32771c['y']=boundary[_0x43d61a(0x98)];break;case 0x1:_0x32771c['x']=Math['random']()*0x64,_0x32771c['y']=boundary[_0x43d61a(0xf7)];break;case 0x2:_0x32771c['x']=boundary[_0x43d61a(0xc2)],_0x32771c['y']=Math['random']()*0x64;break;case 0x3:_0x32771c['x']=boundary[_0x43d61a(0xf8)],_0x32771c['y']=Math[_0x43d61a(0xfe)]()*0x64;break;}return _0x32771c;}function moveMosquito(_0x3f3692,_0x296900){const _0x288625=_0x29c7fd;if(!_0x296900||!_0x296900[_0x288625(0xf3)]||!_0x296900[_0x288625(0x9f)]){console[_0x288625(0xb4)](_0x288625(0x10e),_0x296900);return;}let _0x2f7224=Math[_0x288625(0xfe)]()*0x2-0x1,_0x49db23=Math['random']()*0x2-0x1;const _0x5a8170=setInterval(()=>{const _0x54c740=_0x288625;if(_0x3f3692['classList']['contains'](_0x54c740(0x106))){clearInterval(_0x5a8170);return;}const _0x5ec398=parseFloat(_0x3f3692[_0x54c740(0xbf)][_0x54c740(0xc2)]),_0x3f4593=parseFloat(_0x3f3692['style'][_0x54c740(0x98)]);let _0x285537=_0x5ec398+_0x2f7224,_0x24322a=_0x3f4593+_0x49db23;if(_0x285537<boundary[_0x54c740(0xc2)]||_0x285537>boundary[_0x54c740(0xf8)])_0x2f7224=-_0x2f7224;if(_0x24322a<boundary['top']||_0x24322a>boundary[_0x54c740(0xf7)])_0x49db23=-_0x49db23;if(_0x2f7224>0x0)_0x3f3692[_0x54c740(0xbf)]['backgroundImage']=_0x54c740(0xd0)+_0x296900['rightImage']+')';else _0x2f7224<=0x0&&(_0x3f3692[_0x54c740(0xbf)]['backgroundImage']=_0x54c740(0xd0)+_0x296900[_0x54c740(0xf3)]+')');_0x3f3692[_0x54c740(0xbf)][_0x54c740(0xc2)]=_0x285537+'%',_0x3f3692[_0x54c740(0xbf)]['top']=_0x24322a+'%';},0x10);}function updateScore(_0x86ad0b){const _0x10b1ca=_0x29c7fd;score+=_0x86ad0b,scoreDisplay['textContent']=_0x10b1ca(0x119)+score;}const countdownContainer=document['getElementById'](_0x29c7fd(0xda));function startCountdown(){const _0x4150fe=_0x29c7fd;countdownContainer[_0x4150fe(0xbf)]['display']='block';let _0x3ab613=0x3;const _0x467e7e=setInterval(()=>{const _0x225e27=_0x4150fe;countdownContainer[_0x225e27(0xd4)]=_0x3ab613,_0x3ab613--,_0x3ab613<0x0&&(clearInterval(_0x467e7e),countdownContainer[_0x225e27(0xbf)]['display']='none',showGameUI());},0x3e8);}function _0x53aa(_0x500b7f,_0x49a368){const _0x2e1bd6=_0x2e1b();return _0x53aa=function(_0x53aae7,_0x3ec991){_0x53aae7=_0x53aae7-0x80;let _0x39452d=_0x2e1bd6[_0x53aae7];return _0x39452d;},_0x53aa(_0x500b7f,_0x49a368);}function showGameUI(){const _0x2b1069=_0x29c7fd;document['getElementById'](_0x2b1069(0xed))[_0x2b1069(0xbf)]['display']=_0x2b1069(0xae),isGameOver=![],startTimer(),setInterval(()=>createMosquito(0x32,0x32),0x320);}document[_0x29c7fd(0x11b)]('start-btn')[_0x29c7fd(0xb2)](_0x29c7fd(0xe5),()=>{startCountdown();});function startTimer(){if(timerInterval)clearInterval(timerInterval);remainingTime=0x3c,updateTimerUI(),timerInterval=setInterval(()=>{remainingTime--,updateTimerUI(),remainingTime<=0x0&&(clearInterval(timerInterval),endGame());},0x3e8);}function updateTimerUI(){const _0x4a7400=_0x29c7fd,_0x245770=document[_0x4a7400(0x11b)](_0x4a7400(0x105)),_0x202ce=document[_0x4a7400(0x11b)](_0x4a7400(0x82)),_0x55ca8e=remainingTime/0x3c*0x64;_0x245770[_0x4a7400(0xbf)][_0x4a7400(0xf5)]=_0x55ca8e+'%',_0x202ce[_0x4a7400(0xd4)]=remainingTime+'초';if(remainingTime<=0xa)_0x245770[_0x4a7400(0xbf)][_0x4a7400(0xf1)]=_0x4a7400(0x107);else remainingTime<=0x14?_0x245770[_0x4a7400(0xbf)][_0x4a7400(0xf1)]=_0x4a7400(0xfa):_0x245770[_0x4a7400(0xbf)][_0x4a7400(0xf1)]='#76c7c0';}function endGame(){if(isGameOver)return;isGameOver=!![],showGameOverPopup();}
+// 모듈 방식으로 Firebase와 Firestore 가져오기
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getFirestore, collection, query, where, getDocs, addDoc, updateDoc, doc, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+// Firebase 초기화
+const firebaseConfig = {
+    apiKey: "AIzaSyCK4Zdkhlc0cnjqC3TpmUJmLAt8Xrh8VOw",
+    authDomain: "upupup-e4c2c.firebaseapp.com",
+    projectId: "upupup-e4c2c",
+    storageBucket: "upupup-e4c2c.appspot.com",
+    messagingSenderId: "877963060151",
+    appId: "1:877963060151:web:e70751cb30638880767e32"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Elements
+const loadingMessage = document.getElementById("loading-message");
+const startButton = document.getElementById("start-btn");
+const startScreen = document.getElementById("start-screen");
+const gamearea = document.getElementById("game-area");
+
+function preloadImages(imageUrls, callback) {
+    let loadedCount = 0;
+    const totalImages = imageUrls.length;
+
+    imageUrls.forEach((url) => {
+        const img = new Image();
+        img.src = url;
+
+        img.onload = () => {
+            loadedCount++;
+            loadingMessage.textContent = `이미지 로드 중... (${loadedCount}/${totalImages})`;
+
+            if (loadedCount === totalImages) {
+                callback(); // 모든 이미지가 로드되었을 때 콜백 호출
+            }
+        };
+
+        img.onerror = () => {
+            console.error(`이미지 로드 실패: ${url}`);
+            loadedCount++; // 실패한 이미지도 로드 카운트에 포함
+            loadingMessage.textContent = `이미지 로드 중... (${loadedCount}/${totalImages})`;
+
+            if (loadedCount === totalImages) {
+                callback();
+            }
+        };
+    });
+}
+
+// Show Start Button After Images Load
+preloadImages(
+    [
+        "https://www.survivaloffice.com/images/beeD.png",
+        "https://www.survivaloffice.com/images/beeR.png",
+        "https://www.survivaloffice.com/images/beeL.png",
+        "https://www.survivaloffice.com/images/dfL.png",
+        "https://www.survivaloffice.com/images/dfR.png",
+        "https://www.survivaloffice.com/images/dfD.png",
+        "https://www.survivaloffice.com/images/moL.png",
+        "https://www.survivaloffice.com/images/moR.png",
+        "https://www.survivaloffice.com/images/moD.png",
+        "https://www.survivaloffice.com/images/mokL.png",
+        "https://www.survivaloffice.com/images/mokR.png",
+        "https://www.survivaloffice.com/images/mokD.png",
+        "https://www.survivaloffice.com/images/momain.png"        
+    ],
+    () => {
+        console.log("모든 이미지가 로드되었습니다!");
+        loadingMessage.textContent = ""; // 로딩 메시지 제거
+        startButton.style.display = "block"; // 게임 시작 버튼 표시
+    }
+);
+
+let isGameStarted = false; // 게임 시작 상태를 나타내는 플래그
+
+// Start Game
+startButton.addEventListener("click", (event) => {
+    event.stopPropagation(); // 클릭 이벤트 전파 방지
+    isGameStarted = true; // 게임이 시작되었음을 표시
+    startScreen.style.display = "none"; // 시작 화면 숨기기
+    gamearea.style.display = "block"; // 게임 화면 표시
+    console.log("게임 시작!");
+});
+
+
+// 랭킹 보기 버튼과 컨테이너 요소 가져오기
+const top10RankButton = document.getElementById('top10-rank');
+const rankingContainer = document.getElementById('ranking-container');
+
+// 버튼과 컨테이너가 존재하는지 확인
+if (top10RankButton && rankingContainer) {
+    top10RankButton.addEventListener('click', async () => {
+        console.log("랭킹 보기 버튼 클릭됨");
+        rankingContainer.style.display = 'block';
+        rankingContainer.innerHTML = '<p>로딩 중...</p>';
+        
+        await loadTop10Rankings(); // 이번 주 랭킹 불러오기
+        await loadAllTimeHighScore(); // 전체 최고 점수 불러오기
+    });
+} else {
+    console.error("top10-rank 버튼 또는 ranking-container 요소를 찾을 수 없습니다.");
+}
+
+// Firestore에서 이번 주 월~일 랭킹 가져오기
+async function loadTop10Rankings() {
+    const scoresRef = collection(db, 'mosquito');
+    const { startDate, endDate } = getCurrentWeekRange();
+    console.log("Start Date:", startDate);
+    console.log("End Date:", endDate);
+
+    const q = query(
+        scoresRef,
+        where("date", ">=", startDate), // 범위 필터
+        where("date", "<=", endDate),  // 범위 필터
+        orderBy("score", "desc"),      // score 내림차순 정렬
+        orderBy("date", "desc"),        // date 내림차순 정렬
+        limit(10)
+    );
+
+    const querySnapshot = await getDocs(q);
+    console.log("쿼리 결과 개수:", querySnapshot.size);
+    querySnapshot.forEach(doc => {
+        console.log(doc.data());
+    });
+
+    try {
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+            rankingContainer.innerHTML = '<p>랭킹 데이터가 없습니다.</p>';
+            return;
+        }
+
+        let rankingsHTML = '<h2>Top 10 랭킹</h2><ul>';
+        let rank = 1;
+
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const nickname = data.nickname || 'Unknown'; // 닉네임 기본값
+            const score = data.score || 0; // 점수 기본값
+            let formattedDate;
+
+            // 날짜 필드 처리
+            if (typeof data.date === 'string') {
+                formattedDate = data.date.slice(0, 10); // "YYYY-MM-DD" 형식
+            } else {
+                formattedDate = '날짜 없음';
+            }
+
+            // 순위에 따른 메달 이모지 추가
+            let medalEmoji = '';
+            if (rank === 1) medalEmoji = '🥇';
+            else if (rank === 2) medalEmoji = '🥈';
+            else if (rank === 3) medalEmoji = '🥉';
+
+            // HTML 리스트 아이템 생성
+            rankingsHTML += 
+                `<li class="ranking-item">
+                    ${medalEmoji} ${rank}위 - ${nickname}, ${score}점 <span class="date">${formattedDate}</span>
+                </li>`;
+            rank++;
+        });
+
+        rankingsHTML += '</ul><h4 style="color: red;">📢 랭킹은 매주 월요일 초기화됩니다.</h4>';
+        console.log('Before updating:', rankingContainer.innerHTML);
+        rankingContainer.innerHTML = rankingsHTML; // HTML 업데이트
+        console.log('After updating:', rankingContainer.innerHTML);
+
+        // 순차적으로 나타나는 애니메이션
+        const rankingItems = document.querySelectorAll('.ranking-item');
+        rankingItems.forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.5}s`; // 0.5초 간격으로 딜레이 설정
+        });
+
+    } catch (error) {
+        console.error('Firestore에서 랭킹 데이터를 가져오는 중 오류 발생:', error);
+        rankingContainer.innerHTML = '<p>랭킹 데이터를 불러오지 못했습니다.</p>';
+    }
+}
+
+// 이번 주 월~일 날짜 계산 함수
+function getCurrentWeekRange() {
+    const now = new Date(); // 현재 날짜
+    const dayOfWeek = now.getDay(); // 요일 (0: 일요일, 1: 월요일, ..., 6: 토요일)
+
+    console.log(`현재 날짜: ${now}`);
+    console.log(`현재 요일: ${dayOfWeek}`); // 디버깅
+
+    // 오늘 기준으로 주의 시작(월요일) 날짜 계산
+    const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // 일요일(0)은 -6, 나머지는 1 - 요일
+    console.log(`월요일까지의 차이: ${diffToMonday}`); // 디버깅
+
+    const monday = new Date(now); // 현재 날짜 복사
+    monday.setDate(now.getDate() + diffToMonday); // 월요일 날짜 설정
+    monday.setHours(0, 0, 0, 0); // 월요일 00:00:00
+
+    console.log(`계산된 월요일: ${monday}`); // 디버깅
+
+    // 월요일 기준으로 주의 끝(일요일) 날짜 계산
+    const sunday = new Date(monday); // 월요일 날짜 복사
+    sunday.setDate(monday.getDate() + 6); // 월요일 + 6일 = 일요일
+    sunday.setHours(23, 59, 59, 999); // 일요일 23:59:59
+
+    console.log(`계산된 일요일: ${sunday}`); // 디버깅
+
+    // YYYY-MM-DD 형식으로 반환 (로컬 시간대 기준)
+    const startDate = `${monday.getFullYear()}-${String(monday.getMonth() + 1).padStart(2, '0')}-${String(monday.getDate()).padStart(2, '0')}`;
+    const endDate = `${sunday.getFullYear()}-${String(sunday.getMonth() + 1).padStart(2, '0')}-${String(sunday.getDate()).padStart(2, '0')}`;
+
+    console.log(`이번 주 날짜 범위: ${startDate} ~ ${endDate}`); // 디버그 로그 추가
+    return { startDate, endDate };
+}
+
+// Firestore에서 전체 최고 점수 가져오기
+async function loadAllTimeHighScore() {
+    const scoresRef = collection(db, 'mosquito');
+
+    // 최고 점수를 가져오기 위한 쿼리
+    const q = query(scoresRef, orderBy('score', 'desc'), limit(1));
+
+    try {
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+            rankingContainer.innerHTML += '<h3>최고 점수 데이터가 없습니다.</h3>';
+            return;
+        }
+
+        let highScoreHTML = '<h2>🏆역대 최고 기록🏆</h2>';
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const nickname = data.nickname || 'Unknown';
+            const score = data.score || 0;
+
+            let formattedDate;
+
+            // date 필드가 Firestore Timestamp인지 확인 후 처리
+            if (data.date && typeof data.date.toDate === 'function') {
+                const dateObj = data.date.toDate();
+                const year = dateObj.getFullYear();
+                const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const day = String(dateObj.getDate()).padStart(2, '0');
+                formattedDate = `${year}-${month}-${day}`;
+            } else if (typeof data.date === 'string') {
+                formattedDate = data.date.slice(0, 10); // "YYYY-MM-DD" 형식 추출
+            } else {
+                formattedDate = '날짜 없음';
+            }
+
+            highScoreHTML += `
+                <p>
+                    <h3 style="display: flex; justify-content: space-between; align-items: center;">
+                         🎉  ${nickname},  ${score}점
+                        <span class="date" style="margin-left: auto; text-align: right;">${formattedDate}</span>
+                    </h3>
+                </p>
+            `;
+        });
+
+        // 기존 랭킹 컨테이너 하단에 추가
+        rankingContainer.innerHTML += highScoreHTML;
+        
+    } catch (error) {
+        console.error("Firestore에서 최고 점수 데이터를 가져오는 중 오류 발생:", error);
+        rankingContainer.innerHTML += '<p>최고 점수 데이터를 불러오지 못했습니다.</p>';
+    }
+}
+
+// 랭킹 컨테이너 클릭 시 닫기 이벤트 등록
+if (rankingContainer) {
+    rankingContainer.addEventListener('click', () => {
+        rankingContainer.style.display = 'none'; // 컨테이너 닫기
+    });
+} else {
+    console.error("ranking-container 요소를 찾을 수 없습니다.");
+}
+
+// 점수 저장 함수
+async function saveScore(nickname, score) {
+    console.log("Firestore에 점수 저장 시도:", nickname, score);
+    const now = new Date();
+    const kstOffset = 9 * 60 * 60 * 1000; // UTC+9 (밀리초)
+    const kstDate = new Date(now.getTime() + kstOffset);
+    const date = kstDate.toISOString().split("T")[0]; // "YYYY-MM-DD" 형식
+
+    const scoresRef = collection(db, 'mosquito');
+
+    try {
+        console.log("새로운 점수 저장 중...");
+        await addDoc(scoresRef, {
+            nickname: nickname || 'Unknown',
+            score: score,
+            date: date
+        });
+        alert('점수가 성공적으로 저장되었습니다.');
+    } catch (error) {
+        console.error("Error adding data:", error);
+        alert('점수 저장 중 오류가 발생했습니다.');
+    };
+}
+
+// 팝업 닫기 및 다시 시작 버튼
+document.getElementById('closePopupButton').addEventListener('click', () => {
+    console.log("닫기 버튼 클릭됨");
+    window.location.reload();
+});
+
+// 점수 저장 버튼
+const saveScoreButton = document.getElementById('saveScoreButton');
+
+saveScoreButton.addEventListener('click', async (event) => {
+    event.preventDefault();
+
+    // 이미 비활성화된 버튼이라면 실행하지 않음
+    if (saveScoreButton.disabled) {
+        alert("이미 점수가 등록되었습니다.");
+        return;
+    }
+
+    const nickname = document.getElementById('nicknameInput').value;
+    
+    // 글자 수 제한 (5글자)
+    if (nickname.length === 0) {
+        alert("닉네임을 입력해주세요.");
+        return;
+    } else if (nickname.length > 5) {
+        alert("닉네임은 5글자 이하로 입력해주세요.");
+        return;
+    }
+
+    // 점수 저장 로직
+    await saveScore(nickname, score);
+
+    // 버튼 비활성화
+    saveScoreButton.disabled = true;
+    saveScoreButton.style.cursor = "not-allowed";
+    saveScoreButton.textContent = "등록 완료"; // 버튼 텍스트 변경
+});
+
+// 게임 종료 팝업 표시 함수
+function showGameOverPopup() {
+    const popup = document.getElementById('result-popup');
+    popup.style.display = 'block'; // 팝업 표시
+    isInputBlocked = true; // 입력 차단 활성화
+}
+
+//모기 섹션
+
+// 모기 종류와 확률 설정
+const mosquitoTypes = [
+    {
+        leftImage: "https://www.survivaloffice.com/images/moL.png", 
+        rightImage: "https://www.survivaloffice.com/images/moR.png", 
+        deadImage: "https://www.survivaloffice.com/images/moD.png", 
+        score: 10, 
+        clicksToKill: 1, 
+        probability: 95,
+        width: 50, // 모기 크기 (가로)
+        height: 50, // 모기 크기 (세로)
+
+    },
+    {
+        leftImage: "https://www.survivaloffice.com/images/beeL.png", 
+        rightImage: "https://www.survivaloffice.com/images/beeR.png", 
+        deadImage: "https://www.survivaloffice.com/images/beeD.png", 
+        score: -10, 
+        clicksToKill: 1, 
+        probability: 3,
+        width: 50, // 모기 크기 (가로)
+        height: 50 // 모기 크기 (세로)
+    },
+    {
+        leftImage: "https://www.survivaloffice.com/images/dfL.png", 
+        rightImage: "https://www.survivaloffice.com/images/dfR.png", 
+        deadImage: "https://www.survivaloffice.com/images/dfD.png", 
+        score: -50, 
+        clicksToKill: 1, 
+        probability: 2,
+        width: 50, // 모기 크기 (가로)
+        height: 50 // 모기 크기 (세로)
+    },
+];
+
+// 디버깅 메시지로 배열 확인
+console.debug("mosquitoTypes 배열 확인:", mosquitoTypes);
+
+function getRandomMosquitoType() {
+    if (!mosquitoTypes || mosquitoTypes.length === 0) {
+        console.error("mosquitoTypes 배열이 비어 있습니다.");
+        return null;
+    }
+
+    console.debug(`현재 잡은 모기 수: ${mosquitoesCaught}, 왕모기 등장 여부: ${kingMosquitoAppeared}`);
+
+    // 일반 모기를 10마리 이상 잡았고, 아직 왕모기가 등장하지 않은 경우
+    if (mosquitoesCaught > 0 && mosquitoesCaught % 10 === 0 && !kingMosquitoAppeared) {
+        kingMosquitoAppeared = true; // 왕모기 등장 플래그 설정
+        console.log("왕모기 등장!");
+        return {
+            leftImage: "https://www.survivaloffice.com/images/mokL.png",
+            rightImage: "https://www.survivaloffice.com/images/mokR.png",
+            deadImage: "https://www.survivaloffice.com/images/mokD.png",
+            score: 100,
+            clicksToKill: 3,
+            probability: 100,
+            width: 70,
+            height: 70
+        };
+    }
+
+    // 기존 확률 기반 모기 선택
+    const random = Math.random() * 100;
+    let cumulativeProbability = 0;
+
+    for (const type of mosquitoTypes) {
+        cumulativeProbability += type.probability;
+        if (random <= cumulativeProbability) {
+            return type;
+        }
+    }
+
+    // 기본 모기 타입 반환
+    console.error("모기 타입 선택 실패: 기본 모기를 반환합니다.");
+    return mosquitoTypes[0];
+}
+
+// 점수 관리
+let score = 0;
+const scoreDisplay = document.getElementById("score");
+
+// 타이머 관리리
+const timerContainer = document.getElementById("timer-container");
+let remainingTime = 60;
+let timerInterval;
+let isGameOver = false; // 게임 종료 상태 플래그
+let isInputBlocked = false; // 입력 차단 플래그
+let mosquitoesCaught = 0; // 잡은 모기 수를 추적하는 변수
+let kingMosquitoAppeared = false; // 왕모기 등장 여부
+
+// 모기 수 제한
+const maxMosquitoCount = 50; // 화면에 동시에 존재할 수 있는 최대 모기 수
+let currentMosquitoCount = 0; // 현재 화면에 존재하는 모기 수
+
+// "보이지 않는 영역"의 경계 설정
+const boundary = {
+    left: -20, // 화면 왼쪽 밖
+    right: 110, // 화면 오른쪽 밖
+    top: -20, // 화면 위쪽 밖
+    bottom: 110, // 화면 아래쪽 밖
+};
+
+// 모기 생성 함수
+function createMosquito(width, height) {
+    if (isGameOver || currentMosquitoCount >= maxMosquitoCount) {
+        console.debug("모기 생성 차단: 게임 종료 또는 최대 모기 수 초과");
+        return;
+    }
+
+    // 랜덤 타입 선택
+    const mosquitoType = getRandomMosquitoType();
+    if (!mosquitoType || !mosquitoType.leftImage || !mosquitoType.rightImage) {
+        console.error("모기 타입 또는 이미지 데이터가 유효하지 않습니다.");
+        return;
+    }
+
+    console.debug(`선택된 모기: ${JSON.stringify(mosquitoType)}`);
+
+    // 모기 요소 생성
+    const mosquito = document.createElement('div');
+    mosquito.className = 'mosquito';
+    mosquito.style.width = `${mosquitoType.width}px`;
+    mosquito.style.height = `${mosquitoType.height}px`;
+    mosquito.style.backgroundImage = `url(${mosquitoType.leftImage})`;
+
+    // 클릭 횟수 추적 (모기2 처리용)
+    let clicksLeft = mosquitoType.clicksToKill;
+
+    // 화면 밖에서 시작 위치 지정
+    const startPosition = getStartPosition();
+    mosquito.style.left = `${startPosition.x}%`;
+    mosquito.style.top = `${startPosition.y}%`;
+    mosquito.style.opacity = 0;
+
+    mosquito.addEventListener('click', () => {
+        if (isInputBlocked) return;
+    
+        clicksLeft--;
+        if (clicksLeft <= 0) {
+            mosquito.style.backgroundImage = `url(${mosquitoType.deadImage})`;
+            mosquito.style.width = `${mosquitoType.deadWidth || mosquitoType.width}px`;
+            mosquito.style.height = `${mosquitoType.deadHeight || mosquitoType.height}px`;
+            mosquito.classList.add('dead');
+            updateScore(mosquitoType.score); // 점수 업데이트
+    
+            // 일반 모기일 때만 카운트 증가
+            if (mosquitoType.leftImage !== "https://www.survivaloffice.com/images/mokL.png") {
+                mosquitoesCaught++;
+                console.log(`현재 잡은 모기 수: ${mosquitoesCaught}`);
+                // 왕모기 등장 플래그 해제 (새 왕모기 생성 가능)
+                if (mosquitoesCaught % 10 === 0) {
+                    kingMosquitoAppeared = false;
+                }
+            }
+    
+            setTimeout(() => {
+                mosquito.remove();
+                currentMosquitoCount--;
+            }, 500);
+        } else {
+            console.debug(`남은 클릭 수: ${clicksLeft}`); // 디버깅
+        }
+    });
+
+    // 모기 추가 및 초기화
+    document.getElementById('game-area').appendChild(mosquito);
+    currentMosquitoCount++;
+
+    // 부드럽게 등장 후 이동 시작
+    setTimeout(() => {
+        mosquito.style.opacity = 1; // 화면에 나타남
+        moveMosquito(mosquito, mosquitoType); // 이동 함수에 mosquitoType 전달
+    }, 1000);
+}
+
+// 항상 화면 밖에서 시작 위치를 반환하는 함수
+function getStartPosition() {
+    const side = Math.floor(Math.random() * 4); // 0: 상, 1: 하, 2: 좌, 3: 우
+    const position = { x: 0, y: 0 };
+
+    switch (side) {
+        case 0: // 상단
+            position.x = Math.random() * 100; // 화면 가로 범위
+            position.y = boundary.top; // 상단 경계
+            break;
+        case 1: // 하단
+            position.x = Math.random() * 100; // 화면 가로 범위
+            position.y = boundary.bottom; // 하단 경계
+            break;
+        case 2: // 좌측
+            position.x = boundary.left; // 좌측 경계
+            position.y = Math.random() * 100; // 화면 세로 범위
+            break;
+        case 3: // 우측
+            position.x = boundary.right; // 우측 경계
+            position.y = Math.random() * 100; // 화면 세로 범위
+            break;
+    }
+    return position;
+}
+
+// 모기 지속적인 실시간 이동 함수 (보이지 않는 영역 내에서 반전)
+function moveMosquito(mosquito, mosquitoType) {
+
+    if (!mosquitoType || !mosquitoType.leftImage || !mosquitoType.rightImage) {
+        console.error("모기 타입 또는 이미지 데이터가 유효하지 않습니다:", mosquitoType);
+        return;
+    }
+        // 모기마다 이동 속도 다양화
+    let dx = Math.random() * 2 - 1; // -1 ~ 1 (랜덤 속도)
+    let dy = Math.random() * 2 - 1; // -1 ~ 1 (랜덤 속도)
+
+    const moveInterval = setInterval(() => {
+        if (mosquito.classList.contains('dead')) {
+            clearInterval(moveInterval); // 죽은 모기라면 이동 멈춤
+            return;
+        }
+
+        // 현재 위치
+        const currentLeft = parseFloat(mosquito.style.left);
+        const currentTop = parseFloat(mosquito.style.top);
+
+        // 새로운 위치 계산
+        let newLeft = currentLeft + dx;
+        let newTop = currentTop + dy;
+
+        // 경계에 도달하면 이동 방향 반전
+        if (newLeft < boundary.left || newLeft > boundary.right) dx = -dx;
+        if (newTop < boundary.top || newTop > boundary.bottom) dy = -dy;
+
+        // 이동 방향에 따라 이미지 변경
+        if (dx > 0) {
+            mosquito.style.backgroundImage = `url(${mosquitoType.rightImage})`;
+        } else if (dx <= 0) {
+            mosquito.style.backgroundImage = `url(${mosquitoType.leftImage})`;
+        }
+
+        // 위치 업데이트
+        mosquito.style.left = `${newLeft}%`;
+        mosquito.style.top = `${newTop}%`;
+    }, 16); // 약 60FPS로 이동 (16ms 간격)
+}
+
+// 점수 업데이트 함수
+function updateScore(points) {
+    score += points;
+    scoreDisplay.textContent = `Score: ${score}`;
+}
+
+// HTML 요소 가져오기
+const countdownContainer = document.getElementById("countdown-container");
+
+// 카운트다운 시작
+function startCountdown() {
+    countdownContainer.style.display = "block";
+    let countdown = 3;
+
+    const interval = setInterval(() => {
+        countdownContainer.textContent = countdown; // 카운트다운 업데이트
+        countdown--;
+
+        if (countdown < 0) {
+            clearInterval(interval); // 카운트다운 종료
+            countdownContainer.style.display = "none"; // 카운트다운 숨기기
+            showGameUI(); // 게임 UI 표시
+        }
+    }, 1000);
+}
+
+// 게임 UI 표시 및 게임 시작
+function showGameUI() {
+    document.getElementById('start-screen').style.display = 'none'; // 시작 화면 숨기기
+    isGameOver = false; // 게임 종료 상태 초기화
+    startTimer(); // 타이머 시작
+    startMosquitoSpawner(); // 모기 생성 시작
+}
+
+let mosquitoSpawnInterval = 500; // 초기 생성 주기
+let mosquitoSpawner; // 모기 생성 타이머 핸들러
+
+function startMosquitoSpawner() {
+    if (mosquitoSpawner) clearInterval(mosquitoSpawner); // 기존 타이머 제거
+    mosquitoSpawner = setInterval(() => createMosquito(50, 50), mosquitoSpawnInterval);
+    console.log(`모기 생성 주기: ${mosquitoSpawnInterval}ms`);
+}
+
+function increaseSpawnSpeed() {
+    if (mosquitoSpawnInterval > 200) { // 최소 간격 제한
+        mosquitoSpawnInterval -= 50; // 간격 감소
+        startMosquitoSpawner(); // 새로운 주기로 타이머 재설정
+        console.log(`모기 생성 주기 업데이트: ${mosquitoSpawnInterval}ms`);
+    }
+}
+
+// 일정 시간마다 속도 증가
+setInterval(increaseSpawnSpeed, 10000); // 10초마다 간격 줄이기
+
+// 일정 시간마다 속도 증가
+setInterval(increaseSpawnSpeed, 10000); // 10초마다 속도 증가
+
+// 게임 시작 버튼 클릭 이벤트 수정
+document.getElementById('start-btn').addEventListener('click', () => {
+    startCountdown(); // 카운트다운 시작
+});
+
+// 타이머 시작
+function startTimer() {
+    if (timerInterval) clearInterval(timerInterval); // 기존 타이머 초기화
+    remainingTime = 60; // 초기 시간 설정
+    updateTimerUI();
+    timerInterval = setInterval(() => {
+        remainingTime--;
+        updateTimerUI();
+        if (remainingTime <= 0) {
+            clearInterval(timerInterval);
+            endGame();
+        }
+    }, 1000); // 1초마다 갱신
+}
+
+    // 타이머 UI 업데이트
+    function updateTimerUI() {
+        const timerBar = document.getElementById("timer-bar");
+        const timerText = document.getElementById("timer-text");
+
+        const percentage = (remainingTime / 60) * 100;
+        timerBar.style.width = `${percentage}%`;
+        timerText.textContent = `${remainingTime}초`;
+
+        if (remainingTime <= 10) {
+            timerBar.style.backgroundColor = "#e74c3c";
+        } else if (remainingTime <= 20) {
+            timerBar.style.backgroundColor = "#f39c12";
+        } else {
+            timerBar.style.backgroundColor = "#76c7c0";
+        }
+    }
+
+    // 게임 종료
+    function endGame() {
+        if (isGameOver) return;
+        isGameOver = true;
+    
+        // 점수 저장 팝업 표시
+        showGameOverPopup();
+    }
