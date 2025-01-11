@@ -53,19 +53,9 @@ function preloadImages(imageUrls, callback) {
 // Show Start Button After Images Load
 preloadImages(
     [
-        "https://www.survivaloffice.com/images/beeD.png",
-        "https://www.survivaloffice.com/images/beeR.png",
-        "https://www.survivaloffice.com/images/beeL.png",
-        "https://www.survivaloffice.com/images/dfL.png",
-        "https://www.survivaloffice.com/images/dfR.png",
-        "https://www.survivaloffice.com/images/dfD.png",
-        "https://www.survivaloffice.com/images/moL.png",
-        "https://www.survivaloffice.com/images/moR.png",
-        "https://www.survivaloffice.com/images/moD.png",
-        "https://www.survivaloffice.com/images/mokL.png",
-        "https://www.survivaloffice.com/images/mokR.png",
-        "https://www.survivaloffice.com/images/mokD.png",
-        "https://www.survivaloffice.com/images/momain.png"        
+        "https://www.survivaloffice.com/images/ddong.png",
+        "https://www.survivaloffice.com/images/ddong2.png",
+        "https://www.survivaloffice.com/images/ddong3.png"       
     ],
     () => {
         console.log("모든 이미지가 로드되었습니다!");
@@ -497,7 +487,7 @@ gameArea.addEventListener('touchend', () => {
 // 똥 생성 함수
 function createPoop() {
     const poop = document.createElement('img'); // 이미지 태그 생성
-    poop.src = 'https://www.survivaloffice.com/images/1.png'; // 똥 이미지
+    poop.src = 'https://www.survivaloffice.com/images/ddong.png'; // 똥 이미지
     poop.classList.add('poop'); // 클래스 추가
     poop.style.position = 'absolute';
     poop.style.width = '20px';
@@ -548,7 +538,7 @@ function movePoops() {
         // 바닥 충돌 감지
         if (poopRect.bottom >= gameAreaRect.bottom) {
             poopObj.isRemoved = true; // 상태 플래그 설정
-            poopElement.src = 'https://www.survivaloffice.com/images/2.png'; // 이미지 변경
+            poopElement.src = 'https://www.survivaloffice.com/images/ddong2.png'; // 이미지 변경
             poopElement.style.top = `${gameArea.offsetHeight - poopElement.offsetHeight}px`; // 바닥에 고정
 
             // 점수 증가
