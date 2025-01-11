@@ -57,7 +57,8 @@ preloadImages(
         "https://www.survivaloffice.com/images/ddong2.png",
         "https://www.survivaloffice.com/images/ddong3.png",   
         "https://www.survivaloffice.com/images/zol.png",
-        "https://www.survivaloffice.com/images/zol2.png"    
+        "https://www.survivaloffice.com/images/zol2.png",  
+        "https://www.survivaloffice.com/images/ddongmain.png"   
     ],
     () => {
         console.log("모든 이미지가 로드되었습니다!");
@@ -414,7 +415,7 @@ let isDragging = false; // 드래그 상태
 // 캐릭터 부드러운 이동
 function moveCharacter() {
     if (isGameOver) return; // 게임 종료 상태라면 캐릭터 이동 멈춤
-    
+
     characterX += (targetX - characterX) * 0.1; // 목표 위치로 점진적 이동
     character.style.left = `${characterX}px`;
     requestAnimationFrame(moveCharacter);
@@ -491,8 +492,17 @@ gameArea.addEventListener('touchend', () => {
 // 똥 생성 함수
 function createPoop() {
     const poop = document.createElement('img'); // 이미지 태그 생성
-    poop.src = 'https://www.survivaloffice.com/images/ddong.png'; // 똥 이미지
-    poop.classList.add('poop'); // 클래스 추가
+
+    // 황금똥 생성 확률 (10%)
+    const isGoldenPoop = Math.random() < 0.05; // 10% 확률
+    if (isGoldenPoop) {
+        poop.src = 'https://www.survivaloffice.com/images/ddong3.png'; // 황금똥 이미지
+        poop.classList.add('golden-poop'); // 황금똥 클래스 추가
+    } else {
+        poop.src = 'https://www.survivaloffice.com/images/ddong.png'; // 일반 똥 이미지
+        poop.classList.add('poop'); // 일반 똥 클래스 추가
+    }
+
     poop.style.position = 'absolute';
     poop.style.width = '20px';
     poop.style.height = 'auto';
@@ -505,22 +515,24 @@ function createPoop() {
         element: poop,
         currentY: 0, // 초기 위치
         speed: Math.random() * (poopSpeed - 1) + 1.5, // 속도: 기본 속도에서 랜덤
+        isGolden: isGoldenPoop, // 황금똥 여부
+        isRemoved: false, // 초기화 상태
     };
 
     poops.push(poopObj); // 배열에 추가
 }
 
-
 // 똥 이동 및 충돌 처리
 function movePoops() {
-    if (isGameOver) return; // 게임이 종료되었으면 움직임 정지
-    
+    if (isGameOver) return; // 게임 종료 시 이동 중지
+
+    const toRemoveIndices = []; // 제거할 똥의 인덱스 저장
+
     for (let i = poops.length - 1; i >= 0; i--) {
         const poopObj = poops[i];
-        const poopElement = poopObj.element;
+        if (!poopObj || poopObj.isRemoved) continue; // 제거된 똥은 건너뜀
 
-        // 이미 제거된 똥은 처리하지 않음
-        if (poopObj.isRemoved) continue;
+        const poopElement = poopObj.element;
 
         // 똥 이동
         poopObj.currentY += poopObj.speed;
@@ -537,42 +549,70 @@ function movePoops() {
             poopRect.left < characterRect.right &&
             poopRect.right > characterRect.left
         ) {
-            endGame(); // 게임 종료
-            return; // 더 이상 처리하지 않음
+            if (poopObj.isGolden) {
+                // 황금똥 처리
+                handleGoldenPoop();
+                toRemoveIndices.push(i); // 제거 대상에 추가
+                continue; // 다음 똥 처리로 이동
+            } else {
+                endGame();
+                return;
+            }
         }
 
         // 바닥 충돌 감지
         if (poopRect.bottom >= gameAreaRect.bottom) {
             poopObj.isRemoved = true; // 상태 플래그 설정
             poopElement.src = 'https://www.survivaloffice.com/images/ddong2.png'; // 이미지 변경
-            poopElement.style.top = `${gameArea.offsetHeight - poopElement.offsetHeight}px`; // 바닥에 고정
+            poopElement.style.top = `${gameArea.offsetHeight - poopElement.offsetHeight}px`;
 
             // 점수 증가
-            updateScore(10); // 점수 추가
+            updateScore(10);
 
-            // 배열에서 즉시 제거
-            poops.splice(i, 1);
-
-            // 화면에서 300ms 후 제거
+            // 300ms 후 제거
             setTimeout(() => {
-                poopElement.remove();
+                poopElement.remove(); // 화면에서 제거
             }, 300);
 
-            continue; // 다음 똥으로 이동
+            toRemoveIndices.push(i); // 배열에서 제거 대기
+            continue;
         }
 
-        // 화면 밖으로 나간 똥 제거 (안전망)
+        // 화면 밖으로 나간 똥 제거
         if (poopObj.currentY > gameArea.offsetHeight) {
+            toRemoveIndices.push(i);
             poopObj.isRemoved = true; // 상태 플래그 설정
-            poops.splice(i, 1);
             poopElement.remove(); // 화면에서 제거
         }
+    }
+
+    // 제거 대상 처리
+    for (const index of toRemoveIndices) {
+        poops.splice(index, 1); // 배열에서 제거
     }
 
     // 다음 프레임 호출
     if (!isGameOver) {
         requestAnimationFrame(movePoops);
     }
+}
+
+// 황금똥 처리 함수
+function handleGoldenPoop() {
+    console.log("황금똥 효과 발동: 모든 똥 제거 및 점수 추가");
+    removeAllPoops(); // 모든 똥 제거
+    updateScore(100); // 점수 100 추가
+}
+
+// 모든 똥 제거 함수
+function removeAllPoops() {
+    poops.forEach((poopObj) => {
+        if (poopObj && poopObj.element) {
+            poopObj.element.remove(); // 화면에서 제거
+        }
+    });
+    poops.length = 0; // 배열 초기화
+    console.log("모든 똥이 제거되었습니다.");
 }
 
 setInterval(() => {
