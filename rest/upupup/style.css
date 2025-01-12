@@ -329,6 +329,10 @@ button:hover {
     margin: 0;
 }
 
+#ranking-container ul li {
+    margin: 20px 0; /* 위아래 여백 10px */
+}
+
 /* 날짜 공통 스타일 */
 .ranking-item .date {
     font-family: 'GangwonEduSaeeum_OTFMediumA';
