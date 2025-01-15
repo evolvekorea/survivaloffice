@@ -466,21 +466,39 @@ function updateTimerUI() {
     // 두더지 종류 설정 (확률, 점수, 이미지)
     const moleTypes = [
         {
-            aliveImage: "https://www.survivaloffice.com/images/1.png",
-            deadImage: "https://www.survivaloffice.com/images/2.png",
-            probability: 80,
+            aliveImage: "https://www.survivaloffice.com/images/m1.png",
+            deadImage: "https://www.survivaloffice.com/images/m2.png",
+            probability: 5,
             score: 10,
         },
         {
-            aliveImage: "https://www.survivaloffice.com/images/3.png",
-            deadImage: "https://www.survivaloffice.com/images/4.png",
+            aliveImage: "https://www.survivaloffice.com/images/m3.png",
+            deadImage: "https://www.survivaloffice.com/images/m4.png",
             probability: 10,
             score: 20,
         },
         {
-            aliveImage: "https://www.survivaloffice.com/images/5.png",
-            deadImage: "https://www.survivaloffice.com/images/6.png",
+            aliveImage: "https://www.survivaloffice.com/images/m5.png",
+            deadImage: "https://www.survivaloffice.com/images/m6.png",
             probability: 10,
+            score: 30,
+        },
+        {
+            aliveImage: "https://www.survivaloffice.com/images/md1.png",
+            deadImage: "https://www.survivaloffice.com/images/md2.png",
+            probability: 25,
+            score: 30,
+        },
+        {
+            aliveImage: "https://www.survivaloffice.com/images/md3.png",
+            deadImage: "https://www.survivaloffice.com/images/md4.png",
+            probability: 25,
+            score: 30,
+        },
+        {
+            aliveImage: "https://www.survivaloffice.com/images/md5.png",
+            deadImage: "https://www.survivaloffice.com/images/md6.png",
+            probability: 25,
             score: 30,
         },
     ];
