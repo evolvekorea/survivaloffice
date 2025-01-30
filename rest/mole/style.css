@@ -332,13 +332,15 @@ button:disabled {
     gap: 10px !important;
     width: 360px !important;
     height: 500px !important;
-    background-color: #d8f4f5;
+    background-image: url('https://www.survivaloffice.com/images/molemain.png'); /* 배경 이미지 추가 */
+    background-size: cover; /* 이미지를 전체 영역에 맞춤 */
+    background-position: center; /* 이미지 중앙 정렬 */
+    background-repeat: no-repeat; /* 이미지 반복 방지 */
+    border-radius: 10px !important; /* 모서리 둥글게 */
     margin: 0 auto !important;
     box-sizing: border-box;
     position: relative !important;
-    border-radius: 10px !important; /* 모서리 둥글게 */
     padding: 0px;
-    box-sizing: border-box;
 }
 
 .hole {
