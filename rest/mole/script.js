@@ -65,7 +65,7 @@ preloadImages(
         "https://www.survivaloffice.com/images/md4.png",
         "https://www.survivaloffice.com/images/md5.png",
         "https://www.survivaloffice.com/images/md6.png",
-        "https://www.survivaloffice.com/images/hole.png"        
+        "https://www.survivaloffice.com/images/molemain.png"        
     ],
     () => {
         console.log("모든 이미지가 로드되었습니다!");
@@ -469,19 +469,19 @@ function updateTimerUI() {
             aliveImage: "https://www.survivaloffice.com/images/m1.png",
             deadImage: "https://www.survivaloffice.com/images/m2.png",
             probability: 5,
-            score: 10,
+            score: -10,
         },
         {
             aliveImage: "https://www.survivaloffice.com/images/m3.png",
             deadImage: "https://www.survivaloffice.com/images/m4.png",
             probability: 10,
-            score: 20,
+            score: -20,
         },
         {
             aliveImage: "https://www.survivaloffice.com/images/m5.png",
             deadImage: "https://www.survivaloffice.com/images/m6.png",
             probability: 10,
-            score: 30,
+            score: -20,
         },
         {
             aliveImage: "https://www.survivaloffice.com/images/md1.png",
