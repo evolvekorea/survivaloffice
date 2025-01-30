@@ -349,7 +349,7 @@ button:disabled {
     top: 155%; /* 세로 중앙 */
     left: 50%; /* 가로 중앙 */
     transform: translate(-50%, -50%); /* 정확한 중앙으로 이동 */
-    background-color: #ffffff; /* 구멍 색상 */
+
     border-radius: 30%; /* 원형 */
     position: relative; /* 자식 요소 기준점 설정 */
     overflow: hidden; /* 두더지가 영역 밖으로 나가지 않도록 제한 */
