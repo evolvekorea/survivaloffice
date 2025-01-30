@@ -456,9 +456,18 @@ function updateTimerUI() {
     function endGame() {
         if (isGameOver) return;
         isGameOver = true;
+
+        // 모든 두더지 숨기기
+        document.querySelectorAll(".mole").forEach(mole => {
+        mole.classList.remove("show");
+    });
     
         // 점수 저장 팝업 표시
         showGameOverPopup();
+
+        // 게임 화면 클릭 방지
+        document.getElementById("game-area").style.pointerEvents = "none";
+
     }
 
     const gameArea = document.getElementById("game-area");
@@ -517,6 +526,8 @@ function createHoles() {
 
         // 두더지 클릭 이벤트
         mole.addEventListener("click", () => {
+            if (isGameOver) return; // 게임 종료 시 클릭 무시
+
             if (mole.classList.contains("show")) {
                 const moleTypeIndex = parseInt(mole.dataset.type, 10);
                 if (!isNaN(moleTypeIndex)) {
