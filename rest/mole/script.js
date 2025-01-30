@@ -538,19 +538,30 @@ function createHoles() {
 // 두더지 랜덤 스폰
 function spawnMoles() {
     const holes = document.querySelectorAll(".hole");
+
     setInterval(() => {
-        const randomHole = holes[Math.floor(Math.random() * holes.length)];
-        const mole = randomHole.querySelector(".mole");
+        let numMoles = Math.floor(Math.random() * 2) + 1; // 1~3개의 두더지 등장
+        let availableHoles = [...holes]; // 기존 배열을 복사
 
-        if (!mole.classList.contains("show")) {
-            const randomMoleType = getRandomMoleType();
-            mole.style.backgroundImage = `url(${randomMoleType.aliveImage})`;
-            mole.dataset.type = moleTypes.indexOf(randomMoleType); // 두더지 타입 인덱스 저장
-            mole.classList.add("show");
+        for (let i = 0; i < numMoles; i++) {
+            if (availableHoles.length === 0) break; // 모든 구멍이 사용 중이면 중단
 
-            setTimeout(() => {
-                mole.classList.remove("show");
-            }, 1000); // 1초 후 두더지 사라짐
+            const randomIndex = Math.floor(Math.random() * availableHoles.length);
+            const selectedHole = availableHoles[randomIndex];
+            const mole = selectedHole.querySelector(".mole");
+
+            if (!mole.classList.contains("show")) {
+                const randomMoleType = getRandomMoleType();
+                mole.style.backgroundImage = `url(${randomMoleType.aliveImage})`;
+                mole.dataset.type = moleTypes.indexOf(randomMoleType); // 두더지 타입 인덱스 저장
+                mole.classList.add("show");
+
+                setTimeout(() => {
+                    mole.classList.remove("show");
+                }, 1000); // 1초 후 두더지 사라짐
+            }
+
+            availableHoles.splice(randomIndex, 1); // 사용한 구멍 제거
         }
     }, 800); // 0.8초마다 두더지 스폰
 }
