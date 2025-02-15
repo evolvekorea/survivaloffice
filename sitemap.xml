@@ -52,6 +52,17 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     </url>  
+    <loc>https://www.survivaloffice.com/rest/ddong</loc>
+    <lastmod>2025-02-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    </url>  
+    <loc>https://www.survivaloffice.com/rest/mole</loc>
+    <lastmod>2025-02-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    </url>  
+
 
    <!-- work + 하위 페이지 -->
    <url>
@@ -90,6 +101,13 @@
        <changefreq>monthly</changefreq>
        <priority>0.6</priority>
    </url>      
-   
 
+      <!-- TEST + 하위 페이지 -->
+   <url>
+       <loc>https://www.survivaloffice.com/test/</loc>
+       <lastmod>2025-02-15</lastmod>
+       <changefreq>weekly</changefreq>
+       <priority>0.5</priority>
+   </url>
+  
 </urlset>
