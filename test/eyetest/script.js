@@ -75,14 +75,16 @@ document.addEventListener("DOMContentLoaded", () => {
         // 🔥 이전 공 삭제 및 게임 영역 다시 표시
         gameArea.innerHTML = "";
         balls = [];
-        gameArea.style.display = "block";
+        hasSplit = false;  // ✅ 분열 상태 초기화 (Stage 3에서도 분열 가능)
     
+        gameArea.style.display = "block";
         timerEl.textContent = "";
     
         const initialBallCount = Math.floor(Math.random() * 6) + 5;
         console.log("생성할 공 개수:", initialBallCount);
         createBalls(initialBallCount);
     
+        // ✅ Stage 2, 3에서 분열 이벤트 실행
         if (stage >= 2) {
             splitTimeoutId = setTimeout(() => {
                 console.log("splitBalls() 호출됨");
@@ -97,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
             endStage();
         }, displayTime);
     }
+    
     
   
     // 공 생성 함수
