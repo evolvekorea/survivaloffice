@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>동체시력 테스트 초급편</title>
+  <!-- style.css 연결 -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- 게임 전체를 감싸는 400x400 정사각형 -->
+  <div id="game-wrapper">
+    <!-- 시작 화면: 처음엔 보이도록 hidden 클래스 없음 -->
+    <div id="start-screen">
+      <div id="start-container">
+        <img src="https://www.survivaloffice.com/images/molemain2.png" alt="게임 시작 화면" />
+        <button id="start-btn">게임 시작</button>
+      </div>
+    </div>
+
+    <!-- 게임 플레이 영역: 초기에 숨김 -->
+    <div id="game-container" class="hidden">
+      <div id="timer">5</div>
+      <div id="game-area"></div>
+    </div>
+
+    <!-- 선택지 화면: 초기에 숨김 -->
+    <div id="choice-screen" class="hidden">
+      <div id="choices">
+        <button class="choice-btn"></button>
+        <button class="choice-btn"></button>
+        <button class="choice-btn"></button>
+      </div>
+    </div>
+
+    <!-- 결과 화면: 초기에 숨김 -->
+    <div id="result" class="hidden">
+      <img src="https://www.survivaloffice.com/images/10.png" alt="결과 이미지" />
+    </div>
+  </div>
+
+  <!-- script.js 연결 -->
+  <script src="script.js"></script>
+</body>
+</html>
