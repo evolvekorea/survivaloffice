@@ -237,26 +237,22 @@ document.addEventListener("DOMContentLoaded", () => {
     
         // 메시지 생성
         const message = document.createElement("div");
-        message.id = "result-message"; 
-        message.style.position = "fixed";
-        message.style.top = "50%";
-        message.style.left = "50%";
-        message.style.transform = "translate(-50%, -50%)";
-        message.style.fontSize = "40px";
-        message.style.fontWeight = "bold";
-        message.style.color = "white";
-        message.style.padding = "20px";
-        message.style.borderRadius = "10px";
-        message.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-        message.style.zIndex = "1000";
-        message.style.textAlign = "center";
+        message.id = "result-message";  // ✅ CSS에서 스타일 적용됨
     
+        // 정답 또는 오답 메시지 설정
         if (answer === correctAnswer) {
-            message.textContent = "정답입니다!";
-            document.body.appendChild(message);
-            stage++;
-            setTimeout(() => {
-                message.remove();
+            message.innerHTML = "정답입니다😃";
+        } else {
+            message.innerHTML = "오답입니다😢<br>다시 도전하세요!";
+        }
+    
+        document.body.appendChild(message);
+    
+        // 일정 시간 후 메시지 제거 및 다음 단계 처리
+        setTimeout(() => {
+            message.remove();
+            if (answer === correctAnswer) {
+                stage++;
                 if (stage > 3) {
                     showResult();
                 } else {
@@ -264,15 +260,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     gameContainer.classList.remove("hidden");
                     countdown();
                 }
-            }, 1500);
-        } else {
-            message.textContent = "오답입니다. 다시 도전하세요!";
-            document.body.appendChild(message);
-            setTimeout(() => {
-                message.remove();
+            } else {
                 location.reload();
-            }, 2000);
-        }
+            }
+        }, 2000);
     }
     
   

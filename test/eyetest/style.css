@@ -142,6 +142,26 @@ body {
     text-align: center;
 }
 
+/* 정답/오답 메시지 스타일 */
+#result-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; /* 🔥 게임 화면 전체 덮기 */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    z-index: 1000;
+}
+
+
 /* 결과 화면 */
 #result {
     display: flex;
