@@ -18,6 +18,16 @@ document.addEventListener("DOMContentLoaded", () => {
     let hasSplit = false;       // 분열 이벤트 단 한 번 실행 체크
     let correctAnswer = 0;      // 스테이지 정답(최종 공 개수)
     const ballSize = 20;        // 공 크기 (px)
+
+    // ✅ 처음에는 결과 화면 숨기기
+    resultContainer.classList.add("hidden");
+
+    // ✅ 카카오 SDK 초기화 (한 번만 실행되도록 설정)
+    if (window.Kakao && !Kakao.isInitialized()) {
+        Kakao.init("eee6c2e01641161de9f217ba99c6a0da"); // ✅ 자신의 카카오 앱 키로 변경
+        console.log("카카오 SDK 초기화됨");
+    }
+    
   
     // "게임 시작" 버튼 클릭 시
     startBtn.addEventListener("click", startGame);
@@ -267,15 +277,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
   
-    // 결과 화면 표시
+    // ✅ 게임 종료 후 결과 화면 표시
     function showResult() {
         console.log("showResult() 호출됨");
-    
+
         gameContainer.classList.add("hidden");
         choiceScreen.classList.add("hidden");
-        resultContainer.classList.remove("hidden");
-    
-        // 엔딩 이미지 표시
+        resultContainer.classList.remove("hidden"); // ✅ 결과 화면 표시
+
+        // ✅ 결과 화면 내용을 추가
         resultContainer.innerHTML = `
             <img id="result-image" src="https://www.survivaloffice.com/images/eyetestchoend.png" alt="수료증">
             <div id="result-buttons">
@@ -283,20 +293,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 <button id="save-image">이미지 저장하기</button>
             </div>
         `;
-    
-        // 버튼 이벤트 추가
+
+        // ✅ 버튼 이벤트 추가
         document.getElementById("share-kakao").addEventListener("click", shareKakao);
         document.getElementById("save-image").addEventListener("click", saveImage);
     }
-    
+
     // ✅ 카카오톡 공유하기
     function shareKakao() {
-        if (!window.Kakao) {
+        if (!window.Kakao || !Kakao.isInitialized()) {
             alert("카카오톡 공유 기능을 사용하려면 Kakao SDK가 필요합니다.");
             return;
         }
-    
-        Kakao.init("eee6c2e01641161de9f217ba99c6a0da"); // ✅ 자신의 카카오 앱 키로 변경
+
         Kakao.Link.sendDefault({
             objectType: "feed",
             content: {
@@ -310,12 +319,12 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-    
+
     // ✅ 이미지 저장하기
     function saveImage() {
         const imgElement = document.getElementById("result-image");
         const imgURL = imgElement.src;
-    
+
         const link = document.createElement("a");
         link.href = imgURL;
         link.download = "eyetest_result.png";
@@ -323,5 +332,4 @@ document.addEventListener("DOMContentLoaded", () => {
         link.click();
         document.body.removeChild(link);
     }
-  });
-  
+});
