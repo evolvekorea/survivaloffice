@@ -278,3 +278,10 @@ body {
         height: 400px;
     }
 }
+
+.ad-container {
+    width: 100%;
+    min-height: 90px; /* 광고 높이 보장 */
+    text-align: center;
+    margin: 10px 0; /* 광고와 게임 영역 간 간격 설정 */
+}
