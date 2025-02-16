@@ -42,59 +42,59 @@
         </ul>
     </nav>
 
+<!-- 게임과 광고를 감싸는 컨테이너 -->
+<div class="game-container-wrapper">
   <!-- 상단 광고 -->
   <div class="ad-container">
-    <ins class="adsbygoogle"
-        style="display:block; min-height: 90px;"
-        data-ad-client="ca-pub-4957586937754537"
-        data-ad-slot="9240598215"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
+      <ins class="adsbygoogle"
+          style="display:block; min-height: 90px;"
+          data-ad-client="ca-pub-4957586937754537"
+          data-ad-slot="9240598215"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
   </div>
 
   <!-- 게임 전체를 감싸는 400x400 정사각형 -->
   <div id="game-wrapper">
-    <!-- 시작 화면: 처음엔 보이도록 hidden 클래스 없음 -->
-    <div id="start-screen">
-      <div id="start-container">
-        <img src="https://www.survivaloffice.com/images/eyetest.png" alt="게임 시작 화면" />
-        <button id="start-btn">게임 시작</button>
+      <div id="start-screen">
+          <div id="start-container">
+              <img src="https://www.survivaloffice.com/images/eyetest.png" alt="게임 시작 화면" />
+              <button id="start-btn">게임 시작</button>
+          </div>
       </div>
-    </div>
 
-    <!-- 게임 플레이 영역: 초기에 숨김 -->
-    <div id="game-container" class="hidden">
-      <div id="timer">5</div>
-      <div id="game-area"></div>
-    </div>
-
-    <!-- 선택지 화면: 초기에 숨김 -->
-    <div id="choice-screen" class="hidden">
-      <div id="choices">
-        <button class="choice-btn"></button>
-        <button class="choice-btn"></button>
-        <button class="choice-btn"></button>
+      <div id="game-container" class="hidden">
+          <div id="timer">5</div>
+          <div id="game-area"></div>
       </div>
-    </div>
 
-    <!-- 결과 화면: 초기에 숨김 -->
-    <div id="result">
-      <img id="result-image" src="https://www.survivaloffice.com/images/eyetestchoend.png" alt="수료증">
-      <div id="result-buttons">
-          <button id="share-kakao">카카오톡 공유하기</button>
-          <button id="save-image">이미지 저장하기</button>
+      <div id="choice-screen" class="hidden">
+          <div id="choices">
+              <button class="choice-btn"></button>
+              <button class="choice-btn"></button>
+              <button class="choice-btn"></button>
+          </div>
+      </div>
+
+      <div id="result">
+          <img id="result-image" src="https://www.survivaloffice.com/images/eyetestchoend.png" alt="수료증">
+          <div id="result-buttons">
+              <button id="share-kakao">카카오톡 공유하기</button>
+              <button id="save-image">이미지 저장하기</button>
+          </div>
       </div>
   </div>
-  
+
   <!-- 하단 광고 -->
   <div class="ad-container">
-    <ins class="adsbygoogle"
-        style="display:block; min-height: 90px;"
-        data-ad-client="ca-pub-4957586937754537"
-        data-ad-slot="6198734967"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
+      <ins class="adsbygoogle"
+          style="display:block; min-height: 90px;"
+          data-ad-client="ca-pub-4957586937754537"
+          data-ad-slot="6198734967"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
   </div>
+</div>
 
   <!-- script.js 연결 -->
   <script src="script.js"></script>

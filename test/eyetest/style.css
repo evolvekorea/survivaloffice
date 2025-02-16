@@ -55,7 +55,7 @@ body {
     overflow: hidden; /* 🔥 모바일에서 스크롤이 생기지 않도록 함 */
 }
 
-/* 게임 컨테이너 */
+/* 🔹 게임 컨테이너 */
 #game-wrapper {
     position: relative;
     width: 90vw; /* 🔥 모바일에서는 화면 크기에 맞춤 */
@@ -269,24 +269,36 @@ body {
     color: white;
 }
 
-/* 반응형: PC에서는 크기 조정 */
-/* 🔹 모바일에서 반응형 조절 */
-@media screen and (max-width: 400px) {
-    body {
-        padding-top: 50px;
+
+/* 🔹 모바일 반응형 적용 */
+@media screen and (max-width: 480px) {
+    .game-container-wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .ad-container {
+        width: 100%;
+        text-align: center;
     }
 
     #game-wrapper {
-        width: 90vw; /* 🔥 모바일 화면에서 꽉 차게 조정 */
+        width: 90vw;
         height: 90vw;
         max-width: 400px;
         max-height: 400px;
     }
+}
 
-    #result-image {
-        max-width: 80vw; /* 🔥 모바일에서도 적절한 크기로 조정 */
-        max-height: 50vh;
-    }
+
+/* 🔹 게임과 광고를 감싸는 컨테이너 */
+.game-container-wrapper {
+    display: flex;
+    flex-direction: column; /* 🔥 광고와 게임을 세로 정렬 */
+    align-items: center; /* 🔥 중앙 정렬 */
+    width: 100%;
 }
 
 .ad-container {
