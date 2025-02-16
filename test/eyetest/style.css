@@ -46,23 +46,28 @@ nav ul li a:hover {
 body {
     margin: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;  /* 🔥 네비게이션과 게임 영역을 세로로 정렬 */
+    align-items: center;  /* 🔥 모든 내용을 가운데 정렬 */
     height: 100vh;
     background-color: white;
     font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
-    padding-top: 50px; /* nav 높이만큼 본문을 아래로 이동 */
+    padding-top: 50px; /* 🔥 nav 높이만큼 본문을 아래로 이동 */
+    overflow: hidden; /* 🔥 모바일에서 스크롤이 생기지 않도록 함 */
 }
 
 /* 게임 컨테이너 */
 #game-wrapper {
     position: relative;
-    width: 400px;
-    height: 400px;
-    max-width: 100vw; /* 🔥 화면보다 커지지 않도록 제한 */
-    max-height: 100vh; /* 🔥 화면보다 커지지 않도록 제한 */
+    width: 90vw; /* 🔥 모바일에서는 화면 크기에 맞춤 */
+    max-width: 400px; /* 🔥 최대 크기 제한 */
+    height: 90vw; /* 🔥 가로 비율에 맞게 높이 설정 */
+    max-height: 400px; /* 🔥 최대 크기 제한 */
     border: 2px solid #000;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
 }
 
 /* 화면 전환 요소 공통 스타일 */
@@ -118,8 +123,7 @@ body {
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: auto; /* 🔥 높이를 자동 조절 */
-    max-height: 400px; /* 🔥 400px 이상으로 늘어나지 않도록 제한 */
+    height: 100%;
     background-color: black;
 }
 
@@ -266,16 +270,22 @@ body {
 }
 
 /* 반응형: PC에서는 크기 조정 */
-@media screen and (max-width: 480px) {
-    #game-wrapper {
-        width: 100vw; /* 🔥 모바일에서는 너비를 화면에 맞춤 */
-        max-width: 400px;
-        height: 400px;
+/* 🔹 모바일에서 반응형 조절 */
+@media screen and (max-width: 400px) {
+    body {
+        padding-top: 50px;
     }
-    
-    #game-container {
+
+    #game-wrapper {
+        width: 90vw; /* 🔥 모바일 화면에서 꽉 차게 조정 */
+        height: 90vw;
+        max-width: 400px;
         max-height: 400px;
-        height: 400px;
+    }
+
+    #result-image {
+        max-width: 80vw; /* 🔥 모바일에서도 적절한 크기로 조정 */
+        max-height: 50vh;
     }
 }
 
