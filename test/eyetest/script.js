@@ -29,6 +29,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
   
+    // ✅ 카카오 SDK 로드
+    (function loadKakaoSDK() {
+        if (!window.Kakao) {
+            let script = document.createElement("script");
+            script.src = "https://developers.kakao.com/sdk/js/kakao.min.js";
+            script.onload = () => Kakao.init("eee6c2e01641161de9f217ba99c6a0da");
+            document.head.appendChild(script);
+        } else if (!Kakao.isInitialized()) {
+            Kakao.init("eee6c2e01641161de9f217ba99c6a0da");
+        }
+    })();
+
     // "게임 시작" 버튼 클릭 시
     startBtn.addEventListener("click", startGame);
   
@@ -324,12 +336,19 @@ document.addEventListener("DOMContentLoaded", () => {
     function saveImage() {
         const imgElement = document.getElementById("result-image");
         const imgURL = imgElement.src;
-
-        const link = document.createElement("a");
-        link.href = imgURL;
-        link.download = "eyetest_result.png";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+    
+        fetch(imgURL, { mode: 'cors' })
+            .then(response => response.blob())
+            .then(blob => {
+                const blobURL = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = blobURL;
+                link.download = "eyetest_result.png";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(blobURL);
+            })
+            .catch(error => console.error("이미지 다운로드 오류:", error));
     }
 });
