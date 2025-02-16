@@ -337,18 +337,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const imgElement = document.getElementById("result-image");
         const imgURL = imgElement.src;
     
-        fetch(imgURL, { mode: 'cors' })
-            .then(response => response.blob())
-            .then(blob => {
-                const blobURL = URL.createObjectURL(blob);
-                const link = document.createElement("a");
-                link.href = blobURL;
-                link.download = "eyetest_result.png";
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(blobURL);
-            })
-            .catch(error => console.error("이미지 다운로드 오류:", error));
+        // 🔥 이미지 다운로드 링크 생성
+        const link = document.createElement("a");
+        link.href = imgURL;
+        link.setAttribute("download", "eyetest_result.png"); // 🔥 다운로드 파일명 지정
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 });
