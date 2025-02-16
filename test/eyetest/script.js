@@ -23,21 +23,21 @@ document.addEventListener("DOMContentLoaded", () => {
     resultContainer.classList.add("hidden");
 
     // ✅ 카카오 SDK 로드 및 초기화
-    (function loadKakaoSDK() {
-        if (!window.Kakao) {
-            let script = document.createElement("script");
-            script.src = "https://developers.kakao.com/sdk/js/kakao.min.js";
-            script.onload = () => {
-                if (!Kakao.isInitialized()) {
-                    Kakao.init("eee6c2e01641161de9f217ba99c6a0da"); // ✅ JavaScript 키 입력
-                    console.log("카카오 SDK 초기화 완료");
-                }
-            };
-            document.head.appendChild(script);
-        } else {
-            console.log("카카오 SDK 이미 로드됨");
+    if (!window.Kakao) {
+        let script = document.createElement("script");
+        script.src = "https://developers.kakao.com/sdk/js/kakao.min.js";
+        script.onload = () => {
+            if (!Kakao.isInitialized()) {
+                Kakao.init("eee6c2e01641161de9f217ba99c6a0da");
+                console.log("카카오 SDK 초기화됨");
+            }
+        };
+        document.head.appendChild(script);
+    } else {
+        if (!Kakao.isInitialized()) {
+            Kakao.init("eee6c2e01641161de9f217ba99c6a0da");
         }
-    })();
+    }
 
     // "게임 시작" 버튼 클릭 시
     startBtn.addEventListener("click", startGame);
@@ -321,15 +321,24 @@ document.addEventListener("DOMContentLoaded", () => {
             content: {
                 title: "동체시력 테스트 수료증",
                 description: "나의 동체시력 테스트 결과를 확인해보세요!",
-                imageUrl: "https://www.survivaloffice.com/images/eyetestchoend.png?timestamp=" + new Date().getTime(), 
+                imageUrl: "https://www.survivaloffice.com/images/eyetestchoend.png",
                 link: {
                     mobileWebUrl: "https://www.survivaloffice.com/test/eyetest",
                     webUrl: "https://www.survivaloffice.com/test/eyetest"
                 }
-            }
+            },
+            buttons: [
+                {
+                    title: "테스트 결과 보기",
+                    link: {
+                        mobileWebUrl: "https://www.survivaloffice.com/test/eyetest",
+                        webUrl: "https://www.survivaloffice.com/test/eyetest"
+                    }
+                }
+            ]
         });
     }
-    
+
     // ✅ 이미지 저장하기
     function saveImage() {
         const imgElement = document.getElementById("result-image");
