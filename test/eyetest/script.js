@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const choiceScreen = document.getElementById("choice-screen");
     const resultContainer = document.getElementById("result");
   
-    let timerCount = 5;         // 카운트다운용 변수
+    let timerCount = 3;         // 카운트다운용 변수
     let stage = 1;              // 현재 스테이지 (1~3)
     let countdownInterval;      // 카운트다운 setInterval
     let animationFrameId;       // 공 움직임 requestAnimationFrame
@@ -63,10 +63,10 @@ document.addEventListener("DOMContentLoaded", () => {
         countdown();
     }
   
-    // 5초 카운트다운 (게임 시작 전)
+    // 3초 카운트다운 (게임 시작 전)
     function countdown() {
         console.log("countdown() 시작");
-        timerCount = 5;
+        timerCount = 3;
         timerEl.textContent = timerCount;
         timerEl.style.display = "block"; // 카운트다운 시작 시 표시
     
