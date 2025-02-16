@@ -25,7 +25,7 @@
     <meta property="og:title" content="동체시력 테스트 - 초급편" />
     <meta property="og:description" content="동체시력 테스트 - 공의 개수를 맞추자" />
     <meta property="og:url" content="https://www.survivaloffice.com/test/eyetest" />
-    <meta property="og:image" content="https://www.survivaloffice.com/images/molemain2.png" />
+    <meta property="og:image" content="https://www.survivaloffice.com/images/eyetest.png" />
     <meta property="og:type" content="website" />
   
   <!-- style.css 연결 -->
@@ -47,7 +47,7 @@
     <!-- 시작 화면: 처음엔 보이도록 hidden 클래스 없음 -->
     <div id="start-screen">
       <div id="start-container">
-        <img src="https://www.survivaloffice.com/images/molemain2.png" alt="게임 시작 화면" />
+        <img src="https://www.survivaloffice.com/images/eyetest.png" alt="게임 시작 화면" />
         <button id="start-btn">게임 시작</button>
       </div>
     </div>
@@ -68,9 +68,12 @@
     </div>
 
     <!-- 결과 화면: 초기에 숨김 -->
-    <div id="result" class="hidden">
-      <img src="https://www.survivaloffice.com/images/eyetestchoend.png" alt="결과 이미지" />
-    </div>
+    <div id="result">
+      <img id="result-image" src="https://www.survivaloffice.com/images/eyetestchoend.png" alt="수료증">
+      <div id="result-buttons">
+          <button id="share-kakao">카카오톡 공유하기</button>
+          <button id="save-image">이미지 저장하기</button>
+      </div>
   </div>
 
   <!-- script.js 연결 -->

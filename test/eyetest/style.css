@@ -213,14 +213,59 @@ body {
 
 /* 결과 화면 */
 #result {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     background-color: white;
-    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
 }
 
 #result img {
-    max-width: 90%;
+    max-width: 90vw;
+    max-height: 90vh;
+    width: auto;
     height: auto;
+    display: block;
+    margin: auto;
+}
+
+/* 버튼 컨테이너 */
+#result-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+/* 버튼 스타일 */
+#result-buttons button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#share-kakao {
+    background-color: #fee500;
+    color: black;
+}
+
+#save-image {
+    background-color: #444;
+    color: white;
+}
+
+/* 📌 PC에서는 이미지 크기를 줄이기 */
+@media screen and (min-width: 768px) {
+    #result img {
+        max-width: 50vw;  /* 🔥 PC에서는 화면 너비의 50%만 사용 */
+        max-height: 50vh; /* 🔥 PC에서는 화면 높이의 50%만 사용 */
+    }
 }

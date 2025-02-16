@@ -269,10 +269,59 @@ document.addEventListener("DOMContentLoaded", () => {
   
     // 결과 화면 표시
     function showResult() {
-      console.log("showResult() 호출됨");
-      gameContainer.classList.add("hidden");
-      choiceScreen.classList.add("hidden");
-      resultContainer.classList.remove("hidden");
+        console.log("showResult() 호출됨");
+    
+        gameContainer.classList.add("hidden");
+        choiceScreen.classList.add("hidden");
+        resultContainer.classList.remove("hidden");
+    
+        // 엔딩 이미지 표시
+        resultContainer.innerHTML = `
+            <img id="result-image" src="https://www.survivaloffice.com/images/eyetestchoend.png" alt="수료증">
+            <div id="result-buttons">
+                <button id="share-kakao">카카오톡 공유하기</button>
+                <button id="save-image">이미지 저장하기</button>
+            </div>
+        `;
+    
+        // 버튼 이벤트 추가
+        document.getElementById("share-kakao").addEventListener("click", shareKakao);
+        document.getElementById("save-image").addEventListener("click", saveImage);
+    }
+    
+    // ✅ 카카오톡 공유하기
+    function shareKakao() {
+        if (!window.Kakao) {
+            alert("카카오톡 공유 기능을 사용하려면 Kakao SDK가 필요합니다.");
+            return;
+        }
+    
+        Kakao.init("eee6c2e01641161de9f217ba99c6a0da"); // ✅ 자신의 카카오 앱 키로 변경
+        Kakao.Link.sendDefault({
+            objectType: "feed",
+            content: {
+                title: "동체시력 테스트 수료증",
+                description: "나의 동체시력 테스트 결과를 확인해보세요!",
+                imageUrl: "https://www.survivaloffice.com/images/eyetestchoend.png",
+                link: {
+                    mobileWebUrl: "https://www.survivaloffice.com/test/eyetest",
+                    webUrl: "https://www.survivaloffice.com/test/eyetest"
+                }
+            }
+        });
+    }
+    
+    // ✅ 이미지 저장하기
+    function saveImage() {
+        const imgElement = document.getElementById("result-image");
+        const imgURL = imgElement.src;
+    
+        const link = document.createElement("a");
+        link.href = imgURL;
+        link.download = "eyetest_result.png";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
   });
   
