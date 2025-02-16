@@ -312,3 +312,12 @@ body {
     text-align: center;
     margin: 10px 0; /* 광고와 게임 영역 간 간격 설정 */
 }
+
+#ad-bottom {
+    width: 100%;
+    min-height: 90px;
+    text-align: center;
+    clear: both; /* 🔥 이전 요소와 충돌 방지 */
+    display: block;
+    margin-top: 20px;
+}
