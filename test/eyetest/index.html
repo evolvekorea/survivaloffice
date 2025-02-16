@@ -98,5 +98,18 @@
 
   <!-- script.js 연결 -->
   <script src="script.js"></script>
+
+  <!-- 광고 실행 코드 (페이지 로딩 후 실행) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("애드센스 광고 로드 실행");
+        try {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {
+            console.error("애드센스 광고 로드 실패:", e);
+        }
+    });
+  </script>
+
 </body>
 </html>
