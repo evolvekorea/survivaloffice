@@ -22,22 +22,41 @@ document.addEventListener("DOMContentLoaded", () => {
     // ✅ 처음에는 결과 화면 숨기기
     resultContainer.classList.add("hidden");
 
-    // ✅ 카카오 SDK 로드 및 초기화
-    if (!window.Kakao) {
+// ✅ 카카오 SDK 로드 및 초기화
+function loadKakaoSDK() {
+    return new Promise((resolve, reject) => {
+        if (window.Kakao && Kakao.isInitialized()) {
+            console.log("✅ 카카오 SDK 이미 초기화됨");
+            resolve();
+            return;
+        }
+
         let script = document.createElement("script");
         script.src = "https://developers.kakao.com/sdk/js/kakao.min.js";
         script.onload = () => {
-            if (!Kakao.isInitialized()) {
-                Kakao.init("eee6c2e01641161de9f217ba99c6a0da");
-                console.log("카카오 SDK 초기화됨");
+            if (!window.Kakao) {
+                reject("❌ Kakao 객체가 로드되지 않음");
+                return;
             }
-        };
-        document.head.appendChild(script);
-    } else {
-        if (!Kakao.isInitialized()) {
+
             Kakao.init("eee6c2e01641161de9f217ba99c6a0da");
-        }
-    }
+            console.log("✅ 카카오 SDK 로드 및 초기화 완료");
+            resolve();
+        };
+        script.onerror = () => reject("❌ Kakao SDK 로드 실패");
+        document.head.appendChild(script);
+    });
+}
+
+// ✅ SDK 로드 후 실행할 코드
+document.addEventListener("DOMContentLoaded", () => {
+    loadKakaoSDK().then(() => {
+        console.log("✅ 카카오 SDK 사용 준비 완료!");
+    }).catch(error => {
+        console.error("❌ 카카오 SDK 로딩 오류:", error);
+    });
+});
+
 
     // "게임 시작" 버튼 클릭 시
     startBtn.addEventListener("click", startGame);
@@ -309,35 +328,47 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("save-image").addEventListener("click", saveImage);
     }
 
-    // ✅ 카카오톡 공유하기
+    // ✅ 카카오톡 공유하기 버튼 이벤트
     function shareKakao() {
+        // 🔥 SDK가 정상적으로 로드되었는지 체크
         if (!window.Kakao || !Kakao.isInitialized()) {
-            alert("카카오톡 공유 기능을 사용하려면 Kakao SDK가 필요합니다.");
+            alert("⚠️ 카카오 SDK가 초기화되지 않았습니다. 다시 시도해 주세요.");
             return;
         }
-    
-        Kakao.Link.sendDefault({
-            objectType: "feed",
-            content: {
-                title: "동체시력 테스트 수료증",
-                description: "나의 동체시력 테스트 결과를 확인해보세요!",
-                imageUrl: "https://www.survivaloffice.com/images/eyetestchoend.png",
-                link: {
-                    mobileWebUrl: "https://www.survivaloffice.com/test/eyetest",
-                    webUrl: "https://www.survivaloffice.com/test/eyetest"
-                }
-            },
-            buttons: [
-                {
-                    title: "테스트 결과 보기",
-                    link: {
-                        mobileWebUrl: "https://www.survivaloffice.com/test/eyetest",
-                        webUrl: "https://www.survivaloffice.com/test/eyetest"
-                    }
-                }
-            ]
-        });
-    }
+
+        // 🔥 공유하기 실행
+        async function shareKakao() {
+            try {
+                await loadKakaoSDK(); // SDK가 로드될 때까지 기다림
+        
+                Kakao.Link.sendDefault({
+                    objectType: "feed",
+                    content: {
+                        title: "동체시력 테스트 수료증",
+                        description: "나의 동체시력 테스트 결과를 확인해보세요!",
+                        imageUrl: "https://www.survivaloffice.com/images/eyetestchoend.png",
+                        link: {
+                            mobileWebUrl: "https://www.survivaloffice.com/test/eyetest",
+                            webUrl: "https://www.survivaloffice.com/test/eyetest"
+                        }
+                    },
+                    buttons: [
+                        {
+                            title: "테스트 결과 보기",
+                            link: {
+                                mobileWebUrl: "https://www.survivaloffice.com/test/eyetest",
+                                webUrl: "https://www.survivaloffice.com/test/eyetest"
+                            }
+                        }
+                    ]
+                });
+        
+                console.log("✅ 카카오톡 공유 성공!");
+            } catch (error) {
+                console.error("❌ 카카오톡 공유 오류:", error);
+                alert("⚠️ 카카오톡 공유 중 오류가 발생했습니다. 다시 시도해 주세요.");
+            }
+        }}
 
     // ✅ 이미지 저장하기
     function saveImage() {
