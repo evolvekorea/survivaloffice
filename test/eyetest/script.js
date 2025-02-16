@@ -22,22 +22,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // ✅ 처음에는 결과 화면 숨기기
     resultContainer.classList.add("hidden");
 
-    // ✅ 카카오 SDK 초기화 (한 번만 실행되도록 설정)
-    if (window.Kakao && !Kakao.isInitialized()) {
-        Kakao.init("eee6c2e01641161de9f217ba99c6a0da"); // ✅ 자신의 카카오 앱 키로 변경
-        console.log("카카오 SDK 초기화됨");
-    }
-    
-  
-    // ✅ 카카오 SDK 로드
+    // ✅ 카카오 SDK 로드 및 초기화
     (function loadKakaoSDK() {
         if (!window.Kakao) {
             let script = document.createElement("script");
             script.src = "https://developers.kakao.com/sdk/js/kakao.min.js";
-            script.onload = () => Kakao.init("eee6c2e01641161de9f217ba99c6a0da");
+            script.onload = () => {
+                if (!Kakao.isInitialized()) {
+                    Kakao.init("eee6c2e01641161de9f217ba99c6a0da"); // ✅ JavaScript 키 입력
+                    console.log("카카오 SDK 초기화 완료");
+                }
+            };
             document.head.appendChild(script);
-        } else if (!Kakao.isInitialized()) {
-            Kakao.init("eee6c2e01641161de9f217ba99c6a0da");
+        } else {
+            console.log("카카오 SDK 이미 로드됨");
         }
     })();
 
@@ -317,13 +315,13 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("카카오톡 공유 기능을 사용하려면 Kakao SDK가 필요합니다.");
             return;
         }
-
+    
         Kakao.Link.sendDefault({
             objectType: "feed",
             content: {
                 title: "동체시력 테스트 수료증",
                 description: "나의 동체시력 테스트 결과를 확인해보세요!",
-                imageUrl: "https://www.survivaloffice.com/images/eyetestchoend.png",
+                imageUrl: "https://www.survivaloffice.com/images/eyetestchoend.png?timestamp=" + new Date().getTime(), 
                 link: {
                     mobileWebUrl: "https://www.survivaloffice.com/test/eyetest",
                     webUrl: "https://www.survivaloffice.com/test/eyetest"
@@ -331,7 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-
+    
     // ✅ 이미지 저장하기
     function saveImage() {
         const imgElement = document.getElementById("result-image");
