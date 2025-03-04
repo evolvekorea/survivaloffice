@@ -129,7 +129,13 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 2000);
         }
     
-        const displayTime = (stage === 3) ? 10000 : 15000;
+        const stageTimes = {
+            1: 15000, // Stage 1 → 15초
+            2: 12000, // Stage 2 → 12초
+            3: 10000   // Stage 3 → 10초
+        };
+        
+        const displayTime = stageTimes[stage];
         animateBalls();
     
         stageTimeoutId = setTimeout(() => {

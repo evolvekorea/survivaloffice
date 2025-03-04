@@ -107,39 +107,70 @@ document.addEventListener("DOMContentLoaded", () => {
   
    // 스테이지 시작
    function startStage() {
-        gameArea.innerHTML = "";
-        balls = [];
-        hasSplit = false;
-        gameArea.style.display = "block";
-        timerEl.textContent = "";
+    gameArea.innerHTML = "";
+    balls = [];
+    hasSplit = false;
+    gameArea.style.display = "block";
+    timerEl.textContent = "";
 
-        const initialBallCount = Math.floor(Math.random() * 6) + 5;
-        createBalls(initialBallCount);
+    const initialBallCount = Math.floor(Math.random() * 6) + 5;
+    createBalls(initialBallCount);
 
-        // ✅ 모든 스테이지에서 분열 이벤트 실행하도록 변경
-        splitTimeoutId = setTimeout(() => {
-            splitBalls();
-        }, 2000);
-
-        if (stage === 2) {
-            setTimeout(() => {
-                flashScreen(1000);
-            }, 5000);
-        } else if (stage === 3) {
-            setTimeout(() => {
-                flashScreen(1000);
-            }, 4000);
-            setTimeout(() => {
-                flashScreen(1000);
-            }, 8000);
+    // ✅ 모든 스테이지에서 분열 이벤트 실행 (Stage 3에서는 2회)
+    splitTimeoutId = setTimeout(() => {
+        splitBalls();
+        if (stage === 3) {
+            setTimeout(() => splitBalls(), 3000); // Stage 3에서는 한 번 더 실행
         }
+    }, 2000);
 
-        const displayTime = (stage === 3) ? 10000 : 15000;
-        animateBalls();
+    // ✅ Stage 2 이상에서 삭제 이벤트 실행
+    if (stage >= 2) {
+        setTimeout(() => {
+            removeBalls();
+        }, 4000);
+    }
 
-        stageTimeoutId = setTimeout(() => {
-            endStage();
-        }, displayTime);
+    // ✅ 깜빡임 이벤트 실행 횟수 조절
+    if (stage === 1) {
+        setTimeout(() => flashScreen(1000), 5000);
+    } else if (stage === 2) {
+        setTimeout(() => flashScreen(1000), 4000);
+        setTimeout(() => flashScreen(1000), 8000);
+    } else if (stage === 3) {
+        setTimeout(() => flashScreen(1000), 3000);
+        setTimeout(() => flashScreen(1000), 6000);
+        setTimeout(() => flashScreen(1000), 9000);
+    }
+
+    const stageTimes = {
+        1: 15000, // Stage 1 → 15초
+        2: 12000, // Stage 2 → 12초
+        3: 10000   // Stage 3 → 10초
+    };
+    
+    const displayTime = stageTimes[stage];
+    animateBalls();
+
+    stageTimeoutId = setTimeout(() => {
+        endStage();
+    }, displayTime);
+}
+
+// ✅ 삭제 이벤트: 무작위로 1~2개의 공을 제거
+function removeBalls() {
+    if (balls.length === 0) return;
+
+    let removeCount = Math.min(Math.floor(Math.random() * 2) + 1, balls.length); // 1~2개 삭제
+    for (let i = 0; i < removeCount; i++) {
+        let randomIndex = Math.floor(Math.random() * balls.length);
+        let ballToRemove = balls[randomIndex];
+
+        if (ballToRemove) {
+            ballToRemove.element.remove();
+            balls.splice(randomIndex, 1);
+        }
+    }
 }
 
     // 화면 깜빡임 효과
