@@ -329,7 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // ✅ 결과 화면 내용을 추가
         resultContainer.innerHTML = `
-            <img id="result-image" src="https://www.survivaloffice.com/images/eyetestchoend1.png" alt="수료증">
+            <img id="result-image" src="https://www.survivaloffice.com/images/eyetestchoend2.png" alt="수료증">
             <div id="result-buttons">
                 <button id="share-kakao">카카오톡 공유하기</button>
                 <button id="save-image">이미지 저장하기</button>
@@ -356,7 +356,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     content: {
                         title: "동체시력 테스트 수료증",
                         description: "나의 동체시력 테스트 결과를 확인해보세요!",
-                        imageUrl: "https://www.survivaloffice.com/images/eyetestchoend1.png",
+                        imageUrl: "https://www.survivaloffice.com/images/eyetestchoend2.png",
                         link: {
                             mobileWebUrl: "https://www.survivaloffice.com/test/eyetest",
                             webUrl: "https://www.survivaloffice.com/test/eyetest"
