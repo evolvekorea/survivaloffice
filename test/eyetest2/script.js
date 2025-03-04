@@ -162,6 +162,8 @@ function removeBalls() {
     if (balls.length === 0) return;
 
     let removeCount = Math.min(Math.floor(Math.random() * 2) + 1, balls.length); // 1~2개 삭제
+    console.log(`🟠 삭제 이벤트 실행됨! 총 ${removeCount}개의 공을 삭제합니다.`);
+
     for (let i = 0; i < removeCount; i++) {
         let randomIndex = Math.floor(Math.random() * balls.length);
         let ballToRemove = balls[randomIndex];
@@ -171,6 +173,7 @@ function removeBalls() {
             balls.splice(randomIndex, 1);
         }
     }
+    console.log(`🟢 삭제 후 남은 공 개수: ${balls.length}`);
 }
 
     // 화면 깜빡임 효과
