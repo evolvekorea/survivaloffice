@@ -105,36 +105,51 @@ document.addEventListener("DOMContentLoaded", () => {
     
     
   
-    // 스테이지 시작 (공 생성 및 애니메이션 시작)
-    function startStage() {
-        console.log("startStage() 호출됨, stage:", stage);
-    
-        // 🔥 이전 공 삭제 및 게임 영역 다시 표시
+   // 스테이지 시작
+   function startStage() {
         gameArea.innerHTML = "";
         balls = [];
-        hasSplit = false;  // ✅ 분열 상태 초기화 (Stage 3에서도 분열 가능)
-    
+        hasSplit = false;
         gameArea.style.display = "block";
         timerEl.textContent = "";
-    
+
         const initialBallCount = Math.floor(Math.random() * 6) + 5;
-        console.log("생성할 공 개수:", initialBallCount);
         createBalls(initialBallCount);
-    
-        // ✅ Stage 2, 3에서 분열 이벤트 실행
-        if (stage >= 2) {
-            splitTimeoutId = setTimeout(() => {
-                console.log("splitBalls() 호출됨");
-                splitBalls();
-            }, 2000);
+
+        // ✅ 모든 스테이지에서 분열 이벤트 실행하도록 변경
+        splitTimeoutId = setTimeout(() => {
+            splitBalls();
+        }, 2000);
+
+        if (stage === 2) {
+            setTimeout(() => {
+                flashScreen(1000);
+            }, 5000);
+        } else if (stage === 3) {
+            setTimeout(() => {
+                flashScreen(1000);
+            }, 4000);
+            setTimeout(() => {
+                flashScreen(1000);
+            }, 8000);
         }
-    
+
         const displayTime = (stage === 3) ? 10000 : 15000;
         animateBalls();
-    
+
         stageTimeoutId = setTimeout(() => {
             endStage();
         }, displayTime);
+}
+
+    // 화면 깜빡임 효과
+    function flashScreen(duration) {
+        gameContainer.style.backgroundColor = "black";
+        gameArea.style.visibility = "hidden";
+        setTimeout(() => {
+            gameContainer.style.backgroundColor = "white";
+            gameArea.style.visibility = "visible";
+        }, duration);
     }
     
     
@@ -314,7 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // ✅ 결과 화면 내용을 추가
         resultContainer.innerHTML = `
-            <img id="result-image" src="https://www.survivaloffice.com/images/eyetestchoend.png" alt="수료증">
+            <img id="result-image" src="https://www.survivaloffice.com/images/eyetestchoend1.png" alt="수료증">
             <div id="result-buttons">
                 <button id="share-kakao">카카오톡 공유하기</button>
                 <button id="save-image">이미지 저장하기</button>
@@ -341,7 +356,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     content: {
                         title: "동체시력 테스트 수료증",
                         description: "나의 동체시력 테스트 결과를 확인해보세요!",
-                        imageUrl: "https://www.survivaloffice.com/images/eyetestchoend.png",
+                        imageUrl: "https://www.survivaloffice.com/images/eyetestchoend1.png",
                         link: {
                             mobileWebUrl: "https://www.survivaloffice.com/test/eyetest",
                             webUrl: "https://www.survivaloffice.com/test/eyetest"
