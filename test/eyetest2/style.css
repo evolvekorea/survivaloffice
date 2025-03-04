@@ -1,0 +1,325 @@
+/* 웹폰트 설정 */
+@font-face {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+nav {
+    position: fixed;  /* 🔥 화면 상단에 고정 */
+    top: 0;
+    left: 0;
+    width: 100%;  /* 🔥 전체 너비 사용 */
+    background-color: #f4f4f4;
+    padding: 10px 0;  /* 🔥 위아래 여백 설정 */
+    z-index: 1000;  /* 🔥 다른 요소보다 위로 배치 */
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+    padding-right: 20px; /* 🔥 오른쪽 정렬 시 여백 추가 */
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: rgb(62, 62, 62);
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+}
+
+nav ul li a:hover {
+    background-color: #555;
+    color: white;
+}
+
+/* 전체 화면 설정 */
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* 🔥 세로 정렬 */
+    align-items: center; /* 🔥 중앙 정렬 */
+    background-color: white;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+    padding-top: 50px; /* 🔥 nav 높이만큼 본문을 아래로 이동 */
+    overflow-x: hidden; /* 🔥 가로 스크롤 막기 (가로 밀림 방지) */
+    overflow-y: auto; /* 🔥 세로 스크롤 가능하게 설정 */
+    height: auto; /* 🔥 전체 페이지 크기에 맞게 설정 */
+    min-height: 100vh; /* 🔥 최소 높이를 화면 크기로 설정 */
+}
+
+/* 🔹 게임 컨테이너 */
+#game-wrapper {
+    position: relative;
+    width: 90vw; /* 🔥 모바일에서는 화면 크기에 맞춤 */
+    max-width: 400px; /* 🔥 최대 크기 제한 */
+    height: 90vw; /* 🔥 가로 비율에 맞게 높이 설정 */
+    max-height: 400px; /* 🔥 최대 크기 제한 */
+    border: 2px solid #000;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+/* 화면 전환 요소 공통 스타일 */
+#start-screen,
+#game-container,
+#choice-screen,
+#result {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* 숨김 처리 */
+.hidden {
+    display: none !important;
+}
+
+/* 시작 화면 */
+#start-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    z-index: 30;
+}
+
+#start-container {
+    text-align: center;
+}
+
+#start-container img {
+    width: 100%;
+    max-width: 400px;
+}
+
+#start-btn {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+}
+
+/* 게임 영역 */
+#game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+}
+
+#timer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 60px;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 100;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+}
+
+/* 게임 영역 */
+#game-area {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    position: relative;
+    background-color: black;
+}
+
+/* 공 스타일 */
+.ball {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+}
+
+/* 선택지 화면 */
+#choice-screen {
+    display: flex;
+    justify-content: center;  /* 🔥 가로 중앙 정렬 */
+    align-items: center;  /* 🔥 세로 중앙 정렬 */
+    width: 100%;
+    height: 100%; /* 🔥 부모 높이를 100% 사용 */
+    background-color: rgb(255, 255, 255);
+    z-index: 15;
+}
+
+/* 선택지 버튼 컨테이너 */
+#choices {
+    display: flex;
+    flex-direction: row;  /* 🔥 버튼을 가로로 정렬 */
+    justify-content: center;
+    align-items: center; /* 🔥 세로 중앙 정렬 추가 */
+    gap: 10px;
+    width: 100%;
+    height: 100%; /* 🔥 부모 높이를 100% 사용 */
+}
+
+/* 선택지 버튼 */
+.choice-btn {
+    padding: 10px 20px;
+    font-size: 30px;
+    cursor: pointer;
+    background-color: #ec4d4d;
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 5px;
+    width: 120px; /* 버튼 크기 조정 */
+    text-align: center;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+    margin: 0 10px;  /* 🔥 좌우 여백 추가 */
+}
+
+/* 정답/오답 메시지 스타일 */
+#result-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; /* 🔥 게임 화면 전체 덮기 */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    z-index: 1000;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+}
+
+
+/* 결과 화면 */
+#result {
+    position: fixed;
+    top: 50px; /* 🔥 네비게이션 높이만큼 띄움 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: calc(100vh - 50px); /* 🔥 네비게이션 제외한 높이 */
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 🔥 가로 중앙 정렬 */
+    justify-content: center; /* 🔥 세로 중앙 정렬 */
+    z-index: 10;
+    padding: 20px;
+}
+
+/* 결과 이미지 */
+#result-image {
+    max-width: 80vw; /* 🔥 너무 크지 않도록 조절 */
+    max-height: 60vh; /* 🔥 PC에서도 너무 크지 않도록 제한 */
+    width: auto;
+    height: auto;
+    object-fit: contain; /* 🔥 이미지 비율 유지 */
+}
+
+/* 버튼 컨테이너 */
+#result-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* 버튼 스타일 */
+#result-buttons button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#share-kakao {
+    background-color: #fee500;
+    color: black;
+}
+
+#save-image {
+    background-color: #444;
+    color: white;
+}
+
+
+/* 🔹 모바일 반응형 적용 */
+@media screen and (max-width: 480px) {
+    .game-container-wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .ad-container {
+        width: 100%;
+        text-align: center;
+    }
+
+    #game-wrapper {
+        width: 90vw;
+        height: 90vw;
+        max-width: 400px;
+        max-height: 400px;
+    }
+}
+
+
+/* 🔹 게임과 광고를 감싸는 컨테이너 */
+.game-container-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh; /* 🔥 최소 화면 크기 보장 */
+    height: auto; /* 🔥 내용에 따라 자동 조절 */
+    overflow: visible; /* 🔥 내부 요소가 넘칠 경우 보이도록 설정 */
+}
+
+.ad-container {
+    width: 100%;
+    min-height: 90px; /* 광고 높이 보장 */
+    text-align: center;
+    margin: 10px 0; /* 광고와 게임 영역 간 간격 설정 */
+}
+
+#ad-bottom {
+    width: 100%;
+    min-height: 90px;
+    text-align: center;
+    clear: both; /* 🔥 이전 요소와 충돌 방지 */
+    display: block;
+    margin-top: 20px;
+}

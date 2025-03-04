@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>동체시력 테스트 - 고급편</title>
+  <meta name="description" content="동체시력 테스트 - 고급편">
+  <meta name="keywords" content="동체시력테스트, 테스트, 동체시력, 게임, eye, 서바이벌오피스, 미니게임, 시력, 동체, 동체시력 테스트">
+
+    <!-- Google Adsense 코드 -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537"
+    crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-4957586937754537">  
+
+    <!-- Google Analytics 코드 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-G4TPWGLYLY');
+    </script>    
+
+    <!-- Open Graph 메타태그 -->
+    <meta property="og:title" content="동체시력 테스트 - 고급편" />
+    <meta property="og:description" content="동체시력 테스트 - 공의 개수를 맞추자" />
+    <meta property="og:url" content="https://www.survivaloffice.com/test/eyetest" />
+    <meta property="og:image" content="https://www.survivaloffice.com/images/eyetest.png" />
+    <meta property="og:type" content="website" />
+  
+  <!-- style.css 연결 -->
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+
+</head>
+<body>
+
+    <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/rest/">미니게임</a></li>
+          <li><a href="/work/">생존키트</a></li>
+          <li><a href="/test/">테스트</a></li>
+        </ul>
+    </nav>
+
+<!-- 게임과 광고를 감싸는 컨테이너 -->
+<div class="game-container-wrapper">
+  <!-- 상단 광고 -->
+  <div class="ad-container">
+      <ins class="adsbygoogle"
+          style="display:block; min-height: 90px;"
+          data-ad-client="ca-pub-4957586937754537"
+          data-ad-slot="9240598215"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+  </div>
+
+  <!-- 게임 전체를 감싸는 400x400 정사각형 -->
+  <div id="game-wrapper">
+      <div id="start-screen">
+          <div id="start-container">
+              <img src="https://www.survivaloffice.com/images/eyetest.png" alt="게임 시작 화면" />
+              <button id="start-btn">게임 시작</button>
+          </div>
+      </div>
+
+      <div id="game-container" class="hidden">
+          <div id="timer">5</div>
+          <div id="game-area"></div>
+      </div>
+
+      <div id="choice-screen" class="hidden">
+          <div id="choices">
+              <button class="choice-btn"></button>
+              <button class="choice-btn"></button>
+              <button class="choice-btn"></button>
+          </div>
+      </div>
+
+      <div id="result">
+          <img id="result-image" src="https://www.survivaloffice.com/images/eyetestchoend.png" alt="수료증">
+          <div id="result-buttons">
+              <button id="share-kakao">카카오톡 공유하기</button>
+              <button id="save-image">이미지 저장하기</button>
+          </div>
+      </div>
+  </div>
+
+  <!-- 하단 광고 -->
+  <div class="ad-container">
+    <ins class="adsbygoogle"
+        style="display:block; min-height: 90px;"
+        data-ad-client="ca-pub-4957586937754537"
+        data-ad-slot="9066277744"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+</div>
+
+  <!-- script.js 연결 -->
+  <script src="script.js"></script>
+
+  <!-- 광고 실행 코드 (페이지 로딩 후 실행) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("애드센스 광고 로드 실행");
+
+        try {
+            // ✅ 상단 광고 강제 로드
+            (adsbygoogle = window.adsbygoogle || []).push({});
+
+            // ✅ 하단 광고 강제 로드
+            setTimeout(() => {
+                console.log("하단 광고 강제 로드 실행");
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            }, 500);  // 🔥 2초 뒤 실행하여 렌더링 문제 방지
+        } catch (e) {
+            console.error("애드센스 광고 로드 실패:", e);
+        }
+    });
+</script>
+
+</body>
+</html>
