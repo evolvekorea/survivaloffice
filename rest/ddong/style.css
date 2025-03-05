@@ -357,16 +357,28 @@ button:disabled {
 .ad-container {
     width: 100%;
     height: auto; /* 가변 크기 설정 */
-    min-height: 90px; /* 최소 높이 유지 */
+    min-height: 120px; /* 최소 높이 유지 */
     display: flex; 
     justify-content: center; /* 중앙 정렬 */
     align-items: center; /* 광고가 중앙에 위치하도록 설정 */
     overflow: hidden; /* 광고가 넘칠 경우 숨김 */
+    margin-bottom: 10px; /* 🔥 광고 아래쪽 여백 추가 (겹침 방지) */
 }
 .adsbygoogle {
     display: block;
     width: 100%;
     height: auto !important; /* 광고 높이 자동 조정 */
+}
+
+.footer-ad-container {
+    width: 100%;
+    min-height: 120px; /* 🔥 하단 광고 공간 확보 */
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-top: 10px; /* 🔥 광고 위쪽 여백 추가 */
 }
 
 nav {
@@ -375,7 +387,7 @@ nav {
     left: 0;
     width: 100%;  /* 🔥 전체 너비 사용 */
     background-color: #f4f4f4;
-    padding: 10px 0;  /* 🔥 위아래 여백 설정 */
+    padding: 15px 0;  /* 🔥 위아래 여백 설정 */
     z-index: 1000;  /* 🔥 다른 요소보다 위로 배치 */
 }
 
