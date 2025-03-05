@@ -20,19 +20,7 @@ html, body {
     height: auto; /* 🔥 전체 페이지 크기에 맞게 설정 */
     min-height: 100vh; /* 🔥 최소 높이를 화면 크기로 설정 */
 }
-body {
-    margin: 0;
-    display: flex;
-    flex-direction: column; /* 🔥 세로 정렬 */
-    align-items: center; /* 🔥 중앙 정렬 */
-    background-color: white;
-    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
-    padding-top: 50px; /* 🔥 nav 높이만큼 본문을 아래로 이동 */
-    overflow-x: hidden; /* 🔥 가로 스크롤 막기 (가로 밀림 방지) */
-    overflow-y: auto; /* 🔥 세로 스크롤 가능하게 설정 */
-    height: auto; /* 🔥 전체 페이지 크기에 맞게 설정 */
-    min-height: 100vh; /* 🔥 최소 높이를 화면 크기로 설정 */
-}
+
 /* 메인 컨테이너 */
 #container {
     width: 360px;
