@@ -370,7 +370,7 @@ button:disabled {
 }
 
 nav {
-    position: fixed;  /* 🔥 화면 상단에 고정 */
+    position: relative;  /* 🔥 화면 상단에 고정 */
     top: 0;
     left: 0;
     width: 100%;  /* 🔥 전체 너비 사용 */
