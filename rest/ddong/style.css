@@ -368,3 +368,39 @@ button:disabled {
     width: 100%;
     height: auto !important; /* 광고 높이 자동 조정 */
 }
+
+nav {
+    position: fixed;  /* 🔥 화면 상단에 고정 */
+    top: 0;
+    left: 0;
+    width: 100%;  /* 🔥 전체 너비 사용 */
+    background-color: #f4f4f4;
+    padding: 10px 0;  /* 🔥 위아래 여백 설정 */
+    z-index: 1000;  /* 🔥 다른 요소보다 위로 배치 */
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+    padding-right: 20px; /* 🔥 오른쪽 정렬 시 여백 추가 */
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: rgb(62, 62, 62);
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+}
+
+nav ul li a:hover {
+    background-color: #555;
+    color: white;
+}
