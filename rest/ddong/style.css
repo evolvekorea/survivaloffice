@@ -360,7 +360,8 @@ button:disabled {
     justify-content: center; /* 중앙 정렬 */
     align-items: center; /* 광고가 중앙에 위치하도록 설정 */
     overflow: auto; /* 광고가 넘칠 경우 숨김 */
-    margin-top: 20px; /* 🔥 광고 위아래로 20px 간격 추가 */
+    margin-top: 60px; /* 🔥 광고 위아래로 20px 간격 추가 */
+    margin-bottom: 20px; /* 🔥 광고 위아래로 20px 간격 추가 */
 
 }
 .adsbygoogle {
@@ -377,7 +378,7 @@ button:disabled {
     justify-content: center;
     align-items: center;
     overflow: auto;
-    margin-top: 20px; /* 🔥 광고 위아래로 20px 간격 추가 */
+    margin-top: 30px; /* 🔥 광고 위아래로 20px 간격 추가 */
 
 }
 
