@@ -14,7 +14,6 @@ html, body {
     align-items: center; /* 🔥 중앙 정렬 */
     background-color: white;
     font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
-    padding-top: 50px; /* 🔥 nav 높이만큼 본문을 아래로 이동 */
     overflow-x: hidden; /* 🔥 가로 스크롤 막기 (가로 밀림 방지) */
     overflow-y: auto; /* 🔥 세로 스크롤 가능하게 설정 */
     height: auto; /* 🔥 전체 페이지 크기에 맞게 설정 */
@@ -360,7 +359,7 @@ button:disabled {
     display: flex; 
     justify-content: center; /* 중앙 정렬 */
     align-items: center; /* 광고가 중앙에 위치하도록 설정 */
-    overflow: hidden; /* 광고가 넘칠 경우 숨김 */
+    overflow: auto; /* 광고가 넘칠 경우 숨김 */
 }
 .adsbygoogle {
     display: block;
@@ -375,7 +374,7 @@ button:disabled {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: scroll;
+    overflow: auto;
 }
 
 nav {
