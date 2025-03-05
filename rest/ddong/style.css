@@ -364,6 +364,11 @@ button:disabled {
     overflow: hidden; /* 광고가 넘칠 경우 숨김 */
     margin-bottom: 10px; /* 🔥 광고 아래쪽 여백 추가 (겹침 방지) */
 }
+.adsbygoogle {
+    display: block;
+    width: 100%;
+    height: auto !important; /* 광고 높이 자동 조정 */
+}
 
 .footer-ad-container {
     width: 100%;
@@ -373,7 +378,7 @@ button:disabled {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    margin-bottom: 10px; /* 🔥 광고 위쪽 여백 추가 */
+    margin-top: 10px; /* 🔥 광고 위쪽 여백 추가 */
 }
 
 nav {
