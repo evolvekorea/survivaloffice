@@ -360,6 +360,7 @@ button:disabled {
     justify-content: center; /* 중앙 정렬 */
     align-items: center; /* 광고가 중앙에 위치하도록 설정 */
     overflow: auto; /* 광고가 넘칠 경우 숨김 */
+    margin-top: 10px 0; /* 광고와 게임 영역 간 간격 설정 */
 }
 .adsbygoogle {
     display: block;
@@ -375,6 +376,7 @@ button:disabled {
     justify-content: center;
     align-items: center;
     overflow: auto;
+    margin-top: 10px 0; /* 광고와 게임 영역 간 간격 설정 */
 }
 
 nav {
@@ -383,7 +385,7 @@ nav {
     left: 0;
     width: 100%;  /* 🔥 전체 너비 사용 */
     background-color: #f4f4f4;
-    padding: 15px 0;  /* 🔥 위아래 여백 설정 */
+    padding: 10px 0;  /* 🔥 위아래 여백 설정 */
     z-index: 1000;  /* 🔥 다른 요소보다 위로 배치 */
 }
 
