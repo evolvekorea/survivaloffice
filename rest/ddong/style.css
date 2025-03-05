@@ -18,7 +18,8 @@ html, body {
     justify-content: center;
     background-color: #fafafa;
     font-family: 'GangwonEduSaeeum_OTFMediumA', sans-serif;
-    overflow: hidden; /* 스크롤 방지 */
+    overflow: auto; /* 스크롤 허용 */
+    min-height: 100vh; /* 최소 높이를 뷰포트 높이로 설정 */
 }
 
 /* 메인 컨테이너 */
@@ -34,10 +35,8 @@ html, body {
     background-color: #fafafa; /* 배경색 추가 */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* PC 화면에서 구분 */
     border-radius: 10px; /* 경계선 둥글게 */
-    position: absolute; /* 화면 중앙 고정을 위한 절대 위치 */
-    top: 50%; /* 화면 중앙으로 이동 */
-    left: 50%;
-    transform: translate(-50%, -50%); /* 중앙 정렬 */
+    position: relative; /* 상대 위치로 변경하여 스크롤 가능하게 함 */
+    margin: 20px auto; /* 중앙 정렬 유지 */
 }
 
 /* 상단 UI 가로 배치 */
@@ -316,12 +315,13 @@ button:disabled {
 /* 게임 영역 */
 #game-area {
     position: relative;
-    width: 100%;
-    height: calc(100% - 80px); /* 화면에서 상단 UI 제외한 영역 */
+    max-width: 360px;
+    min-height: 550px; /* 최소 높이 지정 */
+    height: auto; /* 내용에 따라 자동 조정 */
+    overflow: hidden; /* 내부 스크롤 제거 */
     background-color: #d8f4f5;
     border: 2px solid #ccc; /* 게임 영역 표시용 */
     box-sizing: border-box;
-    overflow: hidden;
     margin: 0 auto; /* 중앙 정렬 */
 }
 
@@ -352,4 +352,11 @@ button:disabled {
     100% {
         box-shadow: 0 0 5px gold, 0 0 10px orange, 0 0 20px yellow;
     }
+}
+
+.ad-container {
+    width: 100%;  /* 광고가 화면 전체를 차지하도록 설정 */
+    min-height: 90px;  /* 최소 높이 유지 */
+    text-align: center; /* 중앙 정렬 */
+    overflow: hidden; /* 광고가 영역을 벗어나지 않도록 */
 }
