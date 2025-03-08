@@ -38,6 +38,16 @@
         </ul>
     </nav>
       
+    <!-- 상단 광고 -->
+    <div class="ad-container">
+        <ins class="adsbygoogle"
+            style="display:block; min-height: 90px;"
+            data-ad-client="ca-pub-4957586937754537"
+            data-ad-slot="9240598215"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+    </div>
+    
     <br><br><br><br>
     <h1>로또 번호 생성기</h1>
     <br><br>
@@ -60,11 +70,43 @@
     <h2>저장된 번호 목록</h2>
     <div id="saved-numbers-list"></div>
 
+    <!-- 하단 광고 -->
+    <div class="footer-ad-container">
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-4957586937754537"
+            data-ad-slot="9931828353"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+        </div>
+
     <!-- 스크립트 파일 연결 -->
     <script src="script.js"></script>
 
-    <footer>
-        <p>&copy; 2024 Survival Office. All rights reserved.</p>
-    </footer>    
+    <!-- 광고 실행 코드 (페이지 로딩 후 실행) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("애드센스 광고 로드 실행");
+
+            try {
+                // ✅ 상단 광고 강제 로드
+                (adsbygoogle = window.adsbygoogle || []).push({});
+
+                // ✅ 하단 광고 강제 로드
+                setTimeout(() => {
+                    console.log("하단 광고 강제 로드 실행");
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                }, 500);  // 🔥 2초 뒤 실행하여 렌더링 문제 방지
+            } catch (e) {
+                console.error("애드센스 광고 로드 실패:", e);
+            }
+        });
+        </script>   
+
+        <script src="https://ads-partners.coupang.com/g.js"></script>
+        <script>
+            new PartnersCoupang.G({"id":810614,"trackingCode":"AF4453761","subId":null,"template":"carousel","width":"360","height":"100"});
+        </script>    
+
 </body>
 </html>
