@@ -64,25 +64,26 @@
     </div>
 
     <!-- 행성 영역 -->
-    <div id="planet-area" style="width: 360px; height: 450px;">
+    <div id="planet-area" style="width: 360px; height: 500px;">
         <!-- Start Screen -->
-        <div id="start-screen" style="width: 360px; height: 450px;">
+        <div id="start-screen" style="width: 360px; height: 500px;">
             <div id="loading-message">이미지 로드 중...</div>
             <button id="start-btn" style="display: none;">게임 시작</button>
             <button id="help-btn" onclick="window.open('https://travelerguru.co.kr/%eb%af%b8%eb%8b%88%ea%b2%8c%ec%9e%84-%ec%86%8c%ea%b0%9c-1%ed%83%84-%ed%96%89%ec%84%b1-%eb%a7%8c%eb%93%a4%ea%b8%b0-%ea%b2%8c%ec%9e%84planet-evolution/', '_blank')">
                 게임 방법
             </button>
         </div>
+        <div id="ranking-container" style="display: none;">
+        <h2>Top 10 랭킹</h2>
+        <ul id="ranking-list"></ul>
+    </div>
     </div>
     
     <div id="banner">
         <img src="https://www.survivaloffice.com/images/planetbaner.png" alt="Planet Banner" />
     </div>
 
-    <div id="ranking-container" style="display: none;">
-        <h2>Top 10 랭킹</h2>
-        <ul id="ranking-list"></ul>
-    </div>
+
 
     <div id="result-popup" style="display: none;">
         <h2>게임 종료</h2>
