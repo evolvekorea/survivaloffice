@@ -1,0 +1,415 @@
+/* 웹폰트 설정 */
+@font-face {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 기본 설정 */
+html, body {
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* 🔥 세로 정렬 */
+    align-items: center; /* 🔥 중앙 정렬 */
+    background-color: white;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+    overflow-x: hidden; /* 🔥 가로 스크롤 막기 (가로 밀림 방지) */
+    overflow-y: auto; /* 🔥 세로 스크롤 가능하게 설정 */
+    height: auto; /* 🔥 전체 페이지 크기에 맞게 설정 */
+    min-height: 100vh; /* 🔥 최소 높이를 화면 크기로 설정 */
+}
+
+/* 상단 UI 가로 배치 */
+#game-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 360px; /* 모바일처럼 폭 제한 */
+    margin: 0 auto; /* 중앙 정렬 */
+    padding: 10px 0;
+    gap: 10px; /* 요소 간 간격 */
+}
+
+/* 게임 타이틀 */
+#game-container h1 {
+    flex: 1;
+    text-align: center;
+    font-size: 24px;
+    margin: 0;
+}
+
+/* 랭킹 보기 버튼 */
+#top10-rank {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    position: absolute;
+    top: 10px; /* 컨테이너 상단에서 10px 아래 */
+    right: 10px; /* 컨테이너 우측에서 10px 왼쪽 */
+    background-color: #ffffff; /* 버튼 배경색 */
+    color: rgb(2, 2, 2); /* 버튼 텍스트 색 */
+    border: 2px solid #333;
+    border-radius: 10px; /* 모서리 둥글게 */
+    padding: 5px 10px 0px 10px; /* 위쪽 5px, 아래쪽 3px으로 설정 */
+    cursor: pointer; /* 마우스 포인터 변경 */
+    margin-top: 0;
+    font-size: 25px; /* 텍스트 크기 */
+    font-weight: bold;
+    z-index: 200; /* 다른 요소 위에 표시 */
+    transition: background-color 0.3s ease; /* 호버 시 부드러운 색 전환 */
+    width: auto;
+    box-sizing: border-box; /* 패딩이 요소 크기에 포함되도록 설정 */
+    height: auto; /* 높이를 자동으로 조정 */
+}
+
+/* 랭킹 컨테이너 */
+#ranking-container {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 80%;
+    max-width: 400px;
+    max-height: 450px;
+    background-color: white;
+    border: 2px solid #333;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    display: none; /* 초기에는 숨김 */
+    z-index: 100;
+}
+
+/* 랭킹 리스트 */
+#ranking-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#ranking-container li {
+    margin-bottom: 4px;        /* 🔽 항목 간 간격 축소 */
+    font-size: 15px;           /* 🔽 살짝 작게 조정 (더 많은 항목 수용) */
+    line-height: 1.3;          /* 🔽 줄간격 조절로 높이 절약 */
+    opacity: 0;                
+    transform: translateY(15px); /* 🔽 애니메이션 이동 거리도 줄이기 */
+    transition: all 0.2s ease-in-out; /* 🔽 전환 시간도 약간 짧게 */
+}
+
+
+/* 날짜 공통 스타일 */
+.ranking-item .date {
+    float: right; /* 우측 정렬 */
+    font-size: 14px;
+    color: #666 !important; /* 글자 색상 강제 적용 */
+    margin-top: 2px; /* 위아래 간격 */
+    width: 100px; /* 고정 폭 설정 */
+    text-align: right; /* 텍스트 우측 정렬 */
+    transition: none !important; /* 애니메이션 제거 */
+}
+
+#result-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    text-align: center;
+    z-index: 1100;
+}
+
+#result-popup h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#result-popup input {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#result-popup button {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}
+
+#result-popup button:hover {
+    background-color: #555;
+}
+
+#result-popup div:first-of-type {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#result-popup div:last-of-type {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* 배너 컨테이너 */
+#banner {
+    width: 360px; /* planet-area와 동일한 폭 */
+    margin: 10px auto; /* 중앙 정렬 및 위아래 간격 */
+    text-align: center; /* 이미지 중앙 정렬 */
+}
+
+/* 배너 이미지 */
+#banner img {
+    width: 100%; /* 배너 컨테이너 폭에 맞춤 */
+    height: auto; /* 비율 유지 */
+    border-radius: 10px; /* 선택 사항: 모서리 둥글게 */
+}
+
+#saveScoreButton {
+    background-color: #007bff !important; /* 우선순위를 높이기 위해 !important 사용 */
+    color: white !important;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#saveScoreButton:hover {
+    background-color: #0056b3 !important; /* 호버 상태에서도 우선순위 높이기 */
+}
+
+
+/* CSS 애니메이션 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* .ranking-item 애니메이션 */
+.ranking-item {
+    opacity: 0; /* 초기 상태 */
+    animation: fadeInUp 0.5s ease forwards; /* 애니메이션 적용 */
+}
+
+button:disabled {
+    background-color: #ccc; /* 비활성화된 색상 */
+    color: #666; /* 텍스트 색상 */
+    cursor: not-allowed;
+}
+
+/* Start Screen */
+#start-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url('https://www.survivaloffice.com/images/molestart.png');
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    z-index: 10; /* 구멍들 위에 표시 */
+}
+
+#loading-message {
+    position: absolute; /* 부모 기준으로 위치 조정 가능 */
+    top: 95%; /* 부모 요소의 60% 높이에서 위치 */
+    left: 50%; /* 부모 요소의 중앙 */
+    transform: translate(-50%, -50%); /* 정확한 중앙 정렬 보정 */
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: rgb(255, 255, 255);
+}
+
+#start-btn {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    position: absolute; /* 부모 기준으로 위치 조정 가능 */
+    top: 85%; /* 부모 요소의 60% 높이에서 위치 */
+    left: 50%; /* 부모 요소의 중앙 */
+    transform: translate(-50%, -50%); /* 정확한 중앙 정렬 보정 */
+    padding: 10px 20px;
+    border: 2px solid #333;
+    border-radius: 10px; /* 모서리 둥글게 */
+    font-size: 25px; /* 텍스트 크기 */
+    font-weight: bold;
+    background: #ffffff;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+}
+
+#countdown-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5rem;
+    color: rgb(0, 0, 0);
+    display: none;
+    text-align: center;
+    z-index: 10;
+}
+
+/* 게임 영역 */
+#game-area {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-rows: repeat(4, 90px) !important;
+    gap: 10px !important;
+    width: 360px !important;
+    height: 550px !important;
+    background-image: url('https://www.survivaloffice.com/images/molemain.png'); /* 배경 이미지 추가 */
+    background-size: cover; /* 이미지를 전체 영역에 맞춤 */
+    background-position: center; /* 이미지 중앙 정렬 */
+    background-repeat: no-repeat; /* 이미지 반복 방지 */
+    border-radius: 10px !important; /* 모서리 둥글게 */
+    margin: 0 auto !important;
+    box-sizing: border-box;
+    position: relative !important;
+    padding: 0px;
+}
+
+.ad-container {
+    width: 100%;
+    height: auto; /* 가변 크기 설정 */
+    min-height: 90px; /* 최소 높이 유지 */
+    display: flex; 
+    justify-content: center; /* 중앙 정렬 */
+    align-items: center; /* 광고가 중앙에 위치하도록 설정 */
+    overflow: auto; /* 광고가 넘칠 경우 숨김 */
+    margin-top: 60px; /* 🔥 광고 위아래로 20px 간격 추가 */
+    margin-bottom: 20px; /* 🔥 광고 위아래로 20px 간격 추가 */
+    border-bottom: 3px solid black; /* 🔥 하단 테두리 추가 */
+}
+.adsbygoogle {
+    display: block;
+    width: 100%;
+    height: auto !important; /* 광고 높이 자동 조정 */
+}
+
+.footer-ad-container {
+    width: 100%;
+    min-height: 90px; /* 🔥 하단 광고 공간 확보 */
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    margin-top: 30px; /* 🔥 광고 위아래로 20px 간격 추가 */
+    border-top: 3px solid black;  /* 🔥 상단 테두리 추가 */
+}
+
+nav {
+    position: fixed;  /* 🔥 화면 상단에 고정 */
+    top: 0;
+    left: 0;
+    width: 100%;  /* 🔥 전체 너비 사용 */
+    background-color: #f4f4f4;
+    padding: 10px 0;  /* 🔥 위아래 여백 설정 */
+    z-index: 1000;  /* 🔥 다른 요소보다 위로 배치 */
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+    padding-right: 20px; /* 🔥 오른쪽 정렬 시 여백 추가 */
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: rgb(62, 62, 62);
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+}
+
+nav ul li a:hover {
+    background-color: #555;
+    color: white;
+}
+
+/* 문제 표시 영역 */
+#question-container {
+    position: absolute;
+    top: 20%;
+    width: 100%;
+    text-align: center;
+    font-size: 70px;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+}
+
+/* 선택지 영역 */
+#choices-container {
+    position: absolute;
+    top: 70%;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* 선택지 버튼 */
+#choices-container button {
+    font-size: 40px;
+    font-weight: bold;
+    padding: 10px 20px;
+    width: 100px;          /* 너비 제한 */
+    height: auto;          /* 높이를 내용에 맞춤 */
+    max-height: 60px;      /* 최대 높이 제한 */
+    border-radius: 12px;
+    border: 2px solid black;
+    background-color: white;
+    cursor: pointer;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+    transition: all 0.2s ease-in-out;
+}
+
+#choices-container button:hover {
+    background-color: #f0f0f0;
+}
+
+#feedback {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  width: 100%;
+  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+  z-index: 10;
+}
