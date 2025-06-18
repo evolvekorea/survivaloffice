@@ -103,7 +103,7 @@ button:disabled {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url('https://www.survivaloffice.com/images/molestart.png');
+    background-image: url('https://www.survivaloffice.com/images/mentalmath1main.png');
     background-size: cover;
     background-position: center;
     text-align: center;
@@ -138,11 +138,12 @@ button:disabled {
 
 #countdown-container {
     position: absolute;
-    top: 50%;
+    top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 5rem;
-    color: rgb(0, 0, 0);
+    font-size: 100px;
+    color: rgb(255, 247, 136);
+    font-weight: bold;
     display: none;
     text-align: center;
     z-index: 10;
@@ -323,6 +324,7 @@ nav ul li a:hover {
   border: none;
   cursor: pointer;
   border-radius: 10px;
+  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
 }
 
 #result-container {
@@ -349,12 +351,12 @@ nav ul li a:hover {
 
 #choice-timer {
   position: absolute;
-  top: 15%;
+  top: 30%;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 3rem;
+  font-size: 100px;
   font-weight: bold;
-  color: yellow;
+  color: rgb(255, 0, 0);
   display: none;
   z-index: 1001; /* 선택지보다 위에 */
 }

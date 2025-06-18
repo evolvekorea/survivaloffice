@@ -31,19 +31,8 @@ function preloadImages(imageUrls, callback) {
 }
 
 preloadImages([
-    "https://www.survivaloffice.com/images/m1.png",
-    "https://www.survivaloffice.com/images/m2.png",
-    "https://www.survivaloffice.com/images/m3.png",
-    "https://www.survivaloffice.com/images/m4.png",
-    "https://www.survivaloffice.com/images/m5.png",
-    "https://www.survivaloffice.com/images/m6.png",
-    "https://www.survivaloffice.com/images/md1.png",
-    "https://www.survivaloffice.com/images/md2.png",
-    "https://www.survivaloffice.com/images/md3.png",
-    "https://www.survivaloffice.com/images/md4.png",
-    "https://www.survivaloffice.com/images/md5.png",
-    "https://www.survivaloffice.com/images/md6.png",
-    "https://www.survivaloffice.com/images/molemain.png"
+    "https://www.survivaloffice.com/images/mentalmath1.png",
+    "https://www.survivaloffice.com/images/mentalmath1main.png"
 ], () => {
     loadingMessage.textContent = "";
     startButton.style.display = "block";
