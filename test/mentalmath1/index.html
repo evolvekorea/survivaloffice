@@ -1,136 +1,97 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>암산 능력 평가 - Mentalmath</title>
-    <meta name="description" content="암산 능력 평가">
-    <meta name="keywords" content="암산, 테스트, 암산 게임, 게임, 숫자 게임, 서바이벌오피스, 미니게임, math, mental, mentalmath">
-    
-    <!-- Google Adsense 코드 -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537"
-    crossorigin="anonymous"></script>
-    <meta name="google-adsense-account" content="ca-pub-4957586937754537">  
-    
-    <!-- Google Analytics 코드 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-G4TPWGLYLY');
-    </script>    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>암산 능력 평가 - Mentalmath</title>
+  <meta name="description" content="암산 능력 평가">
+  <meta name="keywords" content="암산, 테스트, 게임, 숫자 게임, 서바이벌오피스">
 
-    <!-- Open Graph 메타태그 -->
-    <meta property="og:title" content="암산 능력 평가 - Mentalmath" />
-    <meta property="og:description" content="화면에 나오는 숫자를 암산하여 정답을 맞추자" />
-    <meta property="og:url" content="https://www.survivaloffice.com/rest/mentalmath1" />
-    <meta property="og:image" content="https://www.survivaloffice.com/images/mentalmath1.png" />
-    <meta property="og:type" content="website" />
-
-    <!-- CSS 스타일시트 추가 -->
-    <link rel="stylesheet" href="style.css">
+  <!-- 광고, 분석, 스타일 -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537" crossorigin="anonymous"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date()); gtag('config', 'G-G4TPWGLYLY');
+  </script>
+  <meta property="og:title" content="암산 능력 평가 - Mentalmath" />
+  <meta property="og:description" content="화면에 나오는 숫자를 암산하여 정답을 맞추자" />
+  <meta property="og:url" content="https://www.survivaloffice.com/rest/mentalmath1" />
+  <meta property="og:image" content="https://www.survivaloffice.com/images/mentalmath1.png" />
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body oncontextmenu="return false">
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/rest/">미니게임</a></li>
+      <li><a href="/work/">생존키트</a></li>
+      <li><a href="/test/">테스트</a></li>
+    </ul>
+  </nav>
 
-    <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/rest/">미니게임</a></li>
-          <li><a href="/work/">생존키트</a></li>
-          <li><a href="/test/">테스트</a></li>
-        </ul>
-    </nav>   
+  <!-- 상단 광고 -->
+  <div class="ad-container">
+    <ins class="adsbygoogle" style="display:block; min-height: 90px;" data-ad-client="ca-pub-4957586937754537" data-ad-slot="9240598215" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  </div>
 
-    <!-- 상단 광고 -->
-    <div class="ad-container">
-        <ins class="adsbygoogle"
-            style="display:block; min-height: 90px;"
-            data-ad-client="ca-pub-4957586937754537"
-            data-ad-slot="9240598215"
-            data-ad-format="auto"
-            data-full-width-responsive="true"></ins>
+  <!-- 게임 영역 -->
+  <div id="game-area">
+    <!-- 카운트다운 -->
+    <div id="countdown-container" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 5rem; display: none;">3</div>
+
+    <!-- 시작 화면 -->
+    <div id="start-screen">
+      <div id="loading-message">이미지 로드 중...</div>
+      <button id="start-btn" style="display: none;">암산 능력 평가<br>S T A R T</button>
+      <button id="help-btn" onclick="window.open('https://travelerguru.co.kr/%eb%af%b8%eb%8b%88%ea%b2%8c%ec%9e%84-%ec%86%8c%ea%b0%9c-7%ed%83%84-%eb%91%90%eb%8d%94%ec%a7%80%ec%9e%a1%ea%b8%b0-%ea%b2%8c%ec%9e%84/', '_blank')">게임 방법</button>
     </div>
 
-    <!-- 게임 영역 -->
-    <div id="game-area">
-        <div id="countdown-container" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 5rem; display: none;">
-            3
-        </div>
-        <!-- Start Screen -->
-        <div id="start-screen">
-            <div id="loading-message">이미지 로드 중...</div>
-            <button id="start-btn" style="display: none;">암산 능력 평가<br>S T A R T</button>
-            <button id="top10-rank">랭킹 보기</button>
-        </div>
-        <div id="ranking-container" style="display: none;">
-        <h2>Top 10 랭킹</h2>
-        <ul id="ranking-list"></ul>
-    </div>
+    <!-- 문제 및 선택지 영역 -->
     <div id="question-container"></div>
     <div id="choices-container"></div>
+    <div id="choice-timer">3</div>
     <div id="feedback"></div>
+
+    <!-- 🎉 결과 화면 -->
+    <div id="result-container" style="display: none;">
+      <div class="result-message">🎉 축하해요 🎉<br>모든 문제를 맞췄어요</div>
+      <div id="result-buttons">
+        <button id="share-kakao">카카오톡 공유하기</button>
+      </div>
     </div>
 
-    <div id="result-popup" style="display: none;">
-        <h2>게임 종료</h2>
-        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px;">
-            <input type="text" id="nicknameInput" placeholder="닉네임 입력" />
-            <button id="saveScoreButton" type="button">점수 등록</button>
-        </div>
-        <div>
-            <button id="closePopupButton" type="button">다시 하기</button>
-            <button id="playOtherGamesButton" type="button" onclick="location.href='https://survivaloffice.com/rest'">
-                다른 게임 하기
-            </button>
-        </div>
+    <!-- ❌ 게임오버 화면 -->
+    <div id="custom-gameover" style="display: none;">
+      <div class="gameover-text">Game Over</div>
+      <button class="retry-button" onclick="location.reload()">다시하기</button>
     </div>
+  </div>
 
-    <!-- 하단 광고 -->
-    <div class="footer-ad-container">
-        <ins class="adsbygoogle"
-            style="display:block"
-            data-ad-client="ca-pub-4957586937754537"
-            data-ad-slot="9931828353"
-            data-ad-format="auto"
-            data-full-width-responsive="true"></ins>
-        </div>
+  <!-- 하단 광고 -->
+  <div class="footer-ad-container">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4957586937754537" data-ad-slot="9931828353" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  </div>
 
-    <!-- 게임 스크립트 -->
-    <script type="module" src="script.js"></script>
-    <script>
-        document.addEventListener('contextmenu', (event) => {
-            event.preventDefault(); // 우클릭 방지
-        });
-    </script>
-    
-    <!-- 광고 실행 코드 (페이지 로딩 후 실행) -->
-      <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            console.log("애드센스 광고 로드 실행");
-
-            try {
-                // ✅ 상단 광고 강제 로드
-                (adsbygoogle = window.adsbygoogle || []).push({});
-
-                // ✅ 하단 광고 강제 로드
-                setTimeout(() => {
-                    console.log("하단 광고 강제 로드 실행");
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                }, 500);  // 🔥 2초 뒤 실행하여 렌더링 문제 방지
-            } catch (e) {
-                console.error("애드센스 광고 로드 실패:", e);
-            }
-        });
-        </script>   
-
-            <script src="https://ads-partners.coupang.com/g.js"></script>
-            <script>
-                new PartnersCoupang.G({"id":810614,"trackingCode":"AF4453761","subId":null,"template":"carousel","width":"360","height":"100"});
-            </script>    
-
+  <!-- 스크립트 -->
+  <script type="module" src="script.js"></script>
+  <script>
+    document.addEventListener("contextmenu", e => e.preventDefault());
+    document.addEventListener("DOMContentLoaded", () => {
+      try {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        setTimeout(() => {
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        }, 500);
+      } catch (e) {
+        console.error("광고 로드 실패:", e);
+      }
+    });
+  </script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <script>
+    new PartnersCoupang.G({ id: 810614, trackingCode: "AF4453761", subId: null, template: "carousel", width: "360", height: "100" });
+  </script>
 </body>
-
-
 </html>
