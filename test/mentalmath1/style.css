@@ -123,7 +123,7 @@ button:disabled {
 #start-btn {
     font-family: 'GangwonEduSaeeum_OTFMediumA';
     position: absolute; /* 부모 기준으로 위치 조정 가능 */
-    top: 85%; /* 부모 요소의 60% 높이에서 위치 */
+    top: 75%; /* 부모 요소의 60% 높이에서 위치 */
     left: 50%; /* 부모 요소의 중앙 */
     transform: translate(-50%, -50%); /* 정확한 중앙 정렬 보정 */
     padding: 10px 20px;
@@ -325,6 +325,25 @@ nav ul li a:hover {
   cursor: pointer;
   border-radius: 10px;
   font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+}
+
+#share-kakao {
+  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+  font-size: 20px;
+  text-align: center;
+  display: inline-block; /* 중앙정렬 시 필수 */
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: #fee500; /* 카카오 컬러 느낌 */
+  border: none;
+  cursor: pointer;
+}
+
+#result-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
 
 #result-container {
