@@ -307,10 +307,11 @@ nav ul li a:hover {
   z-index: 1000;
 }
 
-
 .gameover-text {
-    font-size: 50px;
-    margin-bottom: 30px;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: white;
+    text-align: center; /* ✅ 가운데 정렬 */
 }
 
 .retry-button {
