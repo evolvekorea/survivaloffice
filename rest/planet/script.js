@@ -794,28 +794,39 @@ function update() {
     while (mergeQueue.length > 0) {
         const { planetA, planetB, nextIndex } = mergeQueue.shift();
 
+        const position = planetA.getPosition(); // 위치 저장
+        const canvasPos = toCanvasCoords(position); // 캔버스 좌표 변환
+
         if (nextIndex === null) {
+            // 🌟 태양끼리 합쳐졌을 때 처리
             world.destroyBody(planetA);
             world.destroyBody(planetB);
 
             planetsList.splice(planetsList.indexOf(planetA), 1);
             planetsList.splice(planetsList.indexOf(planetB), 1);
 
+            // 점수 추가 및 이펙트 출력
+            updateScore(5000); // 태양 합성 점수
+            createEffect(canvasPos.x, canvasPos.y);
         } else {
+            // 일반 행성 합성
             mergePlanets(planetA, planetB, nextIndex);
         }
-                // 플래그 해제 (합성 완료)
-                planetA.isMerging = false;
-                planetB.isMerging = false;
+
+        // 플래그 해제
+        planetA.isMerging = false;
+        planetB.isMerging = false;
     }
 
+    // 바닥 밑으로 떨어진 행성 제거
     planetsList.forEach((planet) => {
         if (planet.getPosition().y < 0) {
             world.destroyBody(planet);
         }
     });
 
-    checkGameOver(); // 게임 오버 조건 체크
+    // 게임 오버 조건 확인
+    checkGameOver();
 
     requestAnimationFrame(update);
 }
