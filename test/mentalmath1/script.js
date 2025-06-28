@@ -38,6 +38,68 @@ preloadImages([
     startButton.style.display = "block";
 });
 
+    // ✅ 카카오 SDK 로드 및 초기화
+    async function loadKakaoSDK() {
+        return new Promise((resolve, reject) => {
+            if (window.Kakao && Kakao.isInitialized()) {
+                console.log("✅ 카카오 SDK 이미 초기화됨");
+                resolve();
+                return;
+            }
+
+            let script = document.createElement("script");
+            script.src = "https://developers.kakao.com/sdk/js/kakao.min.js";
+            script.onload = () => {
+                if (!window.Kakao) {
+                    reject("❌ Kakao 객체가 로드되지 않음");
+                    return;
+                }
+
+                Kakao.init("eee6c2e01641161de9f217ba99c6a0da");
+                console.log("✅ 카카오 SDK 로드 및 초기화 완료");
+                resolve();
+            };
+            script.onerror = () => reject("❌ Kakao SDK 로드 실패");
+            document.head.appendChild(script);
+        });
+    }
+
+    // ✅ SDK가 먼저 로드되도록 실행
+    loadKakaoSDK().then(() => {
+        console.log("✅ 카카오 SDK 사용 준비 완료!");
+    }).catch(error => {
+        console.error("❌ 카카오 SDK 로딩 오류:", error);
+    });
+
+function shareKakao() {
+    if (!window.Kakao || !Kakao.isInitialized()) {
+        alert("⚠️ 카카오톡 공유 기능을 사용할 수 없습니다.");
+        return;
+    }
+
+    Kakao.Link.sendDefault({
+        objectType: "feed",
+        content: {
+            title: "암산 능력 평가 결과",
+            description: "🎉 모든 문제를 맞췄어요! 당신도 도전해보세요!",
+            imageUrl: "https://www.survivaloffice.com/images/mentalmath1main_a.png", // 썸네일용
+            link: {
+                mobileWebUrl: "https://www.survivaloffice.com/test/mentalmath1",
+                webUrl: "https://www.survivaloffice.com/test/mentalmath1"
+            }
+        },
+        buttons: [
+            {
+                title: "테스트 하러 가기",
+                link: {
+                    mobileWebUrl: "https://www.survivaloffice.com/test/mentalmath1",
+                    webUrl: "https://www.survivaloffice.com/test/mentalmath1"
+                }
+            }
+        ]
+    });
+}
+
 // 시작 버튼
 startButton.addEventListener("click", () => {
     startScreen.style.display = "none";
@@ -322,8 +384,10 @@ function showGameOverPopup() {
 
 function showResult() {
     gamearea.style.display = "none";
-    document.getElementById("result-container").style.display = "flex";
 
-    // 공유 및 저장 버튼 이벤트
-    document.getElementById("share-kakao").addEventListener("click", shareKakao);
+    const resultContainer = document.getElementById("result-container");
+    resultContainer.style.display = "flex"; // 결과화면 보이기
+
+    const shareBtn = document.getElementById("share-kakao");
+    shareBtn.onclick = shareKakao; // 공유 버튼에 이벤트 부착
 }
