@@ -76,16 +76,6 @@ preloadImages(
 
 let isGameStarted = false; // 게임 시작 상태를 나타내는 플래그
 
-// Start Game
-startButton.addEventListener("click", (event) => {
-    event.stopPropagation(); // 클릭 이벤트 전파 방지
-    isGameStarted = true; // 게임이 시작되었음을 표시
-    startScreen.style.display = "none"; // 시작 화면 숨기기
-    gamearea.style.display = "block"; // 게임 화면 표시
-    console.log("게임 시작!");
-});
-
-
 // 랭킹 보기 버튼과 컨테이너 요소 가져오기
 const top10RankButton = document.getElementById('top10-rank');
 const rankingContainer = document.getElementById('ranking-container');
@@ -304,9 +294,52 @@ async function saveScore(nickname, score) {
 
 // 팝업 닫기 및 다시 시작 버튼
 document.getElementById('closePopupButton').addEventListener('click', () => {
-    console.log("닫기 버튼 클릭됨");
-    window.location.reload();
+    console.log("다시 시작 버튼 클릭됨");
+    resetGame(); // 게임 리셋 함수 호출
 });
+
+function resetGame() {
+    console.log("게임 리셋 중...");
+
+    if (mosquitoSpawner) {
+    clearInterval(mosquitoSpawner);
+    mosquitoSpawner = null;
+    console.log("기존 모기 생성기 정지");
+    }
+
+    // 점수 및 상태 초기화
+    score = 0;
+    mosquitoesCaught = 0;
+    kingMosquitoAppeared = false;
+    isGameOver = false;
+    isInputBlocked = false;
+    currentMosquitoCount = 0;
+    mosquitoSpawnInterval = 500;
+    updateScore(0);
+
+    // 기존 모기 제거
+    document.querySelectorAll('.mosquito').forEach(mosquito => mosquito.remove());
+
+    // 팝업 닫기
+    document.getElementById("result-popup").style.display = "none";
+
+    // 등록 버튼 초기화
+    const saveScoreButton = document.getElementById("saveScoreButton");
+    saveScoreButton.disabled = false;
+    saveScoreButton.textContent = "점수 등록";
+    saveScoreButton.style.cursor = "pointer";
+
+    // 닉네임 입력 필드 초기화
+    document.getElementById("nicknameInput").value = "";
+
+    // 타이머 UI 초기화
+    document.getElementById("timer-bar").style.width = "100%";
+    document.getElementById("timer-text").textContent = "60초";
+
+    // 카운트다운 다시 시작
+    isGameStarted = false; // ✅ 게임 초기화 시 다시 false
+    startCountdown();
+}
 
 // 점수 저장 버튼
 const saveScoreButton = document.getElementById('saveScoreButton');
@@ -626,11 +659,12 @@ function startCountdown() {
 
 // 게임 UI 표시 및 게임 시작
 function showGameUI() {
-    document.getElementById('start-screen').style.display = 'none'; // 시작 화면 숨기기
+    document.getElementById('start-screen').style.display = 'none';
     console.log("게임 화면 표시");
-    isGameOver = false; // 게임 종료 상태 초기화
-    startTimer(); // 타이머 시작
-    startMosquitoSpawner(); // 모기 생성 시작
+    isGameOver = false;
+    isGameStarted = true; // ✅ 이 시점에만 게임 시작됨으로 표시
+    startTimer();
+    startMosquitoSpawner();
 }
 
 let mosquitoSpawnInterval = 500; // 초기 생성 주기
@@ -674,7 +708,16 @@ setInterval(increaseSpawnSpeed, 10000); // 10초마다 속도 증가
 
 // 게임 시작 버튼 클릭 이벤트 수정
 document.getElementById('start-btn').addEventListener('click', () => {
-    startCountdown(); // 카운트다운 시작
+    // 화면 전환
+    startScreen.style.display = "none";
+    gamearea.style.display = "block";
+    startButton.style.display = "none";
+
+    // 버튼 중복 클릭 방지
+    document.getElementById('start-btn').disabled = true;
+
+    // 카운트다운 시작
+    startCountdown();
 });
 
 // 타이머 시작

@@ -216,13 +216,41 @@ document.addEventListener("DOMContentLoaded", () => {
             [array[i], array[j]] = [array[j], array[i]];
         }
     }
-});
-
+    
     // 팝업 닫기 및 다시 시작 버튼
     document.getElementById('closePopupButton').addEventListener('click', () => {
         console.log("닫기 버튼 클릭됨");
-        window.location.reload();
+        resetGame(); // 🔁 새로고침 대신 함수 실행
     });
+
+    function resetGame() {
+    // 상태 초기화
+    currentNumber = 1;
+    isGameOver = false;
+    elapsedTime = null;
+    clearInterval(gameTimer);
+
+    // 숫자 제거
+    const numbers = document.querySelectorAll(".number");
+    numbers.forEach(el => el.remove());
+
+    // UI 초기화
+    document.getElementById("result-popup").style.display = "none";
+    document.getElementById("score").style.display = "none";
+    document.getElementById("nicknameInput").value = "";
+    const saveScoreButton = document.getElementById('saveScoreButton');
+    saveScoreButton.disabled = false;
+    saveScoreButton.style.cursor = "pointer";
+    saveScoreButton.textContent = "점수 등록";
+
+    // 화면 초기화
+    const gameArea = document.getElementById("game-area");
+    gameArea.style.backgroundImage = 'url("https://www.survivaloffice.com/images/828250.png")';
+    gameArea.style.backgroundColor = "";
+    document.getElementById("start-button").style.display = "block";
+    document.getElementById("help-btn").style.display = "block";
+}
+});
 
 
 // 랭킹 보기 버튼과 컨테이너 확인 및 이벤트 등록

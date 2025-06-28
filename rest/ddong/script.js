@@ -69,6 +69,7 @@ preloadImages(
 
 let isGameStarted = false; // 게임 시작 상태를 나타내는 플래그
 
+
 // Start Game
 startButton.addEventListener("click", (event) => {
     event.stopPropagation(); // 클릭 이벤트 전파 방지
@@ -297,9 +298,48 @@ async function saveScore(nickname, score) {
 
 // 팝업 닫기 및 다시 시작 버튼
 document.getElementById('closePopupButton').addEventListener('click', () => {
-    console.log("닫기 버튼 클릭됨");
-    window.location.reload();
+    console.log("다시하기 버튼 클릭됨");
+    resetGame(); // 새로고침 대신 게임 리셋 함수 호출
 });
+
+function resetGame() {
+    console.log("게임 리셋 중...");
+
+if (animationFrameId) cancelAnimationFrame(animationFrameId); // 루프 중지
+
+clearInterval(difficultyInterval);
+clearInterval(poopInterval);
+
+score = 0;
+scoreDisplay.textContent = "Score: 0";
+
+isGameOver = false;
+isInputBlocked = false;
+
+character.src = 'https://www.survivaloffice.com/images/zol.png';
+characterX = gameArea.offsetWidth / 2;
+targetX = characterX;
+character.style.left = `${characterX}px`;
+
+removeAllPoops();
+
+poopSpeed = 2;
+poopSpawnRate = 1000;
+
+document.getElementById('result-popup').style.display = 'none';
+
+
+// 등록 버튼 초기화
+saveScoreButton.disabled = false;
+saveScoreButton.style.cursor = "pointer";
+saveScoreButton.textContent = "점수 등록";
+
+// 입력값 초기화 (선택)
+document.getElementById('nicknameInput').value = '';
+
+moveCharacter(); // ✅ 캐릭터 이동 재시작
+startCountdown(); // ✅ 게임 재시작
+}
 
 // 점수 저장 버튼
 const saveScoreButton = document.getElementById('saveScoreButton');
@@ -384,6 +424,8 @@ function startCountdown() {
     }, 1000);
 }
 
+let animationFrameId = null;
+
 // 게임 UI 표시 및 게임 시작
 function showGameUI() {
     document.getElementById('start-screen').style.display = 'none'; // 시작 화면 숨기기
@@ -394,7 +436,7 @@ function showGameUI() {
     // 캐릭터 등장
     character.style.display = 'block'; // 캐릭터를 보이도록 설정
     
-    gameInterval = requestAnimationFrame(movePoops); // 똥 이동 시작
+    animationFrameId = requestAnimationFrame(movePoops); // 똥 이동 시작
     poopInterval = setInterval(() => createPoop(), poopSpawnRate); // 똥 생성 시작
     increaseDifficulty(); // 난이도 증가 시작
 }
@@ -422,7 +464,6 @@ function moveCharacter() {
 }
 moveCharacter();
 
-let gameInterval;
 let poopSpeed = 2; // 초기 똥 속도
 let poopSpawnRate = 1000; // 초기 똥 생성 간격
 let difficultyInterval; // 전역 변수로 선언
@@ -593,8 +634,9 @@ function movePoops() {
 
     // 다음 프레임 호출
     if (!isGameOver) {
-        requestAnimationFrame(movePoops);
+        animationFrameId = requestAnimationFrame(movePoops);
     }
+    
 }
 
 // 황금똥 처리 함수
@@ -616,7 +658,6 @@ function removeAllPoops() {
 }
 
 setInterval(() => {
-    console.log(`Poops Array Length: ${poops.length}`);
     poops.forEach((poopObj, index) => {
         console.log(
             `Poop ${index}: isRemoved=${poopObj.isRemoved}, currentY=${poopObj.currentY}`

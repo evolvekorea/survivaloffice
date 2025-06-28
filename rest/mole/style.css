@@ -314,15 +314,18 @@ button:disabled {
 }
 
 #countdown-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 5rem;
-    color: rgb(0, 0, 0);
+    position: fixed !important;          /* 무조건 화면 기준 */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    font-size: 5rem !important;
+    font-weight: bold !important;
+    color: black !important;
     display: none;
     text-align: center;
-    z-index: 10;
+    z-index: 99999 !important;           /* 최상위로 보냄 */
+    pointer-events: none;
+    background: transparent;             /* 혹시 다른 배경 없게 */
 }
 
 /* 게임 영역 */

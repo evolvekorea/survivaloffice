@@ -224,7 +224,6 @@ document.addEventListener("DOMContentLoaded", () => {
         centerAnimal.innerHTML = ""; // 기존 내용 초기화
     
         const visibleAnimals = animalQueue.slice(0, 10); // 상위 5개만 표시
-        console.log("Visible Animals:", visibleAnimals); // 디버깅: 표시 동물 확인
 
         visibleAnimals.forEach((animalImg) => {
             renderAnimal(centerAnimal, animalImg); // 이미지 추가
@@ -497,10 +496,39 @@ function updateScore(isCorrect) {
     }
 
     // 팝업 닫기 및 다시 시작 버튼
-    document.getElementById('closePopupButton').addEventListener('click', () => {
-        console.log("닫기 버튼 클릭됨");
-        window.location.reload();
-    });
+document.getElementById('closePopupButton').addEventListener('click', () => {
+    console.log("다시 시작");
+
+    // 점수 등 상태 초기화
+    score = 0;
+    combo = 0;
+    remainingTime = 30;
+    isGameOver = false;
+    isButtonDisabled = false;
+
+    // UI 초기화
+    document.getElementById("result-popup").style.display = "none";
+    scoreDisplay.textContent = `SCORE: ${score}`;
+    updateComboDisplay();
+    centerAnimal.innerHTML = "";
+    leftAnimal.innerHTML = "";
+    rightAnimal.innerHTML = "";
+    animalQueue.length = 0;
+
+    helpButton.style.display = "none";
+    timerContainer.style.display = "none";
+    leftArrow.style.display = "none";
+    rightArrow.style.display = "none";
+
+    // 점수 등록 버튼 초기화
+    saveScoreButton.disabled = false;
+    saveScoreButton.textContent = "등록하기";
+    saveScoreButton.style.cursor = "pointer";
+    document.getElementById('nicknameInput').value = "";
+
+    // 카운트다운부터 다시 시작
+    startCountdown(); // ✅ 핵심 포인트
+});
 
     // 점수 저장 버튼
     const saveScoreButton = document.getElementById('saveScoreButton');

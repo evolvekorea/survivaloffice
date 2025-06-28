@@ -334,8 +334,55 @@ async function saveScore(nickname, score) {
 // 팝업 닫기 및 다시 시작 버튼
 document.getElementById('closePopupButton').addEventListener('click', () => {
     console.log("닫기 버튼 클릭됨");
-    window.location.reload();
+    resetGame(); // 새로고침 대신 함수 호출
 });
+
+function resetGame() {
+    // 점수 초기화
+    score = 0;
+    updateScore(0);
+
+    // 행성 제거
+    planetsList.forEach(p => world.destroyBody(p));
+    planetsList.length = 0;
+
+    // 게임 상태 플래그 초기화
+    isGameOver = false;
+    isGameStarted = false;
+    planetDropCount = 0;
+
+    // 현재 행성 인덱스 초기화 및 미리보기 갱신
+    currentPlanetIndex = getNextPlanetIndex();
+    updateNextPlanetPreview();
+
+    // 결과 팝업 닫기
+    document.getElementById('result-popup').style.display = 'none';
+
+    // 점수 등록 버튼 초기화
+    const saveScoreButton = document.getElementById('saveScoreButton');
+    saveScoreButton.disabled = false;
+    saveScoreButton.style.cursor = "pointer";
+    saveScoreButton.textContent = "점수 등록";
+
+    // 닉네임 입력창 초기화
+    document.getElementById('nicknameInput').value = '';
+
+    // 게임 다시 시작 (카운트다운 없이 바로)
+    startGame();
+}
+
+function startGame() {
+    isGameStarted = true;
+    startScreen.style.display = "none";
+    planetArea.style.display = "block";
+
+    updateScore(0); // 점수 리셋
+    resizeCanvas(); // 캔버스 크기 재조정
+    currentPlanetIndex = getNextPlanetIndex();
+    updateNextPlanetPreview();
+    render(); // 렌더링 루프 재시작
+    update(); // 물리 엔진 루프 재시작
+}
 
 // 점수 저장 버튼
 const saveScoreButton = document.getElementById('saveScoreButton');

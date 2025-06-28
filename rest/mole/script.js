@@ -304,8 +304,29 @@ async function saveScore(nickname, score) {
 
 // 팝업 닫기 및 다시 시작 버튼
 document.getElementById('closePopupButton').addEventListener('click', () => {
-    console.log("닫기 버튼 클릭됨");
-    window.location.reload();
+    console.log("다시 시작");
+
+    // 점수 및 타이머 초기화
+    score = 0;
+    remainingTime = 60;
+    isGameOver = false;
+    updateScore();
+
+    // 팝업 숨김
+    const popup = document.getElementById('result-popup');
+    popup.style.display = 'none';
+
+    // UI 리셋
+    document.getElementById("game-area").style.pointerEvents = "auto";
+    gameArea.innerHTML = ""; // 기존 두더지 제거
+    document.getElementById("nicknameInput").value = "";
+    const saveScoreButton = document.getElementById('saveScoreButton');
+    saveScoreButton.disabled = false;
+    saveScoreButton.textContent = "등록하기";
+    saveScoreButton.style.cursor = "pointer";
+
+    // 카운트다운부터 재시작
+    startCountdown(); // ✅ 핵심
 });
 
 // 점수 저장 버튼
@@ -373,7 +394,11 @@ document.getElementById('start-btn').addEventListener('click', () => {
 
 // 카운트다운 시작
 function startCountdown() {
+    countdownContainer.textContent = ""; // ✅ 혹시 모를 초기화
     countdownContainer.style.display = "block"; // 카운트다운 표시
+    countdownContainer.textContent = "";        // ✅ 텍스트 초기화
+    countdownContainer.style.zIndex = "999";    // ✅ 다시 보여지도록 z-index 재설정
+    countdownContainer.style.fontSize = "5rem"; // ✅ 폰트도 명시
     let countdown = 3; // 카운트다운 초기값
 
     const interval = setInterval(() => {

@@ -473,8 +473,61 @@ async function saveScore(nickname, score) {
 // 팝업 닫기 및 다시 시작 버튼
 document.getElementById('closePopupButton').addEventListener('click', () => {
     console.log("닫기 버튼 클릭됨");
-    window.location.reload();
+    resetGame();
 });
+
+function resetGame() {
+    console.log("🔄 resetGame() 호출됨");
+
+    // 변수 초기화
+    timeLeft = 100;
+    score = 0;
+    currentStep = 0;
+    currentGrid = 2;
+    scrollPosition = 0;
+    isGameOver = false;
+
+    // 타이머 정지
+    clearInterval(timeInterval);
+
+    // UI 초기화
+    document.getElementById('score-value').textContent = score;
+    document.getElementById('time').textContent = timeLeft;
+
+    // 캐릭터 숨기기
+    character.style.display = 'none';
+
+    // 계단 초기화
+    stairsContainer.innerHTML = '';
+
+    // 계단 배열 초기화
+    stairPositions.length = 0;
+
+    // 배경 초기화
+    background.style.backgroundImage = "url('https://www.survivaloffice.com/images/UPA.jpg')";
+
+    // start-screen 다시 보이기
+    startScreen.style.display = 'block';
+    startBtn.disabled = false;
+
+    // result popup 숨기기
+    const popup = document.getElementById('result-popup');
+    popup.style.display = 'none';
+
+    // 닉네임 입력 및 등록 버튼 초기화
+    const nicknameInput = document.getElementById('nicknameInput');
+    const saveScoreButton = document.getElementById('saveScoreButton');
+    if (nicknameInput) nicknameInput.value = '';
+    if (saveScoreButton) {
+        saveScoreButton.disabled = false;
+        saveScoreButton.style.cursor = "pointer";
+        saveScoreButton.textContent = "점수 등록";
+    }
+
+    // ranking 창도 숨기기
+    const rankingContainer = document.getElementById('ranking-container');
+    if (rankingContainer) rankingContainer.style.display = 'none';
+}
 
 // 점수 저장 버튼
 const saveScoreButton = document.getElementById('saveScoreButton');
