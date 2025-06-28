@@ -377,6 +377,27 @@ function startNextProblemCountdown() {
     }, 1000);
 }
 
+function resetGame() {
+    // 상태 초기화
+    score = 0;
+    currentProblem = 0;
+    isGameOver = false;
+    clearTimeout(choiceTimeout);
+
+    // UI 초기화
+    countdownContainer.style.display = "none";
+    questionContainer.textContent = "";
+    choicesContainer.innerHTML = "";
+    feedback.textContent = "";
+    gamearea.style.display = "none";
+    document.getElementById("custom-gameover").style.display = "none";
+    document.getElementById("result-container").style.display = "none";
+
+    // 시작화면 보여주기
+    startScreen.style.display = "block";
+    startButton.style.display = "block"; // 혹시 사라졌을 경우 대비
+}
+
 // 게임오버 화면 표시
 function showGameOverPopup() {
     document.getElementById("custom-gameover").style.display = "flex";
@@ -391,3 +412,6 @@ function showResult() {
     const shareBtn = document.getElementById("share-kakao");
     shareBtn.onclick = shareKakao; // 공유 버튼에 이벤트 부착
 }
+
+document.getElementById("retry-button").addEventListener("click", resetGame);
+
