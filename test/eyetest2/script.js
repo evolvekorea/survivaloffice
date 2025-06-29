@@ -347,11 +347,37 @@ function removeBalls() {
                     countdown();
                 }
             } else {
-                location.reload();
+                resetGame();
             }
         }, 2000);
     }
     
+        function resetGame() {
+        console.log("🔁 resetGame() 호출됨");
+
+        // 상태 초기화
+        stage = 1;
+        timerCount = 3;
+        balls = [];
+        hasSplit = false;
+        correctAnswer = 0;
+        clearTimeout(stageTimeoutId);
+        clearTimeout(splitTimeoutId);
+        cancelAnimationFrame(animationFrameId);
+
+        // UI 초기화
+        gameArea.innerHTML = "";
+        gameArea.style.display = "none";
+        choiceScreen.classList.add("hidden");
+        resultContainer.classList.add("hidden");
+        timerEl.classList.add("hidden");
+        timerEl.textContent = "";
+
+        // 시작 화면 복귀
+        startScreen.classList.remove("hidden");
+        document.getElementById("start-container").classList.remove("hidden");
+        startBtn.style.display = "inline-block";
+    }
   
     // ✅ 게임 종료 후 결과 화면 표시
     function showResult() {
