@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>에겐 vs 테토 테스트</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:,"> <!-- favicon.ico 404 방지 -->
+</head>
+<body>
+  <div id="app">
+
+    <!-- 1. 시작 화면 -->
+    <div id="start-screen" class="screen active">
+      <img src="https://www.survivaloffice.com/images/LRLR2.png" alt="시작화면 배경" class="background-img" />
+      <div class="start-btn-container">
+        <button id="start-btn">테스트 하기</button>
+      </div>
+    </div>
+
+    <!-- 2. 성별 선택 화면 -->
+    <div id="gender-screen" class="screen">
+      <div class="gender-container">
+        <button id="male-btn" class="gender-box">👨 남자</button>
+        <button id="female-btn" class="gender-box">👩 여자</button>
+      </div>
+    </div>
+
+    <!-- 3. 질문 화면 -->
+    <div id="quiz-screen" class="screen">
+      <div class="question-box">
+        <p id="question-text"></p>
+      </div>
+      <div class="choices">
+        <button id="choice-a" class="choice-btn"></button>
+        <button id="choice-b" class="choice-btn"></button>
+      </div>
+    </div>
+
+    <!-- 4. 결과 화면 -->
+    <div id="result-screen" class="screen">
+      <img id="result-image" src="" alt="결과 이미지" />
+    </div>
+
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
