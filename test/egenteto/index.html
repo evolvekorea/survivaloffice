@@ -1,13 +1,58 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>에겐 vs 테토 테스트</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="data:,"> <!-- favicon.ico 404 방지 -->
-</head>
-<body>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>빨리빨리 50</title>
+    <meta name="description" content="빨리빨리50">
+    <meta name="keywords" content="숫자게임, 순발력게임, 서바이벌오피스, 미니게임, 빨리빨리, 빨리빨리50">
+    
+    <!-- Google Adsense 코드 -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537"
+    crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-4957586937754537">  
+    
+    <!-- Google Analytics 코드 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-G4TPWGLYLY');
+    </script>
+
+    <!-- Open Graph 메타태그 -->
+    <meta property="og:title" content="빨리빨리50" />
+    <meta property="og:description" content="빨리빨리50" />
+    <meta property="og:url" content="https://www.survivaloffice.com/rest/828250" />
+    <meta property="og:image" content="https://www.survivaloffice.com/images/828250_b.png" />
+    <meta property="og:type" content="website" />
+
+    <!-- CSS 스타일시트 추가 -->
+    <link rel="stylesheet" href="style.css">
+
+    <body oncontextmenu="return false">
+
+        <nav>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/rest/">미니게임</a></li>
+              <li><a href="/work/">생존키트</a></li>
+              <li><a href="/test/">테스트</a></li>
+            </ul>
+        </nav>
+
+        <!-- 상단 광고 -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                style="display:block; min-height: 90px;"
+                data-ad-client="ca-pub-4957586937754537"
+                data-ad-slot="9240598215"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+        </div>
+
+
   <div id="app">
 
     <!-- 1. 시작 화면 -->
@@ -45,5 +90,38 @@
   </div>
 
   <script src="script.js" defer></script>
+
+  <!-- 하단 광고 -->
+  <div class="footer-ad-container">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4957586937754537" data-ad-slot="9931828353" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  </div>
+
+  <!-- 스크립트 -->
+  <script type="module" src="script.js"></script>
+  <script>
+    document.addEventListener("contextmenu", e => e.preventDefault());
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("애드센스 광고 로드 실행");
+
+            try {
+                // 상단 광고만 push
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                
+                // 하단 광고는 DOM에 충분히 렌더링된 후 push
+                window.addEventListener("load", () => {
+                    console.log("하단 광고 로드 실행");
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                });
+            } catch (e) {
+                console.error("애드센스 광고 로드 실패:", e);
+            }
+        });
+        </script>  
+
+
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <script>
+    new PartnersCoupang.G({ id: 810614, trackingCode: "AF4453761", subId: null, template: "carousel", width: "360", height: "100" });
+  </script>
 </body>
 </html>
