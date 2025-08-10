@@ -272,5 +272,106 @@ function showResult() {
 
   console.log(`🖼 결과 이미지 URL: ${imageUrl}  (category=${category}, band=${band})`);
   resultImage.src = imageUrl;
+  bottomActions.style.display = 'flex';
 }
+
+// ---------- 하단 버튼 참조 ----------
+const shareBtn   = document.getElementById("share-kakao");
+const restartBtn = document.getElementById("restart-btn");
+const bottomActions = document.getElementById("bottom-actions");
+
+// ---------- 카카오 SDK 로드 ----------
+async function loadKakaoSDK() {
+  return new Promise((resolve, reject) => {
+    if (window.Kakao && Kakao.isInitialized()) {
+      console.log("✅ 카카오 SDK 이미 초기화됨");
+      resolve();
+      return;
+    }
+    const script = document.createElement("script");
+    script.src = "https://developers.kakao.com/sdk/js/kakao.min.js";
+    script.onload = () => {
+      if (!window.Kakao) {
+        reject("❌ Kakao 객체가 로드되지 않음");
+        return;
+      }
+      Kakao.init("eee6c2e01641161de9f217ba99c6a0da");
+      console.log("✅ 카카오 SDK 로드 및 초기화 완료");
+      resolve();
+    };
+    script.onerror = () => reject("❌ Kakao SDK 로드 실패");
+    document.head.appendChild(script);
+  });
+}
+loadKakaoSDK().then(() => {
+  console.log("✅ 카카오 SDK 사용 준비 완료!");
+}).catch(err => console.error(err));
+
+// ---------- 카카오 공유 함수 ----------
+function shareKakao(imageUrl) {
+  if (!window.Kakao || !Kakao.isInitialized()) {
+    alert("⚠️ 카카오톡 공유 기능을 사용할 수 없습니다.");
+    return;
+  }
+
+  // 결과 이미지가 없으면 기본 이미지로
+  const finalImage = imageUrl && imageUrl.length > 0
+    ? imageUrl
+    : "https://www.survivaloffice.com/images/egenteto.png";
+
+  Kakao.Link.sendDefault({
+    objectType: "feed",
+    content: {
+      title: "에겐 vs 테토 테스트",
+      description: "나는 에겐 vs 테토 어떤 사람일까?",
+      imageUrl: finalImage, // ✅ 최종 결과 이미지로!
+      link: {
+        mobileWebUrl: "https://www.survivaloffice.com/test/egenteto",
+        webUrl: "https://www.survivaloffice.com/test/egenteto"
+      }
+    },
+    buttons: [
+      {
+        title: "테스트 하러 가기",
+        link: {
+          mobileWebUrl: "https://www.survivaloffice.com/test/egenteto",
+          webUrl: "https://www.survivaloffice.com/test/egenteto"
+        }
+      }
+    ]
+  });
+}
+
+// ---------- 다시하기(리셋) ----------
+function resetTest() {
+  // 점수 & 인덱스 초기화
+  currentIndex = 0;
+  egenScore = 0;
+  tetoScore = 0;
+  selectedGender = "male"; // 기본값으로 돌림(원하면 null로 바꾸고 성별 화면부터 시작 가능)
+
+  // 이미지 초기화
+  resultImage.src = "";
+
+  // 화면 전환: 시작 화면으로
+  resultScreen.classList.remove("active");
+  quizScreen.classList.remove("active");
+  genderScreen.classList.remove("active");
+  startScreen.classList.add("active");
+
+   // ✅ 버튼 숨기기
+  bottomActions.style.display = 'none';
+
+  console.log("🔄 테스트 리셋 완료");
+}
+
+// ---------- 버튼 이벤트 ----------
+shareBtn.addEventListener("click", () => {
+  // 현재 보이는 결과 이미지를 공유
+  shareKakao(resultImage?.src || "");
+});
+
+restartBtn.addEventListener("click", resetTest);
+
+
 });

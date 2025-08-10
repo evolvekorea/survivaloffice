@@ -166,8 +166,9 @@ html, body {
 }
 
 #result-image {
-  max-width: 80%;
-  max-height: 80%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 비율 유지하면서 채움 */
 }
 
 .ad-container {
@@ -244,4 +245,24 @@ nav ul li a:hover {
   background-color: #fee500; /* 카카오 컬러 느낌 */
   border: none;
   cursor: pointer;
+}
+
+#restart-btn {
+  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+  font-size: 20px;
+  text-align: center;
+  display: inline-block; /* 중앙정렬 시 필수 */
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: #ffe2da; /* 카카오 컬러 느낌 */
+  border: none;
+  cursor: pointer;
+}
+
+#bottom-actions {
+    width: 360px;
+    margin: 24px auto;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
 }
