@@ -208,31 +208,69 @@ startBtn.addEventListener("click", () => {
     }
   }
 
-  function showResult() {
+function showResult() {
+  console.log("🏁 테스트 종료 - 결과 계산");
+  console.log(`총 에겐 점수: ${egenScore}, 테토 점수: ${tetoScore}, 성별: ${selectedGender}`);
 
-    console.log("🏁 테스트 종료 - 결과 계산");
-    console.log(`총 에겐 점수: ${egenScore}, 테토 점수: ${tetoScore}`);
+  quizScreen.classList.remove("active");
+  resultScreen.classList.add("active");
 
-    quizScreen.classList.remove("active");
-    resultScreen.classList.add("active");
+  // 점수 구간 함수: 71~100 → high, 50~70 → mid, 그 외(이론상 X) → mid로 안전 처리
+  const bandOf = (score) => {
+    if (score > 70) return "high";
+    if (score >= 50) return "mid";
+    return "mid"; // 예외 방어(일반 규칙에선 도달 X)
+  };
 
-    let imageUrl = "";
+  // 남자 결과 이미지 매핑
+  const maleImgs = {
+    egen: {
+      mid:  "https://www.survivaloffice.com/images/egennam2.png", // 에겐 50초과~70이하
+      high: "https://www.survivaloffice.com/images/egennam1.png"  // 에겐 70초과~100이하
+    },
+    teto: {
+      mid:  "https://www.survivaloffice.com/images/tetonam2.png", // 테토 50초과~70이하
+      high: "https://www.survivaloffice.com/images/tetonam1.png"  // 테토 70초과~100이하
+    },
+    tie: "https://www.survivaloffice.com/images/egentetonam.png"   // 50:50
+  };
 
-    if (selectedGender === "male") {
-      if (tetoScore <= 29) imageUrl = "https://www.survivaloffice.com/images/egennam1.png";
-      else if (tetoScore <= 49) imageUrl = "https://www.survivaloffice.com/images/egennam2.png";
-      else if (tetoScore === 50) imageUrl = "https://www.survivaloffice.com/images/egentetonam.png";
-      else if (tetoScore <= 79) imageUrl = "https://www.survivaloffice.com/images/4.png";
-      else imageUrl = "https://www.survivaloffice.com/images/5.png";
-    } else {
-      if (tetoScore <= 29) imageUrl = "https://www.survivaloffice.com/images/1.png";
-      else if (tetoScore <= 49) imageUrl = "https://www.survivaloffice.com/images/2.png";
-      else if (tetoScore === 50) imageUrl = "https://www.survivaloffice.com/images/3.png";
-      else if (tetoScore <= 79) imageUrl = "https://www.survivaloffice.com/images/tetonam2.png";
-      else imageUrl = "https://www.survivaloffice.com/images/tetonam1.png";
-    }
+  // 여자 결과 이미지 매핑 (요청: nam → yeo 버전으로 개별 지정)
+  const femaleImgs = {
+    egen: {
+      mid:  "https://www.survivaloffice.com/images/egenyeo2.png", // 에겐 50초과~70이하
+      high: "https://www.survivaloffice.com/images/egenyeo1.png"  // 에겐 70초과~100이하
+    },
+    teto: {
+      mid:  "https://www.survivaloffice.com/images/tetoyeo2.png", // 테토 50초과~70이하
+      high: "https://www.survivaloffice.com/images/tetoyeo1.png"  // 테토 70초과~100이하
+    },
+    tie: "https://www.survivaloffice.com/images/egentetoyeo.png"   // 50:50
+  };
 
-    console.log(`🖼 결과 이미지 URL: ${imageUrl}`);
-    resultImage.src = imageUrl;
+  // 1) 우세 판단 + 우세 점수의 구간 도출
+  let category = ""; // 'egen' | 'teto' | 'tie'
+  let band = "mid";
+
+  if (egenScore === tetoScore) {
+    category = "tie";
+  } else if (egenScore > tetoScore) {
+    category = "egen";
+    band = bandOf(egenScore);
+  } else {
+    category = "teto";
+    band = bandOf(tetoScore);
   }
+
+  // 2) 성별별 이미지 최종 선택
+  let imageUrl = "";
+  if (selectedGender === "male") {
+    imageUrl = (category === "tie") ? maleImgs.tie : maleImgs[category][band];
+  } else {
+    imageUrl = (category === "tie") ? femaleImgs.tie : femaleImgs[category][band];
+  }
+
+  console.log(`🖼 결과 이미지 URL: ${imageUrl}  (category=${category}, band=${band})`);
+  resultImage.src = imageUrl;
+}
 });
