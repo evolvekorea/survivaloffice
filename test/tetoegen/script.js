@@ -220,7 +220,7 @@ startBtn.addEventListener("click", () => {
 
     if (selectedGender === "male") {
       if (tetoScore <= 29) imageUrl = "https://www.survivaloffice.com/images/egennam1.png";
-      else if (tetoScore <= 49) imageUrl = "https://www.survivaloffice.com/images/2.png";
+      else if (tetoScore <= 49) imageUrl = "https://www.survivaloffice.com/images/egennam2.png";
       else if (tetoScore === 50) imageUrl = "https://www.survivaloffice.com/images/3.png";
       else if (tetoScore <= 79) imageUrl = "https://www.survivaloffice.com/images/4.png";
       else imageUrl = "https://www.survivaloffice.com/images/5.png";
@@ -228,8 +228,8 @@ startBtn.addEventListener("click", () => {
       if (tetoScore <= 29) imageUrl = "https://www.survivaloffice.com/images/1.png";
       else if (tetoScore <= 49) imageUrl = "https://www.survivaloffice.com/images/2.png";
       else if (tetoScore === 50) imageUrl = "https://www.survivaloffice.com/images/3.png";
-      else if (tetoScore <= 79) imageUrl = "https://www.survivaloffice.com/images/4.png";
-      else imageUrl = "https://www.survivaloffice.com/images/5.png";
+      else if (tetoScore <= 79) imageUrl = "https://www.survivaloffice.com/images/tetonam2.png";
+      else imageUrl = "https://www.survivaloffice.com/images/tetonam1.png";
     }
 
     console.log(`🖼 결과 이미지 URL: ${imageUrl}`);
