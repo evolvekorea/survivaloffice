@@ -181,9 +181,9 @@ function showResult() {
 
   // 임시 이미지 3종(원하는 URL로 교체 가능)
   const resultImages = {
-    normal:   "https://www.survivaloffice.com/images/egenteto.png",
-    suspect:  "https://www.survivaloffice.com/images/egennam1.png",
-    psycho:   "https://www.survivaloffice.com/images/tetonam1.png"
+    normal:   "https://www.survivaloffice.com/images/psycho1.png",
+    suspect:  "https://www.survivaloffice.com/images/psycho2.png",
+    psycho:   "https://www.survivaloffice.com/images/psycho3.png"
   };
 
   let bucket = "normal";
