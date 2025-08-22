@@ -269,3 +269,45 @@ nav ul li a:hover {
     gap: 8px;
     justify-content: center;
 }
+
+/* 진행바 */
+.progress-wrap{
+  display:flex;
+  align-items:center;
+  gap:0px;
+  margin:12px auto 16px;
+  width:100%;
+  max-width:360px;
+  padding: 0 12px;
+}
+
+#progress-track{
+  flex:1;
+  position:relative;     /* ✅ 내부 숫자 중앙 배치용 */
+  height:20px;           /* ↑/↓ 두께는 여기서 조절 */
+  background:#ffffff;
+  border:1.5px solid #ffd1e1;
+  border-radius:999px;
+  overflow:hidden;
+}
+
+/* 채움(분홍) */
+#progress-fill{
+  height:100%;
+  width:0%;
+  background:#ff5fa0;
+  transition:width .25s ease;
+}
+
+#progress-count{
+  position:absolute;
+  inset:0;               /* top:0; right:0; bottom:0; left:0 와 동일 */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:600;
+  color:#333;            /* 분홍/흰색 모두에서 보이는 어두운 색 */
+  text-shadow:0 0 2px rgba(255,255,255,.6); /* 가독성 보조 */
+  pointer-events:none;   /* 클릭 방해 X */
+}

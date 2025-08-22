@@ -73,6 +73,16 @@
 
     <!-- 3. 질문 화면 -->
     <div id="quiz-screen" class="screen">
+      
+      <!-- 진행바 -->
+    <div class="progress-wrap" aria-label="진행도">
+      <div id="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
+        <div id="progress-fill"></div>
+        <!-- ✅ 숫자를 트랙 내부로 -->
+        <div id="progress-count" aria-hidden="true">0 / 10</div>
+      </div>
+    </div>
+
       <div class="question-box">
         <p id="question-text"></p>
       </div>
@@ -98,7 +108,6 @@
     </button>
   </div>
 
-  <script src="script.js" defer></script>
 
   <!-- 하단 광고 -->
   <div class="footer-ad-container">

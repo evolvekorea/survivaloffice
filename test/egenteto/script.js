@@ -16,6 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const choiceB = document.getElementById("choice-b");
   const resultImage = document.getElementById("result-image");
 
+  // 진행바 요소
+  const progressFill  = document.getElementById("progress-fill");
+  const progressTrack = document.getElementById("progress-track");
+  const progressCount = document.getElementById("progress-count");
+
   let currentIndex = 0;
   let egenScore = 0;
   let tetoScore = 0;
@@ -156,6 +161,27 @@ const questions = [
   }
 ];
 
+// 총 문항 수 계산
+const totalQuestions = questions.length;
+
+function updateProgress() {
+  // 현재 표시 중인 문제는 0-index이므로 +1
+  const current = Math.min(currentIndex + 1, totalQuestions);
+  const percent = (current / totalQuestions) * 100;
+
+  if (progressFill) {
+    progressFill.style.width = percent + "%";
+  }
+  if (progressTrack) {
+    progressTrack.setAttribute("aria-valuenow", String(current));
+  }
+  if (progressCount) {
+    progressCount.textContent = `${current} / ${totalQuestions}`;
+  }
+}
+
+
+
 startBtn.addEventListener("click", () => {
     console.log("▶ 테스트 시작 버튼 클릭됨");
     startScreen.classList.remove("active");
@@ -183,6 +209,9 @@ startBtn.addEventListener("click", () => {
     if (!q) return;
 
     console.log(`❓ 문제 ${currentIndex + 1} 표시`);
+
+    // ✅ 진행바 갱신
+    updateProgress();
 
     questionText.textContent = q.question;
     choiceA.textContent = q.options[0].text;
@@ -361,6 +390,11 @@ function resetTest() {
 
    // ✅ 버튼 숨기기
   bottomActions.style.display = 'none';
+
+  // ✅ 진행바 초기화
+  if (progressFill)  progressFill.style.width = "0%";
+  if (progressTrack) progressTrack.setAttribute("aria-valuenow", "0");
+  if (progressCount) progressCount.textContent = `0 / ${totalQuestions}`;
 
   console.log("🔄 테스트 리셋 완료");
 }
