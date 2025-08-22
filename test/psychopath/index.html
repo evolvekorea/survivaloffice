@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>애겐 vs 테토 테스트</title>
-    <meta name="description" content="에겐 vs 테토 테스트">
-    <meta name="keywords" content="에겐남, 에겐녀, 테토남, 테토녀, 에겐테토, 에겐 테스트, 테토 테스트, 심리테스트, MBTI">
+    <title>싸이코패스 테스트(Psychopath Test)</title>
+    <meta name="description" content="재미로 보는 싸이코패스 테스트">
+    <meta name="keywords" content="싸이코패스, psychopath, psycho, 싸이코, 심리테스트, 성격테스트, 성격 테스트, 심리테스트, MBTI, 서바이벌오피스">
     
     <!-- Google Adsense 코드 -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537"
@@ -22,10 +22,10 @@
     </script>
 
     <!-- Open Graph 메타태그 -->
-    <meta property="og:title" content="에겐 vs 테토 테스트" />
-    <meta property="og:description" content="에겐 vs 테토 테스트" />
-    <meta property="og:url" content="https://www.survivaloffice.com/test/egenteto" />
-    <meta property="og:image" content="https://www.survivaloffice.com/images/egenteto.png" />
+    <meta property="og:title" content="싸이코패스 테스트(Psychopath Test)" />
+    <meta property="og:description" content="재미로 보는 싸이코패스 테스트" />
+    <meta property="og:url" content="https://www.survivaloffice.com/test/psychopath" />
+    <meta property="og:image" content="https://www.survivaloffice.com/images/psychopath.png" />
     <meta property="og:type" content="website" />
     
     <!-- 초기 핸드셰이크 시간 감소 -->
@@ -35,7 +35,7 @@
     <!-- CSS 스타일시트 추가 -->
     <link rel="stylesheet" href="style.css">
     </head>
-    
+
     <body oncontextmenu="return false">
 
         <nav>
@@ -62,13 +62,13 @@
 
     <!-- 1. 시작 화면 -->
     <div id="start-screen" class="screen active">
-      <img src="https://www.survivaloffice.com/images/egenteto.png" alt="시작화면 배경" class="background-img" />
+      <img src="https://www.survivaloffice.com/images/psychopath.png" alt="시작화면 배경" class="background-img" />
 
     <!-- ✅ 참여자 수 배지 (CountAPI용 데이터 속성 포함) -->
     <div id="test-counter"
      class="counter-badge"
      data-counter-namespace="survivaloffice"
-     data-counter-key="egentetoTotal">
+     data-counter-key="Psychopath">
       총 0명 참여
     </div>
 
@@ -77,18 +77,10 @@
       </div>
     </div>
 
-    <!-- 2. 성별 선택 화면 -->
-    <div id="gender-screen" class="screen">
-      <div class="gender-container">
-        <button id="male-btn" class="gender-box">👨 남자</button>
-        <button id="female-btn" class="gender-box">👩 여자</button>
-      </div>
-    </div>
-
-    <!-- 3. 질문 화면 -->
+    <!-- 2. 질문 화면 -->
     <div id="quiz-screen" class="screen">
       
-      <!-- 진행바 -->
+    <!-- 진행바 -->
     <div class="progress-wrap" aria-label="진행도">
       <div id="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
         <div id="progress-fill"></div>
@@ -103,10 +95,11 @@
       <div class="choices">
         <button id="choice-a" class="choice-btn"></button>
         <button id="choice-b" class="choice-btn"></button>
+        <button id="choice-c" class="choice-btn"></button>
       </div>
     </div>
 
-    <!-- 4. 결과 화면 -->
+    <!-- 3. 결과 화면 -->
     <div id="result-screen" class="screen">
       <img id="result-image" src="" alt="결과 이미지" />
     </div>
