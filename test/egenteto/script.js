@@ -407,5 +407,131 @@ shareBtn.addEventListener("click", () => {
 
 restartBtn.addEventListener("click", resetTest);
 
+// 카운트 부분//
+const COUNTER_BASE = 'https://api.counterapi.dev/v1';
+const ONLY_ONCE_PER_SESSION = false; // ← 같은 브라우저 탭 세션에서 1회만 집계할지 여부
+
+// 네임스페이스/키의 "정확한 최종 경로"를 항상 슬래시로 끝내서 301 방지
+function counterPath(ns, key) {
+  return `${COUNTER_BASE}/${encodeURIComponent(ns)}/${encodeURIComponent(key)}/`;
+}
+
+// element에서 namespace/key 읽기
+function getCounterConfig() {
+  const el = document.getElementById("test-counter");
+  return {
+    el,
+    ns: el?.dataset.counterNamespace || "survivaloffice",
+    key: el?.dataset.counterKey || "egenteto_test_total",
+  };
+}
+
+// 처음 0으로 생성(이미 있으면 무시)
+async function ensureCounter(ns, key) {
+  const base = counterPath(ns, key);
+  try {
+    const check = await fetch(base, {
+      cache: 'no-store',
+      headers: { 'accept': 'application/json' }
+    });
+    console.log('[counter] check', check.status, base);
+    if (check.ok) return;           // 이미 존재 → 끝
+
+    // 404뿐 아니라 기타 비정상도 생성 시도
+    const set1 = await fetch(`${base}set?count=0`, {
+      cache: 'no-store',
+      headers: { 'accept': 'application/json' }
+    });
+    console.log('[counter] set via /set?count=0', set1.status);
+
+    if (!set1.ok) {
+      const set2 = await fetch(`${base}?count=0`, {
+        cache: 'no-store',
+        headers: { 'accept': 'application/json' }
+      });
+      console.log('[counter] set via /?count=0', set2.status);
+    }
+  } catch (e) {
+    console.warn('[counter] ensure failed:', e);
+  }
+}
+
+// 현재 값 조회
+async function fetchCount(ns, key) {
+  const url = counterPath(ns, key);
+  try {
+    const r = await fetch(url, {
+      cache: 'no-store',
+      headers: { 'accept': 'application/json' }
+    });
+    console.log('[counter] get', r.status, url);
+    if (!r.ok) return 0;
+    const data = await r.json();
+    return (typeof data.count === 'number') ? data.count :
+           (typeof data.value === 'number') ? data.value : 0;
+  } catch (e) {
+    console.warn('[counter] fetch failed:', e);
+    return 0;
+  }
+}
+
+// +1 증가
+async function hitCount(ns, key) {
+  const url = `${counterPath(ns, key)}up`;
+  try {
+    const r = await fetch(url, {
+      cache: 'no-store',
+      headers: { 'accept': 'application/json' }
+    });
+    console.log('[counter] up', r.status, url);
+    if (!r.ok) return null;
+    const data = await r.json();
+    return (typeof data.count === 'number') ? data.count :
+           (typeof data.value === 'number') ? data.value : null;
+  } catch (e) {
+    console.warn('[counter] hit failed:', e);
+    return null;
+  }
+}
+
+// 세션당 1회만 증가할지 결정
+function shouldIncreaseThisSession(ns, key) {
+  if (!ONLY_ONCE_PER_SESSION) return true;
+  const flag = `counted_${ns}_${key}`;
+  if (sessionStorage.getItem(flag) === "1") return false;
+  sessionStorage.setItem(flag, "1");
+  return true;
+}
+
+// UI 반영
+function renderCount(el, n) {
+  if (!el) return;
+  el.textContent = `총 ${Number(n).toLocaleString()}명 참여`;
+  el.setAttribute("data-count", String(n));
+}
+
+// 초기 로드 & 버튼 연동 (이미 DOMContentLoaded 내부이므로 즉시 실행)
+(async function initCounter() {
+  const { el, ns, key } = getCounterConfig();
+  if (!el) return; // 배지가 없으면 패스
+
+  await ensureCounter(ns, key);
+  renderCount(el, await fetchCount(ns, key));
+
+  // 시작 버튼 클릭 시 증가
+  const startBtnEl = document.getElementById("start-btn");
+  if (startBtnEl) {
+    startBtnEl.addEventListener("click", async () => {
+      try {
+        if (shouldIncreaseThisSession(ns, key)) {
+          const after = await hitCount(ns, key);
+          if (after !== null) renderCount(el, after);
+        }
+      } catch (e) {
+        console.warn("[counter] increase on click failed:", e);
+      }
+    });
+  }
+})();
 
 });
