@@ -127,8 +127,8 @@ nav ul li a:hover { background: #555; color: #fff; }
   z-index: 1;
 }
 #start-btn{
-  padding: 12px 24px; background: #ffffffcc; border: none;
-  border-radius: 24px; font-size: 16px; font-weight: bold; cursor: pointer;
+  padding: 12px 22px; background: #ffffffcc; border: none;
+  border-radius: 24px; font-size: 16px; font-weight: bold; cursor: pointer; 
 }
 
 /* ========= 검색 화면 ========= */
@@ -285,3 +285,82 @@ nav ul li a:hover { background: #555; color: #fff; }
   .charts{ grid-template-columns: 1fr; }
   .chart-card.wide{ grid-column: auto; }
 }
+
+/* ==== 시작화면 CTA 강조 ==== */
+/* 배경 위 하단을 살짝 어둡게 → 버튼 대비 상승 */
+#start-screen::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(to top, rgba(0,0,0,.35), rgba(0,0,0,0) 45%);
+  z-index: 1; /* 버튼 뒤, 이미지 앞 */
+}
+
+/* 버튼 컨테이너 위치/층위 확실히 */
+.start-btn-container{
+  position: absolute;
+  left: 50%; bottom: 48px; transform: translateX(-50%);
+  z-index: 2; /* 배경 오버레이보다 위 */
+  width: 88%;
+  display: flex; justify-content: center;
+}
+
+/* 메인 CTA 버튼 */
+#start-btn{
+  -webkit-tap-highlight-color: transparent;
+  appearance: none; border: 0;
+  padding: 14px 28px;
+  min-width: 180px; height: 56px;
+  border-radius: 999px;
+  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+  font-size: 20px; font-weight: 800; letter-spacing: -.2px;
+  color: #fff;
+  background: linear-gradient(135deg, #ff5fa0 0%, #ff86b8 45%, #ffd1e1 100%);
+  box-shadow:
+    0 10px 24px rgba(255,95,160,.35),
+    inset 0 -2px 0 rgba(0,0,0,.08);
+  text-shadow: 0 1px 2px rgba(0,0,0,.25);
+  cursor: pointer;
+  transform: translateZ(0); /* 모바일 렌더링 개선 */
+  position: relative; isolation: isolate;
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+  outline: none;
+}
+
+/* 호버/포커스/액티브 인터랙션 */
+#start-btn:hover{ transform: translateY(-1px) scale(1.02); }
+#start-btn:active{ transform: translateY(0) scale(.98); }
+#start-btn:focus-visible{
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,.8),
+    0 0 0 8px rgba(255,95,160,.35),
+    0 10px 24px rgba(255,95,160,.35);
+}
+
+/* 은은한 발광 효과 (시선 유도) */
+#start-btn::after{
+  content:"";
+  position:absolute; inset:-8px;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.5), rgba(255,255,255,0) 60%);
+  filter: blur(8px);
+  opacity: .45;
+  z-index: -1;
+  animation: cta-pulse 1.8s ease-in-out infinite;
+}
+@keyframes cta-pulse{
+  0%,100%{ transform: scale(1); opacity:.35; }
+  50%{ transform: scale(1.06); opacity:.55; }
+}
+
+/* 모션 최소화 선호 시 애니메이션 끔 */
+@media (prefers-reduced-motion: reduce){
+  #start-btn{ transition:none; }
+  #start-btn::after{ animation:none; opacity:.3; }
+}
+
+/* 작은 기기에서 버튼이 배경에 묻히지 않도록 대비 + 여백 보정 */
+@media (max-width: 380px){
+  #start-btn{ min-width: 200px; height: 52px; font-size: 18px; }
+  .start-btn-container{ bottom: 40px; }
+}
+

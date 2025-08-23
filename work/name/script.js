@@ -101,8 +101,8 @@ document.addEventListener("DOMContentLoaded", () => {
       DATA = await res.json();
       console.log("📥 JSON loaded:", DATA?.meta);
 
-      // 정렬/맵/랭크 준비
-      DATA.names.sort((a, b) => b.pct - a.pct);
+      // 퍼센트 내림차순, 동률이면 이름 오름차순(표시에 일관성)
+      DATA.names.sort((a, b) => (b.pct - a.pct) || a.name.localeCompare(b.name, "ko-KR"));
 
       // ✅ Top100 합계(%) 미리 계산해 meta에 저장
       DATA.meta = DATA.meta || {};
@@ -268,19 +268,24 @@ document.addEventListener("DOMContentLoaded", () => {
     el.innerHTML = `<div class="donut-center">${fmtPct(p)}%</div>`;
   }
 
-  // Top10 정규화 막대 (Top10 합을 100%로)
+    // Top10 정규화 막대 (Top10 합을 100%로) - 동률 포함 순위 사용
   function renderTop10Bar(el, highlightName) {
     if (!el) return;
     const top10 = DATA.names.slice(0, 10);
     const sum = top10.reduce((a, r) => a + r.pct, 0) || 1;
     el.innerHTML = "";
+
     top10.forEach((r, idx) => {
       const scaled = (r.pct / sum) * 100;
+      const rankNum = RANK_MAP.get(r.name) ?? (idx + 1); // ✅ 선언 추가
+
       const row = document.createElement("div");
       row.className = "bar-row" + (r.name === highlightName ? " active" : "");
       row.innerHTML = `
-        <div class="bar-label">${idx + 1}. ${r.name}</div>
-        <div class="bar-track"><div class="bar-fill" style="width:${scaled}%;"></div></div>
+        <div class="bar-label">${rankNum}. ${r.name}</div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:${scaled}%;"></div>
+        </div>
         <div class="bar-val">${fmtPct(scaled)}%</div>
       `;
       el.appendChild(row);
@@ -317,16 +322,17 @@ function renderWaffle(el, pct) {
   // Top 표 렌더 + 하이라이트 + 자동 스크롤
   function renderTopTable(tbody, highlightName, topN = 100) {
     if (!tbody) return;
-    const rows = DATA.names.slice(0, topN).map((r, idx) => {
-      const tr = document.createElement("tr");
-      if (r.name === highlightName) tr.classList.add("hl");
-      tr.innerHTML = `
-        <td>${idx + 1}</td>
-        <td>${r.name}</td>
-        <td class="num">${fmtPct(r.pct)}%</td>
-      `;
-      return tr;
-    });
+    const rows = DATA.names.slice(0, topN).map((r) => {
+    const tr = document.createElement("tr");
+    if (r.name === highlightName) tr.classList.add("hl");
+    const rankNum = RANK_MAP.get(r.name) ?? "";
+    tr.innerHTML = `
+      <td>${rankNum}</td>
+      <td>${r.name}</td>
+      <td class="num">${fmtPct(r.pct)}%</td>
+    `;
+    return tr;
+  });
 
     tbody.innerHTML = "";
     rows.forEach(tr => tbody.appendChild(tr));
