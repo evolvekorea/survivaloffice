@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>너의 이름은</title>
+  <meta name="description" content="반려동물 이름 검색기">
+  <meta name="keywords" content="애완동물, 강아지, 고양이, 동물이름, 강아지이름, 고양이이름, 이름, 코코, 애완동물이름, 개이름, 펫, pet, dog, cat, 강아지 이름, 고양이 이름, 반려동물, 반려동물이름, 너의이름은">
+
+  <!-- Google Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-4957586937754537">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-G4TPWGLYLY');
+  </script>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="너의 이름은" />
+  <meta property="og:description" content="반려동물 이름 검색기" />
+  <meta property="og:url" content="https://www.survivaloffice.com/work/name" />
+  <meta property="og:image" content="https://www.survivaloffice.com/images/name1.png" />
+  <meta property="og:type" content="website" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body oncontextmenu="return false">
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/rest/">미니게임</a></li>
+      <li><a href="/work/">생존키트</a></li>
+      <li><a href="/test/">테스트</a></li>
+    </ul>
+  </nav>
+
+  <!-- 상단 광고 -->
+  <div class="ad-container">
+    <ins class="adsbygoogle"
+         style="display:block; min-height: 90px;"
+         data-ad-client="ca-pub-4957586937754537"
+         data-ad-slot="9240598215"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
+
+  <div id="app" role="application" aria-live="polite">
+
+    <!-- 1) 시작 화면 -->
+    <section id="start-screen" class="screen active" aria-labelledby="start-title">
+      <h1 id="start-title" class="sr-only">반려동물 이름 검색 시작</h1>
+      <img src="https://www.survivaloffice.com/images/name.png" alt="반려동물 이름 검색 시작 화면" class="background-img" />
+      <div class="start-btn-container">
+        <button id="start-btn" class="btn primary">검색 하기</button>
+      </div>
+    </section>
+
+    <!-- 2) 검색 화면 -->
+    <section id="search-screen" class="screen" aria-labelledby="search-title" hidden>
+      <div class="container">
+        <h2 id="search-title">반려동물의 이름을 입력하세요</h2>
+        <p class="hint">예: 코코, 보리, 루나, 뽀삐 (공백/대소문자 자동 무시)</p>
+        <form id="search-form" autocomplete="off">
+          <label for="name-input" class="sr-only">반려동물 이름</label>
+          <div class="search-row">
+            <input id="name-input" name="q" type="text" maxlength="30" inputmode="search" placeholder="예) 코코" required>
+            <button id="search-btn" class="btn primary" type="submit" aria-label="검색">검색</button>
+          </div>
+        </form>
+
+        <div id="suggest-box" class="suggest" hidden>
+          <div class="suggest-title">비슷한 이름</div>
+          <div id="suggest-chips" class="chips"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2.5) 로딩 화면 (검색 → 결과 사이) -->
+    <section id="loading-screen" class="screen" aria-live="assertive" hidden>
+      <div class="loading-wrap">
+        <div class="spinner" aria-hidden="true"></div>
+        <div class="loading-text">결과 분석 중...</div>
+        <div class="loading-sub">이름 순위와 차트를 준비하고 있어요</div>
+      </div>
+    </section>
+
+    <!-- 3) 결과 화면 -->
+    <section id="result-screen" class="screen" aria-labelledby="result-title" hidden>
+      <div class="container result">
+
+        <!-- 헤더: 이름/배지/핵심 수치 -->
+        <header class="result-header">
+          <div class="name-badge">
+            <h2 id="result-title"><span id="res-name">—</span></h2>
+            <span id="res-rank-badge" class="badge rank">—위</span>
+          </div>
+          <p id="res-subcopy" class="subcopy">
+            <!-- 예: “표본 76,921마리 중 약 1/58 빈도로 등록되는 이름” -->
+          </p>
+          <div class="kpis">
+            <div class="kpi">
+              <div class="kpi-label">전체 대비 비율</div>
+              <div id="kpi-pct" class="kpi-value">—%</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Top100 기준</div>
+              <div id="kpi-per-thousand" class="kpi-value">—%</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">희소도(1/n)</div>
+              <div id="kpi-one-in" class="kpi-value">—</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">순위</div>
+              <div id="kpi-rank" class="kpi-value">—위</div>
+            </div>
+          </div>
+        </header>
+
+        <!-- 차트 영역 -->
+        <section class="charts">
+          <!-- A. 전체 대비 도넛: 선택 이름 vs 나머지 -->
+          <article class="chart-card">
+            <h3 class="chart-title">전체 대비 점유율</h3>
+            <div id="chart-overall-donut" class="chart donut" aria-label="전체 대비 도넛 차트"></div>
+            <div class="chart-note">도넛은 “%만” 표시합니다 (건수 미표시)</div>
+          </article>
+
+          <!-- B. Top10 정규화 막대: Top10만 100%로 환산 -->
+          <article class="chart-card">
+            <h3 class="chart-title">Top10 내 상대 비중 (100% 환산)</h3>
+            <div id="chart-top10-bar" class="chart bar" aria-label="Top10 정규화 막대 차트"></div>
+            <div class="chart-note">Top10 합을 100%로 환산해 비교합니다</div>
+          </article>
+
+          <!-- C. 와플(도트) 1000grid -->
+          <article class="chart-card wide">
+            <h3 class="chart-title">천 분율(‰) 감각적 보기</h3>
+            <div id="chart-waffle" class="chart waffle" aria-label="1000 도트 와플 차트"></div>
+            <div class="chart-note">천 개 점 중 채워진 점이 해당 이름의 퍼밀(‰)입니다</div>
+          </article>
+        </section>
+
+        <!-- Top 리스트 + 하이라이트 -->
+        <section class="toplist">
+          <div class="toplist-header">
+            <h3>인기 이름 순위</h3>
+            <div class="toplist-controls">
+              <label for="top-n" class="sr-only">표시 개수</label>
+              <select id="top-n">
+                <option value="50">Top 50</option>
+                <option value="100" selected>Top 100</option>
+                <option value="200">Top 200</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table aria-label="이름 순위 표">
+              <thead>
+                <tr>
+                  <th scope="col" style="width:64px;">순위</th>
+                  <th scope="col">이름</th>
+                  <th scope="col" class="num">비율(%)</th>
+                </tr>
+              </thead>
+              <tbody id="top-tbody">
+                <!-- JS 삽입: 선택 이름 행 하이라이트 + 자동 스크롤 -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 비슷한 이름 추천 -->
+        <section id="res-suggest" class="suggest" hidden>
+          <div class="suggest-title">비슷한 이름</div>
+          <div id="res-chips" class="chips"></div>
+        </section>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- 하단 액션 -->
+  <div id="bottom-actions" style="display:none;">
+    <button id="share-kakao">공유하기</button>
+    <button id="restart-btn">다시하기</button>
+  </div>
+
+  <!-- 하단 광고 -->
+  <div class="footer-ad-container">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4957586937754537"
+         data-ad-slot="9931828353"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="script.js"></script>
+  <script>
+    document.addEventListener("contextmenu", e => e.preventDefault());
+    document.addEventListener("DOMContentLoaded", () => {
+      try {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        window.addEventListener("load", () => (adsbygoogle = window.adsbygoogle || []).push({}));
+      } catch (e) { console.error("애드센스 광고 로드 실패:", e); }
+    });
+  </script>
+
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <script>
+    new PartnersCoupang.G({ id: 810614, trackingCode: "AF4453761", subId: null, template: "carousel", width: "360", height: "100" });
+  </script>
+
+  <noscript>이 서비스는 JavaScript가 필요합니다.</noscript>
+</body>
+</html>
