@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>연도별 인기 이름 검색기</title>
+  <meta name="description" content="연도별 인기 이름 Top 20 보기" />
+  <meta name="keywords" content="이름, 성명, 유행이름, 연도별이름, 인기이름, 서바이벌오피스, 아기이름, 이름짓기, 작명, 유행, 자식이름, 요즘이름" />
+
+  <!-- Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-4957586937754537" />
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-G4TPWGLYLY');
+  </script>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="연도별 인기 이름 검색기" />
+  <meta property="og:description" content="연도별 인기 이름 Top 20 보기" />
+  <meta property="og:url" content="https://www.survivaloffice.com/work/babyname" />
+  <meta property="og:image" content="https://www.survivaloffice.com/images/name1.png" />
+  <meta property="og:type" content="website" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body oncontextmenu="return false">
+  <nav aria-label="Global">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/rest/">미니게임</a></li>
+      <li><a href="/work/">생존키트</a></li>
+      <li><a href="/test/">테스트</a></li>
+    </ul>
+  </nav>
+
+  <!-- 상단 광고 -->
+  <div class="ad-container" aria-label="광고">
+    <ins id="ad-top" class="adsbygoogle"
+        style="display:block; width:100%; min-height:90px;"
+        data-ad-client="ca-pub-4957586937754537"
+        data-ad-slot="9240598215"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+  </div>
+
+  <div id="app" role="application" aria-live="polite">
+    <!-- 스텝퍼: 화면 하단 -->
+    <ol id="stepper" class="stepper" aria-label="진행 단계">
+      <li class="active" data-step="1">시작</li>
+      <li data-step="2">연도선택</li>
+      <li data-step="3">로딩</li>
+      <li data-step="4">결과</li>
+    </ol>
+
+    <!-- 1) 시작 -->
+    <section id="start-screen" class="screen active" aria-labelledby="start-title">
+      <h1 id="start-title" class="sr-only">연도별 인기 이름 검색 시작</h1>
+      <img src="https://www.survivaloffice.com/images/name.png" alt="연도별 인기 이름 검색 시작 화면" class="background-img" />
+      <div class="start-cta">
+        <p class="help-text">연도를 선택해 해당 해의 인기 이름 Top 20을 확인하세요</p>
+        <button id="start-btn" class="btn primary">검색 하기</button>
+      </div>
+    </section>
+
+    <!-- 2) 연도 선택 -->
+    <section id="select-screen" class="screen" aria-labelledby="select-title" hidden>
+      <div class="container narrow">
+        <h2 id="select-title">연도를 선택하세요</h2>
+        <form id="search-form" class="field-row" autocomplete="off">
+          <label for="year-select">연도</label>
+          <select id="year-select" required>
+            <option value="">선택</option>
+            <option>2018</option><option>2019</option><option>2020</option><option>2021</option>
+            <option>2022</option><option>2023</option><option>2024</option><option>2025</option>
+          </select>
+          <div class="actions">
+            <button class="btn primary" type="submit">Top 20 보기</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- 3) 로딩 -->
+    <section id="loading-screen" class="screen" aria-live="assertive" hidden>
+      <div class="loading-wrap">
+        <div class="spinner" aria-hidden="true"></div>
+        <div class="loading-text">결과 분석 중...</div>
+        <div class="loading-sub">연도 데이터와 순위를 불러오고 있어요</div>
+      </div>
+    </section>
+
+    <!-- 4) 결과 -->
+    <section id="result-screen" class="screen" aria-labelledby="result-title" hidden>
+      <div class="container result">
+        <header class="result-header">
+          <h2 id="result-title"><span id="list-year">—</span>년 인기 이름 Top 20</h2>
+          <p class="subtitle">상위 20개 이름만 제공됩니다.</p>
+        </header>
+
+        <!-- Top20 -->
+        <section class="card" aria-labelledby="toplist-title">
+          <div class="card-header">
+            <h3 id="toplist-title">Top 20</h3>
+            <div class="card-actions">
+              <button id="copy-list" class="btn tiny" aria-label="목록 복사">복사</button>
+            </div>
+          </div>
+          <div id="toplist-grid" class="rank-grid" aria-live="polite"></div>
+        </section>
+
+        <!-- 하단 액션 -->
+        <div id="bottom-actions" class="actions-row" style="display:none">
+          <button id="share-kakao" class="btn kakao" type="button">💬 카톡 공유</button>
+          <button id="share-link"  class="btn link"  type="button">🔗 링크 복사</button>
+          <button id="restart-btn" class="btn restart" type="button">↩️ 처음으로</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 하단 광고 -->
+  <div class="footer-ad-container" aria-label="광고">
+    <ins id="ad-bottom" class="adsbygoogle"
+        style="display:block; width:100%; min-height:90px;"
+        data-ad-client="ca-pub-4957586937754537"
+        data-ad-slot="9931828353"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="script.js"></script>
+  <script>
+  (function(){
+    function log(label, ...args) {
+      console.log(`[ADS:${label}]`, ...args);
+    }
+
+    // 폭 0일 땐 지연, 한번 성공하면 다시 push 안 함
+    function pushOnce(ins, label) {
+      if (!ins) { log(label, "❌ slot element not found"); return true; }
+      if (ins.dataset.pushed === "1") { log(label, "⚠️ already pushed; skip"); return true; }
+
+      try {
+        const w = ins.offsetWidth || 0;
+        if (w <= 0) {
+          log(label, `⏳ width=0; defer push`);
+          return false; // 아직은 못함
+        }
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        ins.dataset.pushed = "1";
+        log(label, `✅ pushed (width=${w}px)`);
+        return true;
+      } catch (e) {
+        log(label, "❌ push error:", e);
+        return false;
+      }
+    }
+
+    function setup(ins, label) {
+      // 즉시 시도
+      if (pushOnce(ins, label)) return;
+
+      // 크기 변화를 감시해 폭이 생기면 push
+      const ro = new ResizeObserver(() => {
+        if (pushOnce(ins, label)) ro.disconnect();
+      });
+      ro.observe(ins);
+
+      // 보조 시도: load/resize/orientation
+      const retry = () => pushOnce(ins, label);
+      window.addEventListener("load", retry, { once: true });
+      window.addEventListener("resize", retry);
+      window.addEventListener("orientationchange", retry);
+
+      // 안전 타임아웃(예: 3초 후 한 번 더 시도)
+      setTimeout(retry, 3000);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // 스크립트 로드 상태 로그
+      if (!("adsbygoogle" in window)) {
+        log("INIT", "⚠️ adsbygoogle not yet present; will queue");
+      } else {
+        log("INIT", "✅ adsbygoogle present");
+      }
+
+      // 각 슬롯 초기화
+      setup(document.getElementById("ad-top"), "Top");
+      setup(document.getElementById("ad-bottom"), "Bottom");
+    });
+  })();
+  </script>
+</body>
+</html>
