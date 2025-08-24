@@ -199,7 +199,7 @@ async function shareKakao() {
     const pageUrl = buildQueryURL(LAST_YEAR);
     const title = `${LAST_YEAR}년 인기 이름 Top 20`;
     const desc  = `해당 연도의 인기 이름 Top 20을 확인해보세요.`;
-    const imageUrl = "https://www.survivaloffice.com/images/name1.png";
+    const imageUrl = "https://www.survivaloffice.com/images/babyname1.png";
     window.Kakao.Link.sendDefault({
       objectType: "feed",
       content: { title, description: desc, imageUrl, link: { webUrl: pageUrl, mobileWebUrl: pageUrl } },
