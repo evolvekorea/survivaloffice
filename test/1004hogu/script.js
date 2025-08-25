@@ -12,6 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const choiceButtons = [choiceA, choiceB];
 
   const resultImage   = document.getElementById("result-image");
+  if (resultImage) {
+    // 결과 화면 전환 즉시 보이도록 브라우저 힌트
+    resultImage.loading = "eager";
+    resultImage.decoding = "async";
+  }
 
   // 진행바
   const progressFill  = document.getElementById("progress-fill");
@@ -32,11 +37,46 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========================
+  // ✅ 결과 이미지 경로 (프리로드 대상)
+  // =========================
+  const RESULT_IMAGES = {
+    angel: "https://www.survivaloffice.com/images/1004hogu3.png",
+    hogu:  "https://www.survivaloffice.com/images/1004hogu2.png"
+  };
+
+  // =========================
+  // ✅ 결과 이미지 프리로드
+  // =========================
+  const preloadedImages = {}; // url -> Image 객체
+
+  function preloadImages(map){
+    const urls = Object.values(map);
+    return Promise.all(urls.map(url => new Promise(resolve => {
+      const img = new Image();
+      img.loading = "eager";
+      img.decoding = "async";
+      img.referrerPolicy = "no-referrer";
+      img.onload = () => { preloadedImages[url] = img; resolve(img); };
+      img.onerror = () => { console.warn("⚠️ preload fail:", url); resolve(null); };
+      img.src = url;
+    })));
+  }
+
+  // 가능한 빨리 프리로드 시작 (메인 스레드 여유 시점도 커버)
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => preloadImages(RESULT_IMAGES).then(() => {
+      console.log("✅ 결과 이미지 프리로드 완료(idle)");
+    }));
+  } else {
+    setTimeout(() => preloadImages(RESULT_IMAGES).then(() => {
+      console.log("✅ 결과 이미지 프리로드 완료(timeout)");
+    }), 0);
+  }
+
+  // =========================
   // ✅ 테스트 문항 (10문항)
-  //    - 각 선택은 { text, type, weight }
-  //    - type: 'angel' | 'hogu'
-  //    - weight: 기본 1, 단 하나의 문항만 2로 설정하여 변별력 부여
-  //      (아래에서는 6번 문항을 +2로 지정. 원하는 문항으로 바꿔도 됨)
+  //    - { text, type, weight }, type: 'angel' | 'hogu'
+  //    - 6번 문항만 weight 2 (변별력)
   // =========================
   const questions = [
     {
@@ -78,8 +118,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // 🔥 변별력 문항: weight 2
       question: "회식 자리에서 모두 계산을 미룬다.",
       options: [
-        { text: "분위기 어색하니 이번엔 내가 낸다.",   type: "angel", weight: 2 }, // +2
-        { text: "어차피 항상 내가 내니 그냥 또 낸다.", type: "hogu",  weight: 2 }  // +2
+        { text: "분위기 어색하니 이번엔 내가 낸다.",   type: "angel", weight: 2 },
+        { text: "어차피 항상 내가 내니 그냥 또 낸다.", type: "hogu",  weight: 2 }
       ]
     },
     {
@@ -141,7 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const btn = choiceButtons[idx];
       btn.textContent   = opt.text;
       btn.dataset.type  = opt.type;     // 'angel' | 'hogu'
-      btn.dataset.weight= String(opt.weight ?? 1); // 기본 1
+      btn.dataset.weight= String(opt.weight ?? 1);
     });
   }
 
@@ -168,20 +208,21 @@ document.addEventListener("DOMContentLoaded", () => {
     quizScreen.classList.remove("active");
     resultScreen.classList.add("active");
 
-    // 결과 2종만 사용 (이미지 경로는 필요에 맞게 교체)
-    const resultImages = {
-      angel: "https://www.survivaloffice.com/images/1004hogu3.png",
-      hogu:  "https://www.survivaloffice.com/images/1004hogu2.png"
-    };
-
     const isAngel = angelScore >= hoguScore; // 동점은 천사 우선
     const bucket  = isAngel ? "angel" : "hogu";
+    const url     = RESULT_IMAGES[bucket];
 
-    resultImage.src = resultImages[bucket];
+    // 프리로드된 이미지가 있으면 그것을 사용 (즉시 표시)
+    const cached = preloadedImages[url];
+    if (cached && cached.complete) {
+      resultImage.src = cached.src;
+    } else {
+      resultImage.src = url;
+    }
     resultImage.alt = isAngel ? "천사 결과" : "호구 결과";
 
     bottomActions.style.display = 'flex';
-    console.log(`🖼 결과: ${bucket}, 이미지: ${resultImages[bucket]}`);
+    console.log(`🖼 결과: ${bucket}, 이미지: ${url}`);
   }
 
   // ---------- 하단 버튼 참조 ----------
@@ -271,10 +312,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ---------- 버튼 이벤트 ----------
-  shareBtn.addEventListener("click", () => {
-    shareKakao(resultImage?.src || "");
-  });
-  restartBtn.addEventListener("click", resetTest);
+  const shareBtnEl = document.getElementById("share-kakao");
+  if (shareBtnEl) {
+    shareBtnEl.addEventListener("click", () => {
+      shareKakao(resultImage?.src || "");
+    });
+  }
+  const restartBtnEl = document.getElementById("restart-btn");
+  if (restartBtnEl) {
+    restartBtnEl.addEventListener("click", resetTest);
+  }
 
   // =========================
   // 참여자 카운터 (CountAPI)
