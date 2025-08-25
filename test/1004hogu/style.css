@@ -1,0 +1,311 @@
+/* =========================
+   Webfont
+========================= */
+@font-face {
+  font-family: 'GangwonEduSaeeum_OTFMediumA';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* =========================
+   Reset & Base
+========================= */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f9fbff; /* 시작 화면 흰색 제거 → 은은한 톤 */
+  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: auto;
+  min-height: 100vh;
+}
+
+/* =========================
+   Theme Tokens (Light)
+========================= */
+:root{
+  --angel: #78C6FF;
+  --angel-2: #DDF0FF;
+  --hogu:  #FFC6A7;
+  --hogu-2:#FFE8DD;
+
+  --bg:    #F9FBFF;
+  --panel: #FFFFFF;
+  --ink:   #1f2a37;
+  --muted: #65758b;
+
+  --line:  #e8eef6;
+  --shadow: 0 8px 24px rgba(30, 60, 120, .08);
+
+  --kakao: #fee500;
+}
+
+/* =========================
+   Navigation
+========================= */
+nav {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid var(--line);
+  z-index: 1000;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 20px;
+}
+nav ul li { display: inline; }
+nav ul li a {
+  color: var(--ink);
+  text-decoration: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+nav ul li a:hover {
+  background: #f2f6ff;
+  color: #0b67c6;
+}
+
+/* =========================
+   Ads
+========================= */
+.ad-container,
+.footer-ad-container {
+  width: 100%;
+  min-height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+}
+.ad-container { margin-top: 60px; margin-bottom: 20px; }
+.footer-ad-container { margin-top: 30px; }
+.adsbygoogle { display: block; width: 100%; height: auto !important; }
+
+/* =========================
+   App Canvas (360 x 550)
+========================= */
+#app {
+  width: 360px;
+  height: 550px;
+  position: relative;
+  background: var(--panel);
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--line);
+}
+
+/* Screens */
+.screen {
+  width: 100%; height: 100%;
+  position: absolute; inset: 0;
+  display: none;
+}
+.screen.active {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* =========================
+   Start Screen
+========================= */
+#start-screen { position: relative; background: transparent; }
+.background-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  position: absolute; inset: 0;
+  opacity: 1;   /* 배경만 은은히 */
+  z-index: 0;
+}
+
+/* 참여자 배지 */
+.counter-badge{
+  position: absolute; top: 10px; right: 10px;
+  background: rgba(255,255,255,.85);
+  color: #2b3a4a;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px; font-weight: 700;
+  border: 1px solid var(--line);
+  box-shadow: 0 6px 16px rgba(0,0,0,.06);
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+.start-btn-container {
+  position: absolute; bottom: 40px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+#start-btn {
+  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif; /* ✅ 폰트 적용 */
+  padding: 12px 24px;
+  background: linear-gradient(180deg, #8DD3FF 0%, #78C6FF 100%);
+  color: #0a2340;
+  border: 0;
+  border-radius: 14px;
+  font-size: 18px; font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(120,198,255,.35);
+  transition: transform .12s ease, filter .2s ease;
+}
+#start-btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
+#start-btn:active { transform: translateY(0); }
+
+/* =========================
+   Quiz Screen
+========================= */
+#quiz-screen {
+  background:
+    radial-gradient(1200px 600px at 50% -100px, #EAF6FF 0%, transparent 60%),
+    radial-gradient(1200px 600px at 50% 650px, #FFEFE6 0%, transparent 60%),
+    var(--bg);
+  padding: 18px 0;
+  justify-content: flex-start;
+}
+
+/* Progress */
+.progress-wrap{
+  display:flex; align-items:center;
+  margin:12px auto 12px;
+  width:100%; max-width:360px; padding: 0 12px;
+}
+#progress-track{
+  flex:1; position:relative;
+  height: 18px;
+  background: #ffffff;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+#progress-fill{
+  height:100%; width:0%;
+  background: linear-gradient(90deg, var(--angel) 0%, var(--hogu) 100%);
+  transition: width .28s cubic-bezier(.2,.8,.2,1);
+}
+#progress-count{
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size: 12px; font-weight: 700; color: #334155;
+  pointer-events:none;
+}
+
+/* Question */
+.question-box {
+  border: 2px dashed #B6D9FF;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  margin: 18px 0 16px 0;
+  min-height: 120px;
+  width: 90%;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--ink);
+  box-shadow: 0 8px 22px rgba(80,120,200,.08);
+}
+
+/* Choices */
+.choices {
+  display: flex; flex-direction: column; gap: 12px;
+  margin: 0 auto 22px;
+  width: 90%;
+}
+.choice-btn {
+  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif; /* ✅ 폰트 적용 */
+  padding: 12px 14px;
+  background: #F9FBFF;
+  border: 1.5px solid #E3ECF8;
+  border-radius: 14px;
+  font-size: 17px; line-height: 1.4;
+  color: var(--ink);
+  cursor: pointer; text-align: left;
+  box-shadow: 0 6px 16px rgba(30,60,120,.06);
+  transition: transform .08s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.choice-btn:hover{
+  background: #F1F8FF;
+  border-color: #CFE5FF;
+  box-shadow: 0 10px 20px rgba(120,198,255,.18);
+}
+.choice-btn:active{ transform: translateY(1px); }
+.choice-btn:focus-visible{
+  outline: 2px solid #9BD1FF; outline-offset: 2px;
+}
+
+/* =========================
+   Result Screen
+========================= */
+#result-screen {
+  background: var(--bg);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#result-image {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+/* =========================
+   Bottom Actions
+========================= */
+#bottom-actions {
+  width: 360px;
+  margin: 24px auto;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+#share-kakao, #restart-btn {
+  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+  font-size: 18px;
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Kakao (노란 버튼) */
+#share-kakao {
+  background: var(--kakao);
+  color: #2b2b2b;
+  box-shadow: 0 8px 18px rgba(0,0,0,.12);
+  border: 1px solid rgba(0,0,0,.08);
+}
+#share-kakao:hover { filter: brightness(1.03); }
+
+/* Restart (코랄 버튼) */
+#restart-btn {
+  background: linear-gradient(180deg, #FFD3C0 0%, #FFC6A7 100%);
+  color: #4a3027;
+  box-shadow: 0 8px 18px rgba(255,150,110,.22);
+  border: 1px solid rgba(255,110,70,.18);
+}
+#restart-btn:hover { filter: saturate(1.05) brightness(1.03); }
+
+/* =========================
+   Misc
+========================= */
+#quiz-screen, #result-screen { color: var(--ink); }
+.question-box b, .question-box strong { color: #0b67c6; }
+a:focus-visible, button:focus-visible {
+  outline: 2px solid #9BD1FF;
+  outline-offset: 2px;
+}
