@@ -267,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
     Kakao.Link.sendDefault({
       objectType: "feed",
       content: {
-        title: "젊꼰 테스트 (JUMGGON)",
+        title: "젊꼰 테스트",
         description: "회사생활 밈으로 알아보는 젊은 꼰대 지수 😎",
         imageUrl: finalImage,
         link: {
