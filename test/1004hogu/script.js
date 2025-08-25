@@ -170,8 +170,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 결과 2종만 사용 (이미지 경로는 필요에 맞게 교체)
     const resultImages = {
-      angel: "https://www.survivaloffice.com/images/1004hogu.png",
-      hogu:  "https://www.survivaloffice.com/images/1004hogu1.png"
+      angel: "https://www.survivaloffice.com/images/1004hogu3.png",
+      hogu:  "https://www.survivaloffice.com/images/1004hogu2.png"
     };
 
     const isAngel = angelScore >= hoguScore; // 동점은 천사 우선
