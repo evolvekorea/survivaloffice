@@ -1,104 +1,104 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>생존키트 - 타로, TODO, 스트레스, 룰렛, 로또, 이름검색기</title>
-    <meta name="description" content="기상부터 출근, 근무까지 생존에 필요한 생존키트">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>생존키트 - 타로, TODO, 스트레스, 룰렛, 로또, 이름검색기</title>
+  <meta name="description" content="기상부터 출근, 근무까지 생존에 필요한 생존키트" />
 
-    <!-- Google Adsense 코드 -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537"
-    crossorigin="anonymous"></script>
-    <meta name="google-adsense-account" content="ca-pub-4957586937754537">
+  <!-- Google Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-4957586937754537" />
 
-    <!-- Google Analytics 코드 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-G4TPWGLYLY');
-    </script>    
-        
-    <link rel="stylesheet" href="styles.css">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-G4TPWGLYLY');
+  </script>
+
+  <!-- ✅ 공통 스타일: 사이트 전역 styles.css 사용 -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
-
+  <!-- ✅ 네비게이션: 공통 -->
   <nav>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/rest/">미니게임</a></li>
-        <li><a href="/work/">생존키트</a></li>
-        <li><a href="/test/">테스트</a></li>
-      </ul>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/rest/">미니게임</a></li>
+      <li><a href="/work/">생존키트</a></li>
+      <li><a href="/test/">테스트</a></li>
+    </ul>
   </nav>
-    
+
+  <!-- ✅ 헤더: 공통 -->
   <header>
-      <img src="/images/head_image.jpg" alt="Office soldiers image">
+    <img src="/images/head_image.jpg" alt="Office soldiers image" />
   </header>
 
-  <main>
-      <section class="navigation-section" aria-label="Main navigation">
-        <div class="nav-category">
-            <h3><a href="/work/tarot">오늘의 운세 - 시바타로</a></h3>
-            <hr>
-            <div class="nav-item">
-            <a href="/work/tarot"><img src="/images/tarot.jpg"></a> 
-            </div>
-        </div>
+  <!-- ✅ 인덱스와 동일한 섹션/그리드 구조 -->
+  <div class="nav-category">
+    <h3><a href="/work/">생존키트</a></h3>
+    <hr />
+    <div class="nav-item-container">
+      <div class="nav-item">
+        <h4><a href="/work/tarot">오늘의 운세 - 시바타로</a></h4>
+        <a href="/work/tarot">
+          <img src="/images/tarot.jpg" alt="오늘의 운세 - 시바타로" />
+        </a>
+      </div>
 
-        <div class="nav-category">
-            <h3><a href="/work/name">너의 이름은</a></h3>
-            <hr>
-            <div class="nav-item">
-            <a href="/work/name"><img src="/images/name1.png"></a> 
-            </div>
-        </div>        
+      <div class="nav-item">
+        <h4><a href="/work/name">너의 이름은</a></h4>
+        <a href="/work/name">
+          <img src="/images/name1.png" alt="너의 이름은" />
+        </a>
+      </div>
 
-        <div class="nav-category">
-            <h3><a href="/work/babyname">연도별 인기 이름 검색기</a></h3>
-            <hr>
-            <div class="nav-item">
-            <a href="/work/babyname"><img src="/images/babyname1.png"></a> 
-            </div>
-        </div>        
+      <div class="nav-item">
+        <h4><a href="/work/babyname">연도별 인기 이름 검색기</a></h4>
+        <a href="/work/babyname">
+          <img src="/images/babyname1.png" alt="연도별 인기 이름 검색기" />
+        </a>
+      </div>
 
-        <div class="nav-category">
-            <h3><a href="/work/todo">To Do 리스트</a></h3>
-            <hr>
-            <div class="nav-item">
-            <a href="/work/todo"><img src="/images/todo.jpg"></a> 
-            </div>
-        </div>
+      <div class="nav-item">
+        <h4><a href="/work/todo">To Do 리스트</a></h4>
+        <a href="/work/todo">
+          <img src="/images/todo.jpg" alt="To Do 리스트" />
+        </a>
+      </div>
 
-        <div class="nav-category">
-            <h3><a href="/work/stress">스트레스 측정기</a></h3>
-            <hr>
-            <div class="nav-item">
-            <a href="/work/stress"><img src="/images/stress.jpg"></a> 
-            </div>
-        </div>
+      <div class="nav-item">
+        <h4><a href="/work/stress">스트레스 측정기</a></h4>
+        <a href="/work/stress">
+          <img src="/images/stress.jpg" alt="스트레스 측정기" />
+        </a>
+      </div>
 
-        <div class="nav-category">
-            <h3><a href="/work/roulette">오늘 뭐먹지? 음식 룰렛</a></h3>
-            <hr>
-            <div class="nav-item">
-            <a href="/work/roulette"><img src="/images/roulette.jpg"></a> 
-            </div>
-        </div>
+      <div class="nav-item">
+        <h4><a href="/work/roulette">오늘 뭐먹지? 음식 룰렛</a></h4>
+        <a href="/work/roulette">
+          <img src="/images/roulette.jpg" alt="오늘 뭐먹지? 음식 룰렛" />
+        </a>
+      </div>
 
-        <div class="nav-category">
-            <h3><a href="/work/fire">로또번호 생성기</a></h3>
-            <hr>
-            <div class="nav-item">
-            <a href="/work/fire"><img src="/images/lotto.jpg"></a> 
-            </div>
-        </div>
-  </main>
+      <div class="nav-item">
+        <h4><a href="/work/fire">로또번호 생성기</a></h4>
+        <a href="/work/fire">
+          <img src="/images/lotto.jpg" alt="로또번호 생성기" />
+        </a>
+      </div>
+    </div>
+  </div>
 
+  <!-- ✅ 푸터: 공통(연도+이메일 링크 포함) -->
   <footer>
-      <p>&copy; 2024 Survival Office. All rights reserved.</p>
+    <p>&copy; 2025 Survival Office. All rights reserved. 📨
+      <a href="mailto:evolvekorea@gmail.com?subject=문의드립니다&body=안녕하세요,%0A문의 사항을 작성해주세요." class="email-link">evolvekorea@gmail.com</a>
+    </p>
   </footer>
 </body>
 </html>
