@@ -265,9 +265,18 @@ nav ul li a:hover { background: #f2f6ff; color: #0b67c6; }
   width: 360px;
   margin: 24px auto;
   display: flex;
+  flex-wrap: wrap; /* ✅ 자동 줄바꿈 */
   gap: 8px;
   justify-content: center;
 }
+
+#bottom-actions button {
+  flex: 1 1 auto; /* ✅ 버튼 크기 유연하게 */
+  min-width: 100px; /* ✅ 너무 작아지지 않게 최소 크기 */
+  text-align: center;
+}
+
+
 #share-kakao, #restart-btn {
   font-family: 'Shilla', Arial, sans-serif;
   font-size: 18px;
