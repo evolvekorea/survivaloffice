@@ -327,3 +327,21 @@ nav ul li a:hover {
   text-shadow:0 0 2px rgba(255,255,255,.6); /* 가독성 보조 */
   pointer-events:none;   /* 클릭 방해 X */
 }
+
+/* Other Test (블루 버튼) */
+#other-test-btn {
+  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+  font-size: 18px;
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(180deg, #BFE4FF 0%, #8DD3FF 100%);
+  color: #08324a;
+  box-shadow: 0 8px 18px rgba(120,198,255,.22);
+  border: 1px solid rgba(80,160,220,.18);
+}
+#other-test-btn:hover {
+  filter: saturate(1.05) brightness(1.04);
+}
