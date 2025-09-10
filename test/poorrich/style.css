@@ -145,7 +145,7 @@ nav ul li a:hover { background: #f2f6ff; color: #0b67c6; }
 #start-btn {
   font-family: 'jalnan', Arial, sans-serif;
   padding: 12px 24px;
-  background: linear-gradient(180deg, #8DD3FF 0%, #78C6FF 100%);
+  background: linear-gradient(180deg, #f0bf53 0%, #fcfcfc 100%);
   color: #0a2340;
   border: 0; border-radius: 14px;
   font-size: 18px; font-weight: 900;
