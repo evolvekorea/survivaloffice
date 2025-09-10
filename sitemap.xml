@@ -35,32 +35,34 @@
        <priority>0.7</priority>
    </url>      
     <url>
-    <loc>https://www.survivaloffice.com/rest/LRLR</loc>
-    <lastmod>2024-12-23</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+        <loc>https://www.survivaloffice.com/rest/LRLR</loc>
+        <lastmod>2024-12-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
     </url>  
     <url>
-    <loc>https://www.survivaloffice.com/rest/828250</loc>
-    <lastmod>2024-12-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+        <loc>https://www.survivaloffice.com/rest/828250</loc>
+        <lastmod>2024-12-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
     </url> 
     <url>
-    <loc>https://www.survivaloffice.com/rest/mosquitohunter</loc>
-    <lastmod>2025-01-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+        <loc>https://www.survivaloffice.com/rest/mosquitohunter</loc>
+        <lastmod>2025-01-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
     </url>  
-    <loc>https://www.survivaloffice.com/rest/ddong</loc>
-    <lastmod>2025-02-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    </url>  
-    <loc>https://www.survivaloffice.com/rest/mole</loc>
-    <lastmod>2025-02-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <url>
+        <loc>https://www.survivaloffice.com/rest/ddong</loc>
+        <lastmod>2025-02-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url> 
+        <loc>https://www.survivaloffice.com/rest/mole</loc>
+        <lastmod>2025-02-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
     </url>  
 
       <!-- TEST + 하위 페이지 -->
