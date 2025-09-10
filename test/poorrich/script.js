@@ -27,20 +27,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const progressTrack = document.getElementById("progress-track");
   const progressCount = document.getElementById("progress-count");
 
-  // 점수 저장
+  // 점수/상태
   let scores = { ENTJ:0, ESTJ:0, INFP:0, ISFP:0 };
   let currentIndex = 0;
 
+  // ✅ 추적용
+  const selections = [];                     // [{q:1..10|'TB', type:'ENTJ'.., weight:1}]
+  let tiebreakUsed = false;
+  let tiebreakCandidates = [];
+
   // 결과 이미지 매핑
   const RESULT_IMAGES = {
-    ENTJ:   "https://www.survivaloffice.com/images/poorrich4.png",
-    ESTJ:   "https://www.survivaloffice.com/images/poorrich3.png",
-    INFP:   "https://www.survivaloffice.com/images/poorrich2.png",
-    ISFP:   "https://www.survivaloffice.com/images/poorrich1.png"
+    ENTJ: "https://www.survivaloffice.com/images/poorrich4.png",
+    ESTJ: "https://www.survivaloffice.com/images/poorrich3.png",
+    INFP: "https://www.survivaloffice.com/images/poorrich2.png",
+    ISFP: "https://www.survivaloffice.com/images/poorrich1.png"
   };
-
-  // 각 문제별 가중치 (Q1~Q10)
-  const WEIGHTS = [41,37,31,29,23,19,17,13,11,7];
 
   // 질문 데이터 (10문항, 4지선다)
   const questions = [
@@ -185,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const opt = opts[idx];
       btn.textContent    = opt.text;
       btn.dataset.type   = opt.type;
-      btn.dataset.weight = WEIGHTS[currentIndex]; // 문제별 가중치
+      btn.dataset.weight = "1";           // ✅ 문제별 가중치 제거 → 항상 1점
       btn.style.display  = "block";
     });
   }
@@ -193,8 +195,11 @@ document.addEventListener("DOMContentLoaded", () => {
   choiceButtons.forEach(btn => {
     btn.addEventListener("click", () => {
       const type   = btn.dataset.type;
-      const weight = parseFloat(btn.dataset.weight || "1");
-      if (type) scores[type] += weight;
+      const weight = parseFloat(btn.dataset.weight || "1"); // 항상 1
+      if (type) {
+        scores[type] += weight;
+        selections.push({ q: currentIndex + 1, type, weight });
+      }
 
       currentIndex++;
       if (currentIndex < totalQuestions) {
@@ -212,15 +217,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (leaders.length === 1) {
       showResult(leaders[0]);
     } else {
-      // 동점 발생 → 타이브레이커 모달 표시
       openTiebreaker(leaders).then(finalType => {
-        scores[finalType] += 1;
+        scores[finalType] += 1; // ✅ 타이브레이커도 +1
+        tiebreakUsed = true;
+        selections.push({ q: 'TB', type: finalType, weight: 1 });
         showResult(finalType);
       });
     }
   }
 
   function showResult(finalType) {
+    trackResult(finalType);
+
     quizScreen.classList.remove("active");
     resultScreen.classList.add("active");
     bottomActions.style.display = "flex";
@@ -235,6 +243,8 @@ document.addEventListener("DOMContentLoaded", () => {
     return new Promise(resolve => {
       tbChoices.innerHTML = "";
       tbModal.removeAttribute("hidden");
+
+      tiebreakCandidates = ties.slice();
 
       ties.forEach(type => {
         const btn = document.createElement("button");
@@ -252,6 +262,50 @@ document.addEventListener("DOMContentLoaded", () => {
         e.stopPropagation();
       };
     });
+  }
+
+  // ---------- 결과 추적 ----------
+  function trackResult(finalType) {
+    try {
+      const payload = {
+        test: "poorrich",
+        result: finalType,
+        scores: { ...scores },
+        selections,
+        tiebreak: {
+          used: tiebreakUsed,
+          candidates: tiebreakCandidates
+        },
+        ts: new Date().toISOString(),
+        ua: navigator.userAgent
+      };
+
+      console.log("📊 RESULT_EVENT", payload);
+
+      if (typeof gtag === "function") {
+        gtag('event', 'poorrich_result', {
+          result: finalType,
+          used_tiebreak: tiebreakUsed ? 'yes' : 'no',
+          value: Math.max(...Object.values(scores)) || 0
+        });
+      }
+
+      const url = "https://www.survivaloffice.com/api/poorrich/result";
+      const body = JSON.stringify(payload);
+      if (navigator.sendBeacon) {
+        const blob = new Blob([body], { type: "application/json" });
+        navigator.sendBeacon(url, blob);
+      } else {
+        fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body,
+          keepalive: true
+        }).catch(() => {});
+      }
+    } catch (e) {
+      console.warn("⚠️ trackResult failed:", e);
+    }
   }
 
   // ---------- 참여자 카운터 ----------
@@ -297,6 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ---------- 공유 & 다시하기 ----------
   const shareBtnEl   = document.getElementById("share-kakao");
   const restartBtnEl = document.getElementById("restart-btn");
+  const bottomActions = document.getElementById("bottom-actions");
 
   async function loadKakaoSDK() {
     return new Promise((resolve, reject) => {
@@ -348,6 +403,11 @@ document.addEventListener("DOMContentLoaded", () => {
   if (restartBtnEl) restartBtnEl.addEventListener("click", () => {
     scores = { ENTJ:0, ESTJ:0, INFP:0, ISFP:0 };
     currentIndex = 0;
+
+    selections.length = 0;
+    tiebreakUsed = false;
+    tiebreakCandidates = [];
+
     resultImage.src = "";
     resultScreen.classList.remove("active");
     quizScreen.classList.remove("active");
