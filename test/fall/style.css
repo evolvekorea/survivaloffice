@@ -1,0 +1,355 @@
+/* 웹폰트 설정 */
+@font-face {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 기본 설정 */
+html, body {
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* 🔥 세로 정렬 */
+    align-items: center; /* 🔥 중앙 정렬 */
+    background-color: white;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+    overflow-x: hidden; /* 🔥 가로 스크롤 막기 (가로 밀림 방지) */
+    overflow-y: auto; /* 🔥 세로 스크롤 가능하게 설정 */
+    height: auto; /* 🔥 전체 페이지 크기에 맞게 설정 */
+    min-height: 100vh; /* 🔥 최소 높이를 화면 크기로 설정 */
+}
+
+#app {
+  width: 360px;
+  height: 550px;
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* 화면 공통 */
+.screen {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+}
+
+.screen.active {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 시작 화면 */
+#start-screen {
+  position: relative;
+}
+
+/* 참여자 수 배지 */
+
+.counter-badge{
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:rgba(0,0,0,.6);
+  color:#fff;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:600;
+  backdrop-filter: blur(2px);
+  pointer-events:none; /* 클릭 방해 방지 */
+}
+
+.background-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.start-btn-container {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+#start-btn {
+  padding: 12px 24px;
+  background-color: #ffffffcc;
+  border: none;
+  border-radius: 24px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 1;
+}
+
+/* 성별 선택 */
+#gender-screen {
+  background-color: #ffe2da;
+}
+
+.gender-container {
+  display: flex;
+  gap: 20px;
+}
+
+.gender-box {
+  width: 120px;
+  height: 150px;
+  border: 2px solid #ffe2da;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.gender-box:hover {
+  background-color: #ddd;
+}
+
+/* 질문 화면 */
+#quiz-screen {
+  background-color: #ffe2da;
+  padding: 20px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.question-box {
+  border: 4px double #888;
+  border-radius: 16px;
+  padding: 16px;
+  margin-top: 30px;          /* 상단 여백 줄이기 */
+  margin-bottom: 20px;       /* 하단 여백 추가 */
+  min-height: 150px;         /* 너무 커지지 않도록 최소 높이만 */
+  width: 90%;
+  font-size: 18px;
+  line-height: 1.5;
+  background-color: #fff;
+  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif; /* ⬅ 폰트 적용 */
+  font-weight: bold;
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 40px;
+  width: 90%;
+}
+
+.choice-btn {
+  padding: 12px;
+  background-color: #ececec;
+  border: 1px solid #999;
+  border-radius: 12px;
+  font-size: 18px;
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.4;
+  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif; /* ⬅ 폰트 적용 */
+}
+
+.choice-btn:hover {
+  background-color: #ddd;
+}
+
+/* 결과 화면 */
+#result-screen {
+  background-color: #fff;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#result-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 비율 유지하면서 채움 */
+}
+
+.ad-container {
+    width: 100%;
+    height: auto; /* 가변 크기 설정 */
+    min-height: 90px; /* 최소 높이 유지 */
+    display: flex; 
+    justify-content: center; /* 중앙 정렬 */
+    align-items: center; /* 광고가 중앙에 위치하도록 설정 */
+    overflow: auto; /* 광고가 넘칠 경우 숨김 */
+    margin-top: 60px; /* 🔥 광고 위아래로 20px 간격 추가 */
+    margin-bottom: 20px; /* 🔥 광고 위아래로 20px 간격 추가 */
+}
+.adsbygoogle {
+    display: block;
+    width: 100%;
+    height: auto !important; /* 광고 높이 자동 조정 */
+}
+
+.footer-ad-container {
+    width: 100%;
+    min-height: 90px; /* 🔥 하단 광고 공간 확보 */
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    margin-top: 30px; /* 🔥 광고 위아래로 20px 간격 추가 */
+}
+
+nav {
+    position: fixed;  /* 🔥 화면 상단에 고정 */
+    top: 0;
+    left: 0;
+    width: 100%;  /* 🔥 전체 너비 사용 */
+    background-color: #f4f4f4;
+    padding: 10px 0;  /* 🔥 위아래 여백 설정 */
+    z-index: 1000;  /* 🔥 다른 요소보다 위로 배치 */
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+    padding-right: 20px; /* 🔥 오른쪽 정렬 시 여백 추가 */
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: rgb(62, 62, 62);
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+}
+
+nav ul li a:hover {
+    background-color: #555;
+    color: white;
+}
+
+#share-kakao {
+  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+  font-size: 20px;
+  text-align: center;
+  display: inline-block; /* 중앙정렬 시 필수 */
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: #fee500; /* 카카오 컬러 느낌 */
+  border: none;
+  cursor: pointer;
+}
+
+#restart-btn {
+  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+  font-size: 20px;
+  text-align: center;
+  display: inline-block; /* 중앙정렬 시 필수 */
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: #ffe2da; 
+  border: none;
+  cursor: pointer;
+}
+
+#bottom-actions {
+  width: 360px;
+  margin: 24px auto;
+  display: flex;
+  flex-wrap: wrap; /* ✅ 자동 줄바꿈 */
+  gap: 8px;
+  justify-content: center;
+}
+
+#bottom-actions button {
+  flex: 1 1 auto; /* ✅ 버튼 크기 유연하게 */
+  min-width: 100px; /* ✅ 너무 작아지지 않게 최소 크기 */
+  text-align: center;
+}
+
+
+/* 진행바 */
+.progress-wrap{
+  display:flex;
+  align-items:center;
+  gap:0px;
+  margin:12px auto 16px;
+  width:100%;
+  max-width:360px;
+  padding: 0 12px;
+}
+
+#progress-track{
+  flex:1;
+  position:relative;     /* ✅ 내부 숫자 중앙 배치용 */
+  height:20px;           /* ↑/↓ 두께는 여기서 조절 */
+  background:#ffffff;
+  border:1.5px solid #ffd1e1;
+  border-radius:999px;
+  overflow:hidden;
+}
+
+/* 채움(분홍) */
+#progress-fill{
+  height:100%;
+  width:0%;
+  background:#ff5fa0;
+  transition:width .25s ease;
+}
+
+#progress-count{
+  position:absolute;
+  inset:0;               /* top:0; right:0; bottom:0; left:0 와 동일 */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:600;
+  color:#333;            /* 분홍/흰색 모두에서 보이는 어두운 색 */
+  text-shadow:0 0 2px rgba(255,255,255,.6); /* 가독성 보조 */
+  pointer-events:none;   /* 클릭 방해 X */
+}
+
+/* Other Test (블루 버튼) */
+#other-test-btn {
+  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+  font-size: 18px;
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(180deg, #BFE4FF 0%, #8DD3FF 100%);
+  color: #08324a;
+  box-shadow: 0 8px 18px rgba(120,198,255,.22);
+  border: 1px solid rgba(80,160,220,.18);
+}
+#other-test-btn:hover {
+  filter: saturate(1.05) brightness(1.04);
+}
