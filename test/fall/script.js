@@ -295,41 +295,83 @@ document.addEventListener("DOMContentLoaded", () => {
 
   restartBtn.addEventListener("click", resetTest);
 
-  // ---------- 카카오 공유 ----------
-  // HTML에서 kakao SDK를 선탑재했으므로 여기서 init만(앱키 교체)
+// ===== Kakao SDK 동적 로더 (한 번만 로드 & 중복 init 방지) =====
+const loadKakaoSDK = (() => {
+  let _promise = null;
+
+  return function loadKakaoSDK() {
+    if (_promise) return _promise;
+
+    _promise = new Promise((resolve, reject) => {
+      // 이미 로드+초기화 돼 있으면 바로 OK
+      if (window.Kakao && window.Kakao.isInitialized && window.Kakao.isInitialized()) {
+        return resolve(window.Kakao);
+      }
+
+      // 스크립트 엘리먼트 동적 삽입
+      const script = document.createElement("script");
+      // 안정 경로(무결성 검사 없음) — 버전 핀 필요하면 t1.kakaocdn 버전 사용 가능
+      script.src = "https://developers.kakao.com/sdk/js/kakao.min.js";
+      script.async = true;
+      script.onload = () => {
+        if (!window.Kakao) return reject(new Error("Kakao 객체가 로드되지 않음"));
+        try {
+          if (!window.Kakao.isInitialized()) {
+            window.Kakao.init("eee6c2e01641161de9f217ba99c6a0da"); // ← 본인 자바스크립트 키
+            console.log("✅ Kakao.init 완료");
+          }
+          resolve(window.Kakao);
+        } catch (e) {
+          reject(e);
+        }
+      };
+      script.onerror = () => reject(new Error("Kakao SDK 로드 실패"));
+      document.head.appendChild(script);
+    });
+
+    return _promise;
+  };
+})();
+
+// ===== 공유 함수 (점수/결과를 받아서 공유) =====
+async function shareKakaoWithScore({ percent, resultName, imageUrl } = {}) {
   try {
-    if (window.Kakao && !Kakao.isInitialized()) {
-      Kakao.init("eee6c2e01641161de9f217ba99c6a0da"); // ← 본인 앱키로 유지/교체
-      console.log("✅ Kakao.init 완료");
-    }
-  } catch (e) {
-    console.warn("⚠️ Kakao SDK 초기화 실패:", e);
-  }
+    const Kakao = await loadKakaoSDK();
 
-  function shareKakaoWithScore() {
-    if (!window.Kakao || !Kakao.isInitialized()) {
-      alert("⚠️ 카카오 공유를 사용할 수 없습니다.");
-      return;
-    }
-
-    const pageUrl = "https://www.survivaloffice.com/test/fall";
-    const desc    = `내 가을 감성 지수는 ${latestPercent}%! ${latestResultName}`;
+    // 페이지/문구 기본값
+    const pageUrl = `${location.origin}/test/fall`;
+    const p = (typeof percent === "number" ? percent : (window.latestPercent ?? 0)) | 0;
+    const name = resultName ?? window.latestResultName ?? "가을 감성";
+    const desc = `내 가을 감성 지수는 ${p}%! ${name}`;
 
     Kakao.Link.sendDefault({
       objectType: "feed",
       content: {
         title: "가을 타나봐 테스트 🍂",
         description: desc,
-        imageUrl: "https://www.survivaloffice.com/images/fall.png",
+        imageUrl: imageUrl || "https://www.survivaloffice.com/images/fall.png",
         link: { mobileWebUrl: pageUrl, webUrl: pageUrl }
       },
       buttons: [
         { title: "나도 해보기", link: { mobileWebUrl: pageUrl, webUrl: pageUrl } }
       ]
     });
+  } catch (e) {
+    console.warn("⚠️ 카카오 공유 실패:", e);
+    alert("카카오 공유를 사용할 수 없습니다.");
   }
+}
 
-  shareBtn.addEventListener("click", shareKakaoWithScore);
+// ===== 버튼 바인딩(존재할 때만) =====
+if (shareBtn) {
+  shareBtn.addEventListener("click", () =>
+    shareKakaoWithScore({
+      percent: window.latestPercent,       // 당신 코드에서 계산/세팅하는 변수 사용
+      resultName: window.latestResultName, // "
+      // imageUrl: 결과별 커버 이미지가 있다면 전달
+    })
+  );
+}
 
   // ---------- 참여자 카운터 (CounterAPI) ----------
   const COUNTER_BASE = "https://api.counterapi.dev/v1";
