@@ -1,355 +1,328 @@
-/* 웹폰트 설정 */
+/* =========================
+   Webfont
+========================= */
 @font-face {
-    font-family: 'GangwonEduSaeeum_OTFMediumA';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'GangwonEduSaeeum_OTFMediumA';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* =========================
+   Design Tokens (Autumn)
+========================= */
+:root{
+  --bg: #fff7ed;                  /* 따뜻한 크림 */
+  --ink: #3a2a25;                 /* 다크 브라운 텍스트 */
+  --card: #fffaf3;                /* 카드 배경 */
+  --muted: #8b6f63;               /* 보조 텍스트 */
+  --accent: #b04a2b;              /* 메인 포인트 (브릭) */
+  --accent-2: #d97706;            /* 포인트2 (호박 오렌지) */
+  --rose: #ab2646;                /* 버건디 */
+  --leaf: #d4a373;                /* 낙엽 베이지 */
+  --line: #ead9c8;                /* 경계선 */
+  --shadow: 0 10px 24px rgba(108,63,39,.12);
+  --radius: 14px;
+  --radius-lg: 18px;
 }
 
-/* 기본 설정 */
-html, body {
-    margin: 0;
-    display: flex;
-    flex-direction: column; /* 🔥 세로 정렬 */
-    align-items: center; /* 🔥 중앙 정렬 */
-    background-color: white;
-    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
-    overflow-x: hidden; /* 🔥 가로 스크롤 막기 (가로 밀림 방지) */
-    overflow-y: auto; /* 🔥 세로 스크롤 가능하게 설정 */
-    height: auto; /* 🔥 전체 페이지 크기에 맞게 설정 */
-    min-height: 100vh; /* 🔥 최소 높이를 화면 크기로 설정 */
-}
+/* =========================
+   Reset & Base
+========================= */
+*{box-sizing:border-box; margin:0; padding:0;}
 
-#app {
-  width: 360px;
-  height: 550px;
-  position: relative;
-  background-color: #fff;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-/* 화면 공통 */
-.screen {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: none;
-}
-
-.screen.active {
-  display: flex !important;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-/* 시작 화면 */
-#start-screen {
-  position: relative;
-}
-
-/* 참여자 수 배지 */
-
-.counter-badge{
-  position:absolute;
-  top:10px;
-  right:10px;
-  background:rgba(0,0,0,.6);
-  color:#fff;
-  padding:6px 10px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:600;
-  backdrop-filter: blur(2px);
-  pointer-events:none; /* 클릭 방해 방지 */
-}
-
-.background-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}
-
-.start-btn-container {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-}
-
-#start-btn {
-  padding: 12px 24px;
-  background-color: #ffffffcc;
-  border: none;
-  border-radius: 24px;
-  font-size: 16px;
-  cursor: pointer;
-  font-weight: bold;
-  z-index: 1;
-}
-
-/* 성별 선택 */
-#gender-screen {
-  background-color: #ffe2da;
-}
-
-.gender-container {
-  display: flex;
-  gap: 20px;
-}
-
-.gender-box {
-  width: 120px;
-  height: 150px;
-  border: 2px solid #ffe2da;
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: bold;
-  background-color: #fff;
-  cursor: pointer;
-}
-
-.gender-box:hover {
-  background-color: #ddd;
-}
-
-/* 질문 화면 */
-#quiz-screen {
-  background-color: #ffe2da;
-  padding: 20px;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.question-box {
-  border: 4px double #888;
-  border-radius: 16px;
-  padding: 16px;
-  margin-top: 30px;          /* 상단 여백 줄이기 */
-  margin-bottom: 20px;       /* 하단 여백 추가 */
-  min-height: 150px;         /* 너무 커지지 않도록 최소 높이만 */
-  width: 90%;
-  font-size: 18px;
-  line-height: 1.5;
-  background-color: #fff;
-  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif; /* ⬅ 폰트 적용 */
-  font-weight: bold;
-}
-
-.choices {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 40px;
-  width: 90%;
-}
-
-.choice-btn {
-  padding: 12px;
-  background-color: #ececec;
-  border: 1px solid #999;
-  border-radius: 12px;
-  font-size: 18px;
-  cursor: pointer;
-  text-align: left;
-  line-height: 1.4;
-  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif; /* ⬅ 폰트 적용 */
-}
-
-.choice-btn:hover {
-  background-color: #ddd;
-}
-
-/* 결과 화면 */
-#result-screen {
-  background-color: #fff;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-#result-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* 비율 유지하면서 채움 */
-}
-
-.ad-container {
-    width: 100%;
-    height: auto; /* 가변 크기 설정 */
-    min-height: 90px; /* 최소 높이 유지 */
-    display: flex; 
-    justify-content: center; /* 중앙 정렬 */
-    align-items: center; /* 광고가 중앙에 위치하도록 설정 */
-    overflow: auto; /* 광고가 넘칠 경우 숨김 */
-    margin-top: 60px; /* 🔥 광고 위아래로 20px 간격 추가 */
-    margin-bottom: 20px; /* 🔥 광고 위아래로 20px 간격 추가 */
-}
-.adsbygoogle {
-    display: block;
-    width: 100%;
-    height: auto !important; /* 광고 높이 자동 조정 */
-}
-
-.footer-ad-container {
-    width: 100%;
-    min-height: 90px; /* 🔥 하단 광고 공간 확보 */
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: auto;
-    margin-top: 30px; /* 🔥 광고 위아래로 20px 간격 추가 */
-}
-
-nav {
-    position: fixed;  /* 🔥 화면 상단에 고정 */
-    top: 0;
-    left: 0;
-    width: 100%;  /* 🔥 전체 너비 사용 */
-    background-color: #f4f4f4;
-    padding: 10px 0;  /* 🔥 위아래 여백 설정 */
-    z-index: 1000;  /* 🔥 다른 요소보다 위로 배치 */
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: flex-end;
-    margin: 0;
-    padding: 0;
-    padding-right: 20px; /* 🔥 오른쪽 정렬 시 여백 추가 */
-}
-
-nav ul li {
-    display: inline;
-}
-
-nav ul li a {
-    color: rgb(62, 62, 62);
-    text-decoration: none;
-    padding: 8px 12px;
-    font-size: 14px;
-    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
-}
-
-nav ul li a:hover {
-    background-color: #555;
-    color: white;
-}
-
-#share-kakao {
-  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
-  font-size: 20px;
-  text-align: center;
-  display: inline-block; /* 중앙정렬 시 필수 */
-  padding: 10px 20px;
-  border-radius: 10px;
-  background-color: #fee500; /* 카카오 컬러 느낌 */
-  border: none;
-  cursor: pointer;
-}
-
-#restart-btn {
-  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
-  font-size: 20px;
-  text-align: center;
-  display: inline-block; /* 중앙정렬 시 필수 */
-  padding: 10px 20px;
-  border-radius: 10px;
-  background-color: #ffe2da; 
-  border: none;
-  cursor: pointer;
-}
-
-#bottom-actions {
-  width: 360px;
-  margin: 24px auto;
-  display: flex;
-  flex-wrap: wrap; /* ✅ 자동 줄바꿈 */
-  gap: 8px;
-  justify-content: center;
-}
-
-#bottom-actions button {
-  flex: 1 1 auto; /* ✅ 버튼 크기 유연하게 */
-  min-width: 100px; /* ✅ 너무 작아지지 않게 최소 크기 */
-  text-align: center;
-}
-
-
-/* 진행바 */
-.progress-wrap{
+html, body{
+  margin:0;
   display:flex;
+  flex-direction:column;
   align-items:center;
-  gap:0px;
-  margin:12px auto 16px;
-  width:100%;
-  max-width:360px;
-  padding: 0 12px;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #ffe9c7 0%, transparent 60%),
+    radial-gradient(1000px 500px at 110% 10%, #ffe1d2 0%, transparent 55%),
+    var(--bg);
+  color:var(--ink);
+  font-family:'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+  overflow-x:hidden;
+  overflow-y:auto;
+  min-height:100vh;
 }
 
-#progress-track{
-  flex:1;
-  position:relative;     /* ✅ 내부 숫자 중앙 배치용 */
-  height:20px;           /* ↑/↓ 두께는 여기서 조절 */
-  background:#ffffff;
-  border:1.5px solid #ffd1e1;
-  border-radius:999px;
+/* 살짝 그레인 텍스처 */
+body::after{
+  content:"";
+  position:fixed; inset:0;
+  pointer-events:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' opacity='0.07'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect filter='url(%23n)' width='100%' height='100%' fill='white'/></svg>");
+  mix-blend-mode:multiply;
+}
+
+/* =========================
+   Top Nav
+========================= */
+nav{
+  position:fixed;
+  top:0; left:0; width:100%;
+  background:linear-gradient(180deg, #fff2e0, #ffeede);
+  border-bottom:1px solid var(--line);
+  z-index:1000;
+  backdrop-filter:saturate(1.05) blur(2px);
+}
+nav ul{
+  list-style:none; display:flex; justify-content:flex-end;
+  gap:4px; padding:10px 16px;
+}
+nav ul li a{
+  color:var(--ink); text-decoration:none; font-size:14px;
+  padding:8px 12px; border-radius:999px;
+}
+nav ul li a:hover{
+  background:rgba(208,129,73,.12);
+}
+
+/* 상단 고정으로 인해 본문 상단 여백 확보 */
+.ad-container{ margin-top:64px; }
+
+/* =========================
+   App Shell
+========================= */
+#app{
+  width:360px; height:550px; position:relative;
+  background:linear-gradient(180deg, #fffaf5 0%, #fff4e8 100%);
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow);
   overflow:hidden;
 }
 
-/* 채움(분홍) */
+/* 공통 Screen */
+.screen{
+  width:100%; height:100%;
+  position:absolute; inset:0;
+  display:none;
+}
+.screen.active{
+  display:flex !important;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+/* =========================
+   Start Screen
+========================= */
+#start-screen{ position:relative; }
+
+.background-img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  filter:saturate(0.95) contrast(1.02);
+}
+
+.counter-badge{
+  position:absolute; top:12px; right:12px;
+  background:rgba(58,42,37,.72);
+  color:#fff; padding:6px 10px; border-radius:999px;
+  font-size:12px; font-weight:700;
+  backdrop-filter: blur(3px);
+  pointer-events:none;
+  box-shadow:0 4px 12px rgba(0,0,0,.12);
+}
+
+.start-btn-container{
+  position:absolute; left:50%; bottom:40px; transform:translateX(-50%);
+  z-index:1;
+}
+#start-btn{
+  padding:12px 24px; border:none; cursor:pointer; font-weight:800; font-size:16px;
+  border-radius:999px;
+  color:#fff;
+  background:
+    linear-gradient(180deg, #cf6a2f 0%, #b04a2b 100%);
+  box-shadow: 0 10px 18px rgba(176,74,43,.25);
+  transition: transform .05s ease, filter .2s ease;
+}
+#start-btn:hover{ filter:brightness(1.05) saturate(1.05); }
+#start-btn:active{ transform: translateY(1px) scale(.99); }
+
+/* =========================
+   Gender Screen
+========================= */
+#gender-screen{ 
+  background: linear-gradient(180deg, #ffe9d6 0%, #ffe2d0 100%); 
+}
+.gender-container{
+  display:flex; gap:16px;
+}
+.gender-box{
+  width:120px; height:150px; cursor:pointer;
+  border:1.5px solid var(--line); border-radius:var(--radius);
+  background:linear-gradient(180deg, #fffefb, #fff3e6);
+  box-shadow: 0 8px 18px rgba(120,60,32,.10);
+  font-size:18px; font-weight:800; color:var(--ink);
+  transition: transform .08s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.gender-box:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 12px 22px rgba(120,60,32,.14);
+  border-color:#e9c7a7;
+}
+
+/* =========================
+   Quiz Screen
+========================= */
+#quiz-screen{
+  background:linear-gradient(180deg, #ffe7cf 0%, #ffe0c7 100%);
+  padding:18px 16px;
+  justify-content:space-between; align-items:center;
+}
+
+/* 진행바 */
+.progress-wrap{
+  display:flex; align-items:center; gap:8px;
+  margin:8px auto 10px; width:100%; max-width:360px; padding:0 4px;
+}
+#progress-track{
+  flex:1; position:relative; height:18px;
+  background:#fff5ea; border:1.5px solid #efcfb6; border-radius:999px; overflow:hidden;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.04);
+}
 #progress-fill{
-  height:100%;
-  width:0%;
-  background:#ff5fa0;
+  height:100%; width:0%;
+  background:linear-gradient(90deg, #f59f0b, #d97706);
   transition:width .25s ease;
 }
-
 #progress-count{
-  position:absolute;
-  inset:0;               /* top:0; right:0; bottom:0; left:0 와 동일 */
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:12px;
-  font-weight:600;
-  color:#333;            /* 분홍/흰색 모두에서 보이는 어두운 색 */
-  text-shadow:0 0 2px rgba(255,255,255,.6); /* 가독성 보조 */
-  pointer-events:none;   /* 클릭 방해 X */
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:700; color:#5b463f;
+  text-shadow:0 1px 0 rgba(255,255,255,.65);
+  pointer-events:none;
 }
 
-/* Other Test (블루 버튼) */
-#other-test-btn {
-  font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
-  font-size: 18px;
-  display: inline-block;
-  padding: 10px 18px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  background: linear-gradient(180deg, #BFE4FF 0%, #8DD3FF 100%);
-  color: #08324a;
-  box-shadow: 0 8px 18px rgba(120,198,255,.22);
-  border: 1px solid rgba(80,160,220,.18);
+/* 질문 카드 */
+.question-box{
+  width:92%;
+  border:1.5px solid var(--line);
+  border-radius:20px;
+  padding:16px 14px;
+  min-height:150px;
+  margin:18px 0 14px;
+  font-size:18px; line-height:1.55; font-weight:800;
+  background:
+    radial-gradient(600px 300px at 10% -20%, #fff1df 0%, transparent 60%),
+    radial-gradient(600px 300px at 110% 0%, #ffeede 0%, transparent 55%),
+    var(--card);
+  box-shadow: var(--shadow);
+  color:var(--ink);
 }
-#other-test-btn:hover {
-  filter: saturate(1.05) brightness(1.04);
+
+/* 선택지 */
+.choices{
+  display:flex; flex-direction:column; gap:12px;
+  margin-bottom:28px; width:92%;
+}
+.choice-btn{
+  padding:12px 12px; cursor:pointer; text-align:left;
+  font-size:18px; line-height:1.45; font-weight:700;
+  border-radius:14px; border:1.5px solid #e8cdb8;
+  background:
+    linear-gradient(180deg, #fffefd 0%, #fff5eb 100%);
+  color:#3f302b;
+  box-shadow: 0 6px 14px rgba(140,70,40,.10);
+  transition: transform .05s ease, filter .2s ease, border-color .2s ease;
+}
+.choice-btn:hover{
+  filter:brightness(1.03);
+  border-color:#e3b896;
+}
+.choice-btn:active{
+  transform: translateY(1px) scale(.995);
+}
+
+/* =========================
+   Result Screen
+========================= */
+#result-screen{
+  background:linear-gradient(180deg, #fff3e3 0%, #ffe9d0 100%);
+  justify-content:center; align-items:center;
+  padding:10px;
+}
+#result-image{
+  width:100%; height:100%; object-fit:cover;
+  border-radius: 8px;
+  border:1px solid var(--line);
+  box-shadow: 0 12px 26px rgba(120,60,32,.15);
+}
+
+/* =========================
+   Bottom Actions
+========================= */
+#bottom-actions{
+  width:360px; margin:24px auto;
+  display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+}
+#bottom-actions button{
+  flex:1 1 auto; min-width:110px; text-align:center;
+}
+
+/* Kakao */
+#share-kakao{
+  font-family:'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+  font-size:18px; padding:10px 20px; border-radius:12px; border:none; cursor:pointer;
+  background:#fee500; color:#1c1207; font-weight:800;
+  box-shadow: 0 8px 18px rgba(185,140,0,.22);
+}
+#share-kakao:hover{ filter:brightness(1.03); }
+
+/* Restart */
+#restart-btn{
+  font-family:'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+  font-size:18px; padding:10px 20px; border-radius:12px; border:none; cursor:pointer;
+  background: linear-gradient(180deg, #ffd9c7 0%, #ffc9b3 100%);
+  color:#5a2f24; font-weight:800;
+  box-shadow: 0 8px 18px rgba(176,74,43,.15);
+}
+#restart-btn:hover{ filter:brightness(1.04); }
+
+/* Other Test */
+#other-test-btn{
+  font-family:'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+  font-size:18px; padding:10px 18px; border-radius:12px; border:none; cursor:pointer;
+  background: linear-gradient(180deg, #cfe8ff 0%, #9fd5ff 100%);
+  color:#08324a; box-shadow:0 8px 18px rgba(120,198,255,.22);
+  border:1px solid rgba(80,160,220,.18);
+}
+#other-test-btn:hover{ filter:saturate(1.05) brightness(1.05); }
+
+/* =========================
+   Ads
+========================= */
+.ad-container,
+.footer-ad-container{
+  width:100%; min-height:90px; height:auto;
+  display:flex; justify-content:center; align-items:center;
+  overflow:auto;
+}
+.footer-ad-container{ margin-top:30px; }
+.adsbygoogle{ display:block; width:100%; height:auto !important; }
+
+/* =========================
+   Small leaf corners (optional)
+========================= */
+#app::before, #app::after{
+  content:"";
+  position:absolute; width:100px; height:100px; z-index:0; opacity:.18;
+  background: radial-gradient(circle at 30% 30%, var(--leaf), transparent 60%);
+  filter: blur(1px);
+}
+#app::before{ top:-18px; left:-18px; border-top-left-radius:var(--radius-lg); }
+#app::after{ bottom:-18px; right:-18px; border-bottom-right-radius:var(--radius-lg); }
+
+/* =========================
+   Accessibility tweaks
+========================= */
+[role="progressbar"]{ outline:none; }
+button:focus-visible{
+  outline:2px solid var(--rose);
+  outline-offset:3px;
 }

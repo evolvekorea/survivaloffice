@@ -1,162 +1,210 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>가을 타나봐 테스트</title>
-    <meta name="description" content="나 가을 타나봐~ 테스트">
-    <meta name="keywords" content="가을, 가을테스트, fall, 가을타나봐, 환절기, 가을타나봐테스트, 성격테스트, 심리테스트, MBTI, 서바이벌오피스">
-    
-    <!-- Google Adsense 코드 -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537"
-    crossorigin="anonymous"></script>
-    <meta name="google-adsense-account" content="ca-pub-4957586937754537">  
-    
-    <!-- Google Analytics 코드 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-G4TPWGLYLY');
-    </script>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
+  <title>가을 타나봐 테스트</title>
+  <meta name="description" content="나 가을 타나봐~ 테스트" />
+  <meta
+    name="keywords"
+    content="가을, 가을테스트, fall, 가을타나봐, 환절기, 가을타나봐테스트, 성격테스트, 심리테스트, MBTI, 서바이벌오피스"
+  />
+  <meta name="theme-color" content="#fffaf4" />
 
-    <!-- Open Graph 메타태그 -->
-    <meta property="og:title" content="가을 타나봐 테스트" />
-    <meta property="og:description" content="나 가을 타나봐~ 테스트" />
-    <meta property="og:url" content="https://www.survivaloffice.com/test/fall" />
-    <meta property="og:image" content="https://www.survivaloffice.com/images/fall.png" />
-    <meta property="og:type" content="website" />
-    
-    <!-- 초기 핸드셰이크 시간 감소 -->
-    <link rel="preconnect" href="https://api.counterapi.dev" crossorigin>
-    <link rel="dns-prefetch" href="https://api.counterapi.dev">
+  <!-- Canonical -->
+  <link rel="canonical" href="https://www.survivaloffice.com/test/fall" />
 
-    <!-- CSS 스타일시트 추가 -->
-    <link rel="stylesheet" href="style.css">
-    </head>
-    
-    <body oncontextmenu="return false">
+  <!-- Open Graph -->
+  <meta property="og:title" content="가을 타나봐 테스트" />
+  <meta property="og:description" content="나 가을 타나봐~ 테스트" />
+  <meta property="og:url" content="https://www.survivaloffice.com/test/fall" />
+  <meta property="og:image" content="https://www.survivaloffice.com/images/fall.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
 
-        <nav>
-            <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/rest/">미니게임</a></li>
-              <li><a href="/test/">테스트</a></li>
-              <li><a href="/work/">생존키트</a></li>
-            </ul>
-        </nav>
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
 
-        <!-- 상단 광고 -->
-        <div class="ad-container">
-            <ins class="adsbygoogle"
-                style="display:block; min-height: 90px;"
-                data-ad-client="ca-pub-4957586937754537"
-                data-ad-slot="9240598215"
-                data-ad-format="auto"
-                data-full-width-responsive="true"></ins>
-        </div>
+  <!-- 초기 핸드셰이크 시간 감소 -->
+  <link rel="preconnect" href="https://api.counterapi.dev" crossorigin />
+  <link rel="dns-prefetch" href="https://api.counterapi.dev" />
 
+  <!-- 시작 이미지 프리로드 -->
+  <link rel="preload" as="image" href="https://www.survivaloffice.com/images/fall.png" />
 
-  <div id="app">
+  <!-- Google Adsense -->
+  <script
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537"
+    crossorigin="anonymous"
+  ></script>
+  <meta name="google-adsense-account" content="ca-pub-4957586937754537" />
 
-    <!-- 1. 시작 화면 -->
-    <div id="start-screen" class="screen active">
-      <img src="https://www.survivaloffice.com/images/fall.png" alt="시작화면 배경" class="background-img" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-G4TPWGLYLY");
+  </script>
 
-    <!-- ✅ 참여자 수 배지 (CountAPI용 데이터 속성 포함) -->
-    <div id="test-counter"
-     class="counter-badge"
-     data-counter-namespace="survivaloffice"
-     data-counter-key="fall">
-      총 0명 참여
-    </div>
+  <!-- Kakao SDK (공유 버튼용) - init은 script.js에서 -->
+  <script
+    src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
+    integrity="sha384-9NvYwJt+o3v8ocxV3x5XnJH2Rr7zqgO3vQhVnqW2/5V0n8sXl3D2Qh2M6qS3q3kM"
+    crossorigin="anonymous"
+  ></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body oncontextmenu="return false">
+  <nav aria-label="주요 메뉴">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/rest/">미니게임</a></li>
+      <li><a href="/test/">테스트</a></li>
+      <li><a href="/work/">생존키트</a></li>
+    </ul>
+  </nav>
+
+  <!-- 상단 광고 (CLS 방지 위해 최소 높이 유지) -->
+  <div class="ad-container" role="complementary" aria-label="상단 광고">
+    <ins
+      class="adsbygoogle"
+      style="display:block; min-height: 90px;"
+      data-ad-client="ca-pub-4957586937754537"
+      data-ad-slot="9240598215"
+      data-ad-format="auto"
+      data-full-width-responsive="true"
+    ></ins>
+  </div>
+
+  <div id="app" aria-live="polite">
+    <!-- 1) 시작 화면 -->
+    <section id="start-screen" class="screen active" aria-label="시작 화면">
+      <img
+        src="https://www.survivaloffice.com/images/fall.png"
+        width="360"
+        height="240"
+        alt="테스트 시작 이미지"
+        class="background-img"
+        decoding="async"
+        loading="eager"
+      />
+
+      <!-- 참여자 수 배지 -->
+      <div
+        id="test-counter"
+        class="counter-badge"
+        data-counter-namespace="survivaloffice"
+        data-counter-key="fall"
+        aria-live="polite"
+      >
+        총 0명 참여
+      </div>
 
       <div class="start-btn-container">
-        <button id="start-btn">테스트 하기</button>
+        <button id="start-btn" type="button" class="primary">테스트 하기</button>
       </div>
-    </div>
+    </section>
 
-    <!-- 2. 성별 선택 화면 -->
-    <div id="gender-screen" class="screen">
-      <div class="gender-container">
-        <button id="male-btn" class="gender-box">👨 남자</button>
-        <button id="female-btn" class="gender-box">👩 여자</button>
+    <!-- 2) 성별 선택 -->
+    <section id="gender-screen" class="screen" aria-label="성별 선택">
+      <div class="gender-container" role="group" aria-label="성별 선택 그룹">
+        <button id="male-btn" type="button" class="gender-box">👨 남자</button>
+        <button id="female-btn" type="button" class="gender-box">👩 여자</button>
       </div>
-    </div>
+    </section>
 
-    <!-- 3. 질문 화면 -->
-    <div id="quiz-screen" class="screen">
-      
+    <!-- 3) 질문 화면 -->
+    <section id="quiz-screen" class="screen" aria-label="질문 화면">
       <!-- 진행바 -->
-    <div class="progress-wrap" aria-label="진행도">
-      <div id="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
-        <div id="progress-fill"></div>
-        <!-- ✅ 숫자를 트랙 내부로 -->
-        <div id="progress-count" aria-hidden="true">0 / 10</div>
+      <div class="progress-wrap" aria-label="진행도">
+        <div
+          id="progress-track"
+          role="progressbar"
+          aria-valuemin="0"
+          aria-valuemax="10"
+          aria-valuenow="0"
+          aria-label="문항 진행도"
+        >
+          <div id="progress-fill"></div>
+          <div id="progress-count" aria-hidden="true">0 / 10</div>
+        </div>
       </div>
-    </div>
 
       <div class="question-box">
         <p id="question-text"></p>
       </div>
-      <div class="choices">
-        <button id="choice-a" class="choice-btn"></button>
-        <button id="choice-b" class="choice-btn"></button>
+
+      <div class="choices" role="group" aria-label="선택지">
+        <!-- 기본값 O/X (script.js에서 텍스트 교체 가능) -->
+        <button id="choice-a" type="button" class="choice-btn">O</button>
+        <button id="choice-b" type="button" class="choice-btn">X</button>
       </div>
-    </div>
+    </section>
 
-    <!-- 4. 결과 화면 -->
-    <div id="result-screen" class="screen">
+    <!-- 4) 결과 화면 -->
+    <section id="result-screen" class="screen" aria-label="결과 화면">
       <img id="result-image" src="" alt="결과 이미지" />
-    </div>
-
-  </div>
-  <!-- 하단 액션 영역 (테스트 영역 밖) -->
-  <div id="bottom-actions" style="display: none;">
-    <button id="share-kakao">
-      공유하기
-    </button>
-    <button id="restart-btn">
-      다시하기
-    </button>
-    <button id="other-test-btn" onclick="location.href='https://survivaloffice.com/test'">
-    다른 테스트 하기
-    </button>
+    </section>
   </div>
 
+  <!-- 하단 액션 영역 -->
+  <div id="bottom-actions" style="display:none;">
+    <button id="share-kakao" type="button">공유하기</button>
+    <button id="restart-btn" type="button">다시하기</button>
+    <button id="other-test-btn" type="button" onclick="location.href='https://survivaloffice.com/test'">
+      다른 테스트 하기
+    </button>
+  </div>
 
   <!-- 하단 광고 -->
-  <div class="footer-ad-container">
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4957586937754537" data-ad-slot="9931828353" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <div class="footer-ad-container" role="complementary" aria-label="하단 광고">
+    <ins
+      class="adsbygoogle"
+      style="display:block; min-height: 90px;"
+      data-ad-client="ca-pub-4957586937754537"
+      data-ad-slot="9931828353"
+      data-ad-format="auto"
+      data-full-width-responsive="true"
+    ></ins>
   </div>
 
   <!-- 스크립트 -->
   <script type="module" src="script.js"></script>
   <script>
     document.addEventListener("contextmenu", e => e.preventDefault());
-        document.addEventListener("DOMContentLoaded", () => {
-            console.log("애드센스 광고 로드 실행");
-
-            try {
-                // 상단 광고만 push
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                
-                // 하단 광고는 DOM에 충분히 렌더링된 후 push
-                window.addEventListener("load", () => {
-                    console.log("하단 광고 로드 실행");
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                });
-            } catch (e) {
-                console.error("애드센스 광고 로드 실패:", e);
-            }
+    document.addEventListener("DOMContentLoaded", () => {
+      try {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        window.addEventListener("load", () => {
+          (adsbygoogle = window.adsbygoogle || []).push({});
         });
-        </script>  
+      } catch (e) {
+        console.error("애드센스 광고 로드 실패:", e);
+      }
+    });
+  </script>
 
-
+  <!-- 쿠팡 파트너스 -->
   <script src="https://ads-partners.coupang.com/g.js"></script>
   <script>
-    new PartnersCoupang.G({ id: 810614, trackingCode: "AF4453761", subId: null, template: "carousel", width: "360", height: "100" });
+    new PartnersCoupang.G({
+      id: 810614,
+      trackingCode: "AF4453761",
+      subId: null,
+      template: "carousel",
+      width: "360",
+      height: "100"
+    });
   </script>
 </body>
 </html>
