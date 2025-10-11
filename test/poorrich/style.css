@@ -56,7 +56,9 @@ html, body {
    Navigation
 ========================= */
 nav {
-  position: fixed; top: 0; left: 0; width: 100%;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
   background: #ffffff;
   border-bottom: 1px solid var(--line);
   z-index: 1000;
@@ -66,8 +68,10 @@ nav ul {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
+  margin: 0;
   padding: 10px 20px;
 }
+nav ul li { display: inline; }
 nav ul li a {
   color: var(--ink);
   text-decoration: none;
@@ -75,7 +79,10 @@ nav ul li a {
   font-size: 14px;
   border-radius: 10px;
 }
-nav ul li a:hover { background: #f2f6ff; color: #0b67c6; }
+nav ul li a:hover {
+  background: #f2f6ff;
+  color: #0b67c6;
+}
 
 /* 상단 네비로 가려지는 것 방지 */
 .ad-container { margin-top: 60px; }

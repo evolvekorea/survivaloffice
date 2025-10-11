@@ -59,29 +59,36 @@ body::after{
 }
 
 /* =========================
-   Top Nav
+   Navigation
 ========================= */
-nav{
-  position:sticky;
-  top:0;
-  align-self:stretch;
-  width:100%;
+nav {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
   background:linear-gradient(180deg, #fff2e0, #ffeede);
-  border-bottom:1px solid var(--line);
-  z-index:1000;
-  backdrop-filter:saturate(1.05) blur(2px);
+  border-bottom: 1px solid var(--line);
+  z-index: 1000;
 }
-nav ul{
-  list-style:none; display:flex; justify-content:flex-end;
-  gap:4px; padding:10px 16px;
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 20px;
 }
-nav ul li a{
-  color:var(--ink); text-decoration:none; font-size:15px;
-  padding:8px 12px; border-radius:999px;
+nav ul li { display: inline; }
+nav ul li a {
+  color: var(--ink);
+  text-decoration: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 10px;
 }
-nav ul li a:hover{
+nav ul li a:hover {
   background:rgba(208,129,73,.12);
 }
+
 
 /* 상단 고정으로 인해 본문 상단 여백 확보 */
 .ad-container{ margin-top:18px; }
