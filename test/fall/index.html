@@ -153,7 +153,23 @@
 
     <!-- 4) 결과 화면 -->
     <section id="result-screen" class="screen" aria-label="결과 화면">
-      <img id="result-image" src="" alt="결과 이미지" />
+      <article class="result-card">
+        <header class="result-header">
+          <h2 id="result-title">가을 지수</h2>
+          <div class="result-score-wrap">
+            <div id="result-percent" class="result-percent" aria-live="polite">0%</div>
+            <div class="result-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div id="result-bar-fill"></div>
+            </div>
+          </div>
+        </header>
+        <section class="result-body">
+          <h3 id="result-name" class="result-name">가을 감성 수줍은 다람쥐</h3>
+          <p id="result-description" class="result-description">
+            점수를 확인하면 가을 감성에 딱 맞는 설명이 여기에 표시됩니다.
+          </p>
+        </section>
+      </article>
     </section>
   </div>
 

@@ -15,7 +15,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const questionText = document.getElementById("question-text");
   const choiceA = document.getElementById("choice-a"); // O
   const choiceB = document.getElementById("choice-b"); // X
-  const resultImage = document.getElementById("result-image");
+
+  // 결과 영역
+  const resultTitleEl       = document.getElementById("result-title");
+  const resultPercentEl     = document.getElementById("result-percent");
+  const resultBarFillEl     = document.getElementById("result-bar-fill");
+  const resultBarEl         = document.querySelector(".result-bar");
+  const resultNameEl        = document.getElementById("result-name");
+  const resultDescriptionEl = document.getElementById("result-description");
 
   // 진행바
   const progressFill  = document.getElementById("progress-fill");
@@ -62,8 +69,61 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentIndex = 0;             // 0..9
   let yesCount = 0;                 // O=1, X=0
   let latestPercent = 0;            // 결과 공유에 사용
+  let latestResultName = "";       // 공유용 결과 이름
 
   const TOTAL = 10;
+
+  const RESULT_TITLES = {
+    male: "가을 남자 지수",
+    female: "가을 여자 지수"
+  };
+
+  const RESULT_CONTENT = {
+    male: {
+      "0-20": {
+        name: "바람 안 타는 단풍 방패",
+        description: "아직은 가을 감성보다 현실력이 앞서네요. 건조해지는 날씨만 잘 관리하면 이번 시즌도 안정적으로 지나갈 수 있어요."
+      },
+      "30-40": {
+        name: "선선바람 적응 중 드라이버",
+        description: "가끔 스며드는 쓸쓸함을 드라이브나 산책으로 날려보내는 타입! 몸을 조금만 더 움직이면 가을 무드가 즐거움으로 바뀔 거예요."
+      },
+      "50-60": {
+        name: "감성 충전 낙엽 수집가",
+        description: "가을 감성에 슬슬 물드는 중입니다. 취미 생활이나 음악 플레이리스트에 감미로운 곡을 추가하면 기분 좋은 감성 파도가 와요."
+      },
+      "70-80": {
+        name: "가을 무드 한잔 브루마스터",
+        description: "낮에는 현실, 밤에는 감성으로 꽉 채운 스타일! 따뜻한 커피 한 잔과 플레이리스트로 스스로를 달래는 능력이 탁월합니다."
+      },
+      "90-100": {
+        name: "감성 폭발 노을 장인",
+        description: "주황빛 노을만 봐도 마음이 흔들리는 진성 가을러. 낙엽 밟는 소리 하나에도 의미를 부여하는 섬세함이 매력 포인트예요."
+      }
+    },
+    female: {
+      "0-20": {
+        name: "봄기운 품은 선선 요정",
+        description: "가을보다는 아직 밝고 상큼한 에너지가 강하네요. 계절이 바뀌어도 페이스를 잃지 않는 균형감이 돋보여요."
+      },
+      "30-40": {
+        name: "감성 대기 중 살랑 산들바람",
+        description: "살짝 찾아온 감성 바람을 즐길 준비가 되어 있어요. 일기 쓰기나 향기로운 티타임으로 마음을 천천히 데워보세요."
+      },
+      "50-60": {
+        name: "낭만 충전 단풍 러버",
+        description: "가을 감성에 반쯤 잠긴 상태! 좋아하는 영화나 음악과 함께라면 더욱 풍성한 낭만을 즐길 수 있답니다."
+      },
+      "70-80": {
+        name: "코지 무드 인생 편집장",
+        description: "따뜻한 담요와 감성 플레이리스트로 하루를 편집하듯 꾸미는 능력자예요. 주변 사람들도 당신 덕분에 포근함을 느껴요."
+      },
+      "90-100": {
+        name: "가을 드라마 주연 배우",
+        description: "하늘빛, 공기, 향기 모두가 당신을 위한 배경음악처럼 느껴지는 순간! 가을 감성의 주인공다운 감수성이 반짝입니다."
+      }
+    }
+  };
 
   // ---------- 진행바 업데이트 ----------
   function updateProgress() {
@@ -158,23 +218,13 @@ document.addEventListener("DOMContentLoaded", () => {
     return "90-100";
   }
 
-  // 결과 이미지(성별/구간) — 파일명은 필요에 맞게 교체해서 사용
-  const RESULT_IMAGES = {
-    male: {
-      "0-20":  "https://www.survivaloffice.com/images/fall_m_20.png",
-      "30-40": "https://www.survivaloffice.com/images/fall_m_40.png",
-      "50-60": "https://www.survivaloffice.com/images/fall_m_60.png",
-      "70-80": "https://www.survivaloffice.com/images/fall_m_80.png",
-      "90-100":"https://www.survivaloffice.com/images/fall_m_100.png"
-    },
-    female: {
-      "0-20":  "https://www.survivaloffice.com/images/fall_f_20.png",
-      "30-40": "https://www.survivaloffice.com/images/fall_f_40.png",
-      "50-60": "https://www.survivaloffice.com/images/fall_f_60.png",
-      "70-80": "https://www.survivaloffice.com/images/fall_f_80.png",
-      "90-100":"https://www.survivaloffice.com/images/fall_f_100.png"
-    }
-  };
+  function getResultContent(gender, bucket) {
+    const fallback = {
+      name: "가을 감성 여행자",
+      description: "점수에 맞는 재미난 가을 별명이 곧 도착합니다!"
+    };
+    return RESULT_CONTENT[gender]?.[bucket] || fallback;
+  }
 
   // ---------- 결과 표시 ----------
   function showResult() {
@@ -182,14 +232,30 @@ document.addEventListener("DOMContentLoaded", () => {
     const bKey = bucketKey(latestPercent);
     const genderKey = selectedGender || "male";
 
-    const src =
-      (RESULT_IMAGES[genderKey] && RESULT_IMAGES[genderKey][bKey]) ||
-      "https://www.survivaloffice.com/images/fall.png"; // 폴백
+    const { name, description } = getResultContent(genderKey, bKey);
+    latestResultName = name;
+
+    if (resultTitleEl) {
+      resultTitleEl.textContent = RESULT_TITLES[genderKey] || "가을 지수";
+    }
+    if (resultPercentEl) {
+      resultPercentEl.textContent = `${latestPercent}%`;
+    }
+    if (resultBarFillEl) {
+      resultBarFillEl.style.width = `${latestPercent}%`;
+    }
+    if (resultBarEl) {
+      resultBarEl.setAttribute("aria-valuenow", String(latestPercent));
+    }
+    if (resultNameEl) {
+      resultNameEl.textContent = name;
+    }
+    if (resultDescriptionEl) {
+      resultDescriptionEl.textContent = description;
+    }
 
     console.log(`🏁 완료: yes=${yesCount}/${TOTAL} → ${latestPercent}% → bucket=${bKey}`);
-    console.log("🖼 결과 이미지:", src);
 
-    resultImage.src = src;
     goTo(quizScreen, resultScreen);
     bottomActions.style.display = "flex";
   }
@@ -202,12 +268,20 @@ document.addEventListener("DOMContentLoaded", () => {
     currentIndex = 0;
     yesCount = 0;
     latestPercent = 0;
+    latestResultName = "";
 
-    // 이미지/진행바 초기화
-    resultImage.src = "";
+    // 진행바/결과 초기화
     if (progressFill)  progressFill.style.width = "0%";
     if (progressTrack) progressTrack.setAttribute("aria-valuenow", "0");
     if (progressCount) progressCount.textContent = `0 / ${TOTAL}`;
+    if (resultPercentEl) resultPercentEl.textContent = "0%";
+    if (resultBarFillEl) resultBarFillEl.style.width = "0%";
+    if (resultBarEl) resultBarEl.setAttribute("aria-valuenow", "0");
+    if (resultTitleEl) resultTitleEl.textContent = "가을 지수";
+    if (resultNameEl) resultNameEl.textContent = "가을 감성 수줍은 다람쥐";
+    if (resultDescriptionEl) {
+      resultDescriptionEl.textContent = "점수를 확인하면 가을 감성에 딱 맞는 설명이 여기에 표시됩니다.";
+    }
 
     // 화면: 시작으로
     resultScreen.classList.remove("active");
@@ -239,15 +313,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const pageUrl = "https://www.survivaloffice.com/test/fall";
-    const imgUrl  = resultImage?.src || "https://www.survivaloffice.com/images/fall.png";
-    const desc    = `내 가을 감성 점수는 ${latestPercent}%!`;
+    const desc    = `내 가을 감성 지수는 ${latestPercent}%! ${latestResultName}`;
 
     Kakao.Link.sendDefault({
       objectType: "feed",
       content: {
         title: "가을 타나봐 테스트 🍂",
         description: desc,
-        imageUrl: imgUrl,
+        imageUrl: "https://www.survivaloffice.com/images/fall.png",
         link: { mobileWebUrl: pageUrl, webUrl: pageUrl }
       },
       buttons: [
