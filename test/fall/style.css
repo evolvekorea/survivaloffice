@@ -89,15 +89,15 @@ nav ul li a:hover{
 /* =========================
    App Shell
 ========================= */
-#app{
-  width:var(--frame-width);
-  height:var(--frame-height);
-  position:relative;
-  background:linear-gradient(180deg, #fffaf5 0%, #fff4e8 100%);
-  border:1px solid var(--line);
-  border-radius:var(--radius-lg);
-  box-shadow:var(--shadow);
-  overflow:hidden;
+#app {
+  width: 360px;
+  height: 550px;
+  position: relative;
+  background: var(--panel);
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--line);
 }
 
 /* 공통 Screen */

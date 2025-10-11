@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentIndex = 0;             // 0..9
   let yesCount = 0;                 // O=1, X=0
   let latestPercent = 0;            // 결과 공유에 사용
-  let latestResultName = "";       // 공유용 결과 이름
+  let latestResultName = "";        // 공유용 결과 이름
 
   const TOTAL = 10;
 
@@ -183,9 +183,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!q) return;
     updateProgress();
     questionText.textContent = q;
-
-    // O/X 텍스트는 버튼에 이미 들어가 있으니 그대로 사용
-    // 필요시 스타일만 상태로 바꾸면 됨
   }
 
   // ---------- 응답 처리 ----------
@@ -234,6 +231,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const { name, description } = getResultContent(genderKey, bKey);
     latestResultName = name;
+
+    // 외부 접근이 필요할 수도 있으니 window에도 동기화(옵션)
+    window.latestPercent = latestPercent;
+    window.latestResultName = latestResultName;
 
     if (resultTitleEl) {
       resultTitleEl.textContent = RESULT_TITLES[genderKey] || "가을 지수";
@@ -295,83 +296,106 @@ document.addEventListener("DOMContentLoaded", () => {
 
   restartBtn.addEventListener("click", resetTest);
 
-// ===== Kakao SDK 동적 로더 (한 번만 로드 & 중복 init 방지) =====
-const loadKakaoSDK = (() => {
-  let _promise = null;
+  // ===== Kakao SDK 동적 로더 (한 번만 로드 & 중복 init 방지) =====
+  const loadKakaoSDK = (() => {
+    let _promise = null;
 
-  return function loadKakaoSDK() {
-    if (_promise) return _promise;
+    return function loadKakaoSDK() {
+      if (_promise) return _promise;
 
-    _promise = new Promise((resolve, reject) => {
-      // 이미 로드+초기화 돼 있으면 바로 OK
-      if (window.Kakao && window.Kakao.isInitialized && window.Kakao.isInitialized()) {
-        return resolve(window.Kakao);
-      }
-
-      // 스크립트 엘리먼트 동적 삽입
-      const script = document.createElement("script");
-      // 안정 경로(무결성 검사 없음) — 버전 핀 필요하면 t1.kakaocdn 버전 사용 가능
-      script.src = "https://developers.kakao.com/sdk/js/kakao.min.js";
-      script.async = true;
-      script.onload = () => {
-        if (!window.Kakao) return reject(new Error("Kakao 객체가 로드되지 않음"));
-        try {
-          if (!window.Kakao.isInitialized()) {
-            window.Kakao.init("eee6c2e01641161de9f217ba99c6a0da"); // ← 본인 자바스크립트 키
-            console.log("✅ Kakao.init 완료");
-          }
-          resolve(window.Kakao);
-        } catch (e) {
-          reject(e);
+      _promise = new Promise((resolve, reject) => {
+        // 이미 로드+초기화 돼 있으면 바로 OK
+        if (window.Kakao && window.Kakao.isInitialized && window.Kakao.isInitialized()) {
+          return resolve(window.Kakao);
         }
-      };
-      script.onerror = () => reject(new Error("Kakao SDK 로드 실패"));
-      document.head.appendChild(script);
-    });
 
-    return _promise;
-  };
-})();
+        // 스크립트 엘리먼트 동적 삽입
+        const script = document.createElement("script");
+        // 안정 경로(무결성 검사 없음)
+        script.src = "https://developers.kakao.com/sdk/js/kakao.min.js";
+        script.async = true;
+        script.onload = () => {
+          if (!window.Kakao) return reject(new Error("Kakao 객체가 로드되지 않음"));
+          try {
+            if (!window.Kakao.isInitialized()) {
+              window.Kakao.init("eee6c2e01641161de9f217ba99c6a0da"); // ← 본인 자바스크립트 키
+              console.log("✅ Kakao.init 완료");
+            }
+            resolve(window.Kakao);
+          } catch (e) {
+            reject(e);
+          }
+        };
+        script.onerror = () => reject(new Error("Kakao SDK 로드 실패"));
+        document.head.appendChild(script);
+      });
 
-// ===== 공유 함수 (점수/결과를 받아서 공유) =====
-async function shareKakaoWithScore({ percent, resultName, imageUrl } = {}) {
-  try {
-    const Kakao = await loadKakaoSDK();
+      return _promise;
+    };
+  })();
 
-    // 페이지/문구 기본값
-    const pageUrl = `${location.origin}/test/fall`;
-    const p = (typeof percent === "number" ? percent : (window.latestPercent ?? 0)) | 0;
-    const name = resultName ?? window.latestResultName ?? "가을 감성";
-    const desc = `내 가을 감성 지수는 ${p}%! ${name}`;
+  // ===== 공유 함수 (점수/결과를 받아서 공유) =====
+  async function shareKakaoWithScore({ percent, resultName, imageUrl } = {}) {
+    try {
+      const Kakao = await loadKakaoSDK();
 
-    Kakao.Link.sendDefault({
-      objectType: "feed",
-      content: {
-        title: "가을 타나봐 테스트 🍂",
-        description: desc,
-        imageUrl: imageUrl || "https://www.survivaloffice.com/images/fall.png",
-        link: { mobileWebUrl: pageUrl, webUrl: pageUrl }
-      },
-      buttons: [
-        { title: "나도 해보기", link: { mobileWebUrl: pageUrl, webUrl: pageUrl } }
-      ]
-    });
-  } catch (e) {
-    console.warn("⚠️ 카카오 공유 실패:", e);
-    alert("카카오 공유를 사용할 수 없습니다.");
+      // 페이지/문구 기본값
+      const pageUrl = `${location.origin}/test/fall`;
+      const p = Number.isFinite(percent) ? percent : latestPercent;
+      const name = (resultName ?? latestResultName) || "가을 감성";
+      const desc = `내 가을 감성 지수는 ${p}%! ${name}`;
+
+      Kakao.Link.sendDefault({
+        objectType: "feed",
+        content: {
+          title: "가을 타나봐 테스트 🍂",
+          description: desc,
+          imageUrl: imageUrl || "https://www.survivaloffice.com/images/fallmain.png",
+          link: { mobileWebUrl: pageUrl, webUrl: pageUrl }
+        },
+        buttons: [
+          { title: "나도 해보기", link: { mobileWebUrl: pageUrl, webUrl: pageUrl } }
+        ]
+      });
+    } catch (e) {
+      console.warn("⚠️ 카카오 공유 실패:", e);
+      alert("카카오 공유를 사용할 수 없습니다.");
+    }
   }
-}
 
-// ===== 버튼 바인딩(존재할 때만) =====
-if (shareBtn) {
-  shareBtn.addEventListener("click", () =>
-    shareKakaoWithScore({
-      percent: window.latestPercent,       // 당신 코드에서 계산/세팅하는 변수 사용
-      resultName: window.latestResultName, // "
-      // imageUrl: 결과별 커버 이미지가 있다면 전달
-    })
-  );
-}
+  // ===== 버튼 바인딩(존재할 때만) =====
+  if (shareBtn) {
+    shareBtn.addEventListener("click", () =>
+      shareKakaoWithScore({
+        percent: latestPercent,
+        resultName: latestResultName,
+        // imageUrl: 결과별 커버 이미지가 있다면 전달
+      })
+    );
+  }
+
+  // ===== 메인(스타트) 이미지 사이즈 클램프 (JS만으로 확대 방지) =====
+  function clampStartImage() {
+    // 필요 시 선택자 조정: 시작 화면 대표 이미지
+    const img = document.querySelector('#start-screen img');
+    if (!img) return;
+
+    const MAX_W = 360;
+    const MAX_H = 550;
+
+    // 화면이 더 좁으면 축소, 더 크면 1배 유지
+    const scale = Math.min(1, window.innerWidth / MAX_W);
+
+    img.style.width     = Math.round(MAX_W * scale) + 'px';
+    img.style.height    = Math.round(MAX_H * scale) + 'px';
+    img.style.maxWidth  = MAX_W + 'px';
+    img.style.maxHeight = MAX_H + 'px';
+    img.style.objectFit = 'contain';
+    img.style.display   = 'block';
+    img.style.margin    = '0 auto';
+  }
+  clampStartImage();
+  window.addEventListener('resize', clampStartImage);
 
   // ---------- 참여자 카운터 (CounterAPI) ----------
   const COUNTER_BASE = "https://api.counterapi.dev/v1";
@@ -441,7 +465,7 @@ if (shareBtn) {
     if (sessionStorage.getItem(flag) === "1") return false;
     sessionStorage.setItem(flag, "1");
     return true;
-    }
+  }
 
   function renderCount(el, n) {
     if (!el) return;
