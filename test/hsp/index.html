@@ -3,152 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>민감성 정도 테스트</title>
-    <meta name="description" content="민감한 사람 테스트(Highly Sensitive Person Test)">
-    <meta name="keywords" content="민감, hsp, Highly Sensitive Person, 민감성, 예민, 성격 테스트, 성격테스트, 심리 테스트, 심리테스트, MBTI, 서바이벌오피스">
-    
+    <title>HSP-R 예민한 사람 테스트</title>
+    <meta name="description" content="HSP-R 예민한 사람 테스트 - 18문항으로 민감성 수준을 확인하고 맞춤 상품을 추천받으세요.">
+    <meta name="keywords" content="HSP, 민감성, 예민한 사람 테스트, 심리테스트, HSP-R, 서바이벌오피스">
+
     <!-- Google Adsense 코드 -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537"
-    crossorigin="anonymous"></script>
-    <meta name="google-adsense-account" content="ca-pub-4957586937754537">  
-    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-4957586937754537">
+
     <!-- Google Analytics 코드 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag(){dataLayer.push(arguments);} 
         gtag('js', new Date());
         gtag('config', 'G-G4TPWGLYLY');
     </script>
 
     <!-- Open Graph 메타태그 -->
-    <meta property="og:title" content="민감성 정도 테스트" />
-    <meta property="og:description" content="민감한 사람 테스트(Highly Sensitive Person Test)" />
+    <meta property="og:title" content="HSP-R 예민한 사람 테스트" />
+    <meta property="og:description" content="18문항으로 알아보는 나의 민감성 수준" />
     <meta property="og:url" content="https://www.survivaloffice.com/test/hsp" />
     <meta property="og:image" content="https://www.survivaloffice.com/images/hsp1.png" />
     <meta property="og:type" content="website" />
-    
+
     <!-- 초기 핸드셰이크 시간 감소 -->
     <link rel="preconnect" href="https://api.counterapi.dev" crossorigin>
     <link rel="dns-prefetch" href="https://api.counterapi.dev">
 
-    <!-- CSS 스타일시트 추가 -->
     <link rel="stylesheet" href="style.css">
-    </head>
+</head>
+<body oncontextmenu="return false">
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/rest/">미니게임</a></li>
+            <li><a href="/test/">테스트</a></li>
+            <li><a href="/work/">생존키트</a></li>
+        </ul>
+    </nav>
 
-    <body oncontextmenu="return false">
-
-        <nav>
-            <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/rest/">미니게임</a></li>
-              <li><a href="/test/">테스트</a></li>
-              <li><a href="/work/">생존키트</a></li>
-            </ul>
-        </nav>
-
-        <!-- 상단 광고 -->
-        <div class="ad-container">
-            <ins class="adsbygoogle"
-                style="display:block; min-height: 90px;"
-                data-ad-client="ca-pub-4957586937754537"
-                data-ad-slot="9240598215"
-                data-ad-format="auto"
-                data-full-width-responsive="true"></ins>
-        </div>
-
-
-  <div id="app">
-
-    <!-- 1. 시작 화면 -->
-    <div id="start-screen" class="screen active">
-      <img src="https://www.survivaloffice.com/images/hsp.png" alt="시작화면 배경" class="background-img" />
-
-    <!-- ✅ 참여자 수 배지 (CountAPI용 데이터 속성 포함) -->
-    <div id="test-counter"
-     class="counter-badge"
-     data-counter-namespace="survivaloffice"
-     data-counter-key="1004hogu">
-      총 0명 참여
+    <!-- 상단 광고 (크기 유지) -->
+    <div class="ad-container">
+        <ins class="adsbygoogle"
+            style="display:block; min-height: 90px;"
+            data-ad-client="ca-pub-4957586937754537"
+            data-ad-slot="9240598215"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
     </div>
 
-      <div class="start-btn-container">
-        <button id="start-btn">테스트 하기</button>
-      </div>
+    <div id="app" role="main">
+        <!-- 1. 인트로 화면 -->
+        <section id="start-screen" class="screen active" aria-labelledby="intro-title">
+            <div class="card intro-card">
+                <header class="intro-header">
+                    <p class="badge" id="test-counter" data-counter-namespace="survivaloffice" data-counter-key="hsp">
+                        총 0명 참여
+                    </p>
+                    <h1 id="intro-title">HSP-R 예민한 사람 테스트</h1>
+                    <p class="intro-desc">18문항, 약 3분. 결과는 참고용이며 임상 진단을 대체하지 않습니다.</p>
+                </header>
+                <form id="intro-form" novalidate>
+                    <div class="form-field">
+                        <label for="user-name">이름</label>
+                        <input id="user-name" name="user-name" type="text" inputmode="text" autocomplete="name" placeholder="이름을 입력하세요" required>
+                    </div>
+                    <fieldset class="form-field">
+                        <legend>성별</legend>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="gender" value="남성">
+                                <span>남성</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="gender" value="여성">
+                                <span>여성</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="gender" value="기타/응답하지 않음">
+                                <span>기타/응답하지 않음</span>
+                            </label>
+                        </div>
+                    </fieldset>
+                    <button type="submit" id="start-btn" class="primary-btn">테스트 시작</button>
+                    <p id="intro-helper" class="helper" aria-live="polite"></p>
+                    <p class="form-hint">입력한 정보는 저장되지 않으며, 브라우저에서만 사용됩니다.</p>
+                </form>
+            </div>
+        </section>
+
+        <!-- 2. 질문 화면 -->
+        <section id="quiz-screen" class="screen" aria-live="polite">
+            <div class="card quiz-card">
+                <header class="progress-header">
+                    <div>
+                        <p id="progress-label" class="progress-label">문항 1 / 18</p>
+                        <p id="progress-percent" class="progress-percent">6%</p>
+                    </div>
+                    <p id="progress-score" class="progress-score">선택 점수: -</p>
+                </header>
+                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="18" aria-valuenow="0">
+                    <div id="progress-fill"></div>
+                </div>
+                <article class="question-panel">
+                    <h2 id="question-title">문항 제목</h2>
+                    <p id="question-text" class="question-text"></p>
+                </article>
+                <div id="likert-options" class="likert-options" role="group" aria-labelledby="question-title"></div>
+                <div class="scale-extremes" aria-hidden="true">
+                    <span id="scale-min">전혀 그렇지 않다</span>
+                    <span id="scale-max">매우 그렇다</span>
+                </div>
+                <p id="question-helper" class="helper" role="alert" aria-live="polite"></p>
+                <div class="nav-buttons">
+                    <button type="button" id="prev-btn" class="secondary-btn">이전</button>
+                    <button type="button" id="next-btn" class="primary-btn">다음</button>
+                    <button type="button" id="submit-btn" class="accent-btn">결과 보기</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 결과 화면 -->
+        <section id="result-screen" class="screen" aria-labelledby="result-title">
+            <div class="card result-card" id="result-card">
+                <header class="result-header">
+                    <p id="result-greeting" class="result-greeting"></p>
+                    <h2 id="result-title">당신의 HSP 민감성 수준</h2>
+                </header>
+                <div class="score-summary">
+                    <div class="score-chip">
+                        <span class="score-label">총점</span>
+                        <strong id="score-total" class="score-value">0</strong>
+                    </div>
+                    <div class="score-chip">
+                        <span class="score-label">평균</span>
+                        <strong id="score-average" class="score-value">0.0</strong>
+                    </div>
+                </div>
+                <div class="level-summary">
+                    <p class="level-name" id="level-name"></p>
+                    <p class="level-desc" id="level-desc"></p>
+                </div>
+                <section class="tips" aria-labelledby="tips-title">
+                    <h3 id="tips-title">추천 팁</h3>
+                    <ul id="tips-list"></ul>
+                </section>
+                <section class="products" aria-labelledby="product-title">
+                    <div class="products-header">
+                        <h3 id="product-title">추천 아이템</h3>
+                        <p class="product-note">아래 링크는 쿠팡 파트너스 링크입니다.</p>
+                    </div>
+                    <div id="product-list" class="product-list"></div>
+                </section>
+                <footer class="disclaimer" aria-label="고지 문구">
+                    <p>본 테스트는 자가보고형 참고용이며, 임상 진단을 대체하지 않습니다. 고민이 지속될 경우 전문가 상담을 권합니다.</p>
+                    <p>이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+                    <p>수신자의 사전 동의 없이 메신저/SNS 등으로 링크를 발송하는 행위는 불법 스팸 전송으로 간주될 수 있으며, 규제기관의 행정제재(3천만원 이하 과태료) 또는 형사 처벌(1년 이하 징역 또는 1천만원 이하 벌금)의 대상이 될 수 있습니다.</p>
+                </footer>
+            </div>
+        </section>
     </div>
 
-    <!-- 2. 질문 화면 -->
-    <div id="quiz-screen" class="screen">
-      
-    <!-- 진행바 -->
-    <div class="progress-wrap" aria-label="진행도">
-      <div id="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
-        <div id="progress-fill"></div>
-        <!-- ✅ 숫자를 트랙 내부로 -->
-        <div id="progress-count" aria-hidden="true">0 / 10</div>
-      </div>
+    <div id="bottom-actions" class="bottom-actions" style="display: none;">
+        <button id="share-kakao" type="button" class="pill-btn">카카오톡 공유</button>
+        <button id="capture-btn" type="button" class="pill-btn">결과 저장</button>
+        <button id="restart-btn" type="button" class="pill-btn">다시하기</button>
+        <button id="other-test-btn" type="button" class="pill-btn">다른 테스트 하기</button>
     </div>
 
-      <div class="question-box">
-        <p id="question-text"></p>
-      </div>
-      <div class="choices">
-        <button id="choice-a" class="choice-btn"></button>
-        <button id="choice-b" class="choice-btn"></button>
-      </div>
+    <!-- 하단 광고 (크기 유지) -->
+    <div class="footer-ad-container">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4957586937754537" data-ad-slot="9931828353" data-ad-format="auto" data-full-width-responsive="true"></ins>
     </div>
 
-    <!-- 3. 결과 화면 -->
-    <div id="result-screen" class="screen">
-      <img id="result-image" src="" alt="결과 이미지" />
-    </div>
-
-  </div>
-  <!-- 하단 액션 영역 (테스트 영역 밖) -->
-  <div id="bottom-actions" style="display: none;">
-    <button id="share-kakao">
-      공유하기
-    </button>
-    <button id="restart-btn">
-      다시하기
-    </button>
-    <button id="other-test-btn" onclick="location.href='https://survivaloffice.com/test'">
-    다른 테스트 하기
-    </button>
-  </div>
-
-
-  <!-- 하단 광고 -->
-  <div class="footer-ad-container">
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4957586937754537" data-ad-slot="9931828353" data-ad-format="auto" data-full-width-responsive="true"></ins>
-  </div>
-
-  <!-- 스크립트 -->
-  <script type="module" src="script.js"></script>
-  <script>
-    document.addEventListener("contextmenu", e => e.preventDefault());
+    <script type="module" src="script.js"></script>
+    <script>
+        document.addEventListener("contextmenu", e => e.preventDefault());
         document.addEventListener("DOMContentLoaded", () => {
-            console.log("애드센스 광고 로드 실행");
-
             try {
-                // 상단 광고만 push
                 (adsbygoogle = window.adsbygoogle || []).push({});
-                
-                // 하단 광고는 DOM에 충분히 렌더링된 후 push
                 window.addEventListener("load", () => {
-                    console.log("하단 광고 로드 실행");
                     (adsbygoogle = window.adsbygoogle || []).push({});
                 });
             } catch (e) {
                 console.error("애드센스 광고 로드 실패:", e);
             }
         });
-        </script>  
+    </script>
 
-
-  <script src="https://ads-partners.coupang.com/g.js"></script>
-  <script>
-    new PartnersCoupang.G({ id: 810614, trackingCode: "AF4453761", subId: null, template: "carousel", width: "360", height: "100" });
-  </script>
+    <script src="https://ads-partners.coupang.com/g.js"></script>
+    <script>
+        new PartnersCoupang.G({ id: 810614, trackingCode: "AF4453761", subId: null, template: "carousel", width: "360", height: "100" });
+    </script>
 </body>
 </html>
