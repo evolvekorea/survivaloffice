@@ -43,40 +43,36 @@ html, body {
   align-items: center;
   overflow-x: hidden;
 }
-
+/* =========================
+   Navigation
+========================= */
 nav {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   width: 100%;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(220, 226, 236, 0.7);
+  background: #ffffff;
+  border-bottom: 1px solid var(--line);
   z-index: 1000;
 }
-
 nav ul {
   list-style: none;
   display: flex;
   justify-content: flex-end;
   gap: 8px;
+  margin: 0;
   padding: 10px 20px;
 }
-
-nav li a {
-  text-decoration: none;
-  color: var(--muted);
-  font-size: 14px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-nav li a:hover,
-nav li a:focus-visible {
-  background: rgba(164, 240, 210, 0.35);
+nav ul li { display: inline; }
+nav ul li a {
   color: var(--ink);
-  outline: none;
+  text-decoration: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+nav ul li a:hover {
+  background: #f2f6ff;
+  color: #0b67c6;
 }
 
 .ad-container,
