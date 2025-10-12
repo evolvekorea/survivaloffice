@@ -385,7 +385,6 @@ input[type="text"]:focus {
   border-radius: 14px;
   border: 1.5px solid rgba(226, 215, 255, 0.4);
   background: rgba(255, 255, 255, 0.85);
-  min-height: 78px;
   transition: transform 0.2s ease, border 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
@@ -435,19 +434,18 @@ input[type="text"]:focus {
   color: var(--danger);
 }
 
-.nav-buttons {
-  margin-top: auto;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+/* 중앙 정렬 컨테이너 */
+.nav-buttons{
+  display:flex; justify-content:center; align-items:center;
+  gap:10px; flex-wrap:wrap; margin-top:10px;
 }
 
-.nav-buttons button[disabled] {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+/* 동일 크기 보장 */
+.nav-buttons .nav-btn{
+  min-width:108px; min-height:44px;
+  display:inline-flex; justify-content:center; align-items:center;
 }
+
 
 .result-card {
   gap: 18px;
@@ -615,9 +613,27 @@ input[type="text"]:focus {
   outline: none;
 }
 
+fieldset { border: 0; padding: 0; margin: 0; }
+/* 라디오 주변에 남는 선이 있다면 해당 요소의 border도 제거 */
+.radio-group,
+.radio-option { border-color: transparent; }
+
+/* 라벨 텍스트 숨김 (숫자만 보이게) */
+.option-label { display: none; }
+
+/* 점수 방향 그라데이션 바 */
+.scale-gradient{
+  width:100%; height:8px; border-radius:999px; margin:4px 0 6px;
+  background:linear-gradient(90deg, rgba(164,240,210,.9) 0%, rgba(226,215,255,.9) 100%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.8);
+}
+.scale-extremes{
+  display:flex; justify-content:space-between; font-size:12px; color:#666;
+}
+
 @media (max-width: 420px) {
   nav ul {
-    justify-content: center;
+    justify-content: flex-end;
   }
 
   .ad-container {

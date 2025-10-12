@@ -266,11 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
       valueSpan.className = 'option-value';
       valueSpan.textContent = String(value);
 
-      const labelSpan = document.createElement('span');
-      labelSpan.className = 'option-label';
-      labelSpan.textContent = labelText;
-
-      shell.append(valueSpan, labelSpan);
+      shell.append(valueSpan);
       label.append(input, shell);
       likertOptions.appendChild(label);
 
@@ -291,9 +287,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const isLast = index === totalQuestions - 1;
     prevButton.textContent = ui.question_cta_prev;
     prevButton.disabled = isFirst;
-    nextButton.style.display = isLast ? 'none' : 'block';
-    submitButton.style.display = isLast ? 'block' : 'none';
-    submitButton.style.gridColumn = isLast ? '2 / 4' : '';
+    nextButton.style.display   = isLast ? 'none' : 'inline-flex';
+    submitButton.style.display = isLast ? 'inline-flex' : 'none';
     if (!isLast) {
       nextButton.textContent = ui.question_cta_next;
       nextButton.style.gridColumn = '';
@@ -418,7 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const gender = getSelectedGender();
 
     if (!name) {
-      showHelper(introHelper, '이름을 입력해주세요.');
+      showHelper(introHelper, '성명을 입력해주세요.');
       nameInput.focus();
       return;
     }
@@ -516,12 +511,12 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const description = `${state.name || '나'}의 HSP 민감성 테스트 결과를 확인해보세요!`;
+    const description = `${state.name || '나'}의 예민함 정도 테스트 결과를 확인해보세요!`;
 
     window.Kakao.Link.sendDefault({
       objectType: 'feed',
       content: {
-        title: 'HSP-R 예민한 사람 테스트',
+        title: '나의 예민함 정도 테스트',
         description,
         imageUrl: 'https://www.survivaloffice.com/images/hsp1.png',
         link: {

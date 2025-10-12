@@ -62,7 +62,7 @@
                         총 0명 참여
                     </p>
                     <h1 id="intro-title">나의 예민함 정도 테스트</h1>
-                    <p class="intro-desc">총 18문항, 소요시간 약 3분<br>* 결과는 참고용이며 임상 진단을 대체하지 않습니다.</p>
+                    <p class="intro-desc">총 18문항, 소요시간 약 3분</p>
                 </header>
                 <form id="intro-form" novalidate>
                     <div class="form-field">
@@ -84,7 +84,7 @@
                     </fieldset>
                     <button type="submit" id="start-btn" class="primary-btn">테스트 시작</button>
                     <p id="intro-helper" class="helper" aria-live="polite"></p>
-                    <p class="form-hint">입력한 정보는 저장되지 않으며, 브라우저에서만 사용됩니다.</p>
+                    <p class="form-hint"><br><br>입력한 정보는 저장되지 않으며, 브라우저에서만 사용됩니다.<br>결과는 참고용이며 임상 진단을 대체하지 않습니다.</p>
                 </form>
             </div>
         </section>
@@ -107,15 +107,18 @@
                     <p id="question-text" class="question-text"></p>
                 </article>
                 <div id="likert-options" class="likert-options" role="group" aria-labelledby="question-title"></div>
+                <!-- 점수 방향성 시각화 -->
+                <div class="scale-gradient" aria-hidden="true"></div>
                 <div class="scale-extremes" aria-hidden="true">
-                    <span id="scale-min">전혀 그렇지 않다</span>
-                    <span id="scale-max">매우 그렇다</span>
+                  <span id="scale-min">전혀 그렇지 않다</span>
+                  <span id="scale-max">매우 그렇다</span>
                 </div>
+                
                 <p id="question-helper" class="helper" role="alert" aria-live="polite"></p>
                 <div class="nav-buttons">
-                    <button type="button" id="prev-btn" class="secondary-btn">이전</button>
-                    <button type="button" id="next-btn" class="primary-btn">다음</button>
-                    <button type="button" id="submit-btn" class="accent-btn">결과 보기</button>
+                  <button type="button" id="prev-btn"  class="secondary-btn nav-btn">이전</button>
+                  <button type="button" id="next-btn"  class="primary-btn  nav-btn">다음</button>
+                  <button type="button" id="submit-btn" class="accent-btn   nav-btn">결과 보기</button>
                 </div>
             </div>
         </section>
