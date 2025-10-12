@@ -77,19 +77,19 @@ const TEST_DATA = {
   },
   "products": {
     "low": [
-      { "name": "블루라이트 차단 안경", "url": "https://link.coupang.com/a/cV6a3H", "why": "장시간 화면 노출 시 눈 피로 완화" },
-      { "name": "인체공학 무선 마우스", "url": "https://link.coupang.com/a/cV6cGQ", "why": "미세 스트레스 감소로 작업 효율 향상" },
-      { "name": "허브 티(카페인 프리)", "url": "https://link.coupang.com/a/cV6ffY", "why": "저강도 리셋 루틴에 적합" }
+      { "name": "블루라이트 차단 안경",           "url": "https://link.coupang.com/a/cV6a3H", "why": "장시간 화면 노출 시 눈 피로 완화",      "img": "cou1.png" },
+      { "name": "인체공학 무선 마우스",           "url": "https://link.coupang.com/a/cV6cGQ", "why": "미세 스트레스 감소로 작업 효율 향상",  "img": "cou2.png" },
+      { "name": "허브 티(카페인 프리)",           "url": "https://link.coupang.com/a/cV6ffY", "why": "저강도 리셋 루틴에 적합",              "img": "cou3.png" }
     ],
     "mid": [
-      { "name": "수면 아이마스크(3D 폼/저압식)", "url": "https://link.coupang.com/a/cV6fW4", "why": "광자극 차단으로 회복 품질 향상" },
-      { "name": "아로마 디퓨저(타이머 기능)", "url": "https://link.coupang.com/a/cV6gDE", "why": "은은한 향/습도로 과자극 완충" },
-      { "name": "화이트노이즈 머신", "url": "https://link.coupang.com/a/cV6hgX", "why": "불규칙 소음 상쇄로 집중/수면 도움" }
+      { "name": "수면 아이마스크(3D 폼/저압식)",   "url": "https://link.coupang.com/a/cV6fW4", "why": "광자극 차단으로 회복 품질 향상",      "img": "cou4.png" },
+      { "name": "아로마 디퓨저(타이머 기능)",     "url": "https://link.coupang.com/a/cV6gDE", "why": "은은한 향/습도로 과자극 완충",        "img": "cou5.png" },
+      { "name": "화이트노이즈 머신",              "url": "https://link.coupang.com/a/cV6hgX", "why": "불규칙 소음 상쇄로 집중/수면 도움",    "img": "cou6.png" }
     ],
     "high": [
-      { "name": "ANC 헤드폰/이어버드", "url": "https://link.coupang.com/a/cV6hEr", "why": "소음 민감성 완충에 효과적" },
-      { "name": "암막 커튼(광차단 90%+)", "url": "https://link.coupang.com/a/cV6ib4", "why": "광자극 차단으로 수면/회복 표준화" },
-      { "name": "가중 담요(Weighted Blanket)", "url": "https://link.coupang.com/a/cV6iAH", "why": "심부압 자극으로 불안 완화(개인차)" }
+      { "name": "ANC 헤드폰/이어버드",            "url": "https://link.coupang.com/a/cV6hEr", "why": "소음 민감성 완충에 효과적",            "img": "cou7.png" },
+      { "name": "암막 커튼(광차단 90%+)",         "url": "https://link.coupang.com/a/cV6ib4", "why": "광자극 차단으로 수면/회복 표준화",    "img": "cou8.png" },
+      { "name": "가중 담요(Weighted Blanket)",    "url": "https://link.coupang.com/a/cV6iAH", "why": "심부압 자극으로 불안 완화(개인차)",     "img": "cou9.png" }
     ]
   },
   "ui_texts": {
@@ -354,23 +354,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     productList.innerHTML = '';
     productData.forEach(item => {
-      const card = document.createElement('article');
-      card.className = 'product-card';
+    const card = document.createElement('article');
+    card.className = 'product-card';
 
-      const title = document.createElement('h4');
-      title.textContent = item.name;
+    const IMG_BASE = 'https://www.survivaloffice.com/images/';
+    
+    const img = document.createElement('img');
+    img.className = 'product-img';
+    img.src = item.img
+      ? (item.img.startsWith('http') ? item.img : IMG_BASE + item.img)
+      : '';
+    img.alt = item.name;
+    img.loading = 'lazy';
 
-      const why = document.createElement('p');
-      why.textContent = item.why;
+    const textBox = document.createElement('div');
+    textBox.className = 'product-text';
 
-      const link = document.createElement('a');
-      link.href = item.url;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      link.textContent = '쿠팡에서 보기';
+    const title = document.createElement('h4');
+    title.textContent = item.name;
 
-      card.append(title, why, link);
-      productList.appendChild(card);
+    const why = document.createElement('p');
+    why.textContent = item.why;
+
+    const link = document.createElement('a');
+    link.href = item.url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = '쿠팡에서 보기';
+
+    textBox.append(title, why, link);
+    card.append(img, textBox);
+    productList.appendChild(card);
     });
   }
 
