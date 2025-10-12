@@ -1,371 +1,641 @@
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("✅ DOM fully loaded");
-
-  const startScreen   = document.getElementById("start-screen");
-  const quizScreen    = document.getElementById("quiz-screen");
-  const resultScreen  = document.getElementById("result-screen");
-
-  const startBtn      = document.getElementById("start-btn");
-  const questionText  = document.getElementById("question-text");
-  const choiceA       = document.getElementById("choice-a");
-  const choiceB       = document.getElementById("choice-b");
-  const choiceButtons = [choiceA, choiceB];
-
-  const resultImage   = document.getElementById("result-image");
-  if (resultImage) {
-    // 결과 화면 전환 즉시 보이도록 브라우저 힌트
-    resultImage.loading = "eager";
-    resultImage.decoding = "async";
-  }
-
-  // 진행바
-  const progressFill  = document.getElementById("progress-fill");
-  const progressTrack = document.getElementById("progress-track");
-  const progressCount = document.getElementById("progress-count");
-
-  let currentIndex = 0;
-  let angelScore   = 0; // 천사 점수
-  let hoguScore    = 0; // 호구 점수
-
-  function shuffle(arr){
-    const a = arr.slice();
-    for(let i=a.length-1;i>0;i--){
-      const j = Math.floor(Math.random()*(i+1));
-      [a[i],a[j]] = [a[j],a[i]];
+const TEST_DATA = {
+  "meta": {
+    "title": "나의 예민함 정도 테스트 (18문항)",
+    "version": "HSP-R (community-adapted, 18 items, KR)",
+    "disclaimer": "본 테스트는 자가보고형 참고용이며, 임상 진단을 대체하지 않습니다.",
+    "scale": {
+      "min": 1,
+      "max": 7,
+      "labels": {
+        "1": "전혀 그렇지 않다",
+        "2": "그렇지 않은 편이다",
+        "3": "조금 그렇지 않다",
+        "4": "보통이다",
+        "5": "조금 그렇다",
+        "6": "그렇다",
+        "7": "매우 그렇다"
+      }
     }
-    return a;
-  }
-
-  // =========================
-  // ✅ 결과 이미지 경로 (프리로드 대상)
-  // =========================
-  const RESULT_IMAGES = {
-    angel: "https://www.survivaloffice.com/images/1004hogu3.png",
-    hogu:  "https://www.survivaloffice.com/images/1004hogu2.png"
-  };
-
-  // =========================
-  // ✅ 결과 이미지 프리로드
-  // =========================
-  const preloadedImages = {}; // url -> Image 객체
-
-  function preloadImages(map){
-    const urls = Object.values(map);
-    return Promise.all(urls.map(url => new Promise(resolve => {
-      const img = new Image();
-      img.loading = "eager";
-      img.decoding = "async";
-      img.referrerPolicy = "no-referrer";
-      img.onload = () => { preloadedImages[url] = img; resolve(img); };
-      img.onerror = () => { console.warn("⚠️ preload fail:", url); resolve(null); };
-      img.src = url;
-    })));
-  }
-
-  // 가능한 빨리 프리로드 시작 (메인 스레드 여유 시점도 커버)
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(() => preloadImages(RESULT_IMAGES).then(() => {
-      console.log("✅ 결과 이미지 프리로드 완료(idle)");
-    }));
-  } else {
-    setTimeout(() => preloadImages(RESULT_IMAGES).then(() => {
-      console.log("✅ 결과 이미지 프리로드 완료(timeout)");
-    }), 0);
-  }
-
-  // =========================
-  // ✅ 테스트 문항 (10문항)
-  //    - { text, type, weight }, type: 'angel' | 'hogu'
-  //    - 6번 문항만 weight 2 (변별력)
-  // =========================
-  const questions = [
-    {
-      question: "친구가 또 돈이 없다고 밥을 사달라 한다.",
-      options: [
-        { text: "오늘만 힘들다니까 내가 사줄게.", type: "angel", weight: 1 },
-        { text: "항상 내가 사왔으니 그냥 또 사준다.", type: "hogu",  weight: 1 }
+  },
+  "questions": [
+    { "id": 1, "text": "밝은 빛이나 큰 소리 같은 강한 감각 자극에 쉽게 피로를 느낍니다." },
+    { "id": 2, "text": "주변 사람들의 감정 변화에 민감하게 반응합니다." },
+    { "id": 3, "text": "한 번에 많은 일을 처리해야 할 때 쉽게 압도됩니다." },
+    { "id": 4, "text": "카페인, 약물, 설탕 등 자극 물질에 민감한 편입니다." },
+    { "id": 5, "text": "영화나 음악, 예술 작품에 깊이 몰입하고 쉽게 감동합니다." },
+    { "id": 6, "text": "갑작스러운 변화(환경, 일정 등)가 스트레스로 느껴집니다." },
+    { "id": 7, "text": "타인의 필요를 빨리 알아채고 돕고자 하는 마음이 듭니다." },
+    { "id": 8, "text": "시간 압박이나 촉박한 마감이 있을 때 긴장이 크게 올라갑니다." },
+    { "id": 9, "text": "강한 냄새, 거친 촉감, 불편한 옷감 등에 예민합니다." },
+    { "id": 10, "text": "혼잡하거나 시끄러운 장소를 오래 있으면 지칩니다." },
+    { "id": 11, "text": "문제를 깊이 생각하고 여러 가능성을 신중히 검토하는 편입니다." },
+    { "id": 12, "text": "비판이나 부정적 피드백으로 쉽게 낙담합니다." },
+    { "id": 13, "text": "작은 실수나 실망도 오래 떠올리며 곱씹는 편입니다." },
+    { "id": 14, "text": "하루 일과 후 혼자 조용히 회복하는 시간이 필요합니다." },
+    { "id": 15, "text": "주변의 미묘한 분위기 변화(표정, 말투 등)를 잘 감지합니다." },
+    { "id": 16, "text": "한 공간의 조명, 온도, 좌석 배치 같은 요소가 집중도에 크게 영향을 줍니다." },
+    { "id": 17, "text": "타인의 고통이나 어려움에 쉽게 공감하며 정서적으로 영향받습니다." },
+    { "id": 18, "text": "여러 감각 자극이 한꺼번에 몰리면 휴식이 꼭 필요합니다." }
+  ],
+  "scoring": {
+    "method": "sum_and_average",
+    "thresholds": [
+      { "id": "low",  "label": "낮은 민감성", "average_lt": 3.5 },
+      { "id": "mid",  "label": "중간 민감성", "average_gte": 3.5, "average_lt": 5.0 },
+      { "id": "high", "label": "높은 민감성", "average_gte": 5.0 }
+    ],
+    "notes": "컷오프는 참고용이며 추후 표본에 따라 조정 가능"
+  },
+  "results": {
+    "low": {
+      "title": "낮은 민감성",
+      "description": "자극에 비교적 강하고 회복이 빠른 편입니다. 특정 상황에서만 선택적으로 예민함이 나타날 수 있습니다.",
+      "tips": [
+        "집중 환경을 약간만 정돈해도 성과가 잘 납니다.",
+        "과로만 피하면 스트레스 내성이 높은 편입니다.",
+        "타인의 예민함을 이해하려는 태도가 관계에 도움이 됩니다."
       ]
     },
-    {
-      question: "동료가 내 업무까지 부탁한다.",
-      options: [
-        { text: "급한 상황이라면 내가 도와줄 수 있지.", type: "angel", weight: 1 },
-        { text: "늘 하던 거니까 그냥 해준다.",         type: "hogu",  weight: 1 }
+    "mid": {
+      "title": "중간 민감성",
+      "description": "상황에 따라 예민함과 안정감이 번갈아 나타납니다. 환경 조절과 휴식 루틴이 성과에 큰 영향을 줍니다.",
+      "tips": [
+        "업무/학습 50~90분 후 5~10분 리셋 루틴을 만드세요.",
+        "소음·조명 등 방해요인을 1~2개만 먼저 조정해도 체감 효율이 큽니다.",
+        "스스로에게 친절한 자기대화로 과도한 반추를 줄이세요."
       ]
     },
-    {
-      question: "애인이 늦게 연락한다.",
-      options: [
-        { text: "바빴겠지 하고 이해한다.",           type: "angel", weight: 1 },
-        { text: "원래 그러니까 또 참는다.",           type: "hogu",  weight: 1 }
-      ]
-    },
-    {
-      question: "모르는 사람이 길을 물어본다.",
-      options: [
-        { text: "친절히 설명해주고 잘 가라고 한다.",   type: "angel", weight: 1 },
-        { text: "익숙하니 또 멀리까지 데려다 준다.",   type: "hogu",  weight: 1 }
-      ]
-    },
-    {
-      question: "친구가 중요한 날 약속을 어겼다.",
-      options: [
-        { text: "사정 있었겠지 하고 넘어간다.",       type: "angel", weight: 1 },
-        { text: "늘 이런 식이라 그냥 또 넘어간다.",   type: "hogu",  weight: 1 }
-      ]
-    },
-    {
-      // 🔥 변별력 문항: weight 2
-      question: "회식 자리에서 모두 계산을 미룬다.",
-      options: [
-        { text: "분위기 어색하니 이번엔 내가 낸다.",   type: "angel", weight: 2 },
-        { text: "어차피 항상 내가 내니 그냥 또 낸다.", type: "hogu",  weight: 2 }
-      ]
-    },
-    {
-      question: "지인이 이사 도와달라 한다.",
-      options: [
-        { text: "힘든 날이니 기꺼이 도와준다.",       type: "angel", weight: 1 },
-        { text: "늘 불려 다녀서 익숙하게 또 도와준다.", type: "hogu",  weight: 1 }
-      ]
-    },
-    {
-      question: "부탁을 거절하기 애매한 상황이다.",
-      options: [
-        { text: "가능한 만큼만 들어준다.",            type: "angel", weight: 1 },
-        { text: "매번 그래왔으니 그냥 다 해준다.",     type: "hogu",  weight: 1 }
-      ]
-    },
-    {
-      question: "새벽에 친구가 고민 상담을 한다.",
-      options: [
-        { text: "잠은 부족해도 힘들다니 들어준다.",     type: "angel", weight: 1 },
-        { text: "항상 이런 전화를 받으니 또 들어준다.", type: "hogu",  weight: 1 }
-      ]
-    },
-    {
-      question: "단체에서 잡일을 맡길 사람이 없다.",
-      options: [
-        { text: "누군가는 해야 하니 내가 맡는다.",     type: "angel", weight: 1 },
-        { text: "늘 나만 하던 거라 그냥 또 맡는다.",   type: "hogu",  weight: 1 }
+    "high": {
+      "title": "높은 민감성",
+      "description": "감각·정서 자극에 매우 민감합니다. 올바른 환경 설계와 회복 전략이 삶의 질을 크게 높입니다.",
+      "tips": [
+        "소음 차단·조명·온도 등 기본 환경을 먼저 안정화하세요.",
+        "하루 중 ‘감각 휴식’(무자극 10~15분)을 일정에 넣으세요.",
+        "경계 설정(거절, 일정 조율)을 연습하면 번아웃을 예방할 수 있습니다."
       ]
     }
-  ];
+  },
+  "products": {
+    "low": [
+      { "name": "블루라이트 차단 안경", "url": "https://link.coupang.com/a/cV6a3H", "why": "장시간 화면 노출 시 눈 피로 완화" },
+      { "name": "인체공학 무선 마우스", "url": "https://link.coupang.com/a/cV6cGQ", "why": "미세 스트레스 감소로 작업 효율 향상" },
+      { "name": "허브 티(카페인 프리)", "url": "https://link.coupang.com/a/cV6ffY", "why": "저강도 리셋 루틴에 적합" }
+    ],
+    "mid": [
+      { "name": "수면 아이마스크(3D 폼/저압식)", "url": "https://link.coupang.com/a/cV6fW4", "why": "광자극 차단으로 회복 품질 향상" },
+      { "name": "아로마 디퓨저(타이머 기능)", "url": "https://link.coupang.com/a/cV6gDE", "why": "은은한 향/습도로 과자극 완충" },
+      { "name": "화이트노이즈 머신", "url": "https://link.coupang.com/a/cV6hgX", "why": "불규칙 소음 상쇄로 집중/수면 도움" }
+    ],
+    "high": [
+      { "name": "ANC 헤드폰/이어버드", "url": "https://link.coupang.com/a/cV6hEr", "why": "소음 민감성 완충에 효과적" },
+      { "name": "암막 커튼(광차단 90%+)", "url": "https://link.coupang.com/a/cV6ib4", "why": "광자극 차단으로 수면/회복 표준화" },
+      { "name": "가중 담요(Weighted Blanket)", "url": "https://link.coupang.com/a/cV6iAH", "why": "심부압 자극으로 불안 완화(개인차)" }
+    ]
+  },
+  "ui_texts": {
+    "intro_title": "나의 예민함 정도 테스트",
+    "intro_desc": "18문항, 약 3분. 결과는 참고용이며 임상 진단을 대체하지 않습니다.",
+    "form_fields": {
+      "name": "이름",
+      "gender": "성별",
+      "gender_options": ["남성", "여성"],
+      "start_button": "테스트 시작"
+    },
+    "question_cta_prev": "이전",
+    "question_cta_next": "다음",
+    "submit_button": "결과 보기",
+    "result_title": "당신의 예민함 정도",
+    "score_label": "총점 / 평균",
+    "product_title": "추천 아이템",
+    "product_note": "아래 링크는 쿠팡 파트너스 링크입니다."
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const {
+    meta,
+    questions,
+    results,
+    products,
+    scoring,
+    ui_texts: ui
+  } = TEST_DATA;
 
   const totalQuestions = questions.length;
 
-  function updateProgress() {
-    const current = Math.min(currentIndex + 1, totalQuestions);
-    const percent = (current / totalQuestions) * 100;
+  const screens = {
+    start: document.getElementById('start-screen'),
+    quiz: document.getElementById('quiz-screen'),
+    result: document.getElementById('result-screen')
+  };
 
-    if (progressFill)  progressFill.style.width = percent + "%";
-    if (progressTrack) progressTrack.setAttribute("aria-valuenow", String(current));
-    if (progressCount) progressCount.textContent = `${current} / ${totalQuestions}`;
-  }
+  const introForm = document.getElementById('intro-form');
+  const nameInput = document.getElementById('user-name');
+  const introHelper = document.getElementById('intro-helper');
+  const startButton = document.getElementById('start-btn');
 
-  startBtn.addEventListener("click", () => {
-    startScreen.classList.remove("active");
-    quizScreen.classList.add("active");
-    showQuestion();
-  });
+  const progressLabel = document.getElementById('progress-label');
+  const progressPercent = document.getElementById('progress-percent');
+  const progressScore = document.getElementById('progress-score');
+  const progressFill = document.getElementById('progress-fill');
+  const progressBar = document.querySelector('.progress-bar');
 
-  function showQuestion() {
-    const q = questions[currentIndex];
-    if (!q) return;
+  const questionTitle = document.getElementById('question-title');
+  const questionText = document.getElementById('question-text');
+  const likertOptions = document.getElementById('likert-options');
+  const helperText = document.getElementById('question-helper');
+  const prevButton = document.getElementById('prev-btn');
+  const nextButton = document.getElementById('next-btn');
+  const submitButton = document.getElementById('submit-btn');
+  const quizCard = document.querySelector('.quiz-card');
 
-    updateProgress();
-    questionText.textContent = q.question;
+  const resultGreeting = document.getElementById('result-greeting');
+  const resultTitle = document.getElementById('result-title');
+  const scoreTotalEl = document.getElementById('score-total');
+  const scoreAverageEl = document.getElementById('score-average');
+  const levelNameEl = document.getElementById('level-name');
+  const levelDescEl = document.getElementById('level-desc');
+  const tipsList = document.getElementById('tips-list');
+  const productTitle = document.getElementById('product-title');
+  const productNote = document.querySelector('.product-note');
+  const productList = document.getElementById('product-list');
 
-    const opts = shuffle(q.options); // 2개 섞기
-    opts.forEach((opt, idx) => {
-      const btn = choiceButtons[idx];
-      btn.textContent   = opt.text;
-      btn.dataset.type  = opt.type;     // 'angel' | 'hogu'
-      btn.dataset.weight= String(opt.weight ?? 1);
+  const bottomActions = document.getElementById('bottom-actions');
+  const shareBtn = document.getElementById('share-kakao');
+  const restartBtn = document.getElementById('restart-btn');
+  const otherTestBtn = document.getElementById('other-test-btn');
+  const captureBtn = document.getElementById('capture-btn');
+
+  let increaseCounter = () => {};
+
+  const state = {
+    currentIndex: 0,
+    answers: new Array(totalQuestions).fill(null),
+    name: '',
+    gender: ''
+  };
+
+  function setScreen(activeKey) {
+    Object.entries(screens).forEach(([key, element]) => {
+      if (!element) return;
+      element.classList.toggle('active', key === activeKey);
     });
   }
 
-  choiceButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const type   = btn.dataset.type || "angel";
-      const weight = parseInt(btn.dataset.weight || "1", 10);
+  function resetHelper(element) {
+    if (element) element.textContent = '';
+  }
 
-      if (type === "angel") angelScore += weight;
-      else                  hoguScore  += weight;
+  function showHelper(element, message) {
+    if (element) element.textContent = message;
+  }
 
-      currentIndex++;
-      if (currentIndex < totalQuestions) {
-        showQuestion();
-      } else {
-        showResult();
-      }
-    });
-  });
-
-  function showResult() {
-    console.log("🏁 종료 - 천사:", angelScore, "/ 호구:", hoguScore);
-
-    quizScreen.classList.remove("active");
-    resultScreen.classList.add("active");
-
-    const isAngel = angelScore >= hoguScore; // 동점은 천사 우선
-    const bucket  = isAngel ? "angel" : "hogu";
-    const url     = RESULT_IMAGES[bucket];
-
-    // 프리로드된 이미지가 있으면 그것을 사용 (즉시 표시)
-    const cached = preloadedImages[url];
-    if (cached && cached.complete) {
-      resultImage.src = cached.src;
-    } else {
-      resultImage.src = url;
+  function scrollToTop(container) {
+    if (!container) return;
+    if (typeof container.scrollTo === 'function') {
+      container.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (typeof container.scrollIntoView === 'function') {
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    resultImage.alt = isAngel ? "천사 결과" : "호구 결과";
-
-    bottomActions.style.display = 'flex';
-    console.log(`🖼 결과: ${bucket}, 이미지: ${url}`);
   }
 
-  // ---------- 하단 버튼 참조 ----------
-  const shareBtn      = document.getElementById("share-kakao");
-  const restartBtn    = document.getElementById("restart-btn");
-  const bottomActions = document.getElementById("bottom-actions");
+  function formatPercent(current) {
+    const ratio = ((current + 1) / totalQuestions) * 100;
+    return `${Math.round(ratio)}%`;
+  }
 
-  // ---------- 카카오 SDK 로드 ----------
-  async function loadKakaoSDK() {
-    return new Promise((resolve, reject) => {
-      if (window.Kakao && Kakao.isInitialized()) {
-        console.log("✅ 카카오 SDK 이미 초기화됨");
-        resolve();
-        return;
+  function getSelectedGender() {
+    const selected = introForm.querySelector('input[name="gender"]:checked');
+    return selected ? selected.value : '';
+  }
+
+  function renderScaleLabels() {
+    const minLabel = meta.scale.labels[String(meta.scale.min)] || '';
+    const maxLabel = meta.scale.labels[String(meta.scale.max)] || '';
+    const scaleMin = document.getElementById('scale-min');
+    const scaleMax = document.getElementById('scale-max');
+    if (scaleMin) scaleMin.textContent = minLabel;
+    if (scaleMax) scaleMax.textContent = maxLabel;
+  }
+
+  function renderQuestion() {
+    const index = state.currentIndex;
+    const question = questions[index];
+    if (!question) return;
+
+    progressLabel.textContent = `문항 ${index + 1} / ${totalQuestions}`;
+    progressPercent.textContent = formatPercent(index);
+    const currentScore = state.answers[index];
+    progressScore.textContent = currentScore ? `선택 점수: ${currentScore}` : '선택 점수: -';
+
+    if (progressBar) {
+      progressBar.setAttribute('aria-valuenow', String(index + 1));
+    }
+    if (progressFill) {
+      const percent = ((index + 1) / totalQuestions) * 100;
+      progressFill.style.width = `${percent}%`;
+    }
+
+    questionTitle.textContent = `${question.id}번 문항`;
+    questionText.textContent = question.text;
+    resetHelper(helperText);
+
+    likertOptions.innerHTML = '';
+    const questionName = `question-${question.id}`;
+    const selectedValue = state.answers[index];
+
+    for (let value = meta.scale.min; value <= meta.scale.max; value += 1) {
+      const labelText = meta.scale.labels[String(value)] || `${value}`;
+      const id = `${questionName}-${value}`;
+
+      const label = document.createElement('label');
+      label.className = 'likert-option';
+      label.setAttribute('for', id);
+
+      const input = document.createElement('input');
+      input.type = 'radio';
+      input.name = questionName;
+      input.id = id;
+      input.value = String(value);
+      input.checked = selectedValue === value;
+
+      const shell = document.createElement('span');
+      shell.className = 'option-shell';
+
+      const valueSpan = document.createElement('span');
+      valueSpan.className = 'option-value';
+      valueSpan.textContent = String(value);
+
+      const labelSpan = document.createElement('span');
+      labelSpan.className = 'option-label';
+      labelSpan.textContent = labelText;
+
+      shell.append(valueSpan, labelSpan);
+      label.append(input, shell);
+      likertOptions.appendChild(label);
+
+      input.addEventListener('change', () => {
+        state.answers[index] = value;
+        resetHelper(helperText);
+        progressScore.textContent = `선택 점수: ${value}`;
+        updateNavButtons();
+      });
+    }
+
+    updateNavButtons();
+  }
+
+  function updateNavButtons() {
+    const index = state.currentIndex;
+    const isFirst = index === 0;
+    const isLast = index === totalQuestions - 1;
+    prevButton.textContent = ui.question_cta_prev;
+    prevButton.disabled = isFirst;
+    nextButton.style.display = isLast ? 'none' : 'block';
+    submitButton.style.display = isLast ? 'block' : 'none';
+    submitButton.style.gridColumn = isLast ? '2 / 4' : '';
+    if (!isLast) {
+      nextButton.textContent = ui.question_cta_next;
+      nextButton.style.gridColumn = '';
+    } else {
+      submitButton.textContent = ui.submit_button;
+    }
+  }
+
+  function validateCurrentAnswer() {
+    const answer = state.answers[state.currentIndex];
+    if (typeof answer !== 'number') {
+      showHelper(helperText, '문항에 대한 답변을 선택해주세요.');
+      const firstInput = likertOptions.querySelector('input');
+      if (firstInput) firstInput.focus({ preventScroll: false });
+      return false;
+    }
+    return true;
+  }
+
+  function findFirstUnansweredIndex() {
+    return state.answers.findIndex(value => typeof value !== 'number');
+  }
+
+  function determineLevel(average) {
+    const thresholds = scoring.thresholds || [];
+    for (const threshold of thresholds) {
+      const gte = threshold.average_gte ?? Number.NEGATIVE_INFINITY;
+      const lt = threshold.average_lt ?? Number.POSITIVE_INFINITY;
+      const isGte = average >= gte;
+      const isLt = average < lt;
+      if (isGte && isLt) {
+        return threshold;
       }
-      const script = document.createElement("script");
-      script.src = "https://developers.kakao.com/sdk/js/kakao.min.js";
-      script.onload = () => {
-        if (!window.Kakao) {
-          reject("❌ Kakao 객체가 로드되지 않음");
-          return;
-        }
-        Kakao.init("eee6c2e01641161de9f217ba99c6a0da");
-        console.log("✅ 카카오 SDK 로드 및 초기화 완료");
-        resolve();
-      };
-      script.onerror = () => reject("❌ Kakao SDK 로드 실패");
-      document.head.appendChild(script);
+    }
+    return thresholds[thresholds.length - 1];
+  }
+
+  function renderResult(total, average, levelId) {
+    const levelData = results[levelId];
+    const productData = products[levelId] || [];
+
+    const gender = state.gender ? ` (${state.gender})` : '';
+    resultGreeting.textContent = `${state.name}님${gender}, 결과는 다음과 같습니다.`;
+    resultTitle.textContent = ui.result_title;
+    scoreTotalEl.textContent = total.toFixed(0);
+    scoreAverageEl.textContent = average.toFixed(2);
+
+    if (levelData) {
+      levelNameEl.textContent = levelData.title;
+      levelDescEl.textContent = levelData.description;
+      tipsList.innerHTML = '';
+      levelData.tips.forEach(tip => {
+        const li = document.createElement('li');
+        li.textContent = tip;
+        tipsList.appendChild(li);
+      });
+    }
+
+    productTitle.textContent = ui.product_title;
+    if (productNote) {
+      productNote.textContent = ui.product_note;
+    }
+
+    productList.innerHTML = '';
+    productData.forEach(item => {
+      const card = document.createElement('article');
+      card.className = 'product-card';
+
+      const title = document.createElement('h4');
+      title.textContent = item.name;
+
+      const why = document.createElement('p');
+      why.textContent = item.why;
+
+      const link = document.createElement('a');
+      link.href = item.url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = '쿠팡에서 보기';
+
+      card.append(title, why, link);
+      productList.appendChild(card);
     });
   }
-  loadKakaoSDK().then(() => {
-    console.log("✅ 카카오 SDK 사용 준비 완료!");
-  }).catch(err => console.error(err));
 
-  // ---------- 카카오 공유 ----------
-  function shareKakao(imageUrl) {
-    if (!window.Kakao || !Kakao.isInitialized()) {
-      alert("⚠️ 카카오톡 공유 기능을 사용할 수 없습니다.");
+  function calculateAndShowResult() {
+    const unanswered = findFirstUnansweredIndex();
+    if (unanswered !== -1) {
+      state.currentIndex = unanswered;
+      renderQuestion();
+      showHelper(helperText, '답변하지 않은 문항이 있습니다. 해당 문항으로 이동했어요.');
+      scrollToTop(quizCard);
       return;
     }
 
-    const finalImage = imageUrl && imageUrl.length > 0
-      ? imageUrl
-      : "https://www.survivaloffice.com/images/1004hogu.png";
+    const total = state.answers.reduce((sum, value) => sum + value, 0);
+    const average = total / totalQuestions;
+    const level = determineLevel(average);
+    const levelId = level?.id || scoring.thresholds?.[scoring.thresholds.length - 1]?.id || 'mid';
 
-    Kakao.Link.sendDefault({
-      objectType: "feed",
+    renderResult(total, average, levelId);
+    setScreen('result');
+    bottomActions.style.display = 'flex';
+    scrollToTop(document.getElementById('result-card'));
+  }
+
+  function startTest() {
+    state.currentIndex = 0;
+    state.answers.fill(null);
+    renderScaleLabels();
+    renderQuestion();
+    setScreen('quiz');
+    scrollToTop(quizCard);
+    increaseCounter();
+  }
+
+  introForm.addEventListener('submit', event => {
+    event.preventDefault();
+    resetHelper(introHelper);
+
+    const name = nameInput.value.trim();
+    const gender = getSelectedGender();
+
+    if (!name) {
+      showHelper(introHelper, '이름을 입력해주세요.');
+      nameInput.focus();
+      return;
+    }
+
+    if (!gender) {
+      showHelper(introHelper, '성별을 선택해주세요.');
+      const firstRadio = introForm.querySelector('input[name="gender"]');
+      if (firstRadio) firstRadio.focus();
+      return;
+    }
+
+    state.name = name;
+    state.gender = gender;
+    startTest();
+  });
+
+  prevButton.addEventListener('click', () => {
+    if (state.currentIndex === 0) return;
+    state.currentIndex -= 1;
+    renderQuestion();
+    scrollToTop(quizCard);
+  });
+
+  nextButton.addEventListener('click', () => {
+    if (!validateCurrentAnswer()) return;
+    if (state.currentIndex < totalQuestions - 1) {
+      state.currentIndex += 1;
+      renderQuestion();
+      scrollToTop(quizCard);
+    }
+  });
+
+  submitButton.addEventListener('click', () => {
+    if (!validateCurrentAnswer()) return;
+    calculateAndShowResult();
+  });
+
+  function resetTest() {
+    state.currentIndex = 0;
+    state.answers = new Array(totalQuestions).fill(null);
+    state.name = '';
+    state.gender = '';
+
+    introForm.reset();
+    resetHelper(introHelper);
+    resetHelper(helperText);
+
+    setScreen('start');
+    bottomActions.style.display = 'none';
+    if (progressFill) progressFill.style.width = '0%';
+    if (progressBar) progressBar.setAttribute('aria-valuenow', '0');
+    progressLabel.textContent = `문항 1 / ${totalQuestions}`;
+    progressPercent.textContent = formatPercent(0);
+    progressScore.textContent = '선택 점수: -';
+    scrollToTop(screens.start?.querySelector('.card'));
+  }
+
+  if (restartBtn) {
+    restartBtn.addEventListener('click', () => {
+      resetTest();
+      nameInput.focus();
+    });
+  }
+
+  if (otherTestBtn) {
+    otherTestBtn.addEventListener('click', () => {
+      window.location.href = 'https://survivaloffice.com/test';
+    });
+  }
+
+  // Kakao share
+  async function loadKakaoSDK() {
+    if (window.Kakao && window.Kakao.isInitialized()) {
+      return;
+    }
+    await new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://developers.kakao.com/sdk/js/kakao.min.js';
+      script.onload = () => {
+        if (!window.Kakao) {
+          reject(new Error('Kakao SDK failed to load'));
+          return;
+        }
+        window.Kakao.init('eee6c2e01641161de9f217ba99c6a0da');
+        resolve();
+      };
+      script.onerror = () => reject(new Error('Kakao SDK load error'));
+      document.head.appendChild(script);
+    });
+  }
+
+  function shareKakao() {
+    if (!window.Kakao || !window.Kakao.isInitialized()) {
+      alert('카카오톡 공유 기능을 사용할 수 없습니다. 잠시 후 다시 시도해주세요.');
+      return;
+    }
+
+    const description = `${state.name || '나'}의 예민함 정도 테스트 결과를 확인해보세요!`;
+
+    window.Kakao.Link.sendDefault({
+      objectType: 'feed',
       content: {
-        title: "천사 vs 호구 테스트",
-        description: "나는 천사일까, 호구일까? 10문항으로 간단 체크!",
-        imageUrl: finalImage,
+        title: '나의 예민함 정도 테스트',
+        description,
+        imageUrl: 'https://www.survivaloffice.com/images/hsp1.png',
         link: {
-          mobileWebUrl: "https://www.survivaloffice.com/test/1004hogu",
-          webUrl:       "https://www.survivaloffice.com/test/1004hogu"
+          mobileWebUrl: 'https://www.survivaloffice.com/test/hsp',
+          webUrl: 'https://www.survivaloffice.com/test/hsp'
         }
       },
       buttons: [
         {
-          title: "테스트 하러 가기",
+          title: '테스트 하러 가기',
           link: {
-            mobileWebUrl: "https://www.survivaloffice.com/test/1004hogu",
-            webUrl:       "https://www.survivaloffice.com/test/1004hogu"
+            mobileWebUrl: 'https://www.survivaloffice.com/test/hsp',
+            webUrl: 'https://www.survivaloffice.com/test/hsp'
           }
         }
       ]
     });
   }
 
-  // ---------- 다시하기 ----------
-  function resetTest() {
-    currentIndex = 0;
-    angelScore   = 0;
-    hoguScore    = 0;
-
-    resultImage.src = "";
-    resultScreen.classList.remove("active");
-    quizScreen.classList.remove("active");
-    startScreen.classList.add("active");
-
-    bottomActions.style.display = 'none';
-
-    if (progressFill)  progressFill.style.width = "0%";
-    if (progressTrack) progressTrack.setAttribute("aria-valuenow", "0");
-    if (progressCount) progressCount.textContent = `0 / ${totalQuestions}`;
-
-    console.log("🔄 테스트 리셋 완료");
-  }
-
-  // ---------- 버튼 이벤트 ----------
-  const shareBtnEl = document.getElementById("share-kakao");
-  if (shareBtnEl) {
-    shareBtnEl.addEventListener("click", () => {
-      shareKakao(resultImage?.src || "");
+  if (shareBtn) {
+    shareBtn.addEventListener('click', () => {
+      loadKakaoSDK().then(shareKakao).catch(err => {
+        console.error('[Kakao] share error', err);
+        alert('카카오톡 공유를 준비하지 못했습니다. 잠시 후 다시 시도해주세요.');
+      });
     });
   }
-  const restartBtnEl = document.getElementById("restart-btn");
-  if (restartBtnEl) {
-    restartBtnEl.addEventListener("click", resetTest);
+
+  async function captureResultCard() {
+    const card = document.getElementById('result-card');
+    if (!card) return;
+
+    try {
+      let html2canvasFn = window.html2canvas;
+      if (!html2canvasFn) {
+        const module = await import('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.esm.js');
+        html2canvasFn = module.default;
+        window.html2canvas = html2canvasFn;
+      }
+      const canvas = await html2canvasFn(card, {
+        backgroundColor: '#ffffff',
+        scale: window.devicePixelRatio > 1 ? 2 : 1
+      });
+      const link = document.createElement('a');
+      link.download = `hsp-result-${Date.now()}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    } catch (error) {
+      console.error('[Capture] failed', error);
+      alert('결과 이미지를 저장할 수 없습니다. 잠시 후 다시 시도해주세요.');
+    }
   }
 
-  // =========================
+  if (captureBtn) {
+    captureBtn.addEventListener('click', () => {
+      if (!screens.result.classList.contains('active')) {
+        alert('테스트 결과 확인 후 저장할 수 있습니다.');
+        return;
+      }
+      captureResultCard();
+    });
+  }
+
   // 참여자 카운터 (CountAPI)
-  // =========================
   const COUNTER_BASE = 'https://api.counterapi.dev/v1';
-  const ONLY_ONCE_PER_SESSION = false; // 같은 탭 세션에서 1회만 집계하려면 true
+  const ONLY_ONCE_PER_SESSION = false;
 
   function counterPath(ns, key) {
     return `${COUNTER_BASE}/${encodeURIComponent(ns)}/${encodeURIComponent(key)}/`;
   }
 
   function getCounterConfig() {
-    const el = document.getElementById("test-counter");
+    const el = document.getElementById('test-counter');
     return {
       el,
-      ns: el?.dataset.counterNamespace || "survivaloffice",
-      key: el?.dataset.counterKey       || "1004hogu",
+      ns: el?.dataset.counterNamespace || 'survivaloffice',
+      key: el?.dataset.counterKey || 'hsp'
     };
   }
 
-  function cacheKey(ns, key){ return `counter_${ns}_${key}`; }
-  function getCachedCount(ns, key, maxAgeMs = 10 * 60 * 1000){
-    try{
-      const raw = localStorage.getItem(cacheKey(ns,key));
-      if(!raw) return null;
-      const obj = JSON.parse(raw);
-      if(Date.now() - obj.t > maxAgeMs) return null;
-      return typeof obj.v === 'number' ? obj.v : null;
-    }catch{ return null; }
+  function cacheKey(ns, key) {
+    return `counter_${ns}_${key}`;
   }
-  function setCachedCount(ns, key, val){
-    try{ localStorage.setItem(cacheKey(ns,key), JSON.stringify({ v: Number(val)||0, t: Date.now() })); }catch{}
+
+  function getCachedCount(ns, key, maxAgeMs = 10 * 60 * 1000) {
+    try {
+      const raw = localStorage.getItem(cacheKey(ns, key));
+      if (!raw) return null;
+      const obj = JSON.parse(raw);
+      if (Date.now() - obj.t > maxAgeMs) return null;
+      return typeof obj.v === 'number' ? obj.v : null;
+    } catch (error) {
+      console.warn('[counter] cache parse failed', error);
+      return null;
+    }
+  }
+
+  function setCachedCount(ns, key, value) {
+    try {
+      localStorage.setItem(cacheKey(ns, key), JSON.stringify({ v: Number(value) || 0, t: Date.now() }));
+    } catch (error) {
+      console.warn('[counter] cache store failed', error);
+    }
   }
 
   async function fetchCount(ns, key) {
     const url = counterPath(ns, key);
     try {
-      const r = await fetch(url, { cache: 'no-store', headers: { 'accept': 'application/json' } });
-      if (!r.ok) return 0;
-      const data = await r.json();
-      return (typeof data.count === 'number') ? data.count :
-             (typeof data.value === 'number') ? data.value : 0;
-    } catch (e) {
-      console.warn('[counter] fetch failed:', e);
+      const response = await fetch(url, { cache: 'no-store', headers: { accept: 'application/json' } });
+      if (!response.ok) return 0;
+      const data = await response.json();
+      return typeof data.count === 'number' ? data.count : (typeof data.value === 'number' ? data.value : 0);
+    } catch (error) {
+      console.warn('[counter] fetch failed', error);
       return 0;
     }
   }
@@ -373,13 +643,12 @@ document.addEventListener("DOMContentLoaded", () => {
   async function hitCount(ns, key) {
     const url = `${counterPath(ns, key)}up`;
     try {
-      const r = await fetch(url, { cache: 'no-store', headers: { 'accept': 'application/json' } });
-      if (!r.ok) return null;
-      const data = await r.json();
-      return (typeof data.count === 'number') ? data.count :
-             (typeof data.value === 'number') ? data.value : null;
-    } catch (e) {
-      console.warn('[counter] hit failed:', e);
+      const response = await fetch(url, { cache: 'no-store', headers: { accept: 'application/json' } });
+      if (!response.ok) return null;
+      const data = await response.json();
+      return typeof data.count === 'number' ? data.count : (typeof data.value === 'number' ? data.value : null);
+    } catch (error) {
+      console.warn('[counter] hit failed', error);
       return null;
     }
   }
@@ -387,42 +656,40 @@ document.addEventListener("DOMContentLoaded", () => {
   function shouldIncreaseThisSession(ns, key) {
     if (!ONLY_ONCE_PER_SESSION) return true;
     const flag = `counted_${ns}_${key}`;
-    if (sessionStorage.getItem(flag) === "1") return false;
-    sessionStorage.setItem(flag, "1");
+    if (sessionStorage.getItem(flag) === '1') return false;
+    sessionStorage.setItem(flag, '1');
     return true;
   }
 
-  function renderCount(el, n) {
+  function renderCount(el, value) {
     if (!el) return;
-    el.textContent = `총 ${Number(n).toLocaleString()}명 참여`;
-    el.setAttribute("data-count", String(n));
+    el.textContent = `총 ${Number(value).toLocaleString()}명 참여`;
+    el.setAttribute('data-count', String(value));
     const { ns, key } = getCounterConfig();
-    if (ns && key && typeof n === 'number') setCachedCount(ns, key, n);
+    if (ns && key && typeof value === 'number') {
+      setCachedCount(ns, key, value);
+    }
   }
 
   (async function initCounter() {
     const { el, ns, key } = getCounterConfig();
     if (!el) return;
 
+    increaseCounter = async () => {
+      try {
+        if (shouldIncreaseThisSession(ns, key)) {
+          const after = await hitCount(ns, key);
+          if (after !== null) renderCount(el, after);
+        }
+      } catch (error) {
+        console.warn('[counter] increase failed', error);
+      }
+    };
+
     const cached = getCachedCount(ns, key);
     if (cached !== null) renderCount(el, cached);
 
     const fresh = await fetchCount(ns, key);
     renderCount(el, fresh);
-
-    const startBtnEl = document.getElementById("start-btn");
-    if (startBtnEl) {
-      startBtnEl.addEventListener("click", async () => {
-        try {
-          if (shouldIncreaseThisSession(ns, key)) {
-            const after = await hitCount(ns, key);
-            if (after !== null) renderCount(el, after);
-          }
-        } catch (e) {
-          console.warn("[counter] increase on click failed:", e);
-        }
-      });
-    }
   })();
-
 });
