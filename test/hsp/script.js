@@ -40,15 +40,15 @@ const TEST_DATA = {
   "scoring": {
     "method": "sum_and_average",
     "thresholds": [
-      { "id": "low",  "label": "낮은 민감성", "average_lt": 3.5 },
-      { "id": "mid",  "label": "중간 민감성", "average_gte": 3.5, "average_lt": 5.0 },
-      { "id": "high", "label": "높은 민감성", "average_gte": 5.0 }
+      { "id": "low",  "label": "낮은 예민함", "average_lt": 3.5 },
+      { "id": "mid",  "label": "중간 예민함", "average_gte": 3.5, "average_lt": 5.0 },
+      { "id": "high", "label": "높은 예민함", "average_gte": 5.0 }
     ],
     "notes": "컷오프는 참고용이며 추후 표본에 따라 조정 가능"
   },
   "results": {
     "low": {
-      "title": "낮은 민감성",
+      "title": "낮은 예민함",
       "description": "자극에 비교적 강하고 회복이 빠른 편입니다. 특정 상황에서만 선택적으로 예민함이 나타날 수 있습니다.",
       "tips": [
         "집중 환경을 약간만 정돈해도 성과가 잘 납니다.",
@@ -57,7 +57,7 @@ const TEST_DATA = {
       ]
     },
     "mid": {
-      "title": "중간 민감성",
+      "title": "중간 예민함",
       "description": "상황에 따라 예민함과 안정감이 번갈아 나타납니다. 환경 조절과 휴식 루틴이 성과에 큰 영향을 줍니다.",
       "tips": [
         "업무/학습 50~90분 후 5~10분 리셋 루틴을 만드세요.",
@@ -66,7 +66,7 @@ const TEST_DATA = {
       ]
     },
     "high": {
-      "title": "높은 민감성",
+      "title": "높은 예민함",
       "description": "감각·정서 자극에 매우 민감합니다. 올바른 환경 설계와 회복 전략이 삶의 질을 크게 높입니다.",
       "tips": [
         "소음 차단·조명·온도 등 기본 환경을 먼저 안정화하세요.",
@@ -104,7 +104,7 @@ const TEST_DATA = {
     "question_cta_prev": "이전",
     "question_cta_next": "다음",
     "submit_button": "결과 보기",
-    "result_title": "당신의 HSP 민감성 수준",
+    "result_title": "당신의 예민함 정도",
     "score_label": "총점 / 평균",
     "product_title": "추천 아이템",
     "product_note": "아래 링크는 쿠팡 파트너스 링크입니다."
