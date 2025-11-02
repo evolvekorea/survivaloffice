@@ -1,147 +1,173 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=360, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>태어난 날로 보는 조선시대 나의 이름(Feat. 노비)</title>
-    <meta name="description" content="태어난 날로 알아보는 조선시대 버전 이름 찾기 심리테스트">
-    <meta name="keywords" content="조선시대 이름, 노비 이름 테스트, 생존오피스, 조선시대 심리테스트">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=360, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>태어난 날로 보는 조선시대 나의 이름(Feat. 노비)</title>
+  <meta name="description" content="태어난 날로 알아보는 조선시대 버전 이름 찾기 심리테스트">
+  <meta name="keywords" content="조선시대 이름, 노비 이름 테스트, 생존오피스, 조선시대 심리테스트">
 
-    <!-- Google Adsense 코드 -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537" crossorigin="anonymous"></script>
-    <meta name="google-adsense-account" content="ca-pub-4957586937754537">
+  <!-- Google Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-4957586937754537">
 
-    <!-- Google Analytics 코드 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-G4TPWGLYLY');
-    </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date()); gtag('config', 'G-G4TPWGLYLY');
+  </script>
 
-    <!-- Open Graph 메타태그 -->
-    <meta property="og:title" content="태어난 날로 보는 조선시대 나의 이름(Feat. 노비)" />
-    <meta property="og:description" content="태어난 날로 알아보는 조선시대 버전 이름 찾기" />
-    <meta property="og:url" content="https://www.survivaloffice.com/test/slave" />
-    <meta property="og:image" content="https://www.survivaloffice.com/images/slave1.png" />
-    <meta property="og:type" content="website" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="태어난 날로 보는 조선시대 나의 이름(Feat. 노비)" />
+  <meta property="og:description" content="태어난 날로 알아보는 조선시대 버전 이름 찾기" />
+  <meta property="og:url" content="https://www.survivaloffice.com/test/slave" />
+  <meta property="og:image" content="https://www.survivaloffice.com/images/slave1.png" />
+  <meta property="og:type" content="website" />
 
-    <!-- 초기 핸드셰이크 시간 감소 -->
-    <link rel="preconnect" href="https://api.counterapi.dev" crossorigin>
-    <link rel="dns-prefetch" href="https://api.counterapi.dev">
+  <link rel="preconnect" href="https://api.counterapi.dev" crossorigin>
+  <link rel="dns-prefetch" href="https://api.counterapi.dev">
 
-    <link rel="stylesheet" href="style.css">
+  <!-- Kakao SDK (integrity 제거: SRI 해시 불일치 차단 방지) -->
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 스크롤 보강용 최소 오버라이드 -->
+  <style>
+    /* 각 화면 섹션 안에서 세로 스크롤 허용 */
+    .screen { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    /* iOS에서 상하 스크롤 제스처 더 부드럽게 */
+    html, body { overscroll-behavior-y: contain; }
+  </style>
 </head>
 <body oncontextmenu="return false">
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/rest/">미니게임</a></li>
-            <li><a href="/test/">테스트</a></li>
-            <li><a href="/work/">생존키트</a></li>
-        </ul>
-    </nav>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/rest/">미니게임</a></li>
+      <li><a href="/test/">테스트</a></li>
+      <li><a href="/work/">생존키트</a></li>
+    </ul>
+  </nav>
 
-    <!-- 상단 광고 (크기 유지) -->
-    <div class="ad-container">
-        <ins class="adsbygoogle"
-            style="display:block; min-height: 90px;"
-            data-ad-client="ca-pub-4957586937754537"
-            data-ad-slot="9240598215"
-            data-ad-format="auto"
-            data-full-width-responsive="true"></ins>
-    </div>
+  <!-- 상단 광고 -->
+  <div class="ad-container">
+    <ins class="adsbygoogle"
+         style="display:block; min-height: 90px;"
+         data-ad-client="ca-pub-4957586937754537"
+         data-ad-slot="9240598215"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
 
-    <main id="app" role="main">
-        <section id="start-screen" class="screen active" aria-labelledby="start-title">
-            <div class="screen-overlay">
-                <h1 id="start-title">태어난 날로 보는<br>조선시대 나의 이름</h1>
-                <p class="start-helper">노비가 될지, 평민이 될지… 지금 바로 확인해보세요!</p>
-                <button id="start-btn" class="primary-btn" type="button">이름 찾기</button>
-            </div>
-        </section>
+  <main id="app" role="main">
+    <!-- 시작화면 -->
+    <section id="start-screen" class="screen active" aria-labelledby="start-title">
+      <div class="screen-overlay start-overlay">
+        <h1 id="start-title">태어난 날로 보는<br>조선시대 나의 이름<br>(Feat. 노비)</h1>
+        <!-- 요구사항: 안내문구 삭제 -->
+        <button id="start-btn" class="primary-btn start-cta" type="button">이름 찾기</button>
+      </div>
+    </section>
 
-        <section id="story-screen" class="screen" aria-live="polite">
-            <div class="story-wrapper">
-                <p id="story-text" class="story-text" aria-live="polite"></p>
-                <button id="story-next" class="primary-btn" type="button" hidden>계속하기</button>
-            </div>
-        </section>
+    <!-- 스토리(이름 찾기 후) -->
+    <section id="story-screen" class="screen" aria-live="polite">
+      <div class="story-wrapper">
+        <p id="story-text" class="story-text" aria-live="polite"></p>
+      </div>
+      <!-- 요구사항: 계속하기 버튼 하단 고정 -->
+      <div class="bottom-cta">
+        <button id="story-next" class="primary-btn" type="button" hidden>계속하기</button>
+      </div>
+    </section>
 
-        <section id="gender-screen" class="screen" aria-labelledby="gender-title">
-            <h2 id="gender-title">성별을 선택하세요</h2>
-            <p class="gender-helper">조선시대 남녀는 이름짓는 풍습도 달랐답니다.</p>
-            <div class="gender-grid" role="list">
-                <button class="gender-card" type="button" data-gender="male" role="listitem">
-                    <span class="gender-emoji" aria-hidden="true">🧔</span>
-                    <span class="gender-label">남성</span>
-                </button>
-                <button class="gender-card" type="button" data-gender="female" role="listitem">
-                    <span class="gender-emoji" aria-hidden="true">👩</span>
-                    <span class="gender-label">여성</span>
-                </button>
-            </div>
-        </section>
+    <!-- 성별 선택 (아이콘을 성별 표식으로 변경) -->
+    <section id="gender-screen" class="screen" aria-labelledby="gender-title">
+      <h2 id="gender-title">성별을 선택하세요</h2>
+      <p class="gender-helper">조선시대 남녀는 이름짓는 풍습도 달랐답니다.</p>
+      <div class="gender-grid" role="list">
+        <button class="gender-card" type="button" data-gender="male" role="listitem">
+          <span class="gender-emoji" aria-hidden="true">🚹</span>
+          <span class="gender-label">남성</span>
+        </button>
+        <button class="gender-card" type="button" data-gender="female" role="listitem">
+          <span class="gender-emoji" aria-hidden="true">🚺</span>
+          <span class="gender-label">여성</span>
+        </button>
+      </div>
+    </section>
 
-        <section id="birth-screen" class="screen" aria-labelledby="birth-title">
-            <h2 id="birth-title">태어난 월과 일자를 입력하세요</h2>
-            <form id="birth-form" novalidate>
-                <div class="form-field">
-                    <label for="birth-month">태어난 달</label>
-                    <input id="birth-month" name="birth-month" type="number" inputmode="numeric" min="1" max="12" placeholder="예: 6" required>
-                </div>
-                <div class="form-field">
-                    <label for="birth-day">태어난 날</label>
-                    <input id="birth-day" name="birth-day" type="number" inputmode="numeric" min="1" max="31" placeholder="예: 17" required>
-                </div>
-                <p id="birth-error" class="error-text" role="alert" aria-live="assertive"></p>
-                <button id="reveal-btn" class="primary-btn" type="submit">이름 찾기</button>
-            </form>
-        </section>
+    <!-- 생월/생일 입력 -->
+    <section id="birth-screen" class="screen" aria-labelledby="birth-title">
+      <h2 id="birth-title">태어난 월과 일자를 입력하세요</h2>
+      <form id="birth-form" novalidate>
+        <div class="form-field">
+          <label for="birth-month">태어난 달</label>
+          <input id="birth-month" name="birth-month" type="number" inputmode="numeric" min="1" max="12" placeholder="예: 6" required>
+        </div>
+        <div class="form-field">
+          <label for="birth-day">태어난 날</label>
+          <input id="birth-day" name="birth-day" type="number" inputmode="numeric" min="1" max="31" placeholder="예: 17" required>
+        </div>
+        <p id="birth-error" class="error-text" role="alert" aria-live="assertive"></p>
+        <button id="reveal-btn" class="primary-btn" type="submit">이름 찾기</button>
+      </form>
+    </section>
 
-        <section id="loading-screen" class="screen" aria-live="polite">
-            <div class="loading-wrapper">
-                <div class="loader" role="status" aria-label="이름 생성 중"></div>
-                <p class="loading-text">조선의 호적에서 이름을 찾고 있습니다...</p>
-            </div>
-        </section>
+    <!-- 로딩 -->
+    <section id="loading-screen" class="screen" aria-live="polite">
+      <div class="loading-wrapper">
+        <div class="loader" role="status" aria-label="이름 생성 중"></div>
+        <p class="loading-text">조선의 호적에서 이름을 찾고 있습니다...</p>
+      </div>
+    </section>
 
-        <section id="result-screen" class="screen" aria-labelledby="result-title">
-            <div class="result-wrapper">
-                <h2 id="result-title">당신의 조선시대 이름은</h2>
-                <p id="result-name" class="result-name"></p>
-                <p id="result-desc" class="result-desc"></p>
-                <button id="restart-btn" class="secondary-btn" type="button">다시 하기</button>
-            </div>
-        </section>
-    </main>
+    <!-- 결과 -->
+    <section id="result-screen" class="screen" aria-labelledby="result-title">
+      <div class="result-wrapper">
+        <h2 id="result-title">당신의 조선시대 이름은</h2>
+        <p id="result-name" class="result-name"></p>
+        <p id="result-desc" class="result-desc"></p>
+      </div>
 
-    <!-- 하단 광고 (크기 유지) -->
-    <div class="footer-ad-container">
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4957586937754537" data-ad-slot="9931828353" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    </div>
+      <!-- 요구: 공유/다시하기 유지 -->
+      <div id="bottom-actions" style="display: none;">
+        <button id="share-kakao">공유하기</button>
+        <button id="restart-btn">다시하기</button>
+        <button id="other-test-btn" onclick="location.href='https://survivaloffice.com/test'">다른 테스트 하기</button>
+      </div>
+    </section>
+  </main>
 
-    <p class="sr-only">쿠팡 광고</p>
+  <!-- 하단 광고 -->
+  <div class="footer-ad-container">
+    <ins class="adsbygoogle" style="display:block"
+         data-ad-client="ca-pub-4957586937754537"
+         data-ad-slot="9931828353"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
 
-    <script type="module" src="script.js"></script>
-    <script>
-        document.addEventListener("contextmenu", e => e.preventDefault());
-        document.addEventListener("DOMContentLoaded", () => {
-            try {
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                window.addEventListener("load", () => {
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                });
-            } catch (e) {
-                console.error("애드센스 광고 로드 실패:", e);
-            }
+  <p class="sr-only">쿠팡 광고</p>
+
+  <script type="module" src="script.js"></script>
+  <script>
+    document.addEventListener("contextmenu", e => e.preventDefault());
+    document.addEventListener("DOMContentLoaded", () => {
+      try {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        window.addEventListener("load", () => {
+          (adsbygoogle = window.adsbygoogle || []).push({});
         });
-    </script>
+      } catch (e) { console.error("애드센스 광고 로드 실패:", e); }
+    });
+  </script>
 
-    <script src="https://ads-partners.coupang.com/g.js"></script>
-    <script>
-        new PartnersCoupang.G({ id: 810614, trackingCode: "AF4453761", subId: null, template: "carousel", width: "360", height: "100" });
-    </script>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <script>
+    new PartnersCoupang.G({ id: 810614, trackingCode: "AF4453761", subId: null, template: "carousel", width: "360", height: "100" });
+  </script>
 </body>
 </html>
