@@ -637,6 +637,39 @@ fieldset { border: 0; padding: 0; margin: 0; }
   gap: 15px;             /* 폼 내부 요소들 사이 간격 */
 }
 
+.product-list { display: flex; flex-direction: column; gap: 12px; }
+
+.product-card{
+  display: grid;
+  grid-template-columns: 84px 1fr;   /* 썸네일 + 텍스트 */
+  gap: 12px;
+  align-items: center;
+  background: rgba(255,255,255,.9);
+  border: 1.5px solid rgba(226,215,255,.6);
+  border-radius: 18px;
+  padding: 12px;
+  box-shadow: 0 10px 18px rgba(164,240,210,.25);
+}
+
+.product-img{
+  width: 84px; height: 84px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,.06);
+  background: #fff;
+}
+
+.product-text h4{ font-size: 16px; color: #222; margin-bottom: 4px; }
+.product-text p{ font-size: 14px; color: #666; margin-bottom: 8px; line-height: 1.45; }
+
+.product-text a{
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 40px; padding: 10px 16px;
+  border-radius: 999px; text-decoration: none;
+  background: linear-gradient(135deg,#a4f0d2 0%,#e2d7ff 100%);
+  color: #222; font-weight: 700;
+}
+
 @media (max-width: 420px) {
   nav ul {
     justify-content: flex-end;
