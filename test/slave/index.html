@@ -16,7 +16,8 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date()); gtag('config', 'G-G4TPWGLYLY');
+    gtag('js', new Date());
+    gtag('config', 'G-G4TPWGLYLY');
   </script>
 
   <!-- Open Graph -->
@@ -29,19 +30,12 @@
   <link rel="preconnect" href="https://api.counterapi.dev" crossorigin>
   <link rel="dns-prefetch" href="https://api.counterapi.dev">
 
-  <!-- Kakao SDK (integrity 제거: SRI 해시 불일치 차단 방지) -->
+  <!-- Kakao SDK -->
   <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" crossorigin="anonymous"></script>
 
   <link rel="stylesheet" href="style.css">
-
-  <!-- 스크롤 보강용 최소 오버라이드 -->
-  <style>
-    /* 각 화면 섹션 안에서 세로 스크롤 허용 */
-    .screen { overflow-y: auto; -webkit-overflow-scrolling: touch; }
-    /* iOS에서 상하 스크롤 제스처 더 부드럽게 */
-    html, body { overscroll-behavior-y: contain; }
-  </style>
 </head>
+
 <body oncontextmenu="return false">
   <nav>
     <ul>
@@ -64,36 +58,35 @@
 
   <main id="app" role="main">
     <!-- 시작화면 -->
-    <section id="start-screen" class="screen active" aria-labelledby="start-title">
+    <section id="start-screen" class="screen active" aria-labelledby="start-title"
+      style="background:url('https://www.survivaloffice.com/images/slavemain.png') center/cover no-repeat;">
       <div class="screen-overlay start-overlay">
         <h1 id="start-title">태어난 날로 보는<br>조선시대 나의 이름<br>(Feat. 노비)</h1>
-        <!-- 요구사항: 안내문구 삭제 -->
         <button id="start-btn" class="primary-btn start-cta" type="button">이름 찾기</button>
       </div>
     </section>
 
-    <!-- 스토리(이름 찾기 후) -->
+    <!-- 스토리 -->
     <section id="story-screen" class="screen" aria-live="polite">
       <div class="story-wrapper">
         <p id="story-text" class="story-text" aria-live="polite"></p>
       </div>
-      <!-- 요구사항: 계속하기 버튼 하단 고정 -->
       <div class="bottom-cta">
         <button id="story-next" class="primary-btn" type="button" hidden>계속하기</button>
       </div>
     </section>
 
-    <!-- 성별 선택 (아이콘을 성별 표식으로 변경) -->
+    <!-- 성별 선택 -->
     <section id="gender-screen" class="screen" aria-labelledby="gender-title">
       <h2 id="gender-title">성별을 선택하세요</h2>
       <p class="gender-helper">조선시대 남녀는 이름짓는 풍습도 달랐답니다.</p>
       <div class="gender-grid" role="list">
-        <button class="gender-card" type="button" data-gender="male" role="listitem">
-          <span class="gender-emoji" aria-hidden="true">🚹</span>
+        <button class="gender-card" type="button" data-gender="male" role="listitem"
+          style="background:url('https://www.survivaloffice.com/images/slavem.png') center/cover no-repeat;">
           <span class="gender-label">남성</span>
         </button>
-        <button class="gender-card" type="button" data-gender="female" role="listitem">
-          <span class="gender-emoji" aria-hidden="true">🚺</span>
+        <button class="gender-card" type="button" data-gender="female" role="listitem"
+          style="background:url('https://www.survivaloffice.com/images/slavef.png') center/cover no-repeat;">
           <span class="gender-label">여성</span>
         </button>
       </div>
@@ -132,7 +125,6 @@
         <p id="result-desc" class="result-desc"></p>
       </div>
 
-      <!-- 요구: 공유/다시하기 유지 -->
       <div id="bottom-actions" style="display: none;">
         <button id="share-kakao">공유하기</button>
         <button id="restart-btn">다시하기</button>

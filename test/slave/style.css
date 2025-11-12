@@ -52,7 +52,14 @@ nav a:hover{background:rgba(176,124,58,.15);}
   overflow-y:auto; /* ✅ 내부 스크롤 허용 */
   -webkit-overflow-scrolling:touch;
 }
-.screen.active{display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;}
+.screen.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* 👈 중앙 → 위쪽 */
+  align-items: center;
+  text-align: center;
+  padding-top: 100px; /* 👈 여백 추가로 자연스럽게 */
+}
 
 #start-screen{background:url('https://www.survivaloffice.com/images/slave1.png') center/cover no-repeat;}
 #start-screen::before{content:""; position:absolute; inset:0;
@@ -99,12 +106,25 @@ nav a:hover{background:rgba(176,124,58,.15);}
 }
 .gender-card{
   font-family:'Shilla','Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
-  display:flex; flex-direction:column; justify-content:center; align-items:center; gap:8px;
-  padding:28px 8px; background:var(--surface);
-  border-radius:22px; border:2px solid transparent; color:var(--ink);
-  font-size:18px; cursor:pointer;
-  transition:transform .15s, border .2s, background .2s, box-shadow .2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  height: 230px;              /* 👈 세로 고정 */
+  background-size: cover;     /* 👈 이미지 가득 채우기 */
+  background-position: center top;
+  background-repeat: no-repeat;
+  border-radius: 22px;
+  overflow: hidden;
 }
+.gender-label {
+  margin-bottom: 10px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 12px;
+  padding: 4px 10px;
+}
+
 .gender-card:hover,.gender-card:focus{
   transform:translateY(-4px);
   border-color:rgba(176,124,58,.45);
