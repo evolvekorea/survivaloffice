@@ -44,6 +44,23 @@ nav a:hover{background:rgba(176,124,58,.15);}
   border:1px solid rgba(255,255,255,.6); background:var(--paper);
 }
 
+/* 참여자 배지/버튼은 항상 최상단 */
+.counter-badge,
+.start-btn-container { position: absolute; z-index: 9999; }
+
+.counter-badge{
+  top: 10px; right: 10px;
+  background: #b07c3a(184, 162, 162, 0.9);
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px; font-weight: 700;
+  border: 1px solid var(--line);
+  box-shadow: 0 6px 16px rgba(0,0,0,.06);
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
 /* 각 화면 공통 */
 .screen{
   position:absolute; inset:0;

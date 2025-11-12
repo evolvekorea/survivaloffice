@@ -92,6 +92,13 @@ document.addEventListener("DOMContentLoaded", () => {
     Object.values(screens).forEach(s => s.classList.remove("active"));
     target.classList.add("active");
     bottomActions.style.display = target === screens.result ? "flex" : "none";
+
+    // ✅ 추가: 참여자 수 배지 제어
+    const counterBadge = document.getElementById("test-counter");
+    if (counterBadge) {
+      // 시작화면에서만 표시, 그 외 화면에서는 숨김
+      counterBadge.style.display = target === screens.start ? "block" : "none";
+    }
   }
 
   function pick(arr) {
