@@ -194,37 +194,54 @@ document.addEventListener("DOMContentLoaded", () => {
     showScreen(screens.start);
   };
 
-  // --- 카카오 공유 ---
-  function loadKakao() {
-    const s = document.createElement("script");
-    s.src = "https://developers.kakao.com/sdk/js/kakao.min.js";
-    s.onload = () => {
-      try { Kakao.init("eee6c2e01641161de9f217ba99c6a0da"); }
-      catch (e) { console.warn("Kakao init 실패:", e); }
-    };
-    document.head.appendChild(s);
-  }
-  loadKakao();
-
-  shareBtn.onclick = () => {
-    if (!window.Kakao || !Kakao.isInitialized()) {
-      alert("⚠️ 카카오톡 공유 기능을 사용할 수 없습니다.");
-      return;
-    }
-    const shownName = resultName.textContent || "이름 미상"; // 이미 ‘이’ 처리된 이름
-    Kakao.Link.sendDefault({
-      objectType: "feed",
-      content: {
-        title: "태어난 날로 보는 조선시대 나의 이름 (Feat. 노비)",
-        description: `${shownName}의 조선시대 이름 결과를 확인해보세요!`,
-        imageUrl: "https://www.survivaloffice.com/images/slave1.png",
-        link: { mobileWebUrl: location.href, webUrl: location.href },
-      },
-      buttons: [
-        { title: "테스트 하러 가기", link: { mobileWebUrl: location.href, webUrl: location.href } }
-      ],
-    });
+// --- 카카오 공유 ---
+function loadKakao() {
+  const s = document.createElement("script");
+  s.src = "https://developers.kakao.com/sdk/js/kakao.min.js";
+  s.onload = () => {
+    try { Kakao.init("eee6c2e01641161de9f217ba99c6a0da"); }
+    catch (e) { console.warn("Kakao init 실패:", e); }
   };
+  document.head.appendChild(s);
+}
+loadKakao();
+
+// 👇 성별에 따른 공유 이미지 선택 함수
+function getShareImage(gender) {
+  if (gender === "male") return "https://www.survivaloffice.com/images/slavem.png";
+  if (gender === "female") return "https://www.survivaloffice.com/images/slavef.png";
+  return "https://www.survivaloffice.com/images/slave1.png"; // fallback
+}
+
+// --- 카카오 공유 버튼 ---
+shareBtn.onclick = () => {
+  if (!window.Kakao || !Kakao.isInitialized()) {
+    alert("⚠️ 카카오톡 공유 기능을 사용할 수 없습니다.");
+    return;
+  }
+
+  const shownName = resultName.textContent || "이름 미상";   // 최종 이름
+  const descText  = resultDesc.textContent || "";             // 결과 설명
+  const imageUrl  = getShareImage(state.gender);              // 성별별 이미지 선택
+
+  Kakao.Link.sendDefault({
+    objectType: "feed",
+    content: {
+      title: `나의 조선시대 이름은 ${shownName}!`, // ✅ 이름이 제목에 포함됨
+      description: descText,                        // ✅ 결과 설명도 함께 표시
+      imageUrl: imageUrl,
+      imageWidth: 600,
+      imageHeight: 600,
+      link: { mobileWebUrl: location.href, webUrl: location.href },
+    },
+    buttons: [
+      { 
+        title: "나도 테스트 해보기", 
+        link: { mobileWebUrl: location.href, webUrl: location.href } 
+      }
+    ],
+  });
+};
 
   // --- 참여 카운터 ---
   const COUNTER_BASE = "https://api.counterapi.dev/v1";

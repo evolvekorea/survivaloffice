@@ -58,7 +58,7 @@ nav a:hover{background:rgba(176,124,58,.15);}
   justify-content: flex-start; /* 👈 중앙 → 위쪽 */
   align-items: center;
   text-align: center;
-  padding-top: 100px; /* 👈 여백 추가로 자연스럽게 */
+  padding-top: 60px; /* 👈 여백 추가로 자연스럽게 */
 }
 
 #start-screen{background:url('https://www.survivaloffice.com/images/slave1.png') center/cover no-repeat;}
@@ -87,22 +87,38 @@ nav a:hover{background:rgba(176,124,58,.15);}
 .secondary-btn:hover{background:rgba(176,124,58,.25);}
 
 /* 스토리 화면 */
-#story-screen{justify-content:flex-start;}
-.story-wrapper{width:100%; background:transparent; border-radius:0; padding:0; box-shadow:none;}
+#story-screen.screen.active {
+  justify-content: flex-start !important;
+  align-items: stretch;
+  text-align: left;
+  padding-top: 20px !important; /* 👈 스토리만 위로 붙임 */
+}
+/* ✅ 스토리 본문 여백도 조정 */
+#story-screen .story-wrapper {
+  margin-top: 0;
+  padding: 0 8px;
+}
 .story-text{
   font-size:18px; line-height:1.65; min-height:140px;
   color:var(--ink); margin-top:16px;
   white-space:pre-line; /* ✅ 타자효과 줄바꿈 적용 */
 }
-.bottom-cta{
-  position:absolute; left:24px; right:24px; bottom:20px;
-  z-index:2; /* ✅ 버튼 가림 방지 */
+.bottom-cta {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);  /* ✅ 수평 중앙 정렬 */
+  text-align: center;
+  width: 100%;                  /* ✅ 모바일 360px 기준 폭 맞추기 */
+  display: flex;
+  justify-content: center;      /* ✅ 내부 버튼도 가운데 정렬 */
+  z-index: 2;
 }
 
 /* 성별 카드 */
 .gender-grid{
   width:100%; display:grid; grid-template-columns:repeat(2,1fr);
-  gap:16px; margin-top:24px;
+  gap:16px; margin-top:50px;
 }
 .gender-card{
   font-family:'Shilla','Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
@@ -111,7 +127,7 @@ nav a:hover{background:rgba(176,124,58,.15);}
   justify-content: flex-end;
   align-items: center;
   gap: 8px;
-  height: 230px;              /* 👈 세로 고정 */
+  height: 300px;              /* 👈 세로 고정 */
   background-size: cover;     /* 👈 이미지 가득 채우기 */
   background-position: center top;
   background-repeat: no-repeat;
@@ -123,6 +139,7 @@ nav a:hover{background:rgba(176,124,58,.15);}
   background: rgba(255,255,255,0.7);
   border-radius: 12px;
   padding: 4px 10px;
+  font-size:20px;
 }
 
 .gender-card:hover,.gender-card:focus{
