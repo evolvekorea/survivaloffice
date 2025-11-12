@@ -138,7 +138,13 @@
        <lastmod>2025-10-13</lastmod>
        <changefreq>monthly</changefreq>
        <priority>0.5</priority>
-   </url>      
+   </url>  
+       <url>
+       <loc>https://www.survivaloffice.com/test/slave</loc>
+       <lastmod>2025-11-13</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.5</priority>
+   </url>     
 
    <!-- work + 하위 페이지 -->
    <url>
