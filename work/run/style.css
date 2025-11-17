@@ -233,7 +233,7 @@ nav a {
 }
 
 .record-card.glow {
-  box-shadow: 0 20px 45px rgba(255, 59, 88, 0.25), inset 0 0 0 1px rgba(255, 59, 88, 0.15);
+  box-shadow: 0 20px 45px rgb(255, 255, 255), inset 0 0 0 1px rgb(255, 255, 255);
 }
 
 .distance-section {

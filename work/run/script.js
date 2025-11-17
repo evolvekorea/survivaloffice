@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
     { input: document.getElementById('timeInput'),    display: document.getElementById('timeDisplay'),    type: 'time',   fallback: '00:00' },
     { input: document.getElementById('calInput'),     display: document.getElementById('calDisplay'),     type: 'number', decimals: 0, suffix: '',       fallback: '0' },
     { input: document.getElementById('elevInput'),    display: document.getElementById('elevDisplay'),    type: 'number', decimals: 0, suffix: ' m',     fallback: '0 m' },
-    { input: document.getElementById('heartInput'),   display: document.getElementById('heartDisplay'),   type: 'number', decimals: 0, suffix: ' bpm',   fallback: '-- bpm' },
-    { input: document.getElementById('cadenceInput'), display: document.getElementById('cadenceDisplay'), type: 'number', decimals: 0, suffix: ' spm',   fallback: '0 spm' }
+    { input: document.getElementById('heartInput'),   display: document.getElementById('heartDisplay'),   type: 'number', decimals: 0, suffix: ' ',   fallback: '0' },
+    { input: document.getElementById('cadenceInput'), display: document.getElementById('cadenceDisplay'), type: 'number', decimals: 0, suffix: ' ',   fallback: '0' }
   ];
 
   const easing = {
