@@ -34,10 +34,12 @@ nav {
   position: sticky;
   top: 0;
   width: 100%;
+  height: 48px;        /* ← 높이를 고정해서 아래 요소가 침범 못하게 함 */
   background: #ffffff;
   border-bottom: 1px solid var(--border);
-  z-index: 30;
+  z-index: 100;        /* ← 더 위로 올림 */
 }
+
 nav ul {
   list-style: none;
   margin: 0;
@@ -280,6 +282,9 @@ nav a {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+.ad-container {
+  margin-top: 48px !important;
 }
 
 /* ANIMATIONS */
