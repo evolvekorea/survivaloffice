@@ -1,3 +1,11 @@
+/* 웹폰트 설정 */
+@font-face {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
@@ -30,30 +38,43 @@ body {
 }
 
 /* NAV */
+
 nav {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  height: 48px;        /* ← 높이를 고정해서 아래 요소가 침범 못하게 함 */
-  background: #ffffff;
-  border-bottom: 1px solid var(--border);
-  z-index: 100;        /* ← 더 위로 올림 */
+    position: fixed;  /* 🔥 화면 상단에 고정 */
+    top: 0;
+    left: 0;
+    width: 100%;  /* 🔥 전체 너비 사용 */
+    background-color: #f4f4f4;
+    padding: 10px 0;  /* 🔥 위아래 여백 설정 */
+    z-index: 1000;  /* 🔥 다른 요소보다 위로 배치 */
 }
 
 nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 12px 20px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+    padding-right: 20px; /* 🔥 오른쪽 정렬 시 여백 추가 */
 }
-nav a {
-  text-decoration: none;
-  color: var(--text-color);
-  font-weight: 500;
-  font-size: 14px;
+
+nav ul li {
+    display: inline;
 }
+
+nav ul li a {
+    color: rgb(62, 62, 62);
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
+}
+
+nav ul li a:hover {
+    background-color: #555;
+    color: white;
+}
+
 
 /* ADS */
 .ad-container,
