@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const slowMode = document.getElementById('slowMode');
   const glowEffect = document.getElementById('glowEffect');
   const textColor = document.getElementById('textColor');
-  const accentColor = document.getElementById('accentColor');
   const recordBtn = document.getElementById('recordBtn');
   const resetBtn = document.getElementById('resetBtn');
   const kmInput = document.getElementById('kmInput');
@@ -84,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateColors() {
     document.documentElement.style.setProperty('--text-color', textColor.value);
-    document.documentElement.style.setProperty('--accent-color', accentColor.value);
   }
 
   function resetDisplays() {
@@ -146,7 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   textColor.addEventListener('input', updateColors);
-  accentColor.addEventListener('input', updateColors);
   glowEffect.addEventListener('change', applyEffect);
   effectSelect.addEventListener('change', applyEffect);
 
