@@ -1,246 +1,175 @@
 @font-face {
-    font-family: 'YoonChildfundkoreaManSeh';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408@1.0/YoonChildfundkoreaManSeh.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}        
-	
-.start{
-    display: flex;
-    flex-direction: column;
-}
-*/
-.logo {
-    width: 100px;
-    margin-top: 14px;
-}
-header.page-header h1 a .logo {
-    width: 100px;
-    max-width: 100px;
-    height: auto;
-}
-.main-nav {
-    display: flex;
-    font-size: 1.25rem;
-    text-transform: uppercase;
-    margin-top: 34px;
-    list-style: none;
+  font-family: 'YoonChildfundkoreaManSeh';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408@1.0/YoonChildfundkoreaManSeh.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
 }
 
-.main-nav li {
-    margin-left: 36px;
-       font-family: 'Do Hyeon', sans-serif;
-    line-height: 1.7;
-    color: #432;
+/* Reset */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root{
+  --bg: #fed7e0;
+  --ink: #111;
+  --line: #e7e7e7;
 }
 
-.main-nav a{
-    color: #432;
-       font-family: 'Do Hyeon', sans-serif;
-    line-height: 1.7;
+/* Base */
+html, body {
+  width: 100%;
+  min-height: 100vh;
 }
 
-.main-nav a:hover {
-    color: #0bd;
+body.page {
+  font-family: 'YoonChildfundkoreaManSeh', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  text-align: center;
+  overflow-x: hidden;
+  padding-top: 52px; /* fixed nav space */
 }
 
-
-.page-header {
-    display: flex;
-    justify-content: space-between;
+/* Nav */
+.top-nav {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  z-index: 1000;
 }
 
-    
-article{
-    display: flex;
-    flex-direction: column;
+.top-nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 10px 14px;
 }
 
- 
-        /* 스타일링을 위한 CSS 코드 */
-        
-        body {
-            font-family: 'YoonChildfundkoreaManSeh', sans-serif;
-            text-align: center;
-        }
-            /* 이미지에 아래 여백을 주어 버튼을 내립니다. */
-    /* 이미지 스타일 */
-        /* 모달 스타일 */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-
-/* 기본 모달 콘텐츠 스타일 */
-.modal-content {
-    position: absolute;
-    top: 50%; /* 화면 세로 중앙에 배치 */
-    left: 50%; /* 화면 가로 중앙에 배치 */
-    transform: translate(-50%, -50%); /* 가운데 정렬을 위한 변형 */
-    background-color: #ffdbdb;
-    margin: auto;
-    padding: 20px; /* 내용에 맞게 조절 */
-    border: 1px solid #888;
-    width: 50%; /* 모달 창의 가로 너비를 조절합니다. */
-     height: 10%;
-    max-width: 400px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    border-radius: 10px; /* 모달 창 모서리를 10px만큼 둥글게 만듭니다. */
-}
-        /* 모달 텍스트 스타일 */
-#modalText {
-    text-align: center; /* 가로 가운데 정렬 */
-    position: absolute; /* 위치 지정 */
-    top: 50%; /* 세로 중앙에 배치 */
-    left: 50%; /* 가로 중앙에 배치 */
-    transform: translate(-50%, -50%); /* 가운데 정렬을 위한 변형 */
+.top-nav a {
+  color: var(--ink);
+  text-decoration: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 10px;
 }
 
-        
-/* 닫기 버튼 스타일 */
-.close {
-    position: absolute; /* 모달 내부에서 절대 위치로 설정 */
-    bottom: -50px; /* 모달 내부 아래에 여백을 둡니다. */
-    left: 50%; /* 모달 내부 가로 중앙에 배치 */
-    transform: translateX(-50%); /* 수평 가운데 정렬 */
-  background-color: #ffdbdb; /* 불투명한 배경색으로 설정 */
-opacity: 1; /* 투명도를 완전히 없애기 */
+.top-nav a:hover {
+  background: #f2f6ff;
+  color: #0b67c6;
+}
 
-    color: #000;
-    padding: 10px 10px;
-    border: none;
+/* Layout */
+.container {
+  width: 360px;
+  max-width: 360px;
+  margin: 0 auto;
+  padding: 10px 0 20px;
+}
+
+/* Ads */
+.ad-container,
+.footer-ad-container{
+  width: 360px;
+  max-width: 100%;
+  margin: 10px auto;
+}
+
+/* Counter badge */
+.counter-badge{
+  width: 360px;
+  max-width: 360px;
+  margin: 8px auto 10px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.8);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+/* Start screen */
+.start-screen{
+  display: block;
+}
+
+.start-image{
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 6px auto 12px;
+}
+
+/* Quiz */
+.quiz-container{
+  display: none;
+}
+
+.quiz-container img,
+#result-image{
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Progress bar */
+.progress-container {
+  width: 360px;
+  max-width: 360px;
+  background: #fff;
+  height: 10px;
+  position: relative;
+  display: none;
+  margin: 0 auto 16px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  width: 0;
+  height: 10px;
+  background: #fff478;
+}
+
+/* Buttons */
+.custom-jelly-button{
+  font-family: 'YoonChildfundkoreaManSeh', Arial, sans-serif;
+  background: linear-gradient(90deg, #a1c4fd, #c2e9fb);
+  color: #000;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
-    font-weight: bold;
-    border-radius: 5px;
-    font-size: 15px; /* 원하는 글씨 크기로 조절합니다. */
-}
-.close:hover {
-    background-color: #ffdbdb; /* 마우스 호버 상태일 때도 배경색을 원래 색으로 유지 */
-    color: #000; /* 마우스 호버 상태일 때도 글자색을 원래 색으로 유지 */
+  display: block;
+  margin: 10px auto;
+  width: 90%;
+  max-width: 340px;
 }
 
-        
-    .start-image {
-        max-width: 100%; /* 이미지의 최대 너비를 100%로 설정하여 부모 요소에 맞게 조절 */
-        height: auto; /* 이미지의 높이를 자동으로 조절하여 가로세로 비율 유지 */
-        display: block; /* 이미지를 블록 요소로 표시하여 위아래 여백을 생성 */
-        margin: 0 auto 10px; /* 이미지 아래에 20px 여백을 추가하고 수평 가운데 정렬 */
-    }
-
-        .quiz-container {
-            display: none;
-        }
-
- .custom-jelly-button {
-    background: linear-gradient(90deg, #a1c4fd, #c2e9fb); /* 하늘색 그라데이션 */
-    color: #000000; /* 텍스트 색상 */
-    padding: 15px 30px; /* 버튼의 내부 여백 증가 */
-    border: none;
-    border-radius: 10px; /* 둥글게 유지 */
-    font-size: 18px; /* 글씨 크기 증가 */
-    font-weight: 600; /* 텍스트 두께 (기본보다 두꺼운 정도) */
-	cursor: pointer;
-    text-align: center;
-    display: block;
-    margin: 10px auto;
-    max-width: 400px; /* 최대 너비 증가 */
-    width: 80%; /* 버튼을 화면 크기에 맞춰 더 넓게 설정 */
+.custom-jelly-button:hover{
+  background: linear-gradient(90deg, #76b0fc, #a6ddfa);
+  color: #fff;
 }
 
-.custom-jelly-button:hover {
-    background: linear-gradient(90deg, #76b0fc, #a6ddfa); /* 호버 시 그라데이션 색상 변경 */
-    color: #ffffff; /* 텍스트 색상 변경 */
-}
-       .start-button {
-        background-color: #fff478;
-        color: black;
-        padding: 10px 150px;
-            border-color: #000000;
- 
-        cursor: pointer;
-            font-size: 18px; /* 버튼 글꼴 크기 조절 */
-        display: block;
-        margin: 0 auto;
-              border-radius: 5px; /* 버튼 모서리를 둥글게 만듭니다. */
-    }
-/* 질문 이미지 스타일링 */
-.quiz-container img {
-    width: 500px;
-    height: 900px;
-    max-width: 100%;
-    height: auto;
-    margin: 0 auto;
-}
-        /* 질문 이미지 스타일링 */
-.quiz-container img {
-    width: 500px; /* 기본 이미지의 가로 크기를 500px로 설정 */
+.mt-3{ margin-top: 12px; }
 
-    /* 미디어 쿼리를 사용하여 모바일 화면 크기에서 이미지 크기 조절 */
-    @media (max-width: 768px) { /* 모바일 화면 크기를 기준으로 조절 */
-        width: 100%; /* 모바일 화면에서 이미지를 화면 가로 너비에 맞게 조절 */
-    }
-    
-    height: auto; /* 이미지의 세로 크기를 자동으로 조절하여 비율 유지 */
-    display: block;
-    margin: 0 auto; /* 이미지를 가운데 정렬 */
+.result-container{
+  margin-top: 10px;
 }
 
-/* 질문 버튼 스타일 */
-.question-button {
-    background-color: #fff478;
-    color: black;
-    padding: 10px 10px; /* 상하 패딩만 지정 */
-    border-color: #000000;
-    cursor: pointer;
-    display: block;
-    margin: 10px auto;
-    font-size: 16px;
-    border-radius: 5px;
-    min-width: 350px; /* 최소 가로 길이를 350px로 설정 */
-    box-sizing: border-box; /* 가로 길이를 고정한 상태에서 padding과 border를 포함한 전체 요소 크기 유지 */
-    text-align: center; /* 가운데 정렬 */
+.result-actions{
+  margin-top: 16px;
 }
 
-
-
-
-        #result-image {
-          width: 500px;
-    height: 900px;
-    max-width: 100%;
-    height: auto;
-    margin: 0 auto;
-        }
-
-        /* 프로그래스 바 스타일 */
-        .progress-container {
-            width: 100%;
-            background-color: #ffffff;
-            height: 10px;
-            position: relative;
-            display: none;
-                margin-bottom: 20px; /* 하단에 20px의 마진 추가 */
-        }
-
-        .progress-bar {
-            width: 0;
-          height: 10px;
-            background-color: #fff478;
-            text-align: center;
-            line-height: 30px;
-            color: white;
-            font-weight: bold;
-            position: absolute;
-        }
-
-        .coupang_ad {
-    width: 320px;
-    margin: 0 auto;
+.sr-only{
+  position:absolute;
+  width:1px; height:1px;
+  padding:0; margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
 }

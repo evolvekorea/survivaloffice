@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=360, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>태어난 날로 보는 조선시대 나의 이름(Feat. 노비)</title>
-  <meta name="description" content="태어난 날로 알아보는 조선시대 나의 이름 찾기">
-  <meta name="keywords" content="조선시대 이름, 노비 이름 테스트, 서바이벌오피스, 조선시대 심리테스트, 조선, 노비, 심리테스트, 테스트, 미니게임, ">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=360, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>미룬이 테스트</title>
+  <meta name="description" content="미룬이 테스트" />
+  <meta name="keywords" content="서바이벌오피스,성격테스트,미룬이,미룬이테스트,미룬이테스트결과,연애테스트,연애mbti,연애성격테스트,심리테스트,mbti테스트" />
 
   <!-- Google Adsense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537" crossorigin="anonymous"></script>
-  <meta name="google-adsense-account" content="ca-pub-4957586937754537">
+  <meta name="google-adsense-account" content="ca-pub-4957586937754537" />
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
@@ -21,23 +21,25 @@
   </script>
 
   <!-- Open Graph -->
-  <meta property="og:title" content="태어난 날로 보는 조선시대 나의 이름(Feat. 노비)" />
-  <meta property="og:description" content="태어난 날로 알아보는 조선시대 나의 이름 찾기" />
-  <meta property="og:url" content="https://www.survivaloffice.com/test/slave" />
-  <meta property="og:image" content="https://www.survivaloffice.com/images/slave1.png" />
+  <meta property="og:title" content="미룬이 테스트" />
+  <meta property="og:description" content="미룬이 테스트" />
+  <meta property="og:url" content="https://www.survivaloffice.com/test/mi" />
+  <meta property="og:image" content="https://www.survivaloffice.com/images/test002.png" />
   <meta property="og:type" content="website" />
 
-  <link rel="preconnect" href="https://api.counterapi.dev" crossorigin>
-  <link rel="dns-prefetch" href="https://api.counterapi.dev">
+  <!-- Counter API 성능 힌트 -->
+  <link rel="preconnect" href="https://api.counterapi.dev" crossorigin />
+  <link rel="dns-prefetch" href="https://api.counterapi.dev" />
 
-  <!-- Kakao SDK -->
-  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" crossorigin="anonymous"></script>
+  <!-- ⚠️ (중요) 동적 로드 방식 쓰므로, 여기서는 Kakao SDK script 태그를 넣지 않습니다. -->
+  <!-- <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" crossorigin="anonymous"></script> -->
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 
-<body oncontextmenu="return false">
-  <nav>
+<body class="page" oncontextmenu="return false">
+  <!-- 상단 네비 -->
+  <nav class="top-nav">
     <ul>
       <li><a href="/">Home</a></li>
       <li><a href="/rest/">미니게임</a></li>
@@ -56,87 +58,95 @@
          data-full-width-responsive="true"></ins>
   </div>
 
-  <main id="app" role="main">
-    <!-- 시작화면 -->
-    <section id="start-screen" class="screen active" aria-labelledby="start-title"
-      style="background:url('https://www.survivaloffice.com/images/slavemain.png') center/cover no-repeat;">
-      <div class="screen-overlay start-overlay">
-        <h1 id="start-title">태어난 날로 보는<br>조선시대 나의 이름<br>(Feat. 노비)</h1>
-        <button id="start-btn" class="primary-btn start-cta" type="button">이름 찾기</button>
-      </div>
+  <!-- 참여자 수 배지 -->
+  <div id="test-counter"
+       class="counter-badge"
+       data-counter-namespace="survivaloffice"
+       data-counter-key="mi">
+    총 0명 참여
+  </div>
+
+  <main class="container">
+    <!-- 시작 화면 -->
+    <section id="start-screen" class="start-screen">
+      <img src="https://www.survivaloffice.com/images/img_main002.png" alt="시작 이미지" class="start-image" />
+      <button id="start-btn" type="button" class="custom-jelly-button" onclick="startQuiz()">시작하기</button>
     </section>
 
-      <!-- 참여자 수 배지 -->
-      <div id="test-counter"
-           class="counter-badge"
-           data-counter-namespace="survivaloffice"
-           data-counter-key="slave">
-        총 0명 참여
-      </div>
+    <!-- 프로그래스 바 -->
+    <div class="progress-container" id="progress-container" aria-label="진행률">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
 
-    <!-- 스토리 -->
-    <section id="story-screen" class="screen" aria-live="polite">
-      <div class="story-wrapper">
-        <p id="story-text" class="story-text" aria-live="polite"></p>
-      </div>
-      <div class="bottom-cta">
-        <button id="story-next" class="primary-btn" type="button" hidden>계속하기</button>
-      </div>
+    <!-- 질문 -->
+    <section class="quiz-container" id="quiz-container-1">
+      <p><img src="https://www.survivaloffice.com/images/q1_002.png" alt="문제1" /></p>
+      <button type="button" onclick="checkAnswer(1, 1)" class="custom-jelly-button mt-3">바로 예약하자</button>
+      <button type="button" onclick="checkAnswer(1, 2)" class="custom-jelly-button">아직 안 급하니까 나중에 하자</button>
     </section>
 
-    <!-- 성별 선택 -->
-    <section id="gender-screen" class="screen" aria-labelledby="gender-title">
-      <h2 id="gender-title">성별을 선택하세요</h2>
-      <p class="gender-helper">조선시대 남녀는 이름짓는 풍습도 달랐답니다.</p>
-      <div class="gender-grid" role="list">
-        <button class="gender-card" type="button" data-gender="male" role="listitem"
-          style="background:url('https://www.survivaloffice.com/images/slavem.png') center/cover no-repeat;">
-          <span class="gender-label">남성</span>
-        </button>
-        <button class="gender-card" type="button" data-gender="female" role="listitem"
-          style="background:url('https://www.survivaloffice.com/images/slavef.png') center/cover no-repeat;">
-          <span class="gender-label">여성</span>
-        </button>
-      </div>
+    <section class="quiz-container" id="quiz-container-2">
+      <p><img src="https://www.survivaloffice.com/images/q2_002.png" alt="문제2" /></p>
+      <button type="button" onclick="checkAnswer(2, 1)" class="custom-jelly-button mt-3">이참에 집 청소 싹 해버리자!</button>
+      <button type="button" onclick="checkAnswer(2, 2)" class="custom-jelly-button mt-3">다음에 하자. 굳이 지금 안 불러도 되니까</button>
     </section>
 
-    <!-- 생월/생일 입력 -->
-    <section id="birth-screen" class="screen" aria-labelledby="birth-title">
-      <h2 id="birth-title">태어난 월과 일자를 입력하세요</h2>
-      <form id="birth-form" novalidate>
-        <div class="form-field">
-          <label for="birth-month">태어난 달</label>
-          <input id="birth-month" name="birth-month" type="number" inputmode="numeric" min="1" max="12" placeholder="예: 6" required>
-        </div>
-        <div class="form-field">
-          <label for="birth-day">태어난 날</label>
-          <input id="birth-day" name="birth-day" type="number" inputmode="numeric" min="1" max="31" placeholder="예: 17" required>
-        </div>
-        <p id="birth-error" class="error-text" role="alert" aria-live="assertive"></p>
-        <button id="reveal-btn" class="primary-btn" type="submit">이름 찾기</button>
-      </form>
+    <section class="quiz-container" id="quiz-container-3">
+      <p><img src="https://www.survivaloffice.com/images/q3_002.png" alt="문제3" /></p>
+      <button type="button" onclick="checkAnswer(3, 1)" class="custom-jelly-button mt-3">지금 손질해야겠다!</button>
+      <button type="button" onclick="checkAnswer(3, 2)" class="custom-jelly-button mt-3">귀찮아... 나중에 하고<br>오늘은 배달 시켜 먹어야지.</button>
     </section>
 
-    <!-- 로딩 -->
-    <section id="loading-screen" class="screen" aria-live="polite">
-      <div class="loading-wrapper">
-        <div class="loader" role="status" aria-label="이름 생성 중"></div>
-        <p class="loading-text">조선의 호적에서 이름을 찾고 있습니다...</p>
-      </div>
+    <section class="quiz-container" id="quiz-container-4">
+      <p><img src="https://www.survivaloffice.com/images/q4_002.png" alt="문제4" /></p>
+      <button type="button" onclick="checkAnswer(4, 1)" class="custom-jelly-button mt-3">빨래 얼른 끝내고 몰아보자!</button>
+      <button type="button" onclick="checkAnswer(4, 2)" class="custom-jelly-button mt-3">빨래는 내일 하자. 드라마부터 달려야지!</button>
+    </section>
+
+    <section class="quiz-container" id="quiz-container-5">
+      <p><img src="https://www.survivaloffice.com/images/q5_002.png" alt="문제5" /></p>
+      <button type="button" onclick="checkAnswer(5, 1)" class="custom-jelly-button mt-3">지금 바로 정하고 주문해버리자!</button>
+      <button type="button" onclick="checkAnswer(5, 2)" class="custom-jelly-button mt-3">아직 며칠 남았잖아. 나중에 생각하자.</button>
+    </section>
+
+    <section class="quiz-container" id="quiz-container-6">
+      <p><img src="https://www.survivaloffice.com/images/q6_002.png" alt="문제6" /></p>
+      <button type="button" onclick="checkAnswer(6, 1)" class="custom-jelly-button mt-3">바로 시작해서 하루를 기록해보자!</button>
+      <button type="button" onclick="checkAnswer(6, 2)" class="custom-jelly-button mt-3">첫 장 쓰는 게 왜 이렇게 어렵지…<br>조금 더 생각해보자.</button>
+    </section>
+
+    <section class="quiz-container" id="quiz-container-7">
+      <p><img src="https://www.survivaloffice.com/images/q7_002.png" alt="문제7" /></p>
+      <button type="button" onclick="checkAnswer(7, 1)" class="custom-jelly-button mt-3">그래도 궁금하니까 가서 먹고 오자!</button>
+      <button type="button" onclick="checkAnswer(7, 2)" class="custom-jelly-button mt-3">다음에 사람 없을 때 가야지…</button>
+    </section>
+
+    <section class="quiz-container" id="quiz-container-8">
+      <p><img src="https://www.survivaloffice.com/images/q8_002.png" alt="문제8" /></p>
+      <button type="button" onclick="checkAnswer(8, 1)" class="custom-jelly-button mt-3">마침 재료도 있으니 지금 시작해보자!</button>
+      <button type="button" onclick="checkAnswer(8, 2)" class="custom-jelly-button mt-3">나중에 시간 날 때 해야겠다</button>
+    </section>
+
+    <section class="quiz-container" id="quiz-container-9">
+      <p><img src="https://www.survivaloffice.com/images/q9_002.png" alt="문제9" /></p>
+      <button type="button" onclick="checkAnswer(9, 1)" class="custom-jelly-button mt-3">자료라도 조금씩 모아두자.</button>
+      <button type="button" onclick="checkAnswer(9, 2)" class="custom-jelly-button mt-3">일단 긴장을 풀고 닥치면 집중해서 할래.</button>
+    </section>
+
+    <section class="quiz-container" id="quiz-container-10">
+      <p><img src="https://www.survivaloffice.com/images/q10_002.png" alt="문제10" /></p>
+      <button type="button" onclick="checkAnswer(10, 1)" class="custom-jelly-button mt-3">지금 바로 전화 드리자.</button>
+      <button type="button" onclick="checkAnswer(10, 2)" class="custom-jelly-button mt-3">나중에 시간 여유 있을 때 해야지…</button>
     </section>
 
     <!-- 결과 -->
-    <section id="result-screen" class="screen" aria-labelledby="result-title">
-      <div class="result-wrapper">
-        <h2 id="result-title">당신의 조선시대 이름은</h2>
-        <p id="result-name" class="result-name"></p>
-        <p id="result-desc" class="result-desc"></p>
-      </div>
-
-      <div id="bottom-actions" style="display: none;">
-        <button id="share-kakao">공유하기</button>
-        <button id="restart-btn">다시하기</button>
-        <button id="other-test-btn" onclick="location.href='https://survivaloffice.com/test'">다른 테스트 하기</button>
+    <section id="result-container" class="result-container" style="display:none;">
+      <p id="result-text"></p>
+      <img id="result-image" src="" alt="결과 이미지" />
+      <div class="result-actions">
+        <button id="share-kakao" type="button" class="custom-jelly-button">카카오톡 공유하기</button>
+        <button type="button" class="custom-jelly-button" onclick="location.href='index.html'">다시 해보기</button>
+        <button type="button" class="custom-jelly-button" onclick="location.href='/'">다른 테스트 해보기</button>
       </div>
     </section>
   </main>
@@ -150,9 +160,14 @@
          data-full-width-responsive="true"></ins>
   </div>
 
+  <!-- 쿠팡 -->
   <p class="sr-only">쿠팡 광고</p>
+  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <script>
+    new PartnersCoupang.G({ id: 810614, trackingCode: "AF4453761", subId: null, template: "carousel", width: "360", height: "100" });
+  </script>
 
-  <script type="module" src="script.js"></script>
+  <!-- 애드센스 push -->
   <script>
     document.addEventListener("contextmenu", e => e.preventDefault());
     document.addEventListener("DOMContentLoaded", () => {
@@ -161,13 +176,254 @@
         window.addEventListener("load", () => {
           (adsbygoogle = window.adsbygoogle || []).push({});
         });
-      } catch (e) { console.error("애드센스 광고 로드 실패:", e); }
+      } catch (e) {
+        console.error("애드센스 광고 로드 실패:", e);
+      }
     });
   </script>
 
-  <script src="https://ads-partners.coupang.com/g.js"></script>
+  <!-- ===== 퀴즈 로직 ===== -->
   <script>
-    new PartnersCoupang.G({ id: 810614, trackingCode: "AF4453761", subId: null, template: "carousel", width: "360", height: "100" });
+    let currentQuestion = 0;
+    let score = 0;
+
+    const correctAnswers = [
+      [1],[1],[1],[1],[1],[1],[1],[1],[1],[1]
+    ];
+
+    function startQuiz() {
+      document.getElementById("start-screen").style.display = "none";
+      document.getElementById("progress-container").style.display = "block";
+      document.getElementById("quiz-container-1").style.display = "block";
+      currentQuestion = 1;
+      updateProgressBar();
+    }
+
+    function showQuestion(questionNumber) {
+      for (let i = 1; i <= 10; i++) {
+        const el = document.getElementById(`quiz-container-${i}`);
+        if (el) el.style.display = "none";
+      }
+      document.getElementById(`quiz-container-${questionNumber}`).style.display = "block";
+      currentQuestion = questionNumber;
+      updateProgressBar();
+    }
+
+    function checkAnswer(questionNumber, selectedOption) {
+      const currentCorrect = correctAnswers[questionNumber - 1];
+      if (currentCorrect.includes(selectedOption)) score++;
+
+      document.getElementById(`quiz-container-${questionNumber}`).style.display = "none";
+
+      if (questionNumber < 10) {
+        showQuestion(questionNumber + 1);
+      } else {
+        showResult(score);
+      }
+    }
+
+    function showResult(score) {
+      const resultContainer = document.getElementById("result-container");
+      const resultImage = document.getElementById("result-image");
+      const resultText = document.getElementById("result-text");
+
+      const map = {
+        10: "https://www.survivaloffice.com/images/img002_100.png",
+        9:  "https://www.survivaloffice.com/images/img002_90.png",
+        8:  "https://www.survivaloffice.com/images/img002_80.png",
+        7:  "https://www.survivaloffice.com/images/img002_70.png",
+        6:  "https://www.survivaloffice.com/images/img002_60.png",
+        5:  "https://www.survivaloffice.com/images/img002_50.png",
+        4:  "https://www.survivaloffice.com/images/img002_40.png",
+        3:  "https://www.survivaloffice.com/images/img002_30.png",
+        2:  "https://www.survivaloffice.com/images/img002_20.png",
+        1:  "https://www.survivaloffice.com/images/img002_10.png",
+        0:  "https://www.survivaloffice.com/images/img002_0.png",
+      };
+
+      const imgUrl = map[score] || map[0];
+      resultImage.src = imgUrl;
+
+      // ✅ 공유용 저장
+      window.currentResultImageUrl = imgUrl;
+      window.currentScore = score;
+
+      resultText.textContent = "";
+      resultContainer.style.display = "block";
+    }
+
+    function updateProgressBar() {
+      const progressBar = document.getElementById("progress-bar");
+      const total = 10;
+      const progress = (currentQuestion / total) * 100;
+      progressBar.style.width = progress + "%";
+    }
+  </script>
+
+  <!-- ===== 참여자 카운터 (CountAPI) ===== -->
+  <script>
+    const COUNTER_BASE = 'https://api.counterapi.dev/v1';
+    const ONLY_ONCE_PER_SESSION = false;
+
+    function counterPath(ns, key) {
+      return `${COUNTER_BASE}/${encodeURIComponent(ns)}/${encodeURIComponent(key)}/`;
+    }
+
+    function getCounterConfig() {
+      const el = document.getElementById("test-counter");
+      return {
+        el,
+        ns: el?.dataset.counterNamespace || "survivaloffice",
+        key: el?.dataset.counterKey || "mi",
+      };
+    }
+
+    function cacheKey(ns, key){ return `counter_${ns}_${key}`; }
+
+    function getCachedCount(ns, key, maxAgeMs = 10 * 60 * 1000){
+      try{
+        const raw = localStorage.getItem(cacheKey(ns,key));
+        if(!raw) return null;
+        const obj = JSON.parse(raw);
+        if(Date.now() - obj.t > maxAgeMs) return null;
+        return typeof obj.v === 'number' ? obj.v : null;
+      }catch{ return null; }
+    }
+
+    function setCachedCount(ns, key, val){
+      try{
+        localStorage.setItem(cacheKey(ns,key), JSON.stringify({ v: Number(val)||0, t: Date.now() }));
+      }catch{}
+    }
+
+    async function fetchCount(ns, key) {
+      const url = counterPath(ns, key);
+      try {
+        const r = await fetch(url, { cache: 'no-store', headers: { 'accept': 'application/json' } });
+        if (!r.ok) return 0;
+        const data = await r.json();
+        return (typeof data.count === 'number') ? data.count :
+               (typeof data.value === 'number') ? data.value : 0;
+      } catch (e) {
+        console.warn('[counter] fetch failed:', e);
+        return 0;
+      }
+    }
+
+    async function hitCount(ns, key) {
+      const url = `${counterPath(ns, key)}up`;
+      try {
+        const r = await fetch(url, { cache: 'no-store', headers: { 'accept': 'application/json' } });
+        if (!r.ok) return null;
+        const data = await r.json();
+        return (typeof data.count === 'number') ? data.count :
+               (typeof data.value === 'number') ? data.value : null;
+      } catch (e) {
+        console.warn('[counter] hit failed:', e);
+        return null;
+      }
+    }
+
+    function shouldIncreaseThisSession(ns, key) {
+      if (!ONLY_ONCE_PER_SESSION) return true;
+      const flag = `counted_${ns}_${key}`;
+      if (sessionStorage.getItem(flag) === "1") return false;
+      sessionStorage.setItem(flag, "1");
+      return true;
+    }
+
+    function renderCount(el, n) {
+      if (!el) return;
+      el.textContent = `총 ${Number(n).toLocaleString()}명 참여`;
+      el.setAttribute("data-count", String(n));
+      const { ns, key } = getCounterConfig();
+      if (ns && key && typeof n === 'number') setCachedCount(ns, key, n);
+    }
+
+    (async function initCounter() {
+      const { el, ns, key } = getCounterConfig();
+      if (!el) return;
+
+      const cached = getCachedCount(ns, key);
+      if (cached !== null) renderCount(el, cached);
+
+      const fresh = await fetchCount(ns, key);
+      renderCount(el, fresh);
+
+      const startBtnEl = document.getElementById("start-btn");
+      if (startBtnEl) {
+        startBtnEl.addEventListener("click", async () => {
+          try {
+            if (shouldIncreaseThisSession(ns, key)) {
+              const after = await hitCount(ns, key);
+              if (after !== null) renderCount(el, after);
+            }
+          } catch (e) {
+            console.warn("[counter] increase on click failed:", e);
+          }
+        }, { once: false });
+      }
+    })();
+  </script>
+
+  <!-- ✅ 카카오 SDK 동적 로드 + 공유하기 로직 (네가 준 방식) -->
+  <script>
+    // ---------- 카카오 SDK ----------
+    async function loadKakaoSDK() {
+      return new Promise((resolve, reject) => {
+        if (window.Kakao && Kakao.isInitialized()) { resolve(); return; }
+        const script = document.createElement("script");
+        script.src = "https://developers.kakao.com/sdk/js/kakao.min.js";
+        script.onload = () => {
+          if (!window.Kakao) { reject("❌ Kakao 객체가 로드되지 않음"); return; }
+          Kakao.init("eee6c2e01641161de9f217ba99c6a0da");
+          resolve();
+        };
+        script.onerror = () => reject("❌ Kakao SDK 로드 실패");
+        document.head.appendChild(script);
+      });
+    }
+
+    // 로드/초기화
+    loadKakaoSDK().catch(console.error);
+
+    // 공유 버튼 연결
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("share-kakao");
+      if (!btn) return;
+
+      btn.addEventListener("click", async () => {
+        try {
+          await loadKakaoSDK(); // 혹시 늦게 로드될 수 있으니 보장
+
+          const imgUrl = window.currentResultImageUrl || "https://www.survivaloffice.com/images/test002.png";
+          const score = (typeof window.currentScore === "number") ? window.currentScore : null;
+
+          const shareUrl = "https://www.survivaloffice.com/test/mi";
+          const title = "미룬이 테스트 결과";
+          const desc = (score !== null) ? `내 점수는 ${score}점! 너도 해봐 👇` : "너도 해봐 👇";
+
+          Kakao.Share.sendDefault({
+            objectType: "feed",
+            content: {
+              title: title,
+              description: desc,
+              imageUrl: imgUrl,   // ✅ 결과 이미지
+              link: { mobileWebUrl: shareUrl, webUrl: shareUrl }
+            },
+            buttons: [
+              {
+                title: "테스트 하러가기",
+                link: { mobileWebUrl: shareUrl, webUrl: shareUrl }
+              }
+            ]
+          });
+        } catch (e) {
+          console.error("카카오 공유 실패:", e);
+          alert("카카오 공유 설정을 확인해주세요. (도메인 등록/키 확인)");
+        }
+      });
+    });
   </script>
 </body>
 </html>
