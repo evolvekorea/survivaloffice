@@ -147,10 +147,16 @@
    </url>  
        <url>
        <loc>https://www.survivaloffice.com/test/mi</loc>
-       <lastmod>2026-02-03</lastmod>
+       <lastmod>2026-02-02</lastmod>
        <changefreq>monthly</changefreq>
        <priority>0.5</priority>
    </url>     
+        <url>
+       <loc>https://www.survivaloffice.com/test/candy</loc>
+       <lastmod>2026-02-03</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.5</priority>
+   </url>  
    
 
    <!-- work + 하위 페이지 -->
