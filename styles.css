@@ -24,6 +24,8 @@ nav ul {
     justify-content: flex-end;
     margin: 0;
     padding: 0;
+    max-width: 1440px;
+    margin-inline: auto;
 }
   
 nav ul li {
@@ -91,6 +93,8 @@ footer {
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    width: min(100%, 1440px);
+    margin: 0 auto;
 }
 
 /* 섹션별 카테고리 스타일 */
@@ -184,8 +188,55 @@ footer {
 
 /* 큰 태블릿 및 데스크탑 */
 @media (min-width: 801px) {
+    nav {
+        padding: 14px 32px;
+    }
+
+    nav ul li a {
+        display: block;
+        padding: 10px 18px;
+        font-size: 17px;
+    }
+
+    header img {
+        height: clamp(320px, 32vw, 500px);
+    }
+
+    section {
+        padding: 32px clamp(32px, 5vw, 72px);
+    }
+
+    .nav-category {
+        max-width: none;
+        padding: 24px;
+    }
+
+    .nav-category h3 {
+        font-size: 26px;
+    }
+
     .nav-item {
-        flex: 1 1 calc(33.33% - 10px); /* 큰 태블릿 및 PC에서도 한 줄에 3개 */
+        flex: 1 1 calc(25% - 12px); /* PC에서는 한 줄에 4개 */
+        max-width: calc(25% - 12px);
+        padding: 12px;
+    }
+
+    .nav-item a {
+        font-size: 18px;
+    }
+
+    .nav-item img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+    }
+}
+
+/* 넓은 데스크탑에서는 가로 공간을 더 적극적으로 활용 */
+@media (min-width: 1280px) {
+    .nav-item {
+        flex-basis: calc(20% - 12px);
+        max-width: calc(20% - 12px);
     }
 }
 
