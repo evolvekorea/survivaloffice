@@ -1,0 +1,42 @@
+.food-image,
+.winner-image {
+  display: block;
+  background-repeat: no-repeat;
+  background-size: 400% 200%;
+  filter: drop-shadow(0 10px 10px #5c4b7924);
+}
+
+.battle[hidden] {
+  display: none;
+}
+
+.food-image {
+  width: min(55%, 220px);
+  aspect-ratio: 3 / 4;
+  margin: 18px auto 10px;
+  border-radius: 20px;
+  transition: transform .2s;
+}
+
+.menu-card:hover .food-image {
+  transform: scale(1.035) rotate(-1deg);
+}
+
+.winner-image {
+  width: min(70%, 220px);
+  aspect-ratio: 3 / 4;
+  margin: 8px auto 5px;
+  border-radius: 24px;
+}
+
+@media (max-width: 650px) {
+  .food-image {
+    width: min(82%, 145px);
+    margin-top: 30px;
+    border-radius: 15px;
+  }
+
+  .winner-image {
+    width: min(75%, 180px);
+  }
+}

@@ -1,8 +1,15 @@
 # Survival Office Project Instructions
 
+## Commit and push confirmation
+
+- After completing requested changes and verification, do not commit or push automatically.
+- Summarize the completed changes and checks, then ask the user: `커밋하고 푸시할까요?`
+- Commit and push only after the user explicitly approves.
+
 ## New HTML page requirements
 
-- Apply the rules in this section to every new HTML page created in this repository.
+- Apply the rules in this section to every new HTML page created anywhere in this repository, including but not limited to `rest`, `work`, `test`, and any future section.
+- Every new public page must contain the bottom AdSense unit near the end of `<main>` or the page's main content, immediately before the footer when possible, and must initialize that unit so it can request an ad.
 - Do not retrofit or modify existing pages solely to add these snippets unless the user explicitly requests it.
 - If an equivalent snippet is already present in a new page or template, do not add a duplicate.
 - Keep the publisher ID, Analytics measurement ID, and ad slot ID exactly as written below.
@@ -54,4 +61,12 @@ Place this ad unit at the bottom of the page content:
         data-ad-format="auto"
         data-full-width-responsive="true"></ins>
 </div>
+<script>
+    try {
+        window.adsbygoogle = window.adsbygoogle || [];
+        window.adsbygoogle.push({});
+    } catch (error) {
+        console.warn('AdSense initialization deferred.', error);
+    }
+</script>
 ```
