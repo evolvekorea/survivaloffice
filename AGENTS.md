@@ -19,6 +19,8 @@
 - Whenever a new public page is created, register it in the repository root `index.html`.
 - Also register it in the relevant section index, such as `rest/index.html`, `test/index.html`, or `work/index.html`.
 - Add its canonical public URL to the repository root `sitemap.xml` in the same task.
+- Whenever an existing public page receives a substantial content, design, or feature update, refresh its `<lastmod>` date in `sitemap.xml` in the same task.
+- Keep each sitemap `<loc>` identical to the page's canonical URL, including its trailing slash, and do not create duplicate entries.
 - Use the page's creation or update date for `<lastmod>` and do not create duplicate entries.
 
 ### Google AdSense loader
