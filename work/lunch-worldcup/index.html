@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>오늘 점심 월드컵 | Survival Office</title>
+  <meta name="description" content="두 메뉴 중 하나를 선택해 32강부터 결승까지 오늘의 점심 메뉴를 정하는 이상형 월드컵입니다.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-4957586937754537">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G4TPWGLYLY');</script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav aria-label="주요 메뉴"><a href="/">Home</a><a href="/rest/">미니게임</a><a href="/test/">테스트</a><a href="/work/">생존키트</a></nav>
+  <main>
+    <header class="hero"><span>ONE PICK LUNCH</span><h1>🍽️ 오늘 점심 월드컵</h1><p>고민되는 두 메뉴 중 더 끌리는 하나를 골라 오늘의 점심을 정해보세요.</p></header>
+
+    <section class="tournament" aria-labelledby="roundTitle">
+      <div class="topbar">
+        <div><small>현재 라운드</small><h2 id="roundTitle">32강</h2></div>
+        <div class="match-count"><b id="matchCurrent">1</b> / <span id="matchTotal">16</span></div>
+        <button id="soundButton" type="button" aria-label="효과음 켜기 또는 끄기">🔊</button>
+      </div>
+      <div class="progress"><i id="progressBar"></i></div>
+
+      <div id="battle" class="battle" aria-live="polite">
+        <button class="menu-card left" id="leftChoice" type="button">
+          <span class="shortcut">← 또는 1</span><span class="food" id="leftEmoji">🍜</span><strong id="leftName">라면</strong><em>이 메뉴 선택</em>
+        </button>
+        <div class="versus" aria-hidden="true">VS</div>
+        <button class="menu-card right" id="rightChoice" type="button">
+          <span class="shortcut">2 또는 →</span><span class="food" id="rightEmoji">🍛</span><strong id="rightName">카레</strong><em>이 메뉴 선택</em>
+        </button>
+      </div>
+
+      <div id="result" class="result" hidden>
+        <div id="confetti" class="confetti" aria-hidden="true"></div>
+        <span class="crown">👑</span><small>오늘의 최종 선택</small>
+        <div class="winner-emoji" id="winnerEmoji">🍱</div><h2 id="winnerName">도시락</h2>
+        <p>오늘 점심은 이걸로 결정!</p>
+        <div class="result-actions"><button id="copyButton" type="button">결과 복사</button><button id="restartButton" class="primary" type="button">다시 하기</button></div>
+        <p id="copyMessage" class="copy-message" aria-live="polite"></p>
+      </div>
+
+      <div class="picked"><span>지금까지 선택</span><div id="pickedList"></div></div>
+      <button id="shuffleButton" class="reset-button" type="button">↻ 메뉴 다시 섞기</button>
+      <p class="key-help">PC는 키보드 <kbd>1</kbd>·<kbd>2</kbd> 또는 방향키로도 선택할 수 있어요.</p>
+    </section>
+
+    <section class="guide"><h2>어떻게 진행되나요?</h2><div><p><b>1</b><span>32가지 점심 메뉴 중 두 개씩 대결해요.</span></p><p><b>2</b><span>고른 메뉴가 다음 라운드로 올라가요.</span></p><p><b>3</b><span>결승에서 오늘의 점심 하나를 결정해요.</span></p></div></section>
+
+    <div class="ad-container"><ins class="adsbygoogle" style="display:block;min-height:90px" data-ad-client="ca-pub-4957586937754537" data-ad-slot="9240598215" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+  </main>
+  <footer>© Survival Office · 점심 고민은 짧게, 식사는 맛있게!</footer>
+  <script src="script.js"></script>
+</body>
+</html>
