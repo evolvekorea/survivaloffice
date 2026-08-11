@@ -7,6 +7,13 @@
 - If an equivalent snippet is already present in a new page or template, do not add a duplicate.
 - Keep the publisher ID, Analytics measurement ID, and ad slot ID exactly as written below.
 
+## Public page registration
+
+- Whenever a new public page is created, register it in the repository root `index.html`.
+- Also register it in the relevant section index, such as `rest/index.html`, `test/index.html`, or `work/index.html`.
+- Add its canonical public URL to the repository root `sitemap.xml` in the same task.
+- Use the page's creation or update date for `<lastmod>` and do not create duplicate entries.
+
 ### Google AdSense loader
 
 Place this code in the document `<head>`:

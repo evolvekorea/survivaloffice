@@ -152,12 +152,6 @@ function setMessage(text, kind = '') {
     ui.message.className = `message ${kind}`.trim();
 }
 
-function isRelated(row, column) {
-    if (!selected) return false;
-    return row === selected.row || column === selected.column ||
-        (Math.floor(row / 3) === Math.floor(selected.row / 3) && Math.floor(column / 3) === Math.floor(selected.column / 3));
-}
-
 function renderBoard() {
     ui.board.innerHTML = '';
     const selectedValue = selected ? board[selected.row][selected.column] : 0;
@@ -176,7 +170,6 @@ function renderBoard() {
             if (puzzle[row][column]) cell.classList.add('given');
             if (column === 2 || column === 5) cell.classList.add('box-right');
             if (row === 2 || row === 5) cell.classList.add('box-bottom');
-            if (isRelated(row, column)) cell.classList.add('related');
             if (selectedValue && value === selectedValue) cell.classList.add('same-number');
             if (selected && selected.row === row && selected.column === column) cell.classList.add('selected');
             if (wrongCell && wrongCell.row === row && wrongCell.column === column) cell.classList.add('wrong');
@@ -298,6 +291,15 @@ function finishGame(success) {
         ui.board.querySelectorAll('.cell').forEach(cell => cell.classList.add('completed'));
         playSound('win');
         showOverlay('🌟', '스도쿠 완성!', `${CONFIG[difficulty].label} 난이도를 ${formatTime(elapsed)}에 풀었어요.`, `${finalScore.toLocaleString('ko-KR')}점`, '한 판 더', 'new');
+        window.dispatchEvent(new CustomEvent('sudoku-game-complete', {
+            detail: {
+                score: finalScore,
+                difficulty,
+                elapsed,
+                mistakes,
+                hintsUsed
+            }
+        }));
     } else {
         playSound('gameover');
         showOverlay('🌧️', '조금 아쉬워요', '실수 3번을 사용했어요. 새로운 퍼즐로 다시 도전해 보세요!', '', '다시 도전', 'new');
@@ -339,6 +341,9 @@ function startNewGame() {
     running = true;
     setMessage('빈칸을 선택하고 숫자를 눌러주세요.');
     renderBoard();
+    window.dispatchEvent(new CustomEvent('sudoku-game-start', {
+        detail: { difficulty }
+    }));
 }
 
 function playSound(type) {

@@ -64,6 +64,12 @@
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>  
+    <url>
+        <loc>https://www.survivaloffice.com/rest/sudoku/</loc>
+        <lastmod>2026-08-11</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
 
       <!-- TEST + 하위 페이지 -->
    <url>
@@ -120,7 +126,6 @@
        <changefreq>monthly</changefreq>
        <priority>0.5</priority>
    </url>  
-   </url>      
        <url>
        <loc>https://www.survivaloffice.com/test/poorrich</loc>
        <lastmod>2025-09-11</lastmod>

@@ -1,0 +1,76 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /scores/{document} {
+      allow read, write: if true;
+    }
+
+    match /planet/{document} {
+      allow read, write: if true;
+    }
+
+    match /LRLR/{document} {
+      allow read, write: if true;
+    }
+
+    match /828250/{document} {
+      allow read, write: if true;
+    }
+
+    match /mosquito/{document} {
+      allow read, write: if true;
+    }
+
+    match /ddong/{document} {
+      allow read, write: if true;
+    }
+
+    match /mole/{document} {
+      allow read, write: if true;
+    }
+
+    match /mentalmath1/{document} {
+      allow read, write: if true;
+    }
+
+    match /sudoku_rankings/{difficulty}/scores/{document} {
+      allow read: if difficulty in ['easy', 'normal', 'hard'];
+
+      allow create: if
+        difficulty in ['easy', 'normal', 'hard'] &&
+        request.resource.data.keys().hasOnly([
+          'nickname',
+          'score',
+          'elapsed',
+          'mistakes',
+          'hintsUsed',
+          'difficulty',
+          'game',
+          'version',
+          'createdAt'
+        ]) &&
+        request.resource.data.nickname is string &&
+        request.resource.data.nickname.size() >= 1 &&
+        request.resource.data.nickname.size() <= 10 &&
+        request.resource.data.score is int &&
+        request.resource.data.score > 0 &&
+        request.resource.data.score <= 99999999 &&
+        request.resource.data.elapsed is int &&
+        request.resource.data.elapsed >= 0 &&
+        request.resource.data.elapsed <= 86400 &&
+        request.resource.data.mistakes is int &&
+        request.resource.data.mistakes >= 0 &&
+        request.resource.data.mistakes <= 2 &&
+        request.resource.data.hintsUsed is int &&
+        request.resource.data.hintsUsed >= 0 &&
+        request.resource.data.hintsUsed <= 3 &&
+        request.resource.data.difficulty == difficulty &&
+        request.resource.data.game == 'sudoku' &&
+        request.resource.data.version == 1 &&
+        request.resource.data.createdAt == request.time;
+
+      allow update, delete: if false;
+    }
+  }
+}

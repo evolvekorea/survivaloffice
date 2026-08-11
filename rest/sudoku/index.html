@@ -22,6 +22,7 @@
 
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
+    <script type="module" src="ranking.js"></script>
 </head>
 <body>
     <nav class="site-nav" aria-label="주요 메뉴">
@@ -91,6 +92,31 @@
                     <button class="primary-button" id="overlayButton" type="button">한 판 더</button>
                 </div>
             </div>
+        </section>
+
+        <section class="ranking-card" aria-labelledby="rankingTitle">
+            <div class="ranking-header">
+                <h2 id="rankingTitle">🏆 스도쿠 TOP 10</h2>
+                <button id="refreshRankingButton" type="button">새로고침</button>
+            </div>
+
+            <div class="ranking-tabs" role="tablist" aria-label="스도쿠 난이도별 랭킹">
+                <button type="button" role="tab" data-ranking-difficulty="easy">쉬움</button>
+                <button class="active" type="button" role="tab" data-ranking-difficulty="normal">보통</button>
+                <button type="button" role="tab" data-ranking-difficulty="hard">어려움</button>
+            </div>
+
+            <div class="ranking-submit" id="rankingSubmit" hidden>
+                <p><strong id="rankingFinalScore">0점</strong>을 <b id="rankingFinalDifficulty">보통</b> 랭킹에 등록해 보세요!</p>
+                <form id="rankingForm">
+                    <label for="rankingNickname">닉네임</label>
+                    <input id="rankingNickname" name="nickname" type="text" maxlength="10" placeholder="10자 이내" autocomplete="nickname" required>
+                    <button id="saveRankingButton" type="submit">점수 등록</button>
+                </form>
+            </div>
+
+            <p class="ranking-status" id="rankingStatus" aria-live="polite">랭킹을 불러오는 중이에요…</p>
+            <ol class="ranking-list" id="rankingList"></ol>
         </section>
 
         <section class="how-to-play">
