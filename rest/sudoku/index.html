@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="시간과 점수를 함께 기록하는 귀여운 웹 스도쿠 미니게임">
+    <title>포근포근 스도쿠 | Survival Office</title>
+
+    <!-- Google Adsense 코드 -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537"
+    crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-4957586937754537">
+
+    <!-- Google Analytics 코드 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-G4TPWGLYLY');
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <nav class="site-nav" aria-label="주요 메뉴">
+        <a class="brand" href="/">Survival Office</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a class="active" href="/rest/">미니게임</a>
+            <a href="/test/">테스트</a>
+            <a href="/work/">생존키트</a>
+        </div>
+    </nav>
+
+    <main class="page-shell">
+        <header class="game-heading">
+            <span class="eyebrow">COZY BRAIN GAME</span>
+            <h1>포근포근 스도쿠</h1>
+            <p>시간은 천천히, 숫자는 꼼꼼히! 1부터 9까지 빈칸을 채워 보세요.</p>
+        </header>
+
+        <section class="game-card" aria-label="포근포근 스도쿠 게임">
+            <div class="top-bar">
+                <div class="difficulty-picker" aria-label="난이도 선택">
+                    <button type="button" data-difficulty="easy">쉬움</button>
+                    <button class="active" type="button" data-difficulty="normal">보통</button>
+                    <button type="button" data-difficulty="hard">어려움</button>
+                </div>
+                <button class="new-game-button" id="newGameButton" type="button">새 게임</button>
+            </div>
+
+            <div class="status-grid" aria-label="게임 기록">
+                <div><span>시간</span><strong id="timer">00:00</strong></div>
+                <div><span>점수</span><strong id="score">15,000</strong></div>
+                <div><span>실수</span><strong><b id="mistakes">0</b> / 3</strong></div>
+                <div><span>최고</span><strong id="bestScore">0</strong></div>
+            </div>
+
+            <div class="game-layout">
+                <div class="board-column">
+                    <div class="sudoku-board" id="sudokuBoard" role="grid" aria-label="9×9 스도쿠 판"></div>
+                    <p class="message" id="gameMessage" aria-live="polite">빈칸을 선택하고 숫자를 눌러주세요.</p>
+                </div>
+
+                <aside class="control-panel">
+                    <div class="number-pad" id="numberPad" aria-label="숫자 입력판">
+                        <button type="button" data-number="1">1</button><button type="button" data-number="2">2</button><button type="button" data-number="3">3</button>
+                        <button type="button" data-number="4">4</button><button type="button" data-number="5">5</button><button type="button" data-number="6">6</button>
+                        <button type="button" data-number="7">7</button><button type="button" data-number="8">8</button><button type="button" data-number="9">9</button>
+                    </div>
+                    <div class="tool-buttons">
+                        <button id="eraseButton" type="button"><span>⌫</span>지우기</button>
+                        <button id="hintButton" type="button"><span>💡</span>힌트 <b id="hintCount">3</b></button>
+                        <button id="pauseButton" type="button"><span>Ⅱ</span>잠시 멈춤</button>
+                    </div>
+                    <div class="score-guide">
+                        <h2>점수 규칙</h2>
+                        <p>빠르고 정확하게 풀수록 높은 점수를 받아요. 실수와 힌트 사용은 점수가 줄어듭니다.</p>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="game-overlay" id="gameOverlay" hidden>
+                <div class="result-card">
+                    <div class="result-icon" id="resultIcon">🌟</div>
+                    <h2 id="resultTitle">완성했어요!</h2>
+                    <p id="resultMessage"></p>
+                    <strong id="resultScore"></strong>
+                    <button class="primary-button" id="overlayButton" type="button">한 판 더</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-to-play">
+            <div aria-hidden="true">🧩</div>
+            <p><strong>게임 방법</strong><br>각 가로줄, 세로줄, 굵은 테두리의 3×3 칸에 1부터 9까지 숫자가 한 번씩만 들어가도록 채우면 됩니다. 시간제한은 없지만 시간이 지날수록 획득 가능한 점수가 조금씩 줄어들어요.</p>
+        </section>
+
+        <!-- 애드센스 광고 -->
+        <div class="ad-container">
+            <ins class="adsbygoogle" style="display:block; min-height: 90px;" data-ad-client="ca-pub-4957586937754537" data-ad-slot="9240598215" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        </div>
+    </main>
+
+    <footer><p>&copy; 2025 Survival Office. All rights reserved. 📨 <a href="mailto:evolvekorea@gmail.com">evolvekorea@gmail.com</a></p></footer>
+
+    <script>
+        window.addEventListener('load', function () {
+            try { (adsbygoogle = window.adsbygoogle || []).push({}); }
+            catch (error) { console.info('광고는 배포 환경에서 표시됩니다.'); }
+        });
+    </script>
+</body>
+</html>
