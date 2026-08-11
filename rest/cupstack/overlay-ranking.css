@@ -1,0 +1,21 @@
+.overlay-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.overlay-actions .ranking-action {
+  color: #fff;
+  background: linear-gradient(135deg, #9a83ef, #7054cb);
+  box-shadow: 0 6px 0 #5035a9;
+}
+
+.overlay-actions [hidden] { display: none; }
+
+.next-cup {
+  width: 68px;
+  height: 80px;
+  border-radius: 9px 9px 18px 18px;
+  clip-path: polygon(0 0, 100% 0, 84% 100%, 16% 100%);
+}

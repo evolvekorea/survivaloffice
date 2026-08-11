@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>탕비실 컵 쌓기 | 서바이벌 오피스</title>
+  <meta name="description" content="움직이는 종이컵을 정확히 떨어뜨려 탕비실 최고 높이에 도전하는 무료 미니게임입니다.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-4957586937754537">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G4TPWGLYLY');</script>
+  <link rel="stylesheet" href="style.css"><link rel="stylesheet" href="overlay-ranking.css">
+</head>
+<body>
+  <nav><a href="/">Home</a><a href="/rest/">미니게임</a><a href="/test/">테스트</a><a href="/work/">생존키트</a></nav>
+  <main>
+    <header class="hero"><span class="eyebrow">오늘도 탕비실 생존!</span><h1>☕ 탕비실 컵 쌓기</h1><p>움직이는 종이컵을 타이밍에 맞춰 톡! 가장 높은 컵 탑을 만들어 보세요.</p></header>
+    <section class="game-layout">
+      <div class="game-card">
+        <div class="stats"><div><small>점수</small><strong id="score">0</strong></div><div><small>높이</small><strong><span id="height">0</span>컵</strong></div><div><small>콤보</small><strong id="combo">0</strong></div><div><small>기회</small><strong id="lives">♥♥♥</strong></div></div>
+        <div class="canvas-wrap"><canvas id="gameCanvas" width="420" height="620" aria-label="컵 쌓기 게임 화면"></canvas><div id="overlay" class="overlay"><b id="overlayTitle">컵 탑을 쌓아볼까요?</b><p id="overlayText">화면이나 DROP 버튼을 눌러 컵을 떨어뜨리세요.</p><div class="overlay-actions"><button id="overlayRankingButton" class="ranking-action" type="button" hidden>🏆 랭킹 등록</button><button id="startButton" type="button">게임 시작</button></div></div><div id="message" class="message" aria-live="polite"></div></div>
+        <div class="main-controls"><button id="dropButton" class="drop">DROP <span>컵 놓기</span></button><button id="pauseButton" aria-label="일시정지">Ⅱ</button><button id="soundButton" aria-label="소리 켜기 또는 끄기">🔊</button></div>
+        <p class="keys">PC: <kbd>Space</kbd> 컵 놓기 · <kbd>P</kbd> 일시정지 / 모바일: 화면 또는 DROP 버튼 터치</p>
+      </div>
+      <aside class="side-card"><h2>다음 컵</h2><div id="nextCup" class="next-cup"></div><h2>쌓기 요령</h2><ul><li>가운데에 놓으면 퍼펙트 콤보!</li><li>높아질수록 컵이 빨라져요.</li><li>세 번 놓치면 게임 종료!</li></ul><button id="newButton" class="secondary">새 게임</button></aside>
+    </section>
+    <section class="ranking-card"><div class="section-title"><div><span class="eyebrow">오늘의 탕비실 왕</span><h2>컵 쌓기 TOP 10</h2></div><button id="refreshRanking" class="icon-button" aria-label="랭킹 새로고침">↻</button></div><ol id="rankingList" class="ranking-list"><li class="ranking-status">랭킹을 불러오는 중...</li></ol><form id="rankingForm" class="ranking-form" hidden><p><b id="finalScore">0점</b>을 기록했어요! 랭킹에 이름을 남겨보세요.</p><div><input id="nickname" maxlength="10" autocomplete="nickname" placeholder="닉네임 (10자 이내)" aria-label="랭킹 닉네임"><button type="submit">기록 등록</button></div><small id="rankingMessage" aria-live="polite"></small></form></section>
+    <section class="how"><h2>게임 방법</h2><p>컵이 좌우로 움직일 때 화면을 눌러 아래 컵 위에 떨어뜨리세요. 중앙을 정확히 맞추면 퍼펙트 보너스와 콤보 점수를 얻습니다. 컵을 놓칠 때마다 기회가 하나씩 줄어듭니다.</p></section>
+    <div class="ad-container"><ins class="adsbygoogle" style="display:block;min-height:90px" data-ad-client="ca-pub-4957586937754537" data-ad-slot="9240598215" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+  </main>
+  <footer>© Survival Office · 잠깐 쉬어가는 직장인 미니게임</footer>
+  <script src="script.js"></script><script type="module" src="ranking.js"></script>
+</body>
+</html>

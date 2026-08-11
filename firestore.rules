@@ -72,5 +72,37 @@ service cloud.firestore {
 
       allow update, delete: if false;
     }
+
+    match /cup_stack_rankings/{difficulty}/scores/{document} {
+      allow read: if difficulty in ['easy', 'normal', 'hard'];
+
+      allow create: if
+        difficulty in ['easy', 'normal', 'hard'] &&
+        request.resource.data.keys().hasOnly([
+          'nickname', 'score', 'height', 'perfects', 'elapsed',
+          'difficulty', 'game', 'version', 'createdAt'
+        ]) &&
+        request.resource.data.nickname is string &&
+        request.resource.data.nickname.size() >= 1 &&
+        request.resource.data.nickname.size() <= 10 &&
+        request.resource.data.score is int &&
+        request.resource.data.score > 0 &&
+        request.resource.data.score <= 99999999 &&
+        request.resource.data.height is int &&
+        request.resource.data.height > 0 &&
+        request.resource.data.height <= 9999 &&
+        request.resource.data.perfects is int &&
+        request.resource.data.perfects >= 0 &&
+        request.resource.data.perfects <= request.resource.data.height &&
+        request.resource.data.elapsed is int &&
+        request.resource.data.elapsed >= 0 &&
+        request.resource.data.elapsed <= 86400 &&
+        request.resource.data.difficulty == difficulty &&
+        request.resource.data.game == 'cupstack' &&
+        request.resource.data.version == 1 &&
+        request.resource.data.createdAt == request.time;
+
+      allow update, delete: if false;
+    }
   }
 }

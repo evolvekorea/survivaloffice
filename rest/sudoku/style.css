@@ -129,6 +129,9 @@ button { font: inherit; }
 .result-card h2 { margin: 8px 0; font: 400 34px 'Jua', sans-serif; }
 .result-card p { margin: 0 0 10px; color: var(--muted); line-height: 1.6; }
 .result-card > strong { display: block; margin: 8px 0 20px; color: var(--purple-dark); font-size: 30px; }
+.result-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.result-actions [hidden] { display: none; }
+.ranking-overlay-button { min-height: 48px; padding: 0 24px; border: 0; border-radius: 17px; color: #fff; background: linear-gradient(135deg, #967ce9, #6547be); box-shadow: 0 5px 0 #49309c; font-weight: 900; cursor: pointer; }
 .primary-button { min-height: 48px; padding: 0 28px; border: 0; border-radius: 17px; color: #594414; background: linear-gradient(180deg, #ffeca0, #ffd365); box-shadow: 0 5px 0 #d8ad44; font-weight: 900; cursor: pointer; }
 
 .ranking-card {

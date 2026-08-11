@@ -38,6 +38,8 @@ const ui = {
     nickname: document.getElementById('rankingNickname'),
     saveButton: document.getElementById('saveRankingButton'),
     refreshButton: document.getElementById('refreshRankingButton'),
+    overlay: document.getElementById('gameOverlay'),
+    overlayRankingButton: document.getElementById('overlayRankingButton'),
     tabs: [...document.querySelectorAll('[data-ranking-difficulty]')]
 };
 
@@ -191,6 +193,7 @@ async function saveRanking(event) {
         });
         localStorage.setItem('survivaloffice-sudoku-nickname', nickname);
         resultSaved = true;
+        ui.overlayRankingButton.hidden = true;
         ui.submit.hidden = true;
         setStatus('점수 등록 완료! 랭킹을 새로 불러왔어요.', 'success');
         await selectDifficulty(difficulty);
@@ -216,6 +219,7 @@ window.addEventListener('sudoku-game-complete', event => {
     ui.nickname.disabled = false;
     ui.saveButton.disabled = false;
     ui.submit.hidden = false;
+    ui.overlayRankingButton.hidden = false;
     selectDifficulty(latestResult.difficulty);
 });
 
@@ -223,7 +227,16 @@ window.addEventListener('sudoku-game-start', event => {
     latestResult = null;
     resultSaved = false;
     ui.submit.hidden = true;
+    ui.overlayRankingButton.hidden = true;
     selectDifficulty(event.detail?.difficulty || 'normal');
+});
+
+ui.overlayRankingButton.addEventListener('click', () => {
+    if (!latestResult || resultSaved) return;
+    ui.overlay.hidden = true;
+    ui.submit.hidden = false;
+    ui.submit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    window.setTimeout(() => ui.nickname.focus(), 450);
 });
 
 ui.tabs.forEach(tab => {
