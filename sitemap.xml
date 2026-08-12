@@ -149,7 +149,13 @@
        <lastmod>2025-10-11</lastmod>
        <changefreq>monthly</changefreq>
        <priority>0.5</priority>
-   </url>   
+   </url>
+   <url>
+       <loc>https://www.survivaloffice.com/test/autumn-type/</loc>
+       <lastmod>2026-08-12</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.6</priority>
+   </url>
        <url>
        <loc>https://www.survivaloffice.com/test/hsp</loc>
        <lastmod>2025-10-13</lastmod>

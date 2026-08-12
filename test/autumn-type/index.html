@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>가을 성격 테스트 - 나와 닮은 가을 감성 유형은?</title>
+  <meta name="description" content="12가지 질문으로 알아보는 가을 성격 테스트. 단풍길 산책형부터 가을밤 캠핑형까지 나와 닮은 가을 감성 유형과 추천 활동을 확인해보세요.">
+  <meta name="keywords" content="가을,가을 테스트,가을 성격 테스트,가을 감성,심리테스트,단풍,가을 여행,가을 음식">
+  <link rel="canonical" href="https://www.survivaloffice.com/test/autumn-type/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="가을 성격 테스트 - 나와 닮은 가을 감성 유형은?">
+  <meta property="og:description" content="내 마음은 어떤 가을 풍경과 닮았을까? 12개 질문으로 알아보세요.">
+  <meta property="og:url" content="https://www.survivaloffice.com/test/autumn-type/">
+  <meta property="og:image" content="https://www.survivaloffice.com/images/autumn-type/autumn-type-share.jpg">
+  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Google Adsense 코드 -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-4957586937754537">
+  <!-- Google Analytics 코드 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G4TPWGLYLY');</script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav><a href="/">Home</a><a href="/rest/">미니게임</a><a class="active" href="/test/">테스트</a><a href="/work/">생존키트</a></nav>
+  <main>
+    <section class="hero" id="startScreen">
+      <p class="eyebrow">AUTUMN MOOD TEST</p>
+      <h1>나와 닮은<br><span>가을 감성</span>은?</h1>
+      <p class="lead">선선한 바람이 불면 마음은 어디로 향하나요?<br>12개의 선택으로 나만의 가을을 만나보세요.</p>
+      <div class="hero-art"><img src="/images/autumn-type/autumn-type-thumb.webp" alt="붉은 단풍길을 걷는 가을 풍경" width="600" height="600"><i>🍁</i><i>☕</i><i>📖</i></div>
+      <div class="mini-types"><span>단풍길 산책</span><span>포근한 니트</span><span>가을밤 캠핑</span></div>
+      <button class="primary" id="startButton" type="button">내 가을 유형 찾기</button>
+      <p class="time-note">약 1분 · 6가지 결과</p>
+    </section>
+
+    <section class="quiz" id="quizScreen" hidden>
+      <div class="progress-head"><span id="questionNumber">QUESTION 01</span><strong><b id="currentNumber">1</b> / 12</strong></div>
+      <div class="progress"><i id="progressBar"></i></div>
+      <article class="question-card">
+        <span class="question-emoji" id="questionEmoji">🍂</span>
+        <h2 id="questionText"></h2>
+        <div class="answers"><button id="answerA" type="button"></button><button id="answerB" type="button"></button></div>
+      </article>
+      <button class="back" id="backButton" type="button">← 이전 질문</button>
+    </section>
+
+    <section class="result" id="resultScreen" hidden>
+      <p class="eyebrow">MY AUTUMN TYPE</p>
+      <p class="result-kicker">당신과 닮은 가을은</p>
+      <h2 id="resultName"></h2>
+      <p class="result-quote" id="resultQuote"></p>
+      <img id="resultImage" width="720" height="720" alt="가을 감성 유형 결과 이미지">
+      <div class="result-copy"><p id="resultDescription"></p><div class="traits" id="resultTraits"></div></div>
+      <div class="recommend-grid">
+        <article><small>이번 가을 추천 활동</small><strong id="resultActivity"></strong></article>
+        <article><small>어울리는 가을 음식</small><strong id="resultFood"></strong></article>
+      </div>
+      <div class="match-card"><span>💛 잘 맞는 유형</span><strong id="resultMatch"></strong><span>✨ 다른 매력에 끌리는 유형</span><strong id="resultContrast"></strong></div>
+      <button class="kakao" id="shareKakao" type="button">카카오톡으로 결과 공유</button>
+      <button class="secondary" id="restartButton" type="button">다시 테스트하기</button>
+      <a class="other" href="/test/">다른 테스트 보러 가기 →</a>
+    </section>
+
+    <section class="about">
+      <h2>가을 감성 유형은 어떻게 정해지나요?</h2>
+      <p>휴식 방식, 사람과의 거리, 새로운 경험에 대한 태도, 계획 성향을 바탕으로 가장 가까운 가을 장면을 찾아드려요. 정답은 없으니 지금 마음이 끌리는 쪽을 선택하세요.</p>
+    </section>
+
+    <!-- 애드센스 광고 -->
+    <div class="ad-container"><ins class="adsbygoogle" style="display:block; min-height: 90px;" data-ad-client="ca-pub-4957586937754537" data-ad-slot="9240598215" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+    <script>try{window.adsbygoogle=window.adsbygoogle||[];window.adsbygoogle.push({})}catch(error){console.warn('AdSense initialization deferred.',error)}</script>
+  </main>
+  <footer>© Survival Office · 가을 성격 테스트</footer>
+  <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
