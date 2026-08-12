@@ -15,6 +15,8 @@
 .picture-label{justify-self:center;padding:7px 15px;border-radius:999px;color:#5c4a71;background:#f1ebf8;font-size:12px;font-weight:950}
 .image-pair .versus{position:static;align-self:start;width:44px;height:30px;margin-top:0;border:0;transform:rotate(-5deg);font-size:12px}
 .picture em{display:none}
+.picture img{height:auto;aspect-ratio:auto;object-fit:contain}
+.markers{inset:0}
 .hint-marker{position:absolute;width:12%;aspect-ratio:1;border:4px dashed #ffd43b;border-radius:50%;transform:translate(-50%,-50%);filter:drop-shadow(0 2px 2px #5e481b66);animation:hint-ring .65s ease-in-out 3 alternate}
 .game-card.time-out{animation:card-shake .36s ease}
 @keyframes hint-ring{from{scale:.75;opacity:.25}to{scale:1.18;opacity:1}}
