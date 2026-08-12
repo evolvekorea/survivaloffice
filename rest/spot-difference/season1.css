@@ -10,16 +10,16 @@
 .hint-button:hover:not(:disabled){transform:translateY(-1px)}
 .hint-button:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
 .markers{pointer-events:none}
-.image-pair{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center}
+.image-pair{grid-template-columns:1fr;align-items:center;max-width:720px;margin-inline:auto;gap:8px}
 .picture-column{display:grid;gap:8px;min-width:0}
 .picture-label{justify-self:center;padding:7px 15px;border-radius:999px;color:#5c4a71;background:#f1ebf8;font-size:12px;font-weight:950}
-.image-pair .versus{position:static;align-self:start;width:44px;height:30px;margin-top:0;border:0;transform:rotate(-5deg);font-size:12px}
+.image-pair .versus{position:static;justify-self:center;width:44px;height:30px;margin:0;border:0;transform:rotate(-5deg);font-size:12px}
 .picture em{display:none}
-.picture img{height:auto;aspect-ratio:auto;object-fit:contain}
+.picture img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
 .markers{inset:0}
 .hint-marker{position:absolute;width:12%;aspect-ratio:1;border:4px dashed #ffd43b;border-radius:50%;transform:translate(-50%,-50%);filter:drop-shadow(0 2px 2px #5e481b66);animation:hint-ring .65s ease-in-out 3 alternate}
 .game-card.time-out{animation:card-shake .36s ease}
 @keyframes hint-ring{from{scale:.75;opacity:.25}to{scale:1.18;opacity:1}}
 @keyframes time-pulse{to{filter:brightness(1.18)}}
 @keyframes card-shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-@media(max-width:700px){.status-bar{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.status-bar>div{padding:7px 2px}.status-bar b{font-size:17px}.status-bar strong{font-size:12px}.status-bar small{font-size:9px}.hearts{font-size:11px!important;letter-spacing:0}.scene-actions{justify-content:flex-start}.hint-button{width:100%}.image-pair{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start;gap:7px}.picture-column{gap:5px}.picture-label{padding:5px 10px;font-size:10px}.image-pair .versus{position:absolute;top:0;left:50%;z-index:7;width:32px;height:24px;margin:0;transform:translateX(-50%) rotate(-5deg);font-size:9px}.picture{border-width:2px;border-radius:13px}.found-marker{width:16%;border-width:2px}.hint-marker{width:18%;border-width:3px}}
+@media(max-width:700px){.status-bar{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.status-bar>div{padding:7px 2px}.status-bar b{font-size:17px}.status-bar strong{font-size:12px}.status-bar small{font-size:9px}.hearts{font-size:11px!important;letter-spacing:0}.scene-actions{justify-content:flex-start}.hint-button{width:100%}.image-pair{grid-template-columns:1fr;gap:5px}.picture-column{gap:4px}.picture-label{padding:4px 10px;font-size:10px}.image-pair .versus{position:static;justify-self:center;width:32px;height:22px;margin:-1px 0;transform:rotate(-5deg);font-size:9px}.picture{border-width:2px;border-radius:13px}.found-marker{width:10%;border-width:2px}.hint-marker{width:12%;border-width:3px}}
