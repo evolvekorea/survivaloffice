@@ -1,0 +1,18 @@
+.status-bar{grid-template-columns:repeat(4,minmax(0,1fr))}
+.hearts{color:#f34e72;letter-spacing:.08em;white-space:nowrap}
+.time-track{height:12px;margin:-2px 0 20px;overflow:hidden;border-radius:999px;background:#ece8f8;box-shadow:inset 0 1px 3px #352a5c22}
+.time-track i{display:block;width:100%;height:100%;border-radius:inherit;background:linear-gradient(90deg,#7fd5b5,#8065d8);transform-origin:left;transition:width .1s linear,background .25s}
+.time-track i.warning{background:linear-gradient(90deg,#ffc85c,#f47c63)}
+.time-track i.danger{background:linear-gradient(90deg,#ff8d9d,#e83458);animation:time-pulse .7s ease-in-out infinite alternate}
+.scene-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.scene-actions p{margin:0}
+.hint-button{border:0;border-radius:999px;padding:9px 15px;background:#fff4bd;color:#66521a;font-weight:800;box-shadow:0 3px 0 #ead06a;cursor:pointer}
+.hint-button:hover:not(:disabled){transform:translateY(-1px)}
+.hint-button:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
+.markers{pointer-events:none}
+.hint-marker{position:absolute;width:12%;aspect-ratio:1;border:4px dashed #ffd43b;border-radius:50%;transform:translate(-50%,-50%);filter:drop-shadow(0 2px 2px #5e481b66);animation:hint-ring .65s ease-in-out 3 alternate}
+.game-card.time-out{animation:card-shake .36s ease}
+@keyframes hint-ring{from{scale:.75;opacity:.25}to{scale:1.18;opacity:1}}
+@keyframes time-pulse{to{filter:brightness(1.18)}}
+@keyframes card-shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@media(max-width:700px){.status-bar{grid-template-columns:repeat(2,1fr)}.scene-actions{justify-content:flex-start}.hint-button{width:100%}}

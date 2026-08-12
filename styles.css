@@ -157,6 +157,12 @@ footer {
     border-radius: 5px;
 }
 
+.nav-item img.square-thumb {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
 .nav-item a {
     text-decoration: none;
     color: #333;
