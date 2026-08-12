@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>틀린그림 찾기 시즌1 | Survival Office</title>
-  <meta name="description" content="귀여운 그림 10개 중 무작위 3문제! 문제마다 60초 안에 서로 다른 부분 5개를 찾아보세요.">
+  <meta name="description" content="귀여운 그림 5개 중 무작위 3문제! 문제마다 60초 안에 서로 다른 부분 5개를 찾아보세요.">
   <link rel="canonical" href="https://www.survivaloffice.com/rest/spot-difference/">
   <meta property="og:title" content="틀린그림 찾기 시즌1">
   <meta property="og:description" content="무작위로 나오는 3문제에서 60초 안에 틀린 부분 5개를 찾아보세요.">
@@ -49,9 +49,9 @@
       <h2 id="gameTitle" class="sr-only">틀린그림 찾기 시즌1 게임</h2>
       <div id="startScreen" class="start-screen">
         <div class="start-icon" aria-hidden="true"><i></i><i></i></div>
-        <span>10 SCENES · RANDOM 3</span>
+      <span>5 SCENES · RANDOM 3</span>
         <h2>세 장면에 도전해볼까요?</h2>
-        <p>문제마다 제한 시간은 60초, 하트는 3개예요.<br>막히면 한 번 사용할 수 있는 힌트를 눌러보세요.</p>
+        <p>5개 장면 중 3개가 무작위로 나와요.<br>문제마다 60초, 막히면 힌트를 눌러보세요.</p>
         <button id="startButton" type="button">게임 시작</button>
       </div>
       <div id="playScreen" hidden>
@@ -67,13 +67,13 @@
           <div class="scene-actions"><p id="message" aria-live="polite">막히면 힌트를 사용하세요!</p><button id="hintButton" class="hint-button" type="button">힌트 보기</button></div>
         </div>
         <div id="imagePair" class="image-pair">
-          <button class="picture" data-side="a" type="button" aria-label="왼쪽 그림에서 다른 부분 찾기">
-            <img id="imageA" alt="틀린그림 찾기 원본 그림" draggable="false"><span class="markers" aria-hidden="true"></span><em>그림 A</em>
-          </button>
+          <div class="picture-column"><span class="picture-label">그림 A</span><button class="picture" data-side="a" type="button" aria-label="왼쪽 그림에서 다른 부분 찾기">
+            <img id="imageA" alt="틀린그림 찾기 원본 그림" draggable="false"><span class="markers" aria-hidden="true"></span>
+          </button></div>
           <div class="versus" aria-hidden="true">VS</div>
-          <button class="picture" data-side="b" type="button" aria-label="오른쪽 그림에서 다른 부분 찾기">
-            <img id="imageB" alt="다른 부분이 있는 비교 그림" draggable="false"><span class="markers" aria-hidden="true"></span><em>그림 B</em>
-          </button>
+          <div class="picture-column"><span class="picture-label">그림 B</span><button class="picture" data-side="b" type="button" aria-label="오른쪽 그림에서 다른 부분 찾기">
+            <img id="imageB" alt="다른 부분이 있는 비교 그림" draggable="false"><span class="markers" aria-hidden="true"></span>
+          </button></div>
         </div>
       </div>
       <div id="finishScreen" class="finish-screen" hidden>
@@ -89,7 +89,7 @@
     <section class="how-to">
       <h2>게임 방법</h2>
       <div>
-        <p><b>1</b><span>10개 장면 중 3개가 무작위로 나와요.</span></p>
+        <p><b>1</b><span>5개 장면 중 3개가 무작위로 나와요.</span></p>
         <p><b>2</b><span>각 문제를 60초 안에 풀고, 막히면 힌트를 사용하세요.</span></p>
         <p><b>3</b><span>시간이 끝나면 하트가 하나 줄고, 하트 3개가 모두 없어지면 게임이 끝나요.</span></p>
       </div>
