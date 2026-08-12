@@ -1,0 +1,2 @@
+.leaf{position:relative!important;width:112px!important;height:112px!important;margin:13px auto 4px!important;background:var(--leaf,#a43d2e);clip-path:polygon(50% 0,59% 23%,78% 12%,73% 35%,100% 41%,77% 55%,91% 77%,61% 70%,50% 100%,39% 70%,9% 77%,23% 55%,0 41%,27% 35%,22% 12%,41% 23%);filter:drop-shadow(0 9px 7px #48211436)!important;font-size:0!important}
+.leaf i{position:absolute;left:53px;top:26px;width:5px;height:76px;border-radius:9px;background:#6d301f80}
