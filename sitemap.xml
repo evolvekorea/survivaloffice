@@ -76,6 +76,12 @@
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
+    <url>
+        <loc>https://www.survivaloffice.com/rest/spot-difference/</loc>
+        <lastmod>2026-08-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
 
       <!-- TEST + 하위 페이지 -->
    <url>
