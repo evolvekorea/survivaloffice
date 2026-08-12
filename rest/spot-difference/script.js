@@ -1,13 +1,14 @@
 (() => {
   'use strict';
   const PUZZLES = [
-    {id:1,title:'포근한 사무실',points:[[.86,.58],[.50,.17],[.20,.54],[.16,.69],[.56,.36]]},
-    {id:2,title:'향긋한 카페',points:[[.50,.70],[.55,.27],[.18,.38],[.80,.38],[.91,.62]]},
-    {id:3,title:'햇살 좋은 공원',points:[[.74,.20],[.10,.49],[.47,.75],[.81,.55],[.30,.44]]},
-    {id:4,title:'따뜻한 주방',points:[[.16,.57],[.64,.20],[.49,.36],[.39,.14],[.76,.86]]},
-    {id:5,title:'달콤한 베이커리',points:[[.29,.67],[.20,.35],[.69,.15],[.52,.91],[.47,.07]]}
+    {id:1,title:'포근한 사무실',points:[[.85,.55,.11,.08],[.50,.17,.12,.10],[.20,.49,.11,.09],[.17,.67,.16,.19],[.55,.35,.08,.06]]},
+    {id:2,title:'향긋한 카페',points:[[.50,.68,.14,.09],[.54,.27,.20,.08],[.18,.36,.15,.07],[.80,.37,.14,.09],[.91,.62,.09,.10]]},
+    {id:3,title:'햇살 좋은 공원',points:[[.73,.20,.10,.09],[.11,.46,.12,.12],[.48,.72,.32,.16],[.93,.52,.10,.09],[.34,.42,.13,.09]]},
+    {id:4,title:'따뜻한 주방',points:[[.17,.54,.16,.12],[.66,.20,.13,.20],[.52,.37,.09,.13],[.53,.14,.09,.08],[.87,.84,.11,.10]]},
+    {id:5,title:'달콤한 베이커리',points:[[.29,.65,.11,.10],[.20,.35,.19,.10],[.68,.15,.16,.11],[.52,.89,.25,.09],[.47,.07,.13,.08]]}
   ];
-  const ROUND_MS = location.hostname === '127.0.0.1' && new URLSearchParams(location.search).has('fast') ? 1500 : 60000;
+  const params = new URLSearchParams(location.search);
+  const ROUND_MS = location.hostname === '127.0.0.1' && params.has('fast') ? 1500 : 60000;
   const $ = selector => document.querySelector(selector);
   const ui = {
     gameCard:$('.game-card'),startScreen:$('#startScreen'),playScreen:$('#playScreen'),finishScreen:$('#finishScreen'),startButton:$('#startButton'),restartButton:$('#restartButton'),
@@ -16,7 +17,7 @@
     finishEyebrow:$('#finishEyebrow'),finishTitle:$('#finishTitle'),finishText:$('#finishText')
   };
   let gamePuzzles=[],currentRound=0,found=new Set(),hearts=3,totalStartedAt=0,roundDeadline=0,timerId=null,busy=false,roundActive=false,hintUsed=false,audioContext;
-  const shuffle = items => { const copy=[...items]; for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]];} return copy; };
+  function shuffle(items){const copy=[...items];for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]];}if(location.hostname==='127.0.0.1'&&params.has('scene')){const forced=Number(params.get('scene')),index=copy.findIndex(item=>item.id===forced);if(index>0)[copy[0],copy[index]]=[copy[index],copy[0]];}return copy;}
   const imagePath = (id,side) => `/images/spot-difference/puzzle-${String(id).padStart(2,'0')}-${side}.webp`;
   function formatElapsed(ms){const tenths=Math.floor(ms/100)%10,total=Math.floor(ms/1000),minutes=Math.floor(total/60),seconds=total%60;return `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}.${tenths}`;}
   function updateHearts(){ui.hearts.textContent=Array.from({length:3},(_,i)=>i<hearts?'♥':'♡').join(' ');ui.hearts.setAttribute('aria-label',`남은 하트 ${hearts}개`);}
@@ -28,7 +29,7 @@
   function showMiss(picture,x,y){const marker=document.createElement('i');marker.className='miss-marker';marker.style.left=`${x*100}%`;marker.style.top=`${y*100}%`;picture.querySelector('.markers').append(marker);setTimeout(()=>marker.remove(),450);}
   function playSound(correct){try{audioContext??=new(window.AudioContext||window.webkitAudioContext)();if(audioContext.state==='suspended')audioContext.resume();const o=audioContext.createOscillator(),g=audioContext.createGain();o.type='sine';o.frequency.setValueAtTime(correct?620:180,audioContext.currentTime);if(correct)o.frequency.exponentialRampToValueAtTime(880,audioContext.currentTime+.09);g.gain.setValueAtTime(.0001,audioContext.currentTime);g.gain.exponentialRampToValueAtTime(.06,audioContext.currentTime+.01);g.gain.exponentialRampToValueAtTime(.0001,audioContext.currentTime+.15);o.connect(g).connect(audioContext.destination);o.start();o.stop(audioContext.currentTime+.16);}catch{}}
   function useHint(){if(busy||hintUsed)return;const remaining=gamePuzzles[currentRound].points.map((_,i)=>i).filter(i=>!found.has(i));if(!remaining.length)return;hintUsed=true;ui.hintButton.disabled=true;ui.hintButton.textContent='힌트 사용 완료';addMarker(gamePuzzles[currentRound].points[remaining[Math.floor(Math.random()*remaining.length)]],'hint-marker');ui.message.textContent='노란 원이 깜빡이는 곳을 자세히 살펴보세요!';}
-  function handlePictureClick(event){if(busy||!roundActive)return;const picture=event.currentTarget,rect=picture.querySelector('img').getBoundingClientRect(),x=(event.clientX-rect.left)/rect.width,y=(event.clientY-rect.top)/rect.height;if(x<0||x>1||y<0||y>1)return;const puzzle=gamePuzzles[currentRound],match=puzzle.points.findIndex((point,i)=>!found.has(i)&&Math.hypot(x-point[0],y-point[1])<=.07);if(match<0){showMiss(picture,x,y);playSound(false);ui.message.textContent='조금만 더 살펴보세요. 막히면 힌트를 사용하세요!';return;}found.add(match);addMarker(puzzle.points[match]);playSound(true);ui.found.textContent=found.size;ui.message.textContent=found.size<5?`좋아요! 이제 ${5-found.size}개 남았어요.`:'이 장면의 차이를 모두 찾았어요!';if(found.size===5)completeRound();}
+  function handlePictureClick(event){if(busy||!roundActive)return;const picture=event.currentTarget,rect=picture.querySelector('img').getBoundingClientRect(),x=(event.clientX-rect.left)/rect.width,y=(event.clientY-rect.top)/rect.height;if(x<0||x>1||y<0||y>1)return;const puzzle=gamePuzzles[currentRound],match=puzzle.points.findIndex((point,i)=>{const radiusX=point[2]||.09,radiusY=point[3]||.09;return !found.has(i)&&Math.hypot((x-point[0])/radiusX,(y-point[1])/radiusY)<=1;});if(match<0){showMiss(picture,x,y);playSound(false);ui.message.textContent='조금만 더 살펴보세요. 막히면 힌트를 사용하세요!';return;}found.add(match);addMarker(puzzle.points[match]);playSound(true);ui.found.textContent=found.size;ui.message.textContent=found.size<5?`좋아요! 이제 ${5-found.size}개 남았어요.`:'이 장면의 차이를 모두 찾았어요!';if(found.size===5)completeRound();}
   function handleTimeout(){if(!roundActive)return;roundActive=false;hearts-=1;updateHearts();playSound(false);ui.gameCard.classList.remove('time-out');void ui.gameCard.offsetWidth;ui.gameCard.classList.add('time-out');if(hearts<=0){finishGame(false);return;}ui.message.textContent=`시간 초과! 하트가 1개 줄었어요. 힌트를 사용해보세요.`;roundDeadline=performance.now()+ROUND_MS;ui.timeBar.className='';ui.timeBar.style.width='100%';ui.timer.textContent='01:00';roundActive=true;}
   function completeRound(){busy=true;roundActive=false;ui.pictures.forEach(p=>{p.disabled=true;p.classList.add('solved');});if(currentRound<2){setTimeout(async()=>{currentRound+=1;await loadPuzzle();},900);return;}setTimeout(()=>finishGame(true),650);}
   function finishGame(success){roundActive=false;clearInterval(timerId);ui.playScreen.hidden=true;ui.finishScreen.hidden=false;ui.finalTime.textContent=formatElapsed(performance.now()-totalStartedAt);ui.finishIcon.textContent=success?'🏆':'💔';ui.finishEyebrow.textContent=success?'3문제 모두 완료!':'하트를 모두 사용했어요';ui.finishTitle.textContent=success?'전부 찾았어요':'아쉽지만 다시 도전!';ui.finishText.textContent=success?'총 걸린 시간':'이번 도전 시간';if(success)makeConfetti();else $('.confetti').replaceChildren();busy=false;}
