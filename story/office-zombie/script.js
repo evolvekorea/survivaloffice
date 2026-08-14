@@ -15,7 +15,7 @@
       '<span class="broadcast">[사내 긴급방송] 전 임직원은 현재 위치에서 대기해 주십시오.</span>',
       '방송은 비명과 함께 끊깁니다. 유리문 너머에는 경비원 한 명이 고개를 떨군 채 서 있습니다.'
     ],next:'door'},
-    door:{image:'glass-door.webp',alt:'유리문을 두드리는 지수와 뒤에서 다가오는 좀비 경비원',location:'17층 출입문',mood:'danger',title:'문밖의 지수',text:[
+    door:{image:'glass-door.webp?v=2',alt:'사무실 밖 유리문을 두드리는 지수와 뒤에서 다가오는 좀비 경비원',location:'17층 출입문',mood:'danger',title:'문밖의 지수',text:[
       '<span class="danger">쿵. 쿵.</span>',
       '팀 막내 지수가 유리문을 두드립니다. 뒤쪽에서는 눈빛이 달라진 경비원이 천천히 다가옵니다.',
       '<span class="message">지수 · 문 좀 열어주세요. 빨리요!</span>'
