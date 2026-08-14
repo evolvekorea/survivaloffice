@@ -5,8 +5,7 @@
   const initialState = () => ({health:100,trust:0,rescued:0,minute:47,items:[],flags:{},sceneNumber:1,path:[]});
   let state = initialState();
   let currentScene = 'opening';
-  let timerId = null;
-  let timerStart = 0;
+  let choiceRevealId = null;
   let audioOn = true;
 
   const scenes = {
@@ -52,7 +51,7 @@
       {label:'옥상에서 탈출로를 찾는다',effect:{minute:3},next:'stair'}
     ]},
     stair:{image:'stairwell.webp',alt:'붉은 비상등이 켜진 계단과 좀비가 된 인사팀장',location:'14층 비상계단',mood:'danger',title:'퇴사 면담',text:[
-      '14층 계단참을 좀비가 된 인사팀장이 막고 있습니다.',
+      '14층과 15층 사이 비상계단을 좀비가 된 인사팀장이 막고 있습니다.',
       '그는 고개를 꺾은 채 같은 말을 반복합니다.',
       '<span class="broadcast">“퇴사 사유를… 구체적으로 말씀해주시겠어요?”</span>'
     ],question:'계단을 어떻게 통과하시겠습니까?',choices:[
@@ -141,12 +140,17 @@
   }
   function flash(message,type='gain'){const box=$('#eventFlash');box.textContent=message;box.classList.remove('show');void box.offsetWidth;box.classList.add('show');audio.sfx(type)}
   function save(){localStorage.setItem('officeZombieSave',JSON.stringify({state,currentScene}))}
-  function clearTimer(){clearInterval(timerId);timerId=null;$('#timerTrack').hidden=true;$('#choiceTimer').textContent=''}
+  function clearTimer(){clearTimeout(choiceRevealId);choiceRevealId=null;$('#timerTrack').hidden=true;$('#choiceTimer').textContent=''}
   function preload(scene){if(!scene)return;const img=new Image();img.src=imageBase+scene.image}
   function renderText(lines){const box=$('#storyText');box.innerHTML='';lines.forEach((line,i)=>{const p=document.createElement('p');p.innerHTML=line;p.style.animationDelay=`${i*.28}s`;box.appendChild(p)})}
+  function getReadingDelay(scene){const plainLength=scene.text.join(' ').replace(/<[^>]+>/g,'').length;return Math.min(12000,Math.max(7000,plainLength*45))}
+  function showContinuePrompt(scene){
+    $('#choiceEyebrow').textContent='NEXT SCENE';$('#choiceQuestion').textContent='복도에서 들려온 소리를 확인해보세요.';const wrap=$('#choiceButtons');wrap.innerHTML='';
+    const button=document.createElement('button');button.type='button';button.textContent='계속하기';button.addEventListener('click',()=>{button.disabled=true;audio.sfx('choice');state.sceneNumber++;showScene(scene.next)});wrap.appendChild(button);$('#choicePanel').hidden=false;audio.sfx('next');
+  }
   function showChoices(scene){
     const valid=scene.choices.filter(c=>!c.require||c.require(state));if(!valid.length)return resolveEnding();
-    $('#choiceQuestion').textContent=scene.question;const wrap=$('#choiceButtons');wrap.innerHTML='';
+    $('#choiceEyebrow').textContent='DECISION';$('#choiceQuestion').textContent=scene.question;const wrap=$('#choiceButtons');wrap.innerHTML='';
     valid.forEach(choice=>{const b=document.createElement('button');b.type='button';b.textContent=choice.label;b.addEventListener('click',()=>choose(choice,b,wrap));wrap.appendChild(b)});
     $('#choicePanel').hidden=false;audio.sfx('next');
   }
@@ -160,8 +164,8 @@
     clearTimer();currentScene=id;const scene=scenes[id];if(!scene)return;$('#choicePanel').hidden=true;$('#endingPanel').hidden=true;$('#storyPanel').hidden=false;$('#inventory').hidden=false;
     const frame=$('#sceneFrame');frame.classList.remove('enter','tense');void frame.offsetWidth;frame.classList.add('enter');if(scene.mood==='danger')setTimeout(()=>frame.classList.add('tense'),450);
     $('#sceneImage').src=imageBase+scene.image;$('#sceneImage').alt=scene.alt;$('#locationLabel').textContent=scene.location;$('#sceneCount').textContent=`SCENE ${String(state.sceneNumber).padStart(2,'0')}`;$('#sceneTitle').textContent=scene.title;renderText(scene.text);updateStatus();audio.setMood(scene.mood);save();
-    const continueButton=$('#continueButton');continueButton.hidden=false;continueButton.innerHTML=scene.choices?'선택지 보기 <span>▼</span>':'계속하기 <span>▼</span>';
-    if(scene.choices){const first=scene.choices.find(c=>!c.require||c.require(state));if(first&&scenes[first.next])preload(scenes[first.next])}
+    $('#continueButton').hidden=true;choiceRevealId=setTimeout(()=>{choiceRevealId=null;if(scene.choices)showChoices(scene);else showContinuePrompt(scene)},getReadingDelay(scene));
+    if(scene.choices){const first=scene.choices.find(c=>!c.require||c.require(state));if(first&&scenes[first.next])preload(scenes[first.next])}else if(scene.next)preload(scenes[scene.next]);
   }
   function resolveEnding(){
     let key='solo';
@@ -182,7 +186,6 @@
   function startGame(){audio.start();$('#startOverlay').hidden=true;const saved=localStorage.getItem('officeZombieSave');if(saved){try{const parsed=JSON.parse(saved);if(parsed.currentScene&&!parsed.currentScene.startsWith('ending:')){state=parsed.state;showScene(parsed.currentScene);return}}catch{}}state=initialState();showScene('opening')}
   async function share(){const title=$('#endingTitle').textContent;const data={title:'오피스 좀비: 퇴근까지 13분',text:`내 엔딩은 「${title}」! 당신도 살아서 퇴근할 수 있을까요?`,url:location.href};try{if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(`${data.text} ${data.url}`);flash('공유 문구를 복사했습니다')}}catch{}}
 
-  $('#continueButton').addEventListener('click',()=>{const scene=scenes[currentScene];if(!scene)return;if(scene.choices){$('#continueButton').hidden=true;showChoices(scene);return}if(!scene.next)return;state.sceneNumber++;showScene(scene.next)});
   $('#startButton').addEventListener('click',startGame);$('#restartButton').addEventListener('click',restart);$('#restartTop').addEventListener('click',restart);$('#shareButton').addEventListener('click',share);$('#soundToggle').addEventListener('click',()=>audio.toggle());
   if(localStorage.getItem('officeZombieSave'))$('#startButton').textContent='이어하기';
   updateStatus();renderText(scenes.opening.text);
