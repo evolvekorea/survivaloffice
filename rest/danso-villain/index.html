@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>단소빌런: 이번 역은 정의입니다 | 서바이벌 오피스</title>
+  <meta name="description" content="한 대도 때리지 않고 지하철 민폐 빌런을 퇴치하는 무료 벨트스크롤 액션 게임입니다.">
+  <link rel="canonical" href="https://www.survivaloffice.com/rest/danso-villain/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="단소빌런: 이번 역은 정의입니다">
+  <meta property="og:description" content="위협 자세로 기를 모아 필살기 《안 때렸어》를 사용하세요!">
+  <meta property="og:url" content="https://www.survivaloffice.com/rest/danso-villain/">
+  <meta property="og:image" content="https://www.survivaloffice.com/rest/danso-villain/assets/og-danso-villain.webp">
+  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Google Adsense 코드 -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-4957586937754537">
+  <!-- Google Analytics 코드 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G4TPWGLYLY');</script>
+  <link rel="stylesheet" href="style.css?v=20260814a">
+</head>
+<body>
+  <nav><a href="/">Home</a><a class="active" href="/rest/">미니게임</a><a href="/test/">테스트</a><a href="/work/">생존키트</a></nav>
+  <main>
+    <header class="hero">
+      <span class="eyebrow">NO HIT · ALL THREAT</span>
+      <h1>단소빌런</h1>
+      <p>한 대도 때리지 않고 지하철 빌런을 전부 하차시키세요.</p>
+    </header>
+
+    <section class="game-shell" aria-label="단소빌런 게임">
+      <div class="hud">
+        <div><small>ROUND</small><strong id="roundValue">1 / 7</strong></div>
+        <div><small>점수</small><strong id="scoreValue">0</strong></div>
+        <div class="meter patience"><small>인내심</small><span><i id="patienceBar"></i></span><b id="patienceValue">100</b></div>
+        <div class="meter energy"><small>기 게이지</small><span><i id="energyBar"></i></span><b id="energyValue">0%</b></div>
+      </div>
+      <div class="boss-hud" id="bossHud">
+        <span id="bossName">내리지도 않았는데 먼저 타는 빌런</span>
+        <div><i id="bossBar"></i></div>
+        <b id="bossValue">뻔뻔함 100</b>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="gameCanvas" width="960" height="540" aria-label="지하철 벨트스크롤 액션 게임 화면"></canvas>
+        <div class="skill-text" id="skillText" aria-live="assertive"></div>
+        <div class="overlay" id="overlay">
+          <span id="overlayEyebrow">ARCADE ACTION</span>
+          <h2 id="overlayTitle">이번 역은 정의입니다</h2>
+          <p id="overlayText">위협 자세로 기를 모으고, 바로 앞의 빌런에게 필살기 《안 때렸어》를 사용하세요.</p>
+          <button id="overlayButton" type="button">게임 시작</button>
+        </div>
+      </div>
+
+      <div class="mobile-controls" aria-label="모바일 조작 버튼">
+        <div class="dpad">
+          <button data-move="up" aria-label="위로 이동">▲</button>
+          <div><button data-move="left" aria-label="왼쪽 이동">◀</button><button data-move="down" aria-label="아래로 이동">▼</button><button data-move="right" aria-label="오른쪽 이동">▶</button></div>
+        </div>
+        <div class="actions">
+          <button id="dodgeButton" class="small" type="button">회피</button>
+          <button id="feintButton" type="button">페이크</button>
+          <button id="chargeButton" class="charge" type="button">위협 자세<br><small>길게 누르기 / 탭 고정</small></button>
+          <button id="ultimateButton" class="ultimate" type="button" disabled>안 때렸어</button>
+        </div>
+      </div>
+      <p class="keyboard-guide"><b>PC</b> 이동 WASD/방향키 · <kbd>Z</kbd> 페이크 · <kbd>X</kbd> 위협 자세 고정/해제 · <kbd>C</kbd> 안 때렸어 · <kbd>Space</kbd> 회피</p>
+    </section>
+
+    <section class="round-list">
+      <span class="eyebrow">7 ROUNDS</span><h2>지하철 빌런 전원 하차 작전</h2>
+      <div class="round-grid">
+        <article><b>01</b><span>먼저 타는 빌런</span></article><article><b>02</b><span>큰소리 유튜브 빌런</span></article>
+        <article><b>03</b><span>백팩 빌런</span></article><article><b>04</b><span>쩍벌 빌런</span></article>
+        <article><b>05</b><span>좌석 점거 학생 무리</span></article><article><b>06</b><span>댄스 빌런</span></article>
+        <article class="final"><b>07</b><span>지하철 빌런 연합</span></article>
+      </div>
+    </section>
+
+    <section class="how">
+      <span class="eyebrow">HOW TO PLAY</span><h2>때리는 척만 해도 충분합니다</h2>
+      <div><article><b>01</b><h3>페이크</h3><p>바로 앞의 빌런 코앞에서 단소를 멈춰 뻔뻔함을 깎습니다.</p></article><article><b>02</b><h3>위협 자세</h3><p>버튼을 누르는 동안 움직임을 멈추고 기 게이지를 충전합니다.</p></article><article><b>03</b><h3>안 때렸어</h3><p>기 100%일 때 앞의 대상을 자동으로 조준해 크게 제압합니다.</p></article></div>
+    </section>
+
+    <!-- 애드센스 광고 -->
+    <div class="ad-container"><ins class="adsbygoogle" style="display:block;min-height:90px" data-ad-client="ca-pub-4957586937754537" data-ad-slot="9240598215" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+    <script>try{window.adsbygoogle=window.adsbygoogle||[];window.adsbygoogle.push({})}catch(error){console.warn('AdSense initialization deferred.',error)}</script>
+  </main>
+  <footer>© Survival Office · 본 게임의 인물과 상황은 창작된 코미디입니다.</footer>
+  <script src="game.js?v=20260814a"></script>
+</body>
+</html>
