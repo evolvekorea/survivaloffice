@@ -26,7 +26,7 @@
     <meta name="naver-site-verification" content="8178bc04eb942dda668089047e1d5fb0ae7ba6ce" />
 
     <title>서바이벌 오피스(Survival Office) - 미니 게임, 테스트</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=20260814b">
 
     <!-- 소셜 공유 시 깔끔한 미리보기 -->
     <meta property="og:title" content="Survival Office 서바이벌 오피스 - 작은 즐거움" />
@@ -56,6 +56,62 @@
   </header>
 
   <main>
+      <section class="new-content" aria-labelledby="newContentTitle">
+          <div class="new-content-heading">
+              <div>
+                  <span class="new-badge">NEW</span>
+                  <h2 id="newContentTitle">새로 나온 콘텐츠</h2>
+              </div>
+              <div class="slider-controls" aria-label="신규 콘텐츠 이동">
+                  <button id="newContentPrev" type="button" aria-label="이전 콘텐츠">‹</button>
+                  <button id="newContentNext" type="button" aria-label="다음 콘텐츠">›</button>
+              </div>
+          </div>
+          <div class="new-content-track" id="newContentTrack" tabindex="0">
+              <a class="new-content-card" href="/rest/danso-villain/">
+                  <img src="/rest/danso-villain/assets/thumbnail.webp" alt="단소빌런 게임">
+                  <span class="content-type game">미니게임</span><strong>단소빌런</strong>
+              </a>
+              <a class="new-content-card" href="/story/office-zombie/">
+                  <img src="/story/office-zombie/assets/images/office-dusk.webp" alt="오피스 좀비 스토리 게임">
+                  <span class="content-type story">스토리</span><strong>오피스 좀비</strong>
+              </a>
+              <a class="new-content-card" href="/test/leaf-color/">
+                  <img src="/images/leaf-color/leaf-color-main.webp" alt="단풍색 성격 테스트">
+                  <span class="content-type test">테스트</span><strong>단풍색 성격 테스트</strong>
+              </a>
+              <a class="new-content-card" href="/test/autumn-type/">
+                  <img src="/images/autumn-type/autumn-type-thumb.webp" alt="가을 성격 테스트">
+                  <span class="content-type test">테스트</span><strong>가을 성격 테스트</strong>
+              </a>
+              <a class="new-content-card" href="/rest/spot-difference/">
+                  <img src="/images/spot-difference/spot-difference-share-square.jpg" alt="틀린그림 찾기 시즌1">
+                  <span class="content-type game">미니게임</span><strong>틀린그림 찾기 시즌1</strong>
+              </a>
+              <a class="new-content-card" href="/work/lunch-worldcup/">
+                  <img src="/images/lunch-worldcup.svg" alt="오늘 점심 월드컵">
+                  <span class="content-type tool">생존키트</span><strong>오늘 점심 월드컵</strong>
+              </a>
+              <a class="new-content-card" href="/rest/cupstack/">
+                  <img src="/images/cupstack-cute.png" alt="탕비실 컵 쌓기">
+                  <span class="content-type game">미니게임</span><strong>탕비실 컵 쌓기</strong>
+              </a>
+              <a class="new-content-card" href="/rest/sudoku/">
+                  <img src="/images/sudoku-cute.png" alt="포근포근 스도쿠">
+                  <span class="content-type game">미니게임</span><strong>포근포근 스도쿠</strong>
+              </a>
+              <a class="new-content-card" href="/test/candy/">
+                  <img src="/images/test001.png" alt="캔디 성격 테스트">
+                  <span class="content-type test">테스트</span><strong>캔디 성격 테스트</strong>
+              </a>
+              <a class="new-content-card" href="/test/mi/">
+                  <img src="/images/test002.png" alt="미룬이 테스트">
+                  <span class="content-type test">테스트</span><strong>미룬이 테스트</strong>
+              </a>
+          </div>
+          <div class="slider-progress" aria-hidden="true"><i id="newContentProgress"></i></div>
+      </section>
+
       <section class="navigation-section" aria-label="Main navigation">
           <div class="nav-container">
 
@@ -248,6 +304,6 @@
     </p>
 </footer>
 
-  <script defer src="script.js"></script>
+  <script defer src="script.js?v=20260814b"></script>
 </body>
 </html>

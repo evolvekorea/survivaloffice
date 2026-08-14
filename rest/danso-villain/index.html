@@ -19,7 +19,7 @@
   <!-- Google Analytics 코드 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G4TPWGLYLY');</script>
-  <link rel="stylesheet" href="style.css?v=20260814a">
+  <link rel="stylesheet" href="style.css?v=20260814c">
 </head>
 <body>
   <nav><a href="/">Home</a><a class="active" href="/rest/">미니게임</a><a href="/test/">테스트</a><a href="/work/">생존키트</a></nav>
@@ -53,19 +53,22 @@
         </div>
       </div>
 
-      <div class="mobile-controls" aria-label="모바일 조작 버튼">
-        <div class="dpad">
-          <button data-move="up" aria-label="위로 이동">▲</button>
-          <div><button data-move="left" aria-label="왼쪽 이동">◀</button><button data-move="down" aria-label="아래로 이동">▼</button><button data-move="right" aria-label="오른쪽 이동">▶</button></div>
+      <div class="game-controls" aria-label="화면 조작 장치">
+        <div class="joystick-zone">
+          <div id="joystick" class="joystick" role="application" aria-label="이동 조이스틱" tabindex="0">
+            <span id="joystickKnob"></span>
+          </div>
+          <small>이동</small>
         </div>
         <div class="actions">
+          <button id="jumpButton" class="jump" type="button">점프</button>
           <button id="dodgeButton" class="small" type="button">회피</button>
-          <button id="feintButton" type="button">페이크</button>
+          <button id="feintButton" class="attack" type="button">페이크<br><small>(공격)</small></button>
           <button id="chargeButton" class="charge" type="button">위협 자세<br><small>길게 누르기 / 탭 고정</small></button>
           <button id="ultimateButton" class="ultimate" type="button" disabled>안 때렸어</button>
         </div>
       </div>
-      <p class="keyboard-guide"><b>PC</b> 이동 WASD/방향키 · <kbd>Z</kbd> 페이크 · <kbd>X</kbd> 위협 자세 고정/해제 · <kbd>C</kbd> 안 때렸어 · <kbd>Space</kbd> 회피</p>
+      <p class="keyboard-guide"><b>PC</b> 조이스틱 또는 WASD/방향키 · <kbd>Space</kbd> 점프 · <kbd>Z</kbd> 페이크(공격) · <kbd>X</kbd> 위협 자세 · <kbd>C</kbd> 안 때렸어 · <kbd>Shift</kbd> 회피</p>
     </section>
 
     <section class="round-list">
@@ -80,7 +83,7 @@
 
     <section class="how">
       <span class="eyebrow">HOW TO PLAY</span><h2>때리는 척만 해도 충분합니다</h2>
-      <div><article><b>01</b><h3>페이크</h3><p>바로 앞의 빌런 코앞에서 단소를 멈춰 뻔뻔함을 깎습니다.</p></article><article><b>02</b><h3>위협 자세</h3><p>버튼을 누르는 동안 움직임을 멈추고 기 게이지를 충전합니다.</p></article><article><b>03</b><h3>안 때렸어</h3><p>기 100%일 때 앞의 대상을 자동으로 조준해 크게 제압합니다.</p></article></div>
+      <div><article><b>01</b><h3>페이크(공격)</h3><p>바로 앞의 빌런 코앞에서 단소를 멈춰 뻔뻔함을 깎습니다.</p></article><article><b>02</b><h3>위협 자세</h3><p>버튼을 누르는 동안 움직임을 멈추고 기 게이지를 충전합니다.</p></article><article><b>03</b><h3>안 때렸어</h3><p>기 100%일 때 앞의 대상을 자동으로 조준해 크게 제압합니다.</p></article></div>
     </section>
 
     <!-- 애드센스 광고 -->
@@ -88,6 +91,6 @@
     <script>try{window.adsbygoogle=window.adsbygoogle||[];window.adsbygoogle.push({})}catch(error){console.warn('AdSense initialization deferred.',error)}</script>
   </main>
   <footer>© Survival Office · 본 게임의 인물과 상황은 창작된 코미디입니다.</footer>
-  <script src="game.js?v=20260814a"></script>
+  <script src="game.js?v=20260814c"></script>
 </body>
 </html>

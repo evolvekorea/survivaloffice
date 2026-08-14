@@ -74,6 +74,165 @@ main {
     width: 100%;
 }
 
+/* 신규 콘텐츠 슬라이더 */
+.new-content {
+    width: min(100%, 1440px);
+    margin: 20px auto 0;
+    padding: 22px clamp(16px, 4vw, 48px) 18px;
+    overflow: hidden;
+}
+
+.new-content-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.new-content-heading > div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.new-content-heading h2 {
+    font-size: clamp(25px, 3vw, 36px);
+    line-height: 1;
+}
+
+.new-badge {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 9px;
+    border-radius: 999px;
+    background: #ff5e76;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .12em;
+}
+
+.slider-controls {
+    display: flex;
+    gap: 7px;
+}
+
+.slider-controls button {
+    width: 39px;
+    height: 39px;
+    border: 1px solid #d6d6d6;
+    border-radius: 50%;
+    background: #fff;
+    color: #333;
+    font-family: Arial, sans-serif;
+    font-size: 27px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 5px 14px rgba(0, 0, 0, .08);
+}
+
+.slider-controls button:hover {
+    background: #333;
+    color: #fff;
+}
+
+.slider-controls button:disabled {
+    cursor: default;
+    opacity: .3;
+}
+
+.new-content-track {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    padding: 3px 2px 15px;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+}
+
+.new-content-track::-webkit-scrollbar {
+    display: none;
+}
+
+.new-content-card {
+    position: relative;
+    flex: 0 0 calc((100% - 56px) / 5);
+    min-width: 0;
+    padding: 8px 8px 13px;
+    overflow: hidden;
+    border: 1px solid #dedede;
+    border-radius: 15px;
+    background: #fff;
+    color: #262626;
+    text-decoration: none;
+    scroll-snap-align: start;
+    box-shadow: 0 7px 20px rgba(0, 0, 0, .08);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.new-content-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .14);
+}
+
+.new-content-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 9px;
+    border-radius: 10px;
+    object-fit: cover;
+    background: #eee;
+}
+
+.new-content-card strong {
+    display: block;
+    padding: 3px 2px 0;
+    overflow: hidden;
+    font-size: clamp(16px, 1.6vw, 20px);
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.content-type {
+    display: inline-flex;
+    margin-left: 2px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: #e9f7ff;
+    color: #19779d;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.content-type.test { background: #fff0f5; color: #bd4167; }
+.content-type.tool { background: #eef8e8; color: #4d842c; }
+.content-type.story { background: #f2edff; color: #6f4db5; }
+
+.slider-progress {
+    height: 4px;
+    margin: 1px 2px 0;
+    overflow: hidden;
+    border-radius: 9px;
+    background: #ddd;
+}
+
+.slider-progress i {
+    display: block;
+    width: 20%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #ff5e76, #ff9b55);
+    transform-origin: left center;
+    transition: transform .15s ease;
+}
+
 section {
     margin-top: 20px;
     padding: 20px;
@@ -178,6 +337,40 @@ footer {
 /* 반응형 웹페이지 위한 미디어 쿼리 */
 /* 모바일 */
 @media (max-width: 600px) {
+    .new-content {
+        margin-top: 8px;
+        padding: 17px 12px 12px;
+    }
+
+    .new-content-heading {
+        margin-bottom: 10px;
+    }
+
+    .slider-controls button {
+        width: 34px;
+        height: 34px;
+        font-size: 23px;
+    }
+
+    .new-content-track {
+        gap: 10px;
+        padding-bottom: 12px;
+    }
+
+    .new-content-card {
+        flex-basis: calc((100% - 10px) / 2.15);
+        padding: 6px 6px 10px;
+        border-radius: 12px;
+    }
+
+    .new-content-card strong {
+        font-size: 16px;
+    }
+
+    .content-type {
+        font-size: 10px;
+    }
+
     .nav-item {
         flex: 1 1 calc(50% - 10px); /* 모바일에서 한 줄에 2개씩 */
         max-width: calc(50% - 10px);
@@ -186,6 +379,10 @@ footer {
 
 /* 작은 태블릿 */
 @media (min-width: 601px) and (max-width: 800px) {
+    .new-content-card {
+        flex-basis: calc((100% - 28px) / 3);
+    }
+
     .nav-item {
         flex: 1 1 calc(33.33% - 10px); /* 작은 태블릿에서 한 줄에 3개 */
         max-width: calc(33.33% - 10px);
