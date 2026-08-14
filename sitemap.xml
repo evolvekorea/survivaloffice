@@ -3,7 +3,7 @@
    <!-- 메인 페이지 -->
    <url>
        <loc>https://www.survivaloffice.com/</loc>
-       <lastmod>2024-11-11</lastmod>
+       <lastmod>2026-08-14</lastmod>
        <changefreq>daily</changefreq>
        <priority>1.0</priority>
    </url>
@@ -249,4 +249,17 @@
        <changefreq>monthly</changefreq>
        <priority>0.6</priority>
    </url>    
+   <!-- story + 하위 페이지 -->
+   <url>
+       <loc>https://www.survivaloffice.com/story/</loc>
+       <lastmod>2026-08-14</lastmod>
+       <changefreq>weekly</changefreq>
+       <priority>0.8</priority>
+   </url>
+   <url>
+       <loc>https://www.survivaloffice.com/story/office-zombie/</loc>
+       <lastmod>2026-08-14</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.8</priority>
+   </url>
 </urlset>

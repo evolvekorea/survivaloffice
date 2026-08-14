@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>오피스 좀비: 퇴근까지 13분 | 선택형 생존 스토리</title>
+  <meta name="description" content="회사에 좀비가 나타났다. 동료를 구할지 혼자 탈출할지 선택하며 8개의 엔딩에 도전하는 무료 인터랙티브 생존 스토리 게임입니다.">
+  <link rel="canonical" href="https://www.survivaloffice.com/story/office-zombie/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="오피스 좀비: 퇴근까지 13분">
+  <meta property="og:description" content="회사에 좀비가 나타났다. 오늘도 살아서 퇴근할 수 있을까?">
+  <meta property="og:url" content="https://www.survivaloffice.com/story/office-zombie/">
+  <meta property="og:image" content="https://www.survivaloffice.com/story/office-zombie/assets/images/office-dusk.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-4957586937754537">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G4TPWGLYLY');</script>
+  <link rel="stylesheet" href="style.css?v=20260814b">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"오피스 좀비: 퇴근까지 13분","url":"https://www.survivaloffice.com/story/office-zombie/","genre":["Interactive fiction","Survival"],"playMode":"SinglePlayer","applicationCategory":"Game","operatingSystem":"Web browser","inLanguage":"ko"}</script>
+</head>
+<body>
+  <nav class="top-nav"><a href="/story/" aria-label="스토리 게임 목록">← <span>스토리 게임</span></a><b>SURVIVAL OFFICE</b><button id="soundToggle" type="button" aria-label="소리 켜기 또는 끄기">🔊</button></nav>
+  <main>
+    <section class="game-shell" id="gameShell">
+      <header class="game-head">
+        <div><span class="episode">EPISODE 01</span><h1>오피스 좀비</h1><p>퇴근까지 13분</p></div>
+        <button id="restartTop" class="ghost-button" type="button">처음부터</button>
+      </header>
+      <div class="status-bar" aria-label="현재 상태">
+        <div><span>체력</span><b id="healthValue">100</b></div>
+        <div><span>신뢰</span><b id="trustValue">0</b></div>
+        <div><span>구조</span><b id="rescueValue">0</b></div>
+        <div class="time"><span>현재 시각</span><b id="clockValue">17:47</b></div>
+      </div>
+      <div class="scene-frame" id="sceneFrame">
+        <img id="sceneImage" src="assets/images/office-dusk.webp" alt="금요일 저녁의 사무실">
+        <div class="scene-shade"></div>
+        <span id="locationLabel" class="location-label">17층 사무실</span>
+        <div id="eventFlash" class="event-flash" aria-live="polite"></div>
+      </div>
+      <section id="choicePanel" class="choice-panel" aria-modal="true" aria-labelledby="choiceQuestion" hidden>
+        <div class="choice-head"><span>DECISION</span><b id="choiceTimer"></b></div>
+        <h2 id="choiceQuestion">어떻게 하시겠습니까?</h2>
+        <div id="choiceButtons" class="choice-buttons"></div>
+        <div class="timer-track" id="timerTrack" hidden><i id="timerFill"></i></div>
+      </section>
+      <article class="story-panel" id="storyPanel" aria-live="polite">
+        <p class="scene-count" id="sceneCount">SCENE 01</p>
+        <h2 id="sceneTitle">금요일 오후 5시 47분</h2>
+        <div id="storyText" class="story-text"></div>
+        <button id="continueButton" class="continue-button" type="button" hidden>계속하기 <span>▼</span></button>
+      </article>
+      <section id="inventory" class="inventory" aria-label="획득한 물품"><span>보유 물품</span><div id="inventoryItems"><em>아직 없음</em></div></section>
+      <section id="endingPanel" class="ending-panel" hidden>
+        <p>YOUR ENDING</p><h2 id="endingTitle"></h2><div id="endingText"></div>
+        <div class="ending-stats"><span>생존 <b id="endHealth"></b></span><span>구조 <b id="endRescue"></b></span><span>신뢰 <b id="endTrust"></b></span></div>
+        <div class="ending-actions"><button id="restartButton" type="button">다른 선택 해보기</button><button id="shareButton" type="button">결과 공유하기</button></div>
+      </section>
+      <div id="startOverlay" class="start-overlay">
+        <div><span class="start-tag">INTERACTIVE SURVIVAL STORY</span><h2>퇴근까지<br><strong>13분</strong></h2><p>선택에 따라 동료와 물품, 그리고 결말이 달라집니다.<br>소리를 켜면 더 몰입해서 즐길 수 있습니다.</p><button id="startButton" type="button">생존 시작하기</button><small>약 5~8분 · 8개의 엔딩 · 자동 저장</small></div>
+      </div>
+    </section>
+    <section class="guide"><p>HOW TO PLAY</p><h2>당신의 판단이<br>다음 장면을 결정합니다</h2><div><span><b>01</b>장면과 이야기를 읽습니다.</span><span><b>02</b>팝업으로 나타난 행동을 선택합니다.</span><span><b>03</b>체력·신뢰·물품에 따라 결말이 달라집니다.</span></div></section>
+    <div class="ad-container"><ins class="adsbygoogle" style="display:block;min-height:90px" data-ad-client="ca-pub-4957586937754537" data-ad-slot="9240598215" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+    <script>try{window.adsbygoogle=window.adsbygoogle||[];window.adsbygoogle.push({})}catch(error){console.warn('AdSense initialization deferred.',error)}</script>
+  </main>
+  <footer><a href="/">Survival Office</a><span>본 게임의 이야기와 이미지는 창작물입니다.</span></footer>
+  <script src="script.js?v=20260814b"></script>
+</body>
+</html>
