@@ -1,5 +1,5 @@
 (() => {
-  document.documentElement.dataset.storyBuild='20260814i';
+  document.documentElement.dataset.storyBuild='20260814k';
   const $ = (selector) => document.querySelector(selector);
   const imageBase = 'assets/images/';
   const initialState = () => ({health:100,trust:0,rescued:0,minute:47,items:[],flags:{},sceneNumber:1,path:[]});
@@ -110,16 +110,16 @@
   };
 
   const endings = {
-    allSaved:{image:'survivor-ending.webp',title:'모두의 퇴근',text:'고주파 신호가 멈추자 감염자들의 움직임이 눈에 띄게 느려졌습니다. 당신은 실험 증거를 확보하고 구한 동료들과 함께 폐쇄 직전의 대피소에 도착합니다.<br><strong>생존자 명단에는 당신이 데려온 사람들의 이름이 나란히 기록됩니다.</strong><br>오늘의 퇴근은 혼자가 아닙니다.',mood:'ending'},
-    truth:{image:'survivor-ending.webp',title:'회사가 묻으려 한 것',text:'확보한 실험 기록이 외부 기관에 전달되며 사건의 원인이 세상에 알려집니다. 기자가 처음부터 수상하지 않았느냐고 묻자 당신은 짧게 대답합니다.<br><strong>“금요일마다 무료로 나눠 주던 그 음료요.”</strong>',mood:'ending'},
-    team:{image:'survivor-ending.webp',title:'이번 프로젝트도 내가 살렸다',text:'당신은 위험한 순간마다 동료를 포기하지 않았습니다. 생존자들이 모두 탈출하자 회사에서 포상 메일이 도착합니다.<br><strong>특별 포상: 모바일 상품권 1만 원</strong>',mood:'ending'},
-    solo:{image:'service-exit.webp',title:'정시 퇴근',text:'당신은 뒤를 돌아보지 않고 가장 가까운 출구로 혼자 달렸습니다. 약속 상대에게 메시지가 옵니다.<br>“오늘도 야근이야?”<br><strong>“아니. 오늘은 칼퇴했어.”</strong>',mood:'ending'},
-    narrow:{image:'service-exit.webp',title:'간신히 퇴근',text:'마지막 수단을 사용해 잠긴 출구를 열었지만 대피소는 이미 폐쇄 직전입니다. 당신과 남은 동료들은 뒤도 돌아보지 않고 통제선 안으로 뛰어듭니다.<br><strong>안전요원이 문을 닫은 순간, 건물 쪽에서 비상등이 완전히 꺼집니다.</strong>',mood:'ending'},
+    allSaved:{image:'survivor-ending.webp',countedSurvivors:true,title:'모두의 퇴근',text:'고주파 신호가 멈추자 감염자들의 움직임이 눈에 띄게 느려졌습니다. 당신은 실험 증거를 확보하고 구한 동료들과 함께 폐쇄 직전의 대피소에 도착합니다.<br><strong>생존자 명단에는 당신이 데려온 사람들의 이름이 나란히 기록됩니다.</strong><br>오늘의 퇴근은 혼자가 아닙니다.',mood:'ending'},
+    truth:{image:'survivor-ending.webp',countedSurvivors:true,title:'회사가 묻으려 한 것',text:'확보한 실험 기록이 외부 기관에 전달되며 사건의 원인이 세상에 알려집니다. 기자가 처음부터 수상하지 않았느냐고 묻자 당신은 짧게 대답합니다.<br><strong>“금요일마다 무료로 나눠 주던 그 음료요.”</strong>',mood:'ending'},
+    team:{image:'survivor-ending.webp',countedSurvivors:true,title:'이번 프로젝트도 내가 살렸다',text:'당신은 위험한 순간마다 동료를 포기하지 않았습니다. 생존자들이 모두 탈출하자 회사에서 포상 메일이 도착합니다.<br><strong>특별 포상: 모바일 상품권 1만 원</strong>',mood:'ending'},
+    solo:{image:'service-exit.webp',soloSurvivor:true,title:'정시 퇴근',text:'당신은 뒤를 돌아보지 않고 가장 가까운 출구로 혼자 달렸습니다. 약속 상대에게 메시지가 옵니다.<br>“오늘도 야근이야?”<br><strong>“아니. 오늘은 칼퇴했어.”</strong>',mood:'ending'},
+    narrow:{image:'service-exit.webp',countedSurvivors:true,title:'간신히 퇴근',text:'마지막 수단을 사용해 잠긴 출구를 열었지만 대피소는 이미 폐쇄 직전입니다. 당신과 남은 동료들은 뒤도 돌아보지 않고 통제선 안으로 뛰어듭니다.<br><strong>안전요원이 문을 닫은 순간, 건물 쪽에서 비상등이 완전히 꺼집니다.</strong>',mood:'ending'},
     betrayed:{image:'director-office.webp',title:'팀장님 먼저 들어가 보시죠',text:'출구 앞에서 동료들이 당신을 뒤에 남겨둔 채 문을 닫습니다.<br><strong>“좋은 리더는 팀원을 믿고 뒤를 맡기는 법입니다.”</strong><br>평소의 선택은 결정적인 순간에 돌아옵니다.',mood:'failure'},
     infected:{image:'office-dusk.webp',title:'퇴근은 했습니다',text:'무리하게 출구를 향해 달린 당신은 건물 밖에 도착합니다. 하지만 사원증 속 사진과 달리 눈동자가 희미하게 빛나기 시작합니다.<br><strong>출근 가능 여부: 확인 중</strong>',mood:'failure'},
-    overtime:{image:'server-room.webp',title:'최후의 야근자',text:'서버실 문을 잠그고 구조를 기다렸지만, 건물은 이미 봉쇄된 뒤였습니다. 새벽 1시 19분, 문 바깥의 충격음과 함께 조명이 꺼집니다.<br><strong>출퇴근 시스템은 당신을 자동으로 퇴근 처리했습니다.<br>그러나 문을 열고 나온 사람은 없었습니다.</strong>',mood:'failure'},
-    rooftop:{image:'rooftop.webp',title:'옥상의 마지막 신호',text:'휴대전화 불빛을 흔들며 기다리지만 구조 헬기는 오지 않습니다. 무전기에서는 건물 봉쇄 명령만 반복되고, 옥상 출입문이 안쪽에서 크게 휘어집니다.<br><strong>출입문이 무너진 뒤, 당신의 구조 신호가 마지막으로 끊깁니다.</strong><br>이 선택에서는 살아서 퇴근하지 못했습니다.',mood:'failure'},
-    sacrifice:{image:'rooftop.webp',title:'전설의 퇴근 조장',text:'당신이 감염자들을 유인한 사이 동료들은 모두 빠져나갔습니다. 마지막으로 닫히는 문 너머에서 누군가 당신의 이름을 외칩니다.<br><strong>“꼭 다시 돌아오세요!”</strong><br>당신의 사원증은 회사 로비에 오래도록 남았습니다.',mood:'ending'}
+    overtime:{image:'ending-fatal-server.webp?v=1',fatal:true,title:'최후의 야근자',text:'서버실 문을 잠그고 구조를 기다렸지만, 건물은 이미 봉쇄된 뒤였습니다. 새벽 1시 19분, 문 바깥의 충격음과 함께 조명이 꺼집니다.<br><strong>출퇴근 시스템은 당신을 자동으로 퇴근 처리했습니다.<br>그러나 문을 열고 나온 사람은 없었습니다.</strong>',mood:'failure'},
+    rooftop:{image:'ending-fatal-rooftop.webp?v=1',fatal:true,title:'옥상의 마지막 신호',text:'휴대전화 불빛을 흔들며 기다리지만 구조 헬기는 오지 않습니다. 무전기에서는 건물 봉쇄 명령만 반복되고, 옥상 출입문이 안쪽에서 크게 휘어집니다.<br><strong>출입문이 무너진 뒤, 당신의 구조 신호가 마지막으로 끊깁니다.</strong><br>이 선택에서는 살아서 퇴근하지 못했습니다.',mood:'failure'},
+    sacrifice:{image:'ending-fatal-rooftop.webp?v=1',fatal:true,title:'전설의 퇴근 조장',text:'당신이 감염자들을 유인한 사이 동료들은 모두 빠져나갔습니다. 마지막으로 닫히는 문 너머에서 누군가 당신의 이름을 외칩니다.<br><strong>“꼭 다시 돌아오세요!”</strong><br>당신의 사원증은 회사 로비에 오래도록 남았습니다.',mood:'failure'}
   };
 
   class AudioEngine {
@@ -186,7 +186,10 @@
   }
   function showEnding(key){
     clearTimer();const ending=endings[key]||endings.solo;currentScene=`ending:${key}`;$('#choicePanel').hidden=true;$('#storyPanel').hidden=true;$('#inventory').hidden=true;
-    $('#sceneImage').src=imageBase+ending.image;$('#sceneImage').alt=ending.title;$('#locationLabel').textContent='ENDING';$('#endingTitle').textContent=ending.title;$('#endingText').innerHTML=ending.text;$('#endHealth').textContent=state.health;$('#endRescue').textContent=`${state.rescued}명`;$('#endTrust').textContent=state.trust;$('#endingPanel').hidden=false;audio.setMood(ending.mood);audio.sfx('ending');localStorage.removeItem('officeZombieSave');
+    if(ending.fatal){state.health=0;updateStatus()}
+    const survivorCount=ending.soloSurvivor?1:Math.max(1,Math.min(4,state.rescued+1));
+    const endingImage=ending.countedSurvivors||ending.soloSurvivor?`ending-survivors-${survivorCount}.webp?v=1`:ending.image;
+    $('#sceneImage').src=imageBase+endingImage;$('#sceneImage').alt=ending.countedSurvivors||ending.soloSurvivor?`주인공을 포함한 ${survivorCount}명의 생존자`:ending.title;$('#locationLabel').textContent='ENDING';$('#endingTitle').textContent=ending.title;$('#endingText').innerHTML=ending.text;$('#endHealth').textContent=state.health;$('#endRescue').textContent=`${state.rescued}명`;$('#endTrust').textContent=state.trust;$('#endingPanel').hidden=false;audio.setMood(ending.mood);audio.sfx('ending');localStorage.removeItem('officeZombieSave');
     try{gtag('event','story_ending',{game:'office_zombie',ending:key})}catch{}
   }
   function restart(){clearTimer();localStorage.removeItem('officeZombieSave');state=initialState();currentScene='opening';$('#startButton').textContent='생존 시작하기';$('#startOverlay').hidden=false;$('#endingPanel').hidden=true;showScene('opening')}
