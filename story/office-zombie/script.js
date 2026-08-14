@@ -1,5 +1,5 @@
 (() => {
-  document.documentElement.dataset.storyBuild='20260814b';
+  document.documentElement.dataset.storyBuild='20260814i';
   const $ = (selector) => document.querySelector(selector);
   const imageBase = 'assets/images/';
   const initialState = () => ({health:100,trust:0,rescued:0,minute:47,items:[],flags:{},sceneNumber:1,path:[]});
@@ -25,7 +25,7 @@
       {label:'지수에게 뒤를 보라고 소리친다',effect:{trust:1,rescued:1,flags:{jisu:true}},flash:'지수가 몸을 피해 사무실로 들어왔습니다',next:'plan'}
     ]},
     plan:{image:'office-dusk.webp',alt:'어두워진 사무실 안에 모인 생존자들',location:'17층 사무실',mood:'suspense',title:'두 개의 메시지',text:[
-      '사무실에 흩어져 있던 김 대리, 박 과장, 최 부장이 중앙 회의실로 모입니다.',
+      s=>s.flags.jisu?'지수와 사무실에 흩어져 있던 김 대리, 박 과장, 최 부장이 중앙 회의실로 모입니다.':'유리문 바깥의 소리가 멎은 뒤, 김 대리와 박 과장, 최 부장이 중앙 회의실로 모입니다.',
       '<span class="message">익명 · B2 서버실로 오세요. 엘리베이터는 절대 타지 마세요.</span>',
       '최 부장은 옥상 구조 안내 문자를 내밉니다. 그때 탕비실에서 냉장고 문이 닫히는 소리와 짧은 신음이 들립니다.'
     ],question:'첫 이동 경로를 정하세요.',choices:[
@@ -69,6 +69,7 @@
       {label:'서버실로 내려가 익명의 발신자를 찾는다',effect:{minute:4},next:'parking'}
     ]},
     parking:{image:'parking.webp',alt:'좀비들이 서 있는 지하 주차장과 마스터 카드를 든 이 차장',location:'지하 1층 주차장',mood:'danger',title:'차량 사이의 구조 요청',text:[
+      s=>s.path[s.path.length-1]?.scene==='rooftop'?'옥상에서 비상계단을 따라 내려오자 지하 2층으로 향하는 통로가 주차장에서 끊깁니다.':'지하 2층 서버실로 가려면 먼저 지하 1층 주차장을 가로질러야 합니다.',
       '주차된 차량 사이에서 이 차장이 구조를 요청합니다. 혼자 움직이기 힘들지만 마스터 카드를 들고 있습니다.',
       '멀리 서 있던 감염자들이 출입 단말기의 신호음에 일제히 고개를 돌립니다.'
     ],question:'이 차장을 어떻게 하시겠습니까?',choices:[
@@ -79,13 +80,14 @@
     server:{image:'server-room.webp',alt:'붉고 푸른 조명의 서버실과 유리문 밖의 좀비들',location:'지하 2층 서버실',mood:'tech',title:'집중력 음료 프로젝트',text:[
       '익명의 발신자는 전산팀 윤 주임이었습니다.',
       '서버에는 음료를 마신 직원 명단과 고주파 반응 실험 기록이 남아 있습니다.',
-      '<strong class="impact">시험 대상자 47명.</strong> 외부 기관으로 자료를 보내려면 감염자들이 몰려 있는 시설관리실의 보조 발전기를 작동해야 합니다.'
+      '<strong class="impact">시험 대상자 47명.</strong> 외부 기관으로 자료를 보내려면 감염자들이 몰려 있는 시설 관리실의 보조 발전기를 작동해야 합니다.'
     ],question:'서버 자료를 어떻게 처리하시겠습니까?',choices:[
       {label:'발전기를 작동해 외부 기관에 전송한다',effect:{health:-12,minute:4,trust:2,flags:{evidence:true,transmitted:true}},flash:'사건의 증거가 전송됐습니다',next:'director'},
       {label:'자료를 저장장치에 복사하고 탈출한다',effect:{minute:2,items:['증거 저장장치'],flags:{evidence:true}},flash:'증거를 확보했습니다',next:'escape'},
       {label:'문을 잠그고 구조를 기다린다',effect:{minute:8},next:'ending:overtime'}
     ]},
     director:{image:'director-office.webp',alt:'대표실의 붉게 빛나는 송신기와 유리문 밖의 좀비들',location:'20층 대표실',mood:'reveal',title:'모든 신호의 시작',text:[
+      s=>s.path[s.path.length-1]?.scene==='server'?'윤 주임이 알려준 화물용 비상계단을 따라 20층 대표실에 도착합니다.':'연구원이 알려준 보안 코드를 입력하고 20층 대표실 문을 엽니다.',
       '대표실 책상 위 송신기가 건물 전체에 고주파를 내보내고 있습니다.',
       '유리문 밖 감염자들은 신호가 강해질 때마다 동시에 몸을 움직입니다.',
       '<span class="danger">삐——</span>'
@@ -95,26 +97,29 @@
       {label:'신호를 크게 틀어 감염자들을 유인한다',effect:{health:-35,flags:{lured:true}},next:'escape'}
     ]},
     escape:{image:'service-exit.webp',alt:'서비스 출구에서 카드키를 대는 주인공과 뒤따르는 동료들',location:'직원 전용 출구',mood:'escape',title:'마지막 출구',text:[
-      '오후 6시를 훌쩍 넘겼습니다. 서쪽 대피소가 폐쇄되기까지 몇 분 남지 않았습니다.',
-      '직원 전용문은 잠겨 있고, 뒤쪽 복도에서는 감염자들이 가까워집니다. 지금까지 구한 동료와 물품이 마지막 탈출 수단입니다.'
+      s=>s.flags.cable?'점검용 케이블을 건너 맞은편 건물 1층 서비스 출구에 도착합니다.':'비상 통로를 따라 건물 1층 직원 전용 출구에 도착합니다.',
+      s=>s.flags.cable?'맞은편 건물도 이미 대피가 끝났고 서비스 출구는 잠겨 있습니다. 정문 밖의 감염자들이 유리문을 두드리기 시작합니다.':'오후 6시를 훌쩍 넘겼습니다. 직원 전용문은 잠겨 있고, 뒤쪽 복도에서는 감염자들이 가까워집니다.',
+      '서쪽 대피소가 폐쇄되기까지 남은 시간은 몇 분. 지금까지 구한 동료와 물품이 마지막 탈출 수단입니다.'
     ],question:'마지막 탈출 방법을 선택하세요.',choices:[
       {label:'마스터 카드로 직원 전용문을 연다',require:s=>s.items.includes('마스터 카드'),effect:{flags:{finalPlan:'card'}},next:'resolve'},
       {label:'지수의 휴대전화로 반대편에 알림음을 울린다',require:s=>s.flags.jisu,effect:{trust:1,flags:{finalPlan:'jisu'}},next:'resolve'},
       {label:'소화기로 시야를 가리고 모두 함께 돌파한다',require:s=>s.items.includes('소화기'),effect:{health:-10,trust:1,flags:{finalPlan:'extinguisher'}},next:'resolve'},
+      {label:'임시 억제제를 감염자에게 투여해 통로를 만든다',require:s=>s.items.includes('임시 억제제'),effect:{health:-5,trust:1,flags:{finalPlan:'antidote',antidoteUsed:true}},next:'resolve'},
       {label:'혼자서 가장 가까운 출구로 달린다',effect:{health:-20,trust:-3,flags:{finalPlan:'run'}},next:'resolve'}
     ]}
   };
 
   const endings = {
-    allSaved:{image:'survivor-ending.webp',title:'모두의 퇴근',text:'고주파 신호가 멈추자 감염자들의 움직임이 눈에 띄게 느려졌습니다. 당신은 증거를 전송하고 구한 동료들과 함께 폐쇄 직전의 대피소에 도착합니다.<br><strong>생존자 명단에는 당신이 데려온 사람들의 이름이 나란히 기록됩니다.</strong><br>오늘의 퇴근은 혼자가 아닙니다.',mood:'ending'},
+    allSaved:{image:'survivor-ending.webp',title:'모두의 퇴근',text:'고주파 신호가 멈추자 감염자들의 움직임이 눈에 띄게 느려졌습니다. 당신은 실험 증거를 확보하고 구한 동료들과 함께 폐쇄 직전의 대피소에 도착합니다.<br><strong>생존자 명단에는 당신이 데려온 사람들의 이름이 나란히 기록됩니다.</strong><br>오늘의 퇴근은 혼자가 아닙니다.',mood:'ending'},
     truth:{image:'survivor-ending.webp',title:'회사가 묻으려 한 것',text:'확보한 실험 기록이 외부 기관에 전달되며 사건의 원인이 세상에 알려집니다. 기자가 처음부터 수상하지 않았느냐고 묻자 당신은 짧게 대답합니다.<br><strong>“금요일마다 무료로 나눠 주던 그 음료요.”</strong>',mood:'ending'},
     team:{image:'survivor-ending.webp',title:'이번 프로젝트도 내가 살렸다',text:'당신은 위험한 순간마다 동료를 포기하지 않았습니다. 생존자들이 모두 탈출하자 회사에서 포상 메일이 도착합니다.<br><strong>특별 포상: 모바일 상품권 1만 원</strong>',mood:'ending'},
-    solo:{image:'service-exit.webp',title:'정시 퇴근',text:'당신은 누구도 기다리지 않고 가장 빠른 길로 혼자 탈출했습니다. 약속 상대에게 메시지가 옵니다.<br>“오늘도 야근이야?”<br><strong>“아니. 오늘은 칼퇴했어.”</strong>',mood:'ending'},
+    solo:{image:'service-exit.webp',title:'정시 퇴근',text:'당신은 뒤를 돌아보지 않고 가장 가까운 출구로 혼자 달렸습니다. 약속 상대에게 메시지가 옵니다.<br>“오늘도 야근이야?”<br><strong>“아니. 오늘은 칼퇴했어.”</strong>',mood:'ending'},
+    narrow:{image:'service-exit.webp',title:'간신히 퇴근',text:'마지막 수단을 사용해 잠긴 출구를 열었지만 대피소는 이미 폐쇄 직전입니다. 당신과 남은 동료들은 뒤도 돌아보지 않고 통제선 안으로 뛰어듭니다.<br><strong>안전요원이 문을 닫은 순간, 건물 쪽에서 비상등이 완전히 꺼집니다.</strong>',mood:'ending'},
     betrayed:{image:'director-office.webp',title:'팀장님 먼저 들어가 보시죠',text:'출구 앞에서 동료들이 당신을 뒤에 남겨둔 채 문을 닫습니다.<br><strong>“좋은 리더는 팀원을 믿고 뒤를 맡기는 법입니다.”</strong><br>평소의 선택은 결정적인 순간에 돌아옵니다.',mood:'failure'},
     infected:{image:'office-dusk.webp',title:'퇴근은 했습니다',text:'무리하게 출구를 향해 달린 당신은 건물 밖에 도착합니다. 하지만 사원증 속 사진과 달리 눈동자가 희미하게 빛나기 시작합니다.<br><strong>출근 가능 여부: 확인 중</strong>',mood:'failure'},
     overtime:{image:'server-room.webp',title:'최후의 야근자',text:'서버실 문을 잠그고 구조를 기다렸지만, 건물은 이미 봉쇄된 뒤였습니다. 새벽 1시 19분, 문 바깥의 충격음과 함께 조명이 꺼집니다.<br><strong>출퇴근 시스템은 당신을 자동으로 퇴근 처리했습니다.<br>그러나 문을 열고 나온 사람은 없었습니다.</strong>',mood:'failure'},
     rooftop:{image:'rooftop.webp',title:'옥상의 마지막 신호',text:'휴대전화 불빛을 흔들며 기다리지만 구조 헬기는 오지 않습니다. 무전기에서는 건물 봉쇄 명령만 반복되고, 옥상 출입문이 안쪽에서 크게 휘어집니다.<br><strong>출입문이 무너진 뒤, 당신의 구조 신호가 마지막으로 끊깁니다.</strong><br>이 선택에서는 살아서 퇴근하지 못했습니다.',mood:'failure'},
-    sacrifice:{image:'rooftop.webp',title:'전설의 퇴근 조장',text:'당신이 감염자들을 유인한 사이 동료들은 모두 빠져나갔습니다. 마지막으로 닫히는 문 너머에서 지수가 외칩니다.<br><strong>“월요일에 꼭 다시 만나요!”</strong><br>당신의 사원증은 회사 로비에 오래도록 남았습니다.',mood:'ending'}
+    sacrifice:{image:'rooftop.webp',title:'전설의 퇴근 조장',text:'당신이 감염자들을 유인한 사이 동료들은 모두 빠져나갔습니다. 마지막으로 닫히는 문 너머에서 누군가 당신의 이름을 외칩니다.<br><strong>“꼭 다시 돌아오세요!”</strong><br>당신의 사원증은 회사 로비에 오래도록 남았습니다.',mood:'ending'}
   };
 
   class AudioEngine {
@@ -142,8 +147,9 @@
   function save(){localStorage.setItem('officeZombieSave',JSON.stringify({state,currentScene}))}
   function clearTimer(){clearTimeout(choiceRevealId);choiceRevealId=null;$('#timerTrack').hidden=true;$('#choiceTimer').textContent=''}
   function preload(scene){if(!scene)return;const img=new Image();img.src=imageBase+scene.image}
+  function getSceneLines(scene){return scene.text.map(line=>typeof line==='function'?line(state):line)}
   function renderText(lines){const box=$('#storyText');box.innerHTML='';lines.forEach((line,i)=>{const p=document.createElement('p');p.innerHTML=line;p.style.animationDelay=`${i*.28}s`;box.appendChild(p)})}
-  function getReadingDelay(scene){const plainLength=scene.text.join(' ').replace(/<[^>]+>/g,'').length;return Math.min(12000,Math.max(7000,plainLength*45))}
+  function getReadingDelay(lines){const plainLength=lines.join(' ').replace(/<[^>]+>/g,'').length;return Math.min(12000,Math.max(7000,plainLength*45))}
   function showContinuePrompt(scene){
     $('#choiceEyebrow').textContent='NEXT SCENE';$('#choiceQuestion').textContent='복도에서 들려온 소리를 확인해보세요.';const wrap=$('#choiceButtons');wrap.innerHTML='';
     const button=document.createElement('button');button.type='button';button.textContent='계속하기';button.addEventListener('click',()=>{button.disabled=true;audio.sfx('choice');state.sceneNumber++;showScene(scene.next)});wrap.appendChild(button);$('#choicePanel').hidden=false;audio.sfx('next');
@@ -163,18 +169,19 @@
   function showScene(id){
     clearTimer();currentScene=id;const scene=scenes[id];if(!scene)return;$('#choicePanel').hidden=true;$('#endingPanel').hidden=true;$('#storyPanel').hidden=false;$('#inventory').hidden=false;
     const frame=$('#sceneFrame');frame.classList.remove('enter','tense');void frame.offsetWidth;frame.classList.add('enter');if(scene.mood==='danger')setTimeout(()=>frame.classList.add('tense'),450);
-    $('#sceneImage').src=imageBase+scene.image;$('#sceneImage').alt=scene.alt;$('#locationLabel').textContent=scene.location;$('#sceneCount').textContent=`SCENE ${String(state.sceneNumber).padStart(2,'0')}`;$('#sceneTitle').textContent=scene.title;renderText(scene.text);updateStatus();audio.setMood(scene.mood);save();
-    $('#continueButton').hidden=true;choiceRevealId=setTimeout(()=>{choiceRevealId=null;if(scene.choices)showChoices(scene);else showContinuePrompt(scene)},getReadingDelay(scene));
+    const lines=getSceneLines(scene);$('#sceneImage').src=imageBase+scene.image;$('#sceneImage').alt=scene.alt;$('#locationLabel').textContent=scene.location;$('#sceneCount').textContent=`SCENE ${String(state.sceneNumber).padStart(2,'0')}`;$('#sceneTitle').textContent=scene.title;renderText(lines);updateStatus();audio.setMood(scene.mood);save();
+    $('#continueButton').hidden=true;choiceRevealId=setTimeout(()=>{choiceRevealId=null;if(scene.choices)showChoices(scene);else showContinuePrompt(scene)},getReadingDelay(lines));
     if(scene.choices){const first=scene.choices.find(c=>!c.require||c.require(state));if(first&&scenes[first.next])preload(scenes[first.next])}else if(scene.next)preload(scenes[scene.next]);
   }
   function resolveEnding(){
-    let key='solo';
+    let key='narrow';
     if(state.flags.lured&&state.health<=65)key='sacrifice';
     else if(state.trust<=-3)key='betrayed';
     else if(state.health<=35||state.flags.finalPlan==='run'&&state.health<65)key='infected';
+    else if(state.flags.finalPlan==='run')key='solo';
     else if(state.flags.signalOff&&state.flags.evidence&&state.rescued>=2&&state.trust>=3)key='allSaved';
     else if(state.flags.evidence)key='truth';
-    else if(state.rescued>=2&&state.trust>=2)key='team';
+    else if(state.rescued>=1&&state.trust>=2)key='team';
     showEnding(key);
   }
   function showEnding(key){
@@ -188,5 +195,5 @@
 
   $('#startButton').addEventListener('click',startGame);$('#restartButton').addEventListener('click',restart);$('#restartTop').addEventListener('click',restart);$('#shareButton').addEventListener('click',share);$('#soundToggle').addEventListener('click',()=>audio.toggle());
   if(localStorage.getItem('officeZombieSave'))$('#startButton').textContent='이어하기';
-  updateStatus();renderText(scenes.opening.text);
+  updateStatus();renderText(getSceneLines(scenes.opening));
 })();
