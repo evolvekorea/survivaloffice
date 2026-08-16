@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=360, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>캔디 성격 테스트</title>
+  <link rel="canonical" href="https://survivaloffice.com/test/candy/">
+    <title>캔디 성격 테스트</title>
   <meta name="description" content="캔디 성격 테스트" />
   <meta name="keywords" content="서바이벌오피스,성격테스트,캔디,캔디성격테스트,캔디성격테스트결과,연애테스트,연애mbti,연애성격테스트,심리테스트,mbti테스트" />
 
@@ -23,8 +24,8 @@
   <!-- Open Graph -->
   <meta property="og:title" content="캔디 성격 테스트" />
   <meta property="og:description" content="캔디 성격 테스트" />
-  <meta property="og:url" content="https://www.survivaloffice.com/test/candy" />
-  <meta property="og:image" content="https://www.survivaloffice.com/images/test001.png" />
+  <meta property="og:url" content="https://survivaloffice.com/test/candy/" />
+  <meta property="og:image" content="https://survivaloffice.com/images/test001.png" />
   <meta property="og:type" content="website" />
 
   <!-- Counter API 성능 힌트 -->
@@ -70,7 +71,7 @@
   <main class="container candy">
     <!-- 시작화면 -->
     <article class="start">
-      <img id="img_main" class="mt-3" src="https://www.survivaloffice.com/images/img_main001.png" alt="시작 이미지">
+      <img id="img_main" class="mt-3" src="https://survivaloffice.com/images/img_main001.png" alt="시작 이미지">
       <!-- ✅ 카운터가 찾는 id="start-btn" 반드시 필요 -->
       <button id="start-btn" type="button" class="candy-btn candy-btn-start mt-3" onclick="start();">
         테스트 시작하기
@@ -171,22 +172,22 @@
     };
 
     var result = {
-      "ISTJ": {"img":"https://www.survivaloffice.com/images/img_istj001.png"},
-      "ISFJ": {"img":"https://www.survivaloffice.com/images/img_isfj001.png"},
-      "INFJ": {"img":"https://www.survivaloffice.com/images/img_infj001.png"},
-      "INTJ": {"img":"https://www.survivaloffice.com/images/img_intj001.png"},
-      "ISTP": {"img":"https://www.survivaloffice.com/images/img_istp001.png"},
-      "ISFP": {"img":"https://www.survivaloffice.com/images/img_isfp001.png"},
-      "INFP": {"img":"https://www.survivaloffice.com/images/img_infp001.png"},
-      "INTP": {"img":"https://www.survivaloffice.com/images/img_intp001.png"},
-      "ESTP": {"img":"https://www.survivaloffice.com/images/img_estp001.png"},
-      "ESFP": {"img":"https://www.survivaloffice.com/images/img_esfp001.png"},
-      "ENFP": {"img":"https://www.survivaloffice.com/images/img_enfp001.png"},
-      "ENTP": {"img":"https://www.survivaloffice.com/images/img_entp001.png"},
-      "ESTJ": {"img":"https://www.survivaloffice.com/images/img_estj001.png"},
-      "ESFJ": {"img":"https://www.survivaloffice.com/images/img_esfj001.png"},
-      "ENFJ": {"img":"https://www.survivaloffice.com/images/img_enfj001.png"},
-      "ENTJ": {"img":"https://www.survivaloffice.com/images/img_entj001.png"}
+      "ISTJ": {"img":"https://survivaloffice.com/images/img_istj001.png"},
+      "ISFJ": {"img":"https://survivaloffice.com/images/img_isfj001.png"},
+      "INFJ": {"img":"https://survivaloffice.com/images/img_infj001.png"},
+      "INTJ": {"img":"https://survivaloffice.com/images/img_intj001.png"},
+      "ISTP": {"img":"https://survivaloffice.com/images/img_istp001.png"},
+      "ISFP": {"img":"https://survivaloffice.com/images/img_isfp001.png"},
+      "INFP": {"img":"https://survivaloffice.com/images/img_infp001.png"},
+      "INTP": {"img":"https://survivaloffice.com/images/img_intp001.png"},
+      "ESTP": {"img":"https://survivaloffice.com/images/img_estp001.png"},
+      "ESFP": {"img":"https://survivaloffice.com/images/img_esfp001.png"},
+      "ENFP": {"img":"https://survivaloffice.com/images/img_enfp001.png"},
+      "ENTP": {"img":"https://survivaloffice.com/images/img_entp001.png"},
+      "ESTJ": {"img":"https://survivaloffice.com/images/img_estj001.png"},
+      "ESFJ": {"img":"https://survivaloffice.com/images/img_esfj001.png"},
+      "ENFJ": {"img":"https://survivaloffice.com/images/img_enfj001.png"},
+      "ENTJ": {"img":"https://survivaloffice.com/images/img_entj001.png"}
     };
 
     function start(){
@@ -217,7 +218,7 @@
         ($("#TF").val() < 2) ? mbti += "T" : mbti += "F";
         ($("#JP").val() < 2) ? mbti += "J" : mbti += "P";
 
-        const imgUrl = result[mbti]?.img || "https://www.survivaloffice.com/images/test001.png";
+        const imgUrl = result[mbti]?.img || "https://survivaloffice.com/images/test001.png";
         $("#img").attr("src", imgUrl);
 
         // ✅ 카카오 공유용 저장
@@ -362,9 +363,9 @@
         try {
           await loadKakaoSDK();
 
-          const imgUrl = window.currentResultImageUrl || "https://www.survivaloffice.com/images/test001.png";
+          const imgUrl = window.currentResultImageUrl || "https://survivaloffice.com/images/test001.png";
           const mbti = window.currentMbti || "";
-          const shareUrl = "https://www.survivaloffice.com/test/candy";
+          const shareUrl = "https://survivaloffice.com/test/candy";
 
           Kakao.Share.sendDefault({
             objectType: "feed",
