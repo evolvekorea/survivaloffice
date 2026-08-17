@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상지야 생일 축하해!</title>
+    <meta name="description" content="어벤져스가 오늘의 주인공 상지를 위해 준비한 특별한 생일 축하 페이지입니다.">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <link rel="canonical" href="https://survivaloffice.com/sangji-birthday/">
+
+    <meta property="og:title" content="상지야 생일 축하해! 🎂">
+    <meta property="og:description" content="어벤져스가 상지를 위해 준비한 특별한 생일 축하 카드">
+    <meta property="og:url" content="https://survivaloffice.com/sangji-birthday/">
+    <meta property="og:image" content="https://survivaloffice.com/sangji-birthday/thumbnail.svg">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#ff7fa5">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎂</text></svg>">
+
+    <!-- Google Analytics 코드 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-G4TPWGLYLY');
+    </script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="briefing-active">
+    <section class="briefing-screen" id="briefingScreen" aria-labelledby="briefingTitle">
+        <div class="briefing-folder" aria-hidden="true"></div>
+        <article class="secret-document">
+            <span class="paper-clip" aria-hidden="true"></span>
+            <div class="document-topline">
+                <span>AVENGERS SECRET FILE</span>
+                <span>DOC. A-0817-S</span>
+            </div>
+            <div class="confidential-stamp" aria-hidden="true">CONFIDENTIAL</div>
+            <p class="document-classification">1급 기밀 · 생일 작전 문서</p>
+            <h1 id="briefingTitle">상지 생일 축하<br>특별 작전 계획서</h1>
+            <p class="document-intro">본 문서는 작전 대상자 외 열람을 금합니다.<br>아래 내용을 확인한 후 봉인을 해제하십시오.</p>
+            <dl class="mission-details">
+                <div><dt>작전 대상</dt><dd>상지</dd></div>
+                <div><dt>작전명</dt><dd>오늘 하루 가장 행복하게 만들기</dd></div>
+                <div><dt>발신</dt><dd>어벤져스 일동</dd></div>
+                <div><dt>현재 상태</dt><dd><span class="status-ready">준비 완료</span></dd></div>
+            </dl>
+            <p class="document-warning"><strong>주의</strong> 문서를 열람하는 순간 생일 축하 작전이 시작됩니다.</p>
+            <button class="open-document-button" id="openDocumentButton" type="button">
+                <span>기밀 문서 열람하기</span><i aria-hidden="true">→</i>
+            </button>
+            <p class="document-signature">AUTHORIZED BY AVENGERS</p>
+        </article>
+    </section>
+
+    <div class="ambient" aria-hidden="true">
+        <span class="balloon balloon-one"></span>
+        <span class="balloon balloon-two"></span>
+        <span class="balloon balloon-three"></span>
+        <span class="sparkle sparkle-one">✦</span>
+        <span class="sparkle sparkle-two">✧</span>
+        <span class="sparkle sparkle-three">✦</span>
+    </div>
+
+    <header class="page-header">
+        <button class="music-button" id="musicButton" type="button" aria-pressed="false">
+            <span class="music-symbol" aria-hidden="true">♪</span>
+            <span class="music-label">생일 노래 듣기</span>
+        </button>
+        <span class="mini-label">FROM. AVENGERS</span>
+    </header>
+
+    <main>
+        <section class="hero-card" aria-labelledby="birthdayTitle">
+            <div class="hero-copy">
+                <p class="eyebrow">어벤져스가 준비한</p>
+                <h1 id="birthdayTitle" tabindex="-1"><span>상지야,</span><br>생일 축하해!</h1>
+                <p class="hero-message">오늘만큼은 걱정은 잠깐 내려놓고,<br>좋아하는 것들로 하루를 가득 채우길 바라!</p>
+            </div>
+
+            <div class="cake-scene" aria-label="생일 케이크와 켜진 촛불 다섯 개">
+                <div class="cake-shadow"></div>
+                <div class="cake">
+                    <div class="candles" aria-hidden="true">
+                        <span class="candle candle-pink"><i class="flame"></i></span>
+                        <span class="candle candle-yellow"><i class="flame"></i></span>
+                        <span class="candle candle-mint"><i class="flame"></i></span>
+                        <span class="candle candle-lilac"><i class="flame"></i></span>
+                        <span class="candle candle-blue"><i class="flame"></i></span>
+                    </div>
+                    <div class="icing"><span></span><span></span><span></span><span></span></div>
+                    <div class="cake-body">
+                        <span class="berry berry-one"></span>
+                        <span class="berry berry-two"></span>
+                        <span class="berry berry-three"></span>
+                        <strong>HAPPY<br>BIRTHDAY</strong>
+                    </div>
+                    <div class="plate"></div>
+                </div>
+            </div>
+
+            <button class="wish-button" id="wishButton" type="button">
+                <span class="button-icon">🕯️</span>
+                <span class="button-copy"><strong>소원 빌고 촛불 끄기</strong><small>버튼을 눌러주세요</small></span>
+            </button>
+
+            <p class="wish-result" id="wishResult" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="letter-section" aria-labelledby="letterTitle">
+            <button class="letter-envelope" id="letterButton" type="button" aria-expanded="false" aria-controls="birthdayLetter">
+                <span class="envelope-icon" aria-hidden="true">✉️</span>
+                <span><strong>어벤져스에게 온 축하 카드</strong><small>눌러서 열어보기</small></span>
+                <i aria-hidden="true">＋</i>
+            </button>
+            <div class="birthday-letter" id="birthdayLetter" hidden>
+                <p class="letter-to">TO. 상지</p>
+                <h2 id="letterTitle">어벤져스가 전하는 생일 축하</h2>
+                <p>지금까지 잘해온 만큼 앞으로의 날들도 분명 멋질 거야. 행복은 크게, 고민은 작게, 어벤져스와 함께하는 좋은 기억은 오래오래 남는 한 해가 되기를 진심으로 바랄게.</p>
+                <p class="letter-highlight">오늘 하루 세상에서 제일 행복한 사람은 상지!</p>
+                <p class="letter-from">생일을 진심으로 축하해 🎉<br>— 어벤져스 일동</p>
+            </div>
+        </section>
+
+        <section class="birthday-wishes" aria-label="상지를 위한 생일 소원">
+            <article><span>01</span><strong>웃음 가득</strong><p>사소한 순간에도 자주 웃는 한 해</p></article>
+            <article><span>02</span><strong>행운 가득</strong><p>바라는 일마다 좋은 결과가 따르는 한 해</p></article>
+            <article><span>03</span><strong>사랑 가득</strong><p>좋은 사람들과 따뜻함을 나누는 한 해</p></article>
+        </section>
+    </main>
+
+    <footer>
+        <p>상지의 생일을 축하하는</p>
+        <strong>어벤져스 일동</strong>
+    </footer>
+
+    <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+    <script src="script.js"></script>
+</body>
+</html>
