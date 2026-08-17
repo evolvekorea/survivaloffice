@@ -330,7 +330,7 @@ h1 span { color: var(--deep-pink); }
 .cake-shadow { position: absolute; bottom: 38px; width: 300px; height: 45px; border-radius: 50%; background: rgba(97, 54, 91, .14); filter: blur(8px); }
 .cake { position: relative; width: 300px; height: 310px; filter: drop-shadow(0 20px 16px rgba(103, 62, 80, .12)); }
 
-.candles { position: absolute; z-index: 5; top: 20px; left: 49px; right: 49px; display: flex; justify-content: space-between; align-items: flex-end; }
+.candles { position: absolute; z-index: 10; top: 58px; left: 49px; right: 49px; display: flex; justify-content: space-between; align-items: flex-end; }
 .candle { position: relative; width: 17px; height: 72px; border: 3px solid rgba(79, 51, 81, .12); border-radius: 8px 8px 4px 4px; background: repeating-linear-gradient(-45deg, #fff 0 7px, currentColor 7px 14px); color: #ff7a9f; }
 .candle:nth-child(even) { height: 63px; }
 .candle-yellow { color: #f5c850; }
