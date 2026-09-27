@@ -29,9 +29,9 @@ Place this code in the document `<head>`:
 
 ```html
 <!-- Google Adsense 코드 -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4957586937754537"
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6532882266109488"
 crossorigin="anonymous"></script>
-<meta name="google-adsense-account" content="ca-pub-4957586937754537">
+<meta name="google-adsense-account" content="ca-pub-6532882266109488">
 ```
 
 ### Google Analytics
@@ -58,7 +58,7 @@ Place this ad unit at the bottom of the page content:
 <div class="ad-container">
     <ins class="adsbygoogle"
         style="display:block; min-height: 90px;"
-        data-ad-client="ca-pub-4957586937754537"
+        data-ad-client="ca-pub-6532882266109488"
         data-ad-slot="9240598215"
         data-ad-format="auto"
         data-full-width-responsive="true"></ins>
