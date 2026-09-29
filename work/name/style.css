@@ -272,12 +272,6 @@ nav ul li a:hover { background: #555; color: #fff; }
 #share-kakao{ background: #fee500; }
 #restart-btn{ background: #ffe2da; }
 
-/* ========= 선택적으로 유지되는 요소들 (사용 안 해도 무방) ========= */
-.counter-badge{
-  position:absolute; top:10px; right:10px;
-  background: rgba(0,0,0,.6); color:#fff; padding:6px 10px; border-radius:999px;
-  font-size:12px; font-weight:600; backdrop-filter: blur(2px); pointer-events:none;
-}
 
 /* ========= 작은 화면 대응(선택) ========= */
 @media (max-width: 380px){

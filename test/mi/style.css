@@ -76,17 +76,6 @@ body.page {
   margin: 10px auto;
 }
 
-/* Counter badge */
-.counter-badge{
-  width: 360px;
-  max-width: 360px;
-  margin: 8px auto 10px;
-  padding: 10px 12px;
-  background: rgba(255,255,255,0.8);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  font-size: 14px;
-}
 
 /* Start screen */
 .start-screen{

@@ -93,12 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
     target.classList.add("active");
     bottomActions.style.display = target === screens.result ? "flex" : "none";
 
-    // ✅ 추가: 참여자 수 배지 제어
-    const counterBadge = document.getElementById("test-counter");
-    if (counterBadge) {
-      // 시작화면에서만 표시, 그 외 화면에서는 숨김
-      counterBadge.style.display = target === screens.start ? "block" : "none";
-    }
   }
 
   function pick(arr) {
@@ -250,41 +244,4 @@ shareBtn.onclick = () => {
   });
 };
 
-  // --- 참여 카운터 ---
-  const COUNTER_BASE = "https://api.counterapi.dev/v1";
-  async function fetchCount(ns, key) {
-    try {
-      const r = await fetch(`${COUNTER_BASE}/${ns}/${key}/`, { cache: "no-store" });
-      const d = await r.json();
-      return d.count || d.value || 0;
-    } catch {
-      return 0;
-    }
-  }
-  async function hitCount(ns, key) {
-    try {
-      const r = await fetch(`${COUNTER_BASE}/${ns}/${key}/up`, { cache: "no-store" });
-      const d = await r.json();
-      return d.count || d.value || null;
-    } catch {
-      return null;
-    }
-  }
-  function renderCount(el, n) {
-    if (!el) return;
-    el.textContent = `총 ${Number(n).toLocaleString()}명 참여`;
-  }
-
-  (async function initCounter() {
-    const el = document.getElementById("test-counter");
-    if (!el) return;
-    const ns = el.dataset.counterNamespace || "survivaloffice";
-    const key = el.dataset.counterKey || "NobiName";
-    const val = await fetchCount(ns, key);
-    renderCount(el, val);
-    startBtn.addEventListener("click", async () => {
-      const after = await hitCount(ns, key);
-      if (after !== null) renderCount(el, after);
-    });
-  })();
 });

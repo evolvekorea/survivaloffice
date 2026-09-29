@@ -130,22 +130,9 @@ nav ul li a:hover {
 /* 기존 <img class="background-img">는 완전 숨김(간섭 차단) */
 .background-img { display: none !important; }
 
-/* 참여자 배지/버튼은 항상 최상단 */
-.counter-badge,
+/* 시작 버튼은 항상 최상단 */
 .start-btn-container { position: absolute; z-index: 9999; }
 
-.counter-badge{
-  top: 10px; right: 10px;
-  background: rgba(255,255,255,.9);
-  color: #2b3a4a;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 12px; font-weight: 700;
-  border: 1px solid var(--line);
-  box-shadow: 0 6px 16px rgba(0,0,0,.06);
-  backdrop-filter: blur(4px);
-  pointer-events: none;
-}
 
 .start-btn-container { bottom: 40px; left: 50%; transform: translateX(-50%); }
 

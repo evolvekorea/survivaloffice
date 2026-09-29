@@ -61,7 +61,7 @@ button, input, select, textarea{
   color: #0b67c6;
 }
 
-/* ===== Ads / Counter ===== */
+/* ===== Ads ===== */
 .ad-container,
 .footer-ad-container{
   width: 360px;
@@ -69,16 +69,6 @@ button, input, select, textarea{
   margin: 10px auto;
 }
 
-.counter-badge{
-  width: 360px;
-  max-width: 360px;
-  margin: 8px auto 10px;
-  padding: 10px 12px;
-  background: rgba(255,255,255,0.9);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  font-size: 14px;
-}
 
 /* ===== Main container ===== */
 .container.candy{

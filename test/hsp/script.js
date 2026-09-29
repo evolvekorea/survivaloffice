@@ -166,7 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const otherTestBtn = document.getElementById('other-test-btn');
   const captureBtn = document.getElementById('capture-btn');
 
-  let increaseCounter = () => {};
 
   const state = {
     currentIndex: 0,
@@ -416,7 +415,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderQuestion();
     setScreen('quiz');
     scrollToTop(quizCard);
-    increaseCounter();
   }
 
   introForm.addEventListener('submit', event => {
@@ -594,111 +592,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 참여자 카운터 (CountAPI)
-  const COUNTER_BASE = 'https://api.counterapi.dev/v1';
-  const ONLY_ONCE_PER_SESSION = false;
-
-  function counterPath(ns, key) {
-    return `${COUNTER_BASE}/${encodeURIComponent(ns)}/${encodeURIComponent(key)}/`;
-  }
-
-  function getCounterConfig() {
-    const el = document.getElementById('test-counter');
-    return {
-      el,
-      ns: el?.dataset.counterNamespace || 'survivaloffice',
-      key: el?.dataset.counterKey || 'hsp'
-    };
-  }
-
-  function cacheKey(ns, key) {
-    return `counter_${ns}_${key}`;
-  }
-
-  function getCachedCount(ns, key, maxAgeMs = 10 * 60 * 1000) {
-    try {
-      const raw = localStorage.getItem(cacheKey(ns, key));
-      if (!raw) return null;
-      const obj = JSON.parse(raw);
-      if (Date.now() - obj.t > maxAgeMs) return null;
-      return typeof obj.v === 'number' ? obj.v : null;
-    } catch (error) {
-      console.warn('[counter] cache parse failed', error);
-      return null;
-    }
-  }
-
-  function setCachedCount(ns, key, value) {
-    try {
-      localStorage.setItem(cacheKey(ns, key), JSON.stringify({ v: Number(value) || 0, t: Date.now() }));
-    } catch (error) {
-      console.warn('[counter] cache store failed', error);
-    }
-  }
-
-  async function fetchCount(ns, key) {
-    const url = counterPath(ns, key);
-    try {
-      const response = await fetch(url, { cache: 'no-store', headers: { accept: 'application/json' } });
-      if (!response.ok) return 0;
-      const data = await response.json();
-      return typeof data.count === 'number' ? data.count : (typeof data.value === 'number' ? data.value : 0);
-    } catch (error) {
-      console.warn('[counter] fetch failed', error);
-      return 0;
-    }
-  }
-
-  async function hitCount(ns, key) {
-    const url = `${counterPath(ns, key)}up`;
-    try {
-      const response = await fetch(url, { cache: 'no-store', headers: { accept: 'application/json' } });
-      if (!response.ok) return null;
-      const data = await response.json();
-      return typeof data.count === 'number' ? data.count : (typeof data.value === 'number' ? data.value : null);
-    } catch (error) {
-      console.warn('[counter] hit failed', error);
-      return null;
-    }
-  }
-
-  function shouldIncreaseThisSession(ns, key) {
-    if (!ONLY_ONCE_PER_SESSION) return true;
-    const flag = `counted_${ns}_${key}`;
-    if (sessionStorage.getItem(flag) === '1') return false;
-    sessionStorage.setItem(flag, '1');
-    return true;
-  }
-
-  function renderCount(el, value) {
-    if (!el) return;
-    el.textContent = `총 ${Number(value).toLocaleString()}명 참여`;
-    el.setAttribute('data-count', String(value));
-    const { ns, key } = getCounterConfig();
-    if (ns && key && typeof value === 'number') {
-      setCachedCount(ns, key, value);
-    }
-  }
-
-  (async function initCounter() {
-    const { el, ns, key } = getCounterConfig();
-    if (!el) return;
-
-    increaseCounter = async () => {
-      try {
-        if (shouldIncreaseThisSession(ns, key)) {
-          const after = await hitCount(ns, key);
-          if (after !== null) renderCount(el, after);
-        }
-      } catch (error) {
-        console.warn('[counter] increase failed', error);
-      }
-    };
-
-    const cached = getCachedCount(ns, key);
-    if (cached !== null) renderCount(el, cached);
-
-    const fresh = await fetchCount(ns, key);
-    renderCount(el, fresh);
-  })();
 });

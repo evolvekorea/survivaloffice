@@ -132,15 +132,6 @@ nav ul li a:hover {
   filter:saturate(0.95) contrast(1.02);
 }
 
-.counter-badge{
-  position:absolute; top:12px; right:12px;
-  background:rgba(58,42,37,.72);
-  color:#fff; padding:6px 10px; border-radius:999px;
-  font-size:12px; font-weight:700;
-  backdrop-filter: blur(3px);
-  pointer-events:none;
-  box-shadow:0 4px 12px rgba(0,0,0,.12);
-}
 
 .start-btn-container{
   position:absolute; left:50%; bottom:40px; transform:translateX(-50%);

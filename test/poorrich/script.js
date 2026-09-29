@@ -221,46 +221,6 @@ document.addEventListener("DOMContentLoaded", () => {
     resultImage.alt = finalType + " 결과";
   }
 
-  // ---------- 참여자 카운터 ----------
-  const COUNTER_BASE = 'https://api.counterapi.dev/v1';
-  const COUNTER_CFG = { ns:"survivaloffice", key:"poorrich" };
-  const counterEl = document.getElementById("test-counter");
-
-  function renderCount(el, n) {
-    if (!el) return;
-    el.textContent = `총 ${Number(n).toLocaleString()}명 참여`;
-  }
-
-  async function fetchCount(ns, key) {
-    const url = `${COUNTER_BASE}/${encodeURIComponent(ns)}/${encodeURIComponent(key)}/`;
-    try {
-      const r = await fetch(url, { cache: 'no-store', headers:{'accept':'application/json'} });
-      if (!r.ok) return 0;
-      const d = await r.json();
-      return d.count || d.value || 0;
-    } catch { return 0; }
-  }
-
-  async function hitCount(ns, key) {
-    const url = `${COUNTER_BASE}/${encodeURIComponent(ns)}/${encodeURIComponent(key)}/up`;
-    try {
-      const r = await fetch(url, { cache:'no-store', headers:{'accept':'application/json'} });
-      if (!r.ok) return null;
-      const d = await r.json();
-      return d.count || d.value || null;
-    } catch { return null; }
-  }
-
-  (async function initCounter(){
-    if(!counterEl) return;
-    const n = await fetchCount(COUNTER_CFG.ns, COUNTER_CFG.key);
-    renderCount(counterEl, n);
-    startBtn.addEventListener("click", async ()=>{
-      const after = await hitCount(COUNTER_CFG.ns, COUNTER_CFG.key);
-      if(after!==null) renderCount(counterEl, after);
-    });
-  })();
-
   // ---------- 공유 & 다시하기 ----------
   const shareBtnEl   = document.getElementById("share-kakao");
   const restartBtnEl = document.getElementById("restart-btn");

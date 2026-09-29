@@ -58,21 +58,7 @@ html, body {
   position: relative;
 }
 
-/* 참여자 수 배지 */
 
-.counter-badge{
-  position:absolute;
-  top:10px;
-  right:10px;
-  background:rgba(0,0,0,.6);
-  color:#fff;
-  padding:6px 10px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:600;
-  backdrop-filter: blur(2px);
-  pointer-events:none; /* 클릭 방해 방지 */
-}
 
 .background-img {
   width: 100%;
@@ -353,13 +339,6 @@ nav ul li a:hover{
   color: #fff !important;
 }
 
-/* 시작 화면 카운터 배지 다크+레드 글로우 */
-.counter-badge{
-  background: rgba(0,0,0,.55) !important;
-  color: #fff !important;
-  box-shadow: 0 0 12px var(--blood-glow);
-  border: 1px solid rgba(255,255,255,.08);
-}
 
 /* 질문 화면 전체 다크 */
 #quiz-screen{
@@ -498,18 +477,6 @@ nav ul li a:hover{
   background: transparent !important;
 }
 
-/* ==== 참여자 배지: 다크 + 레드 글로우 ==== */
-.counter-badge{
-  background: rgba(10,10,12,.72) !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(255,255,255,.12) !important;
-  border-radius: 999px !important;
-  padding: 6px 12px !important;
-  font-weight: 700 !important;
-  letter-spacing: .2px;
-  text-shadow: 0 1px 2px rgba(0,0,0,.6), 0 0 6px rgba(211,22,44,.25);
-  box-shadow: 0 8px 18px rgba(0,0,0,.35), 0 0 14px rgba(211,22,44,.35);
-}
 
 /* ==== 시작 버튼: 다크 글래스 + 호버/포커스 상태 ==== */
 #start-btn{

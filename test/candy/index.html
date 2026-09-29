@@ -28,9 +28,6 @@
   <meta property="og:image" content="https://survivaloffice.com/images/test001.png" />
   <meta property="og:type" content="website" />
 
-  <!-- Counter API 성능 힌트 -->
-  <link rel="preconnect" href="https://api.counterapi.dev" crossorigin />
-  <link rel="dns-prefetch" href="https://api.counterapi.dev" />
 
   <!-- (선택) Bootstrap CSS: btn 클래스 쓰는 경우 안정 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" crossorigin="anonymous">
@@ -60,13 +57,6 @@
          data-full-width-responsive="true"></ins>
   </div>
 
-  <!-- 참여자 수 배지 -->
-  <div id="test-counter"
-       class="counter-badge"
-       data-counter-namespace="survivaloffice"
-       data-counter-key="candy">
-    총 0명 참여
-  </div>
 
   <main class="container candy">
     <!-- 시작화면 -->
@@ -235,107 +225,7 @@
     }
   </script>
 
-  <!-- ===== 참여자 카운터 (CountAPI) ===== -->
-  <script>
-    const COUNTER_BASE = 'https://api.counterapi.dev/v1';
-    const ONLY_ONCE_PER_SESSION = false;
 
-    function counterPath(ns, key) {
-      return `${COUNTER_BASE}/${encodeURIComponent(ns)}/${encodeURIComponent(key)}/`;
-    }
-
-    function getCounterConfig() {
-      const el = document.getElementById("test-counter");
-      return {
-        el,
-        ns: el?.dataset.counterNamespace || "survivaloffice",
-        key: el?.dataset.counterKey || "candy",
-      };
-    }
-
-    function cacheKey(ns, key){ return `counter_${ns}_${key}`; }
-    function getCachedCount(ns, key, maxAgeMs = 10 * 60 * 1000){
-      try{
-        const raw = localStorage.getItem(cacheKey(ns,key));
-        if(!raw) return null;
-        const obj = JSON.parse(raw);
-        if(Date.now() - obj.t > maxAgeMs) return null;
-        return typeof obj.v === 'number' ? obj.v : null;
-      }catch{ return null; }
-    }
-    function setCachedCount(ns, key, val){
-      try{ localStorage.setItem(cacheKey(ns,key), JSON.stringify({ v: Number(val)||0, t: Date.now() })); }catch{}
-    }
-
-    async function fetchCount(ns, key) {
-      const url = counterPath(ns, key);
-      try {
-        const r = await fetch(url, { cache: 'no-store', headers: { 'accept': 'application/json' } });
-        if (!r.ok) return 0;
-        const data = await r.json();
-        return (typeof data.count === 'number') ? data.count :
-               (typeof data.value === 'number') ? data.value : 0;
-      } catch (e) {
-        console.warn('[counter] fetch failed:', e);
-        return 0;
-      }
-    }
-
-    async function hitCount(ns, key) {
-      const url = `${counterPath(ns, key)}up`;
-      try {
-        const r = await fetch(url, { cache: 'no-store', headers: { 'accept': 'application/json' } });
-        if (!r.ok) return null;
-        const data = await r.json();
-        return (typeof data.count === 'number') ? data.count :
-               (typeof data.value === 'number') ? data.value : null;
-      } catch (e) {
-        console.warn('[counter] hit failed:', e);
-        return null;
-      }
-    }
-
-    function shouldIncreaseThisSession(ns, key) {
-      if (!ONLY_ONCE_PER_SESSION) return true;
-      const flag = `counted_${ns}_${key}`;
-      if (sessionStorage.getItem(flag) === "1") return false;
-      sessionStorage.setItem(flag, "1");
-      return true;
-    }
-
-    function renderCount(el, n) {
-      if (!el) return;
-      el.textContent = `총 ${Number(n).toLocaleString()}명 참여`;
-      el.setAttribute("data-count", String(n));
-      const { ns, key } = getCounterConfig();
-      if (ns && key && typeof n === 'number') setCachedCount(ns, key, n);
-    }
-
-    (async function initCounter() {
-      const { el, ns, key } = getCounterConfig();
-      if (!el) return;
-
-      const cached = getCachedCount(ns, key);
-      if (cached !== null) renderCount(el, cached);
-
-      const fresh = await fetchCount(ns, key);
-      renderCount(el, fresh);
-
-      const startBtnEl = document.getElementById("start-btn");
-      if (startBtnEl) {
-        startBtnEl.addEventListener("click", async () => {
-          try {
-            if (shouldIncreaseThisSession(ns, key)) {
-              const after = await hitCount(ns, key);
-              if (after !== null) renderCount(el, after);
-            }
-          } catch (e) {
-            console.warn("[counter] increase on click failed:", e);
-          }
-        });
-      }
-    })();
-  </script>
 
   <!-- ✅ 카카오 SDK 동적 로드 + 공유하기 -->
   <script>
