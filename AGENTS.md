@@ -40,12 +40,12 @@ Place this code in the document `<head>`:
 
 ```html
 <!-- Google Analytics 코드 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-G4TPWGLYLY"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EMYLMRJZ6S"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-G4TPWGLYLY');
+    gtag('config', 'G-EMYLMRJZ6S');
 </script>
 ```
 
