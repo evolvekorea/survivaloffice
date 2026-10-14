@@ -191,7 +191,7 @@ function render() {
   ui.deskNote.textContent = caught ? '팀장님, 그게 아니라…' : game.slacking ? (game.phase === 'watching' ? '등 뒤가 따갑다…' : game.phase === 'warning' ? '빨리 보고서로 바꿔!' : '월급은 그대로, 행복은 두 배.') : game.phase === 'watching' ? '네, 보고서 작성 중입니다.' : '오늘도 일하는 척, 완벽하게.';
   if (displayedPhase !== game.phase) {
     displayedPhase = game.phase;
-    const phase = { away: ['safe','●','팀장님은 바쁜 중'], warning: ['warning','!','앗! 팀장님이 돌아본다'], watching: ['watching','◉','지금 보고 있어요!'] }[game.phase];
+    const phase = { away: ['safe','●','팀장님이 안 보고 있어요'], warning: ['warning','!','앗! 팀장님이 돌아본다'], watching: ['watching','◉','지금 보고 있어요!'] }[game.phase];
     ui.bossSignal.className = `boss-signal ${phase[0]}`;
     ui.signalIcon.textContent = phase[1];
     ui.signalText.textContent = phase[2];
