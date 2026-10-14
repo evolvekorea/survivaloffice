@@ -3,7 +3,7 @@
    <!-- 메인 페이지 -->
    <url>
        <loc>https://survivaloffice.com/</loc>
-       <lastmod>2026-08-14</lastmod>
+       <lastmod>2026-10-15</lastmod>
        <changefreq>daily</changefreq>
        <priority>1.0</priority>
    </url>
@@ -11,7 +11,7 @@
    <!-- rest + 하위 페이지 -->
    <url>
        <loc>https://survivaloffice.com/rest/</loc>
-       <lastmod>2024-11-05</lastmod>
+       <lastmod>2026-10-15</lastmod>
        <changefreq>monthly</changefreq>
        <priority>0.7</priority>
    </url>
@@ -260,5 +260,11 @@
        <lastmod>2026-09-29</lastmod>
        <changefreq>monthly</changefreq>
        <priority>0.8</priority>
+   </url>
+   <url>
+       <loc>https://survivaloffice.com/rest/office-slacking/</loc>
+       <lastmod>2026-10-15</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.7</priority>
    </url>
 </urlset>

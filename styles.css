@@ -1,455 +1,650 @@
-@font-face {
-    font-family: 'GangwonEduSaeeum_OTFMediumA';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-/* Global Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
-}
-
-nav {
-    background-color: #f4f4f4;
-    padding: 10px;
-}
-  
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: flex-end;
-    margin: 0;
-    padding: 0;
-    max-width: 1440px;
-    margin-inline: auto;
-}
-  
-nav ul li {
-    display: inline;
-}
-  
-nav ul li a {
-    color: rgb(62, 62, 62);
-    text-decoration: none;
-    padding: 8px 12px;
-    font-size: 14px;
-}
-
-nav ul li a:hover {
-    background-color: #555;
-}
-
-html, body {
-    height: 100%;
-}
-
-body {
-    line-height: 1.6;
-    background-color: #f4f4f4;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-}
-
-header {
-    background-color: #f4f4f4;
-    padding: 0;
-    text-align: center;
-    margin-bottom: 0;
-}
-
-header img {
-    width: 100%;
-    height: auto;
-    max-height: 500px;
-    object-fit: cover;
-}
-
-main {
-    flex-grow: 1;
-    width: 100%;
-}
-
-/* 신규 콘텐츠 슬라이더 */
-.new-content {
-    width: min(100%, 1440px);
-    margin: 20px auto 0;
-    padding: 22px clamp(16px, 4vw, 48px) 18px;
-    overflow: hidden;
-}
-
-.new-content-heading {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 14px;
-}
-
-.new-content-heading > div:first-child {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-}
-
-.new-content-heading h2 {
-    font-size: clamp(25px, 3vw, 36px);
-    line-height: 1;
-}
-
-.new-badge {
-    display: inline-flex;
-    align-items: center;
-    height: 24px;
-    padding: 0 9px;
-    border-radius: 999px;
-    background: #ff5e76;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: .12em;
-}
-
-.slider-controls {
-    display: flex;
-    gap: 7px;
-}
-
-.slider-controls button {
-    width: 39px;
-    height: 39px;
-    border: 1px solid #d6d6d6;
-    border-radius: 50%;
-    background: #fff;
-    color: #333;
-    font-family: Arial, sans-serif;
-    font-size: 27px;
-    line-height: 1;
-    cursor: pointer;
-    box-shadow: 0 5px 14px rgba(0, 0, 0, .08);
-}
-
-.slider-controls button:hover {
-    background: #333;
-    color: #fff;
-}
-
-.slider-controls button:disabled {
-    cursor: default;
-    opacity: .3;
-}
-
-.new-content-track {
-    display: flex;
-    gap: 14px;
-    overflow-x: auto;
-    padding: 3px 2px 15px;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    overscroll-behavior-x: contain;
-}
-
-.new-content-track::-webkit-scrollbar {
-    display: none;
-}
-
-.new-content-card {
-    position: relative;
-    flex: 0 0 calc((100% - 56px) / 5);
-    min-width: 0;
-    padding: 8px 8px 13px;
-    overflow: hidden;
-    border: 1px solid #dedede;
-    border-radius: 15px;
-    background: #fff;
-    color: #262626;
-    text-decoration: none;
-    scroll-snap-align: start;
-    box-shadow: 0 7px 20px rgba(0, 0, 0, .08);
-    transition: transform .2s ease, box-shadow .2s ease;
-}
-
-.new-content-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, .14);
-}
-
-.new-content-card img {
-    display: block;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    margin-bottom: 9px;
-    border-radius: 10px;
-    object-fit: cover;
-    background: #eee;
-}
-
-.new-content-card strong {
-    display: block;
-    padding: 3px 2px 0;
-    overflow: hidden;
-    font-size: clamp(16px, 1.6vw, 20px);
-    line-height: 1.25;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.content-type {
-    display: inline-flex;
-    margin-left: 2px;
-    padding: 2px 7px;
-    border-radius: 999px;
-    background: #e9f7ff;
-    color: #19779d;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.content-type.test { background: #fff0f5; color: #bd4167; }
-.content-type.tool { background: #eef8e8; color: #4d842c; }
-.content-type.story { background: #f2edff; color: #6f4db5; }
-
-.slider-progress {
-    height: 4px;
-    margin: 1px 2px 0;
-    overflow: hidden;
-    border-radius: 9px;
-    background: #ddd;
-}
-
-.slider-progress i {
-    display: block;
-    width: 20%;
-    height: 100%;
-    border-radius: inherit;
-    background: linear-gradient(90deg, #ff5e76, #ff9b55);
-    transform-origin: left center;
-    transition: transform .15s ease;
-}
-
-section {
-    margin-top: 20px;
-    padding: 20px;
-}
-
-footer {
-    background-color: #353535;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    width: 100%;
-}
-
-/* 네비게이션 컨테이너 스타일 */
-.nav-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    width: min(100%, 1440px);
-    margin: 0 auto;
-}
-
-/* 섹션별 카테고리 스타일 */
-.nav-category {
-    width: 100%;
-    max-width: 1000px;
-    padding: 15px;
-    background-color: #fafafa;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-sizing: border-box;
-}
-
-/* 섹션 제목 스타일 */
-.nav-category h3 {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-    text-align: left;
-}
-
-/* '일', '휴식', '그 외'와 같은 nav-category의 제목 링크 스타일 */
-.nav-category h3 a {
-    text-decoration: none; /* 밑줄 제거 */
-}
-
-/* 각 섹션 구분선 */
-.nav-category hr {
-    border: 0;
-    height: 1px;
-    background: #ddd;
-    margin: 15px 0;
-}
-
-/* 각 항목의 스타일 및 정렬 */
-.nav-item-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: flex-start;
-}
-
-.nav-item {
-    flex: 1 1 calc(33.33% - 10px); /* 한 줄에 3개씩 배치 */
-    max-width: calc(33.33% - 10px);
-    background-color: #e0e0e0;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    padding: 8px;
-    text-align: center;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-sizing: border-box;
-}
-
-.nav-item img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-}
-
-.nav-item img.square-thumb {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-}
-
-.nav-item a {
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.nav-item:hover {
-    background-color: #d3d3d3;
-    transform: scale(1.05);
-}
-
-/* 반응형 웹페이지 위한 미디어 쿼리 */
-/* 모바일 */
-@media (max-width: 600px) {
-    .new-content {
-        margin-top: 8px;
-        padding: 17px 12px 12px;
-    }
-
-    .new-content-heading {
-        margin-bottom: 10px;
-    }
-
-    .slider-controls button {
-        width: 34px;
-        height: 34px;
-        font-size: 23px;
-    }
-
-    .new-content-track {
-        gap: 10px;
-        padding-bottom: 12px;
-    }
-
-    .new-content-card {
-        flex-basis: calc((100% - 10px) / 2.15);
-        padding: 6px 6px 10px;
-        border-radius: 12px;
-    }
-
-    .new-content-card strong {
-        font-size: 16px;
-    }
-
-    .content-type {
-        font-size: 10px;
-    }
-
-    .nav-item {
-        flex: 1 1 calc(50% - 10px); /* 모바일에서 한 줄에 2개씩 */
-        max-width: calc(50% - 10px);
-    }
-}
-
-/* 작은 태블릿 */
-@media (min-width: 601px) and (max-width: 800px) {
-    .new-content-card {
-        flex-basis: calc((100% - 28px) / 3);
-    }
-
-    .nav-item {
-        flex: 1 1 calc(33.33% - 10px); /* 작은 태블릿에서 한 줄에 3개 */
-        max-width: calc(33.33% - 10px);
-    }
-}
-
-/* 큰 태블릿 및 데스크탑 */
-@media (min-width: 801px) {
-    nav {
-        padding: 14px 32px;
-    }
-
-    nav ul li a {
-        display: block;
-        padding: 10px 18px;
-        font-size: 17px;
-    }
-
-    header img {
-        height: clamp(320px, 32vw, 500px);
-    }
-
-    section {
-        padding: 32px clamp(32px, 5vw, 72px);
-    }
-
-    .nav-category {
-        max-width: none;
-        padding: 24px;
-    }
-
-    .nav-category h3 {
-        font-size: 26px;
-    }
-
-    .nav-item {
-        flex: 1 1 calc(25% - 12px); /* PC에서는 한 줄에 4개 */
-        max-width: calc(25% - 12px);
-        padding: 12px;
-    }
-
-    .nav-item a {
-        font-size: 18px;
-    }
-
-    .nav-item img {
-        width: 100%;
-        aspect-ratio: 1 / 1;
-        object-fit: cover;
-    }
-}
-
-/* 넓은 데스크탑에서는 가로 공간을 더 적극적으로 활용 */
-@media (min-width: 1280px) {
-    .nav-item {
-        flex-basis: calc(20% - 12px);
-        max-width: calc(20% - 12px);
-    }
-}
-
-.email-link {
-    color: #ffffff; /* 원하는 색상 (예: 주황색) */
-    text-decoration: none; /* 밑줄 제거 */
-    font-weight: bold; /* 굵게 표시 */
-}
-
-.email-link:hover {
-    color: #29f5e4; /* 마우스 오버 시 색상 변경 */
-    text-decoration: underline; /* 마우스 오버 시 밑줄 추가 */
-}
+:root {
+    --paper:#f8f7f2;
+    --ink:#243e35;
+    --muted:#737b72;
+    --line:#e2e5da;
+    --green:#315c49;
+    --accent:#f3c76a}
+    * {
+        box-sizing:border-box}
+        html {
+            scroll-behavior:smooth;
+            scroll-padding-top:24px}
+            body {
+                margin:0;
+                color:var(--ink);
+                background:var(--paper);
+                font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic",sans-serif;
+                font-size:14px;
+                line-height:1.6;
+                word-break:keep-all}
+                h1,h2,h3,h4,p {
+                    margin:0}
+                    a {
+                        color:inherit;
+                        text-decoration:none}
+                        button {
+                            font:inherit}
+                            a,button {
+                                -webkit-tap-highlight-color:transparent}
+                                a:focus-visible,button:focus-visible,[tabindex]:focus-visible {
+                                    outline:3px solid #a35d20;
+                                    outline-offset:5px}
+                                    img {
+                                        max-width:100%;
+                                        display:block}
+                                        .page-width,.new-content,.navigation-section,.nav-inner,.footer-inner {
+                                            width:min(1180px,calc(100% - 80px));
+                                            margin-inline:auto}
+                                            .skip-link {
+                                                position:absolute;
+                                                left:24px;
+                                                top:-100px;
+                                                z-index:20;
+                                                padding:12px 20px;
+                                                background:white}
+                                                .skip-link:focus {
+                                                    top:12px}
+                                                    .site-nav {
+                                                        border-bottom:1px solid var(--line);
+                                                        background:#fffef9}
+                                                        .nav-inner {
+                                                            min-height:88px;
+                                                            display:flex;
+                                                            justify-content:space-between;
+                                                            align-items:center;
+                                                            gap:28px}
+                                                            .brand {
+                                                                display:flex;
+                                                                gap:12px;
+                                                                align-items:center;
+                                                                flex-shrink:0;
+                                                                font-size:18px;
+                                                                font-weight:800;
+                                                                letter-spacing:-.6px;
+                                                                line-height:1.3}
+                                                                .brand small {
+                                                                    display:block;
+                                                                    margin-top:5px;
+                                                                    font:9px/1.3 Arial,sans-serif;
+                                                                    letter-spacing:2.6px;
+                                                                    color:var(--muted)}
+                                                                    .brand-mark {
+                                                                        position:relative;
+                                                                        display:grid;
+                                                                        place-items:center;
+                                                                        width:42px;
+                                                                        height:44px;
+                                                                        border-radius:11px 11px 11px 2px;
+                                                                        background:var(--green);
+                                                                        color:white;
+                                                                        font:800 17px/1 Arial,sans-serif;
+                                                                        letter-spacing:-1px}
+                                                                        .brand-mark span {
+                                                                            position:absolute;
+                                                                            width:8px;
+                                                                            height:8px;
+                                                                            background:var(--accent);
+                                                                            border-radius:50%;
+                                                                            top:-3px;
+                                                                            right:-3px;
+                                                                            border:2px solid var(--paper)}
+                                                                            .site-nav ul {
+                                                                                display:flex;
+                                                                                gap:10px;
+                                                                                padding:0;
+                                                                                margin:0;
+                                                                                list-style:none}
+                                                                                .site-nav li a {
+                                                                                    display:block;
+                                                                                    padding:9px 13px;
+                                                                                    font-size:13px;
+                                                                                    font-weight:650;
+                                                                                    border-radius:8px;
+                                                                                    color:#68756b;
+                                                                                    white-space:nowrap;
+                                                                                    transition:background .2s,color .2s}
+                                                                                    .site-nav a[aria-current="page"],.site-nav li a:hover {
+                                                                                        color:var(--ink);
+                                                                                        background:#eaf0e6}
+                                                                                        .home-hero {
+                                                                                            display:grid;
+                                                                                            grid-template-columns:1fr 1.12fr;
+                                                                                            gap:48px;
+                                                                                            align-items:center;
+                                                                                            padding-block:48px 34px}
+                                                                                            .eyebrow {
+                                                                                                font-size:10px;
+                                                                                                line-height:1.5;
+                                                                                                font-weight:800;
+                                                                                                letter-spacing:1.8px;
+                                                                                                color:var(--green)}
+                                                                                                .status-dot {
+                                                                                                    display:inline-block;
+                                                                                                    width:7px;
+                                                                                                    height:7px;
+                                                                                                    border-radius:50%;
+                                                                                                    background:#7b9b68;
+                                                                                                    margin-right:7px;
+                                                                                                    box-shadow:0 0 0 4px #eaf0e3;
+                                                                                                    vertical-align:1px}
+                                                                                                    .hero-copy h1 {
+                                                                                                        font-size:clamp(32px,3.55vw,48px);
+                                                                                                        line-height:1.4;
+                                                                                                        letter-spacing:-2.7px;
+                                                                                                        margin:18px 0;
+                                                                                                        font-weight:800}
+                                                                                                        em {
+                                                                                                            font-style:normal;
+                                                                                                            color:#668363}
+                                                                                                            .hero-description {
+                                                                                                                font-size:13px;
+                                                                                                                color:#697569;
+                                                                                                                line-height:1.9}
+                                                                                                                .hero-actions {
+                                                                                                                    display:flex;
+                                                                                                                    align-items:center;
+                                                                                                                    gap:23px;
+                                                                                                                    margin-top:28px;
+                                                                                                                    flex-wrap:wrap}
+                                                                                                                    .button {
+                                                                                                                        display:inline-flex;
+                                                                                                                        justify-content:center;
+                                                                                                                        align-items:center;
+                                                                                                                        gap:26px;
+                                                                                                                        padding:13px 21px;
+                                                                                                                        border-radius:9px;
+                                                                                                                        font-size:13px;
+                                                                                                                        font-weight:750;
+                                                                                                                        transition:transform .2s,background .2s}
+                                                                                                                        .button-primary {
+                                                                                                                            background:var(--green);
+                                                                                                                            color:white;
+                                                                                                                            box-shadow:0 4px 0 #203f33}
+                                                                                                                            .button-primary:hover {
+                                                                                                                                background:#244936;
+                                                                                                                                transform:translateY(-2px)}
+                                                                                                                                .text-link {
+                                                                                                                                    display:inline-flex;
+                                                                                                                                    align-items:center;
+                                                                                                                                    gap:12px;
+                                                                                                                                    font-size:12px;
+                                                                                                                                    font-weight:650;
+                                                                                                                                    white-space:nowrap}
+                                                                                                                                    .text-link:hover {
+                                                                                                                                        color:#8b632d}
+                                                                                                                                        .hero-note {
+                                                                                                                                            color:#8b9086;
+                                                                                                                                            font-size:11px;
+                                                                                                                                            margin-top:23px}
+                                                                                                                                            .hero-feature {
+                                                                                                                                                position:relative;
+                                                                                                                                                border-radius:20px;
+                                                                                                                                                overflow:hidden;
+                                                                                                                                                background:#e0d3b9;
+                                                                                                                                                box-shadow:0 10px 28px #233f3510;
+                                                                                                                                                isolation:isolate}
+                                                                                                                                                .hero-feature>img {
+                                                                                                                                                    width:100%;
+                                                                                                                                                    height:346px;
+                                                                                                                                                    object-fit:cover;
+                                                                                                                                                    transition:transform .5s}
+                                                                                                                                                    .hero-feature:hover>img {
+                                                                                                                                                        transform:scale(1.035)}
+                                                                                                                                                        .feature-sticker {
+                                                                                                                                                            position:absolute;
+                                                                                                                                                            top:18px;
+                                                                                                                                                            left:18px;
+                                                                                                                                                            background:var(--accent);
+                                                                                                                                                            border-radius:5px;
+                                                                                                                                                            padding:6px 10px;
+                                                                                                                                                            color:#4e462b;
+                                                                                                                                                            font-size:10px;
+                                                                                                                                                            letter-spacing:1px;
+                                                                                                                                                            font-weight:850;
+                                                                                                                                                            transform:rotate(-3deg)}
+                                                                                                                                                            .feature-sticker span {
+                                                                                                                                                                padding-left:9px}
+                                                                                                                                                                .feature-caption {
+                                                                                                                                                                    position:absolute;
+                                                                                                                                                                    bottom:0;
+                                                                                                                                                                    left:0;
+                                                                                                                                                                    right:0;
+                                                                                                                                                                    color:#fff;
+                                                                                                                                                                    padding:40px 24px 23px;
+                                                                                                                                                                    background:linear-gradient(transparent,#132c25ed);
+                                                                                                                                                                    display:flex;
+                                                                                                                                                                    align-items:center;
+                                                                                                                                                                    justify-content:space-between;
+                                                                                                                                                                    gap:10px}
+                                                                                                                                                                    .feature-caption h2 {
+                                                                                                                                                                        font-size:23px;
+                                                                                                                                                                        margin-top:4px;
+                                                                                                                                                                        letter-spacing:-.8px}
+                                                                                                                                                                        .feature-caption div>span {
+                                                                                                                                                                            font-size:10px;
+                                                                                                                                                                            color:#e2e9d8;
+                                                                                                                                                                            letter-spacing:1px}
+                                                                                                                                                                            .round-arrow {
+                                                                                                                                                                                display:grid;
+                                                                                                                                                                                place-items:center;
+                                                                                                                                                                                width:40px;
+                                                                                                                                                                                height:40px;
+                                                                                                                                                                                border:1px solid #ffffff80;
+                                                                                                                                                                                border-radius:50%;
+                                                                                                                                                                                font-size:23px}
+                                                                                                                                                                                .quick-links {
+                                                                                                                                                                                    display:grid;
+                                                                                                                                                                                    grid-template-columns:repeat(4,minmax(0,1fr));
+                                                                                                                                                                                    border:1px solid var(--line);
+                                                                                                                                                                                    background:#fffefb;
+                                                                                                                                                                                    border-radius:14px;
+                                                                                                                                                                                    padding:19px 6px}
+                                                                                                                                                                                    .quick-links>a {
+                                                                                                                                                                                        display:flex;
+                                                                                                                                                                                        align-items:center;
+                                                                                                                                                                                        gap:12px;
+                                                                                                                                                                                        padding:3px 18px;
+                                                                                                                                                                                        border-right:1px solid var(--line)}
+                                                                                                                                                                                        .quick-links>a:last-child {
+                                                                                                                                                                                            border:0}
+                                                                                                                                                                                            .quick-links>a:hover strong {
+                                                                                                                                                                                                text-decoration:underline;
+                                                                                                                                                                                                text-underline-offset:4px}
+                                                                                                                                                                                                .quick-icon {
+                                                                                                                                                                                                    display:grid;
+                                                                                                                                                                                                    place-items:center;
+                                                                                                                                                                                                    width:38px;
+                                                                                                                                                                                                    height:40px;
+                                                                                                                                                                                                    border-radius:12px;
+                                                                                                                                                                                                    font-size:20px;
+                                                                                                                                                                                                    flex-shrink:0}
+                                                                                                                                                                                                    .mint {
+                                                                                                                                                                                                        background:#e6eee3;
+                                                                                                                                                                                                        color:#547357}
+                                                                                                                                                                                                        .peach {
+                                                                                                                                                                                                            background:#fbe8df;
+                                                                                                                                                                                                            color:#bd7959}
+                                                                                                                                                                                                            .yellow {
+                                                                                                                                                                                                                background:#fbf0cc;
+                                                                                                                                                                                                                color:#a38b3e}
+                                                                                                                                                                                                                .lavender {
+                                                                                                                                                                                                                    background:#eeebf6;
+                                                                                                                                                                                                                    color:#87729b}
+                                                                                                                                                                                                                    .quick-links strong {
+                                                                                                                                                                                                                        font-size:13px;
+                                                                                                                                                                                                                        display:block}
+                                                                                                                                                                                                                        .quick-links small {
+                                                                                                                                                                                                                            display:block;
+                                                                                                                                                                                                                            color:var(--muted);
+                                                                                                                                                                                                                            font-size:9px;
+                                                                                                                                                                                                                            margin-top:3px}
+                                                                                                                                                                                                                            .quick-links b {
+                                                                                                                                                                                                                                margin-left:auto;
+                                                                                                                                                                                                                                color:#9aa494;
+                                                                                                                                                                                                                                font-size:15px;
+                                                                                                                                                                                                                                font-weight:400}
+                                                                                                                                                                                                                                .new-content {
+                                                                                                                                                                                                                                    margin-top:44px}
+                                                                                                                                                                                                                                    .new-content-heading {
+                                                                                                                                                                                                                                        display:flex;
+                                                                                                                                                                                                                                        align-items:center;
+                                                                                                                                                                                                                                        justify-content:space-between;
+                                                                                                                                                                                                                                        margin-bottom:19px;
+                                                                                                                                                                                                                                        gap:16px}
+                                                                                                                                                                                                                                        .new-content-heading>div:first-child {
+                                                                                                                                                                                                                                            display:flex;
+                                                                                                                                                                                                                                            align-items:center;
+                                                                                                                                                                                                                                            gap:10px}
+                                                                                                                                                                                                                                            .new-content-heading h2,.category-heading h2,.category-heading h3 {
+                                                                                                                                                                                                                                                font-size:23px;
+                                                                                                                                                                                                                                                line-height:1.4;
+                                                                                                                                                                                                                                                letter-spacing:-1px}
+                                                                                                                                                                                                                                                .new-badge {
+                                                                                                                                                                                                                                                    display:inline-block;
+                                                                                                                                                                                                                                                    background:#f1c770;
+                                                                                                                                                                                                                                                    color:#574b2f;
+                                                                                                                                                                                                                                                    border-radius:5px;
+                                                                                                                                                                                                                                                    font:800 9px/1.5 Arial,sans-serif;
+                                                                                                                                                                                                                                                    letter-spacing:1px;
+                                                                                                                                                                                                                                                    padding:5px 8px}
+                                                                                                                                                                                                                                                    .slider-controls {
+                                                                                                                                                                                                                                                        display:flex;
+                                                                                                                                                                                                                                                        gap:7px}
+                                                                                                                                                                                                                                                        .slider-controls button {
+                                                                                                                                                                                                                                                            display:grid;
+                                                                                                                                                                                                                                                            place-items:center;
+                                                                                                                                                                                                                                                            width:32px;
+                                                                                                                                                                                                                                                            height:32px;
+                                                                                                                                                                                                                                                            border:1px solid #d9dfd2;
+                                                                                                                                                                                                                                                            border-radius:50%;
+                                                                                                                                                                                                                                                            background:#fffefa;
+                                                                                                                                                                                                                                                            color:var(--ink);
+                                                                                                                                                                                                                                                            font:23px/1 Arial,sans-serif;
+                                                                                                                                                                                                                                                            cursor:pointer}
+                                                                                                                                                                                                                                                            .slider-controls button:hover {
+                                                                                                                                                                                                                                                                background:#e8eede}
+                                                                                                                                                                                                                                                                .slider-controls button:disabled {
+                                                                                                                                                                                                                                                                    opacity:.3;
+                                                                                                                                                                                                                                                                    cursor:default}
+                                                                                                                                                                                                                                                                    .new-content-track {
+                                                                                                                                                                                                                                                                        display:flex;
+                                                                                                                                                                                                                                                                        gap:18px;
+                                                                                                                                                                                                                                                                        overflow-x:auto;
+                                                                                                                                                                                                                                                                        scroll-snap-type:x mandatory;
+                                                                                                                                                                                                                                                                        scrollbar-width:none;
+                                                                                                                                                                                                                                                                        overscroll-behavior-x:contain;
+                                                                                                                                                                                                                                                                        padding:3px 1px 16px}
+                                                                                                                                                                                                                                                                        .new-content-track::-webkit-scrollbar {
+                                                                                                                                                                                                                                                                            display:none}
+                                                                                                                                                                                                                                                                            .new-content-card {
+                                                                                                                                                                                                                                                                                flex:0 0 calc((100% - 72px)/5);
+                                                                                                                                                                                                                                                                                min-width:0;
+                                                                                                                                                                                                                                                                                scroll-snap-align:start;
+                                                                                                                                                                                                                                                                                background:#fffefb;
+                                                                                                                                                                                                                                                                                border:1px solid var(--line);
+                                                                                                                                                                                                                                                                                border-radius:13px;
+                                                                                                                                                                                                                                                                                overflow:hidden;
+                                                                                                                                                                                                                                                                                padding-bottom:14px;
+                                                                                                                                                                                                                                                                                transition:transform .2s,box-shadow .2s}
+                                                                                                                                                                                                                                                                                .new-content-card:hover,.nav-item:hover {
+                                                                                                                                                                                                                                                                                    transform:translateY(-4px);
+                                                                                                                                                                                                                                                                                    box-shadow:0 9px 22px #2d463415;
+                                                                                                                                                                                                                                                                                    border-color:#b6c3ab}
+                                                                                                                                                                                                                                                                                    .new-content-card img {
+                                                                                                                                                                                                                                                                                        width:100%;
+                                                                                                                                                                                                                                                                                        aspect-ratio:1;
+                                                                                                                                                                                                                                                                                        object-fit:cover;
+                                                                                                                                                                                                                                                                                        background:#ecece3;
+                                                                                                                                                                                                                                                                                        margin-bottom:11px}
+                                                                                                                                                                                                                                                                                        .content-type {
+                                                                                                                                                                                                                                                                                            display:inline-block;
+                                                                                                                                                                                                                                                                                            color:#69805c;
+                                                                                                                                                                                                                                                                                            font-size:9px;
+                                                                                                                                                                                                                                                                                            letter-spacing:.3px;
+                                                                                                                                                                                                                                                                                            font-weight:700;
+                                                                                                                                                                                                                                                                                            margin:0 12px}
+                                                                                                                                                                                                                                                                                            .content-type.test {
+                                                                                                                                                                                                                                                                                                color:#ae785e}
+                                                                                                                                                                                                                                                                                                .content-type.story {
+                                                                                                                                                                                                                                                                                                    color:#8d759c}
+                                                                                                                                                                                                                                                                                                    .content-type.tool {
+                                                                                                                                                                                                                                                                                                        color:#89823e}
+                                                                                                                                                                                                                                                                                                        .new-content-card strong {
+                                                                                                                                                                                                                                                                                                            display:block;
+                                                                                                                                                                                                                                                                                                            font-size:13px;
+                                                                                                                                                                                                                                                                                                            letter-spacing:-.35px;
+                                                                                                                                                                                                                                                                                                            margin:3px 12px 0;
+                                                                                                                                                                                                                                                                                                            line-height:1.5}
+                                                                                                                                                                                                                                                                                                            .slider-progress {
+                                                                                                                                                                                                                                                                                                                height:2px;
+                                                                                                                                                                                                                                                                                                                border-radius:4px;
+                                                                                                                                                                                                                                                                                                                background:#e2e6da;
+                                                                                                                                                                                                                                                                                                                overflow:hidden}
+                                                                                                                                                                                                                                                                                                                .slider-progress i {
+                                                                                                                                                                                                                                                                                                                    display:block;
+                                                                                                                                                                                                                                                                                                                    height:100%;
+                                                                                                                                                                                                                                                                                                                    width:20%;
+                                                                                                                                                                                                                                                                                                                    border-radius:inherit;
+                                                                                                                                                                                                                                                                                                                    background:#819877;
+                                                                                                                                                                                                                                                                                                                    transform-origin:left center}
+                                                                                                                                                                                                                                                                                                                    .navigation-section {
+                                                                                                                                                                                                                                                                                                                        margin-top:48px;
+                                                                                                                                                                                                                                                                                                                        margin-bottom:72px}
+                                                                                                                                                                                                                                                                                                                        .nav-container {
+                                                                                                                                                                                                                                                                                                                            display:flex;
+                                                                                                                                                                                                                                                                                                                            flex-direction:column;
+                                                                                                                                                                                                                                                                                                                            gap:44px}
+                                                                                                                                                                                                                                                                                                                            .nav-category {
+                                                                                                                                                                                                                                                                                                                                width:100%}
+                                                                                                                                                                                                                                                                                                                                .category-heading {
+                                                                                                                                                                                                                                                                                                                                    display:flex;
+                                                                                                                                                                                                                                                                                                                                    justify-content:space-between;
+                                                                                                                                                                                                                                                                                                                                    align-items:end;
+                                                                                                                                                                                                                                                                                                                                    margin-bottom:23px;
+                                                                                                                                                                                                                                                                                                                                    gap:18px;
+                                                                                                                                                                                                                                                                                                                                    border-top:1px solid var(--line);
+                                                                                                                                                                                                                                                                                                                                    padding-top:28px}
+                                                                                                                                                                                                                                                                                                                                    .category-heading .eyebrow {
+                                                                                                                                                                                                                                                                                                                                        font-size:9px;
+                                                                                                                                                                                                                                                                                                                                        margin-bottom:6px;
+                                                                                                                                                                                                                                                                                                                                        color:#89917d}
+                                                                                                                                                                                                                                                                                                                                        .category-heading p:not(.eyebrow) {
+                                                                                                                                                                                                                                                                                                                                            color:var(--muted);
+                                                                                                                                                                                                                                                                                                                                            font-size:12px;
+                                                                                                                                                                                                                                                                                                                                            margin-top:7px}
+                                                                                                                                                                                                                                                                                                                                            .nav-item-container {
+                                                                                                                                                                                                                                                                                                                                                display:grid;
+                                                                                                                                                                                                                                                                                                                                                grid-template-columns:repeat(5,minmax(0,1fr));
+                                                                                                                                                                                                                                                                                                                                                gap:20px 18px}
+                                                                                                                                                                                                                                                                                                                                                .nav-item {
+                                                                                                                                                                                                                                                                                                                                                    display:flex;
+                                                                                                                                                                                                                                                                                                                                                    flex-direction:column;
+                                                                                                                                                                                                                                                                                                                                                    min-width:0;
+                                                                                                                                                                                                                                                                                                                                                    background:#fffefb;
+                                                                                                                                                                                                                                                                                                                                                    border:1px solid var(--line);
+                                                                                                                                                                                                                                                                                                                                                    border-radius:13px;
+                                                                                                                                                                                                                                                                                                                                                    overflow:hidden;
+                                                                                                                                                                                                                                                                                                                                                    transition:transform .2s,box-shadow .2s,border-color .2s}
+                                                                                                                                                                                                                                                                                                                                                    .tile-image {
+                                                                                                                                                                                                                                                                                                                                                        position:relative;
+                                                                                                                                                                                                                                                                                                                                                        overflow:hidden;
+                                                                                                                                                                                                                                                                                                                                                        background:#e8eadf}
+                                                                                                                                                                                                                                                                                                                                                        .tile-image img {
+                                                                                                                                                                                                                                                                                                                                                            width:100%;
+                                                                                                                                                                                                                                                                                                                                                            aspect-ratio:1;
+                                                                                                                                                                                                                                                                                                                                                            object-fit:cover}
+                                                                                                                                                                                                                                                                                                                                                            .tile-badge {
+                                                                                                                                                                                                                                                                                                                                                                position:absolute;
+                                                                                                                                                                                                                                                                                                                                                                top:10px;
+                                                                                                                                                                                                                                                                                                                                                                left:10px;
+                                                                                                                                                                                                                                                                                                                                                                background:var(--accent);
+                                                                                                                                                                                                                                                                                                                                                                color:#4e462b;
+                                                                                                                                                                                                                                                                                                                                                                padding:3px 7px;
+                                                                                                                                                                                                                                                                                                                                                                font:800 9px/1.5 Arial,sans-serif;
+                                                                                                                                                                                                                                                                                                                                                                border-radius:4px}
+                                                                                                                                                                                                                                                                                                                                                                .tile-copy {
+                                                                                                                                                                                                                                                                                                                                                                    padding:14px 30px 17px 14px;
+                                                                                                                                                                                                                                                                                                                                                                    position:relative;
+                                                                                                                                                                                                                                                                                                                                                                    flex-grow:1}
+                                                                                                                                                                                                                                                                                                                                                                    .tile-copy h4 {
+                                                                                                                                                                                                                                                                                                                                                                        font-size:13px;
+                                                                                                                                                                                                                                                                                                                                                                        line-height:1.55;
+                                                                                                                                                                                                                                                                                                                                                                        letter-spacing:-.35px}
+                                                                                                                                                                                                                                                                                                                                                                        .tile-copy p {
+                                                                                                                                                                                                                                                                                                                                                                            font-size:10px;
+                                                                                                                                                                                                                                                                                                                                                                            line-height:1.6;
+                                                                                                                                                                                                                                                                                                                                                                            color:var(--muted);
+                                                                                                                                                                                                                                                                                                                                                                            margin-top:6px}
+                                                                                                                                                                                                                                                                                                                                                                            .tile-arrow {
+                                                                                                                                                                                                                                                                                                                                                                                position:absolute;
+                                                                                                                                                                                                                                                                                                                                                                                top:14px;
+                                                                                                                                                                                                                                                                                                                                                                                right:12px;
+                                                                                                                                                                                                                                                                                                                                                                                color:#8e9b83;
+                                                                                                                                                                                                                                                                                                                                                                                font-size:15px}
+                                                                                                                                                                                                                                                                                                                                                                                .site-footer {
+                                                                                                                                                                                                                                                                                                                                                                                    border-top:1px solid var(--line);
+                                                                                                                                                                                                                                                                                                                                                                                    background:#efefe6;
+                                                                                                                                                                                                                                                                                                                                                                                    padding:31px 0}
+                                                                                                                                                                                                                                                                                                                                                                                    .footer-inner {
+                                                                                                                                                                                                                                                                                                                                                                                        display:flex;
+                                                                                                                                                                                                                                                                                                                                                                                        align-items:center;
+                                                                                                                                                                                                                                                                                                                                                                                        justify-content:space-between;
+                                                                                                                                                                                                                                                                                                                                                                                        gap:24px}
+                                                                                                                                                                                                                                                                                                                                                                                        .footer-inner strong {
+                                                                                                                                                                                                                                                                                                                                                                                            display:block;
+                                                                                                                                                                                                                                                                                                                                                                                            font-size:14px;
+                                                                                                                                                                                                                                                                                                                                                                                            margin-bottom:6px}
+                                                                                                                                                                                                                                                                                                                                                                                            .footer-inner span {
+                                                                                                                                                                                                                                                                                                                                                                                                font-size:11px;
+                                                                                                                                                                                                                                                                                                                                                                                                color:var(--muted)}
+                                                                                                                                                                                                                                                                                                                                                                                                .footer-inner p {
+                                                                                                                                                                                                                                                                                                                                                                                                    text-align:right;
+                                                                                                                                                                                                                                                                                                                                                                                                    color:#838b7c;
+                                                                                                                                                                                                                                                                                                                                                                                                    font-size:10px;
+                                                                                                                                                                                                                                                                                                                                                                                                    line-height:1.9}
+                                                                                                                                                                                                                                                                                                                                                                                                    .email-link:hover {
+                                                                                                                                                                                                                                                                                                                                                                                                        text-decoration:underline}
+                                                                                                                                                                                                                                                                                                                                                                                                        @media(max-width:1050px) {
+                                                                                                                                                                                                                                                                                                                                                                                                            .page-width,.new-content,.navigation-section,.nav-inner,.footer-inner {
+                                                                                                                                                                                                                                                                                                                                                                                                                width:calc(100% - 48px)}
+                                                                                                                                                                                                                                                                                                                                                                                                                .home-hero {
+                                                                                                                                                                                                                                                                                                                                                                                                                    gap:28px}
+                                                                                                                                                                                                                                                                                                                                                                                                                    .hero-feature>img {
+                                                                                                                                                                                                                                                                                                                                                                                                                        height:320px}
+                                                                                                                                                                                                                                                                                                                                                                                                                        .quick-links>a {
+                                                                                                                                                                                                                                                                                                                                                                                                                            padding-inline:12px;
+                                                                                                                                                                                                                                                                                                                                                                                                                            gap:9px}
+                                                                                                                                                                                                                                                                                                                                                                                                                            .quick-links small {
+                                                                                                                                                                                                                                                                                                                                                                                                                                font-size:8px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                .quick-links b {
+                                                                                                                                                                                                                                                                                                                                                                                                                                    display:none}
+                                                                                                                                                                                                                                                                                                                                                                                                                                    .nav-item-container {
+                                                                                                                                                                                                                                                                                                                                                                                                                                        grid-template-columns:repeat(4,minmax(0,1fr))}
+                                                                                                                                                                                                                                                                                                                                                                                                                                        .site-nav ul {
+                                                                                                                                                                                                                                                                                                                                                                                                                                            gap:2px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                            .site-nav li a {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                padding-inline:10px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                .new-content-card {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    flex-basis:calc((100% - 54px)/4)}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                @media(max-width:760px) {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    .page-width,.new-content,.navigation-section,.nav-inner,.footer-inner {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        width:calc(100% - 36px)}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        .nav-inner {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            flex-direction:column;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            align-items:start;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            gap:14px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-top:19px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            min-height:0}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            .brand {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                font-size:16px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                .brand-mark {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    width:36px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    height:38px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    font-size:15px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .brand small {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        font-size:8px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        letter-spacing:2px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .site-nav ul {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            width:100%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            justify-content:space-between;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            gap:2px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-bottom:11px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .site-nav li a {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                font-size:11px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                padding:7px 9px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .home-hero {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    grid-template-columns:1fr;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-block:30px 24px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    gap:24px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .hero-copy h1 {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        font-size:37px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        letter-spacing:-2px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin:14px 0}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .hero-description {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            font-size:12px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .hero-actions {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin-top:20px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                gap:22px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .hero-note {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    display:none}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .hero-feature>img {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height:auto;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        aspect-ratio:1.65}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .feature-caption {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding:40px 18px 16px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .feature-caption h2 {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                font-size:20px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .feature-sticker {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    top:13px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    left:13px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    font-size:9px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .round-arrow {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        width:33px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height:33px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        font-size:20px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .quick-links {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            grid-template-columns:repeat(2,minmax(0,1fr));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding:8px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            gap:0}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .quick-links>a {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                padding:13px 7px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border:0}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .quick-links>a:nth-child(-n+2) {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    border-bottom:1px solid var(--line)}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .quick-icon {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        width:32px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height:36px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        border-radius:9px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        font-size:17px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .quick-links strong {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            font-size:12px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .quick-links small {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                font-size:8px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .new-content {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-top:30px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .new-content-heading {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        gap:8px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-bottom:14px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .new-content-heading h2,.category-heading h2,.category-heading h3 {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            font-size:20px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .new-content-heading>div:first-child {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                gap:7px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .new-badge {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    font-size:8px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding:4px 6px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .new-content-track {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        gap:12px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .new-content-card {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            flex-basis:calc((100% - 12px)/2.2)}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .new-content-card strong {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                font-size:12px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin-inline:10px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .content-type {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-inline:10px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    font-size:8px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .slider-controls {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        gap:4px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .slider-controls button {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            width:28px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            height:28px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            font-size:20px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .navigation-section {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin-top:30px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin-bottom:44px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .nav-container {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    gap:30px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .category-heading {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-bottom:17px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-top:22px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .category-heading p:not(.eyebrow) {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            font-size:10px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .text-link {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                font-size:11px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                gap:7px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .nav-item-container {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    grid-template-columns:repeat(2,minmax(0,1fr));
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    gap:14px 12px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .tile-copy {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding:12px 25px 14px 11px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .tile-copy h4 {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            font-size:12px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .tile-copy p {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                font-size:9px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .tile-arrow {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    right:9px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    top:10px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .footer-inner {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        flex-direction:column;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        align-items:start;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        gap:18px}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .footer-inner p {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            text-align:left}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @media(prefers-reduced-motion:reduce) {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            html {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                scroll-behavior:auto}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *,*::before,*::after {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    transition:none!important}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }

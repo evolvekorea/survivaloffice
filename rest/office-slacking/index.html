@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>상사 몰래 딴짓하기 | 서바이벌 오피스</title>
+  <meta name="description" content="팀장님의 눈을 피해 몰래 딴짓하세요! 업무 화면으로 재빨리 전환하며 60초를 버티는 무료 눈치·타이밍 웹 게임입니다. PC와 모바일에서 바로 플레이하세요.">
+  <link rel="canonical" href="https://survivaloffice.com/rest/office-slacking/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="상사 몰래 딴짓하기 · 들키지 말고 퇴근하자!">
+  <meta property="og:description" content="딴짓은 대담하게, 눈치는 빠르게. 팀장님의 시선을 피해 60초 최고 기록에 도전하세요.">
+  <meta property="og:url" content="https://survivaloffice.com/rest/office-slacking/">
+  <meta property="og:image" content="https://survivaloffice.com/rest/office-slacking/assets/cover.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#183e35">
+  <link rel="icon" href="data:,">
+  <link rel="preload" as="image" href="assets/office-work-away.webp">
+  <link rel="stylesheet" href="style.css?v=20261015b">
+  <!-- Google Adsense 코드 -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6532882266109488" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-6532882266109488">
+  <!-- Google Analytics 코드 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-83W9F71F10"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-83W9F71F10');</script>
+</head>
+<body>
+  <nav class="site-nav" aria-label="사이트 메뉴"><a class="brand" href="/">SURVIVAL <b>OFFICE</b></a><div><a class="active" href="/rest/">미니게임</a><a href="/test/">테스트</a><a href="/work/">생존키트</a><a href="/story/">스토리 게임</a></div></nav>
+  <main>
+    <header class="hero"><div><span class="eyebrow">직장인 생존 미니게임 · 60초 챌린지</span><h1>상사 몰래 <span>딴짓하기</span><i aria-hidden="true">!</i></h1><p>딴짓은 대담하게, 눈치는 빠르게.</p></div><div class="personal-best"><span>나의 최고 기록</span><strong id="bestScore">0<small>점</small></strong></div></header>
+
+    <section class="game-shell" aria-label="상사 몰래 딴짓하기 게임">
+      <div class="hud">
+        <div class="stat timer"><span>퇴근까지</span><strong id="timer">01:00</strong></div>
+        <div class="stat score"><span>딴짓 점수</span><strong id="score">0</strong></div>
+        <div class="suspicion"><div><span>의심도</span><b id="suspicionValue">0%</b></div><div id="suspicionMeter" class="meter" role="progressbar" aria-label="상사의 의심도" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="suspicionFill"></i></div></div>
+        <button id="pauseButton" class="icon-button" type="button" aria-label="일시정지" disabled>Ⅱ</button>
+        <button id="soundButton" class="icon-button sound-button" type="button" aria-label="효과음 켜기" aria-pressed="false">♪<span class="sound-slash" aria-hidden="true">╱</span></button>
+        <button id="focusButton" class="icon-button focus-button" type="button" aria-label="집중 화면 켜기" aria-pressed="false">⛶</button>
+      </div>
+
+      <div id="stage" class="stage" data-phase="away" data-mode="work">
+        <img id="workAwayArt" class="scene-art work-away-art" src="assets/office-work-away.webp" width="1536" height="1024" alt="모니터를 보며 업무에 집중하는 직원의 뒷모습" fetchpriority="high" draggable="false">
+        <img id="workWatchArt" class="scene-art work-watch-art" src="assets/office-work-watch.webp" width="1536" height="1024" alt="" aria-hidden="true" draggable="false">
+        <img id="awayArt" class="scene-art away-art" src="assets/office-away.webp" width="1536" height="1024" alt="" aria-hidden="true" draggable="false">
+        <img id="watchArt" class="scene-art watch-art" src="assets/office-watch.webp" width="1536" height="1024" alt="" aria-hidden="true" draggable="false">
+        <div class="scene-shade"></div>
+        <div class="stage-top"><span id="levelBadge" class="level-badge">ROUND 01 · 평화로운 오후</span><span id="comboBadge" class="combo-badge">딴짓 콤보 <b id="comboValue">×1</b></span></div>
+        <div id="bossSignal" class="boss-signal safe"><span id="signalIcon" aria-hidden="true">●</span><span id="signalText">팀장님은 바쁜 중</span></div>
+        <div id="bossAlert" class="boss-alert" aria-hidden="true">!</div>
+        <div class="monitor-screen" aria-hidden="true">
+          <div class="spreadsheet"><div class="sheet-title"><span>▦</span> 월간 업무 보고서 <i>저장됨</i></div><div class="sheet-toolbar">파일　 편집　 보기　 삽입</div><div class="sheet-formula">fx <span>= SUM(B2:B12)</span></div><div class="sheet-grid"><div class="sheet-selection"></div></div><div class="sheet-bottom">● 보고서 작성 중</div></div>
+          <canvas id="arcadeScreen" width="520" height="300"></canvas>
+        </div>
+        <div id="floatingScore" class="floating-score" aria-hidden="true"></div>
+        <div class="desk-note" id="deskNote">오늘도 일하는 척, 완벽하게.</div>
+        <div id="overlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="overlayTitle" aria-describedby="overlayDescription">
+          <div class="overlay-card">
+            <span id="overlayKicker" class="overlay-kicker">월급은 소중하니까</span>
+            <h2 id="overlayTitle">눈치 챙기고,<br>딴짓 시작!</h2>
+            <p id="overlayDescription">팀장님이 안 볼 때 몰래 게임하세요.<br><b>노란 경고</b>가 뜨면 재빨리 업무로 전환!</p>
+            <div id="introChips" class="intro-chips"><span>◷ 60초</span><span>↔ 간단한 조작</span><span>♥ 의심도 100%면 끝</span></div>
+            <div id="resultStats" class="result-stats" hidden></div>
+            <button id="startButton" class="primary-button" type="button" disabled>사무실 준비 중…</button>
+            <button id="secondaryButton" class="secondary-button" type="button" hidden>처음부터 다시</button>
+            <button id="shareButton" class="secondary-button" type="button" hidden>내 기록 공유하기 ↗</button>
+            <p id="overlayHint" class="overlay-hint">PC는 SPACE · 모바일은 업무 / 딴짓 버튼</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-deck">
+        <div class="mode-readout"><span id="modeDot" class="mode-dot"></span><div><b id="modeLabel">업무 중</b><span id="modeDescription">시작 버튼을 눌러 출근하세요</span></div></div>
+        <button id="toggleButton" class="toggle-button" type="button" disabled><span id="toggleIcon" aria-hidden="true">▶</span><span id="toggleLabel">몰래 딴짓하기</span><kbd>SPACE</kbd></button>
+        <div class="touch-controls" role="group" aria-label="터치 게임 조작">
+          <button id="workButton" class="touch-button work-button" type="button" aria-pressed="true" disabled><span aria-hidden="true">▦</span><strong>일하는 척</strong><small>보고서로 숨기기</small></button>
+          <button id="slackButton" class="touch-button slack-button" type="button" aria-pressed="false" disabled><span aria-hidden="true">▶</span><strong>딴짓하기</strong><small>몰래 점수 쌓기</small></button>
+        </div>
+      </div>
+      <div class="game-footnote"><span>PC <kbd>SPACE</kbd> 전환 · <kbd>P</kbd> 일시정지</span><span>한 번 터치하면 유지 · ⛶ 집중 화면</span></div>
+    </section>
+    <p id="announcement" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+
+    <section class="how-to" aria-labelledby="howTitle"><div class="section-heading"><span class="eyebrow">눈치 만렙이 되는 법</span><h2 id="howTitle">세 가지만 기억하세요</h2></div><div class="tips"><article><span class="step">01</span><h3>안 볼 때 신나게</h3><p>딴짓하는 동안 점수가 쌓입니다. 연속 2초마다 콤보가 올라 최대 3배!</p></article><article><span class="step">02</span><h3>노란 경고는 신호</h3><p>느낌표가 뜨면 업무로 전환하세요. 들키지 않고 넘기면 눈치 보너스 120점!</p></article><article><span class="step">03</span><h3>끝까지 방심 금지</h3><p>20초마다 팀장님의 눈치가 빨라집니다. 업무 중에는 의심도가 서서히 내려갑니다.</p></article></div></section>
+    <div class="more-games"><a href="/rest/">← 다른 미니게임</a><span>최고 기록은 이 브라우저에 저장됩니다.</span><a href="/rest/cupstack/">탕비실 컵 쌓기도 도전 →</a></div>
+
+    <!-- 애드센스 광고: 플레이 조작부와 분리된 페이지 하단 광고 -->
+    <div class="ad-container"><span class="ad-label">광고</span><ins class="adsbygoogle" style="display:block; min-height:90px;" data-ad-client="ca-pub-6532882266109488" data-ad-slot="6135096954" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+    <script>try{window.adsbygoogle=window.adsbygoogle||[];window.adsbygoogle.push({});}catch(error){console.warn('AdSense initialization deferred.',error);}</script>
+  </main>
+  <footer>© Survival Office · 잠깐의 딴짓, 가벼운 즐거움.<br><small>이 게임의 인물과 상황은 창작된 코미디입니다.</small></footer>
+  <noscript><p class="no-script">이 게임을 플레이하려면 브라우저의 JavaScript를 켜 주세요.</p></noscript>
+  <script type="module" src="game.mjs?v=20261015b"></script>
+</body>
+</html>

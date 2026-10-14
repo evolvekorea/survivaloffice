@@ -1,224 +1,176 @@
-@font-face {
-    font-family: 'GangwonEduSaeeum_OTFMediumA';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-/* Global Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
-}
-
-nav {
-    background-color: #f4f4f4;
-    padding: 10px;
-}
-  
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: flex-end;
-    margin: 0;
-    padding: 0;
-}
-  
-nav ul li {
-    display: inline;
-}
-  
-nav ul li a {
-    color: rgb(62, 62, 62);
-    text-decoration: none;
-    padding: 8px 12px;
-    font-size: 14px;
-    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
-}
-  
-nav ul li a:hover {
-    background-color: #555;
-}
-
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-}
-
-body {
-    font-family: 'GangwonEduSaeeum_OTFMediumA', Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f4f4f4;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-}
-
-header {
-    background-color: #f4f4f4;
-    color: white;
-    padding: 0;
-    text-align: center;
-    position: relative;
-    margin-bottom: 0;
-}
-
-header img {
-    width: 100%;
-    height: auto;
-    max-height: 500px;
-    object-fit: cover;
-    margin-bottom: 0;
-}
-
-main {
-    padding: 0;
-    text-align: left;
-    flex-grow: 1;
-    width: 100%;
-}
-
-section {
-    margin-top: 20px;
-    padding: 20px;
-
-}
-
-footer {
-    background-color: #353535;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    width: 100%;
-    position: relative;
-    bottom: 0;
-}
-
-/* 네비게이션 컨테이너 스타일 */
-.nav-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-/* 섹션별 카테고리 스타일 */
-.nav-category {
-    width: 100%;
-    padding: 15px;
-    background-color: #fafafa;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-sizing: border-box;
-}
-
-/* 섹션 제목 스타일 */
-.nav-category h3 {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-    text-align: left;
-}
-
-/* '일', '휴식', '그 외'와 같은 nav-category의 제목 링크 스타일 */
-.nav-category h3 a {
-    text-decoration: none; /* 밑줄 제거 */
-}
-
-/* 각 섹션 구분선 */
-.nav-category hr {
-    border: 0;
-    height: 1px;
-    background: #ddd;
-    margin: 15px 0;
-}
-
-/* 각 항목의 스타일 및 정렬 */
-.nav-item-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: flex-start;
-}
-
-.nav-item {
-    flex: 1 1 calc(33.33% - 10px); /* 한 줄에 3개씩 배치 */
-    max-width: calc(33.33% - 10px);
-    background-color: #e0e0e0;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    padding: 8px;
-    text-align: center;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-sizing: border-box;
-}
-
-.nav-item img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-}
-
-.nav-item a {
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.nav-item:hover {
-    background-color: #d3d3d3;
-    transform: scale(1.05);
-}
-
-/* .nav-category 컨테이너 중앙 정렬 */
-.nav-category-wrapper {
-    display: flex;
-    justify-content: center; /* 가로 중앙 정렬 */
-    align-items: center; /* 세로 중앙 정렬 (선택사항) */
-    padding: 20px; /* 여백 추가 */
-    min-height: 100vh; /* 선택사항: 화면 높이를 기준으로 중앙 정렬 */
-    box-sizing: border-box;
-}
-
-/* 반응형 웹페이지 위한 미디어 쿼리 */
-/* 모바일 */
-@media (max-width: 600px) {
-    .nav-item {
-        flex: 1 1 calc(50% - 10px); /* 모바일에서 한 줄에 2개씩 */
-        max-width: calc(50% - 10px);
-    }
-}
-
-/* 작은 태블릿 */
-@media (min-width: 601px) and (max-width: 800px) {
-    .nav-item {
-        flex: 1 1 calc(33.33% - 10px); /* 작은 태블릿에서 한 줄에 3개 */
-        max-width: calc(33.33% - 10px);
-    }
-}
-
-/* 큰 태블릿 및 데스크탑 */
-/* .nav-item 한 줄에 4개 */
-@media (min-width: 801px) {
-    .nav-item {
-        flex: 1 1 calc(25% - 15px); /* 한 줄에 4개 */
-        max-width: calc(25% - 15px);
-    }
-}
-
-.email-link {
-    color: #ffffff; /* 원하는 색상 (예: 주황색) */
-    text-decoration: none; /* 밑줄 제거 */
-    font-weight: bold; /* 굵게 표시 */
-}
-
-.email-link:hover {
-    color: #29f5e4; /* 마우스 오버 시 색상 변경 */
-    text-decoration: underline; /* 마우스 오버 시 밑줄 추가 */
-}
+@import url('../styles.css?v=20261015');
+.games-heading {
+    padding-block:38px 28px}
+    .games-heading>div {
+        display:flex;
+        justify-content:space-between;
+        align-items:end;
+        gap:24px;
+        margin-top:12px}
+        .games-heading h1 {
+            font-size:clamp(32px,3.6vw,45px);
+            line-height:1.3;
+            letter-spacing:-2.4px}
+            .games-heading>div>p {
+                font-size:12px;
+                line-height:1.8;
+                color:var(--muted);
+                text-align:right}
+                .game-spotlight {
+                    display:grid;
+                    grid-template-columns:.85fr 1.3fr;
+                    border:1px solid #dce2d2;
+                    border-radius:18px;
+                    overflow:hidden;
+                    background:#eaf0e3}
+                    .spotlight-copy {
+                        padding:30px 36px}
+                        .spotlight-kicker {
+                            font-size:11px;
+                            color:#6c7d62;
+                            margin-top:15px}
+                            .spotlight-copy h2 {
+                                font-size:36px;
+                                line-height:1.3;
+                                letter-spacing:-1.8px;
+                                margin:7px 0 13px}
+                                .spotlight-copy>p:not(.spotlight-kicker) {
+                                    font-size:11px;
+                                    line-height:1.9;
+                                    color:#6b7864}
+                                    .game-tags {
+                                        display:flex;
+                                        gap:6px;
+                                        margin:15px 0 23px}
+                                        .game-tags span {
+                                            font-size:9px;
+                                            color:#63775b;
+                                            background:#fffefa99;
+                                            border:1px solid #d7dfce;
+                                            border-radius:5px;
+                                            padding:3px 7px}
+                                            .spotlight-art {
+                                                position:relative;
+                                                overflow:hidden}
+                                                .spotlight-art img {
+                                                    width:100%;
+                                                    height:100%;
+                                                    object-fit:cover;
+                                                    transition:transform .5s}
+                                                    .spotlight-art:hover img {
+                                                        transform:scale(1.025)}
+                                                        .art-note {
+                                                            position:absolute;
+                                                            right:20px;
+                                                            bottom:20px;
+                                                            padding:9px 14px;
+                                                            border-radius:8px 8px 2px 8px;
+                                                            font-size:11px;
+                                                            color:#4f6147;
+                                                            background:#fffef0ee;
+                                                            box-shadow:0 3px 10px #233b2915;
+                                                            transform:rotate(-3deg)}
+                                                            .games-main>.nav-category {
+                                                                margin-top:32px;
+                                                                margin-bottom:60px}
+                                                                .games-main .category-heading {
+                                                                    border-top:0;
+                                                                    padding-top:0}
+                                                                    .count-badge {
+                                                                        display:inline-flex;
+                                                                        vertical-align:3px;
+                                                                        align-items:center;
+                                                                        justify-content:center;
+                                                                        height:23px;
+                                                                        min-width:29px;
+                                                                        padding-inline:7px;
+                                                                        background:#e6ecdf;
+                                                                        color:#638057;
+                                                                        border-radius:7px;
+                                                                        font:700 11px/1 Arial,sans-serif;
+                                                                        margin-left:5px;
+                                                                        letter-spacing:0}
+                                                                        .catalog-note {
+                                                                            color:#89917f;
+                                                                            font-size:11px}
+                                                                            .games-main .nav-item-container {
+                                                                                grid-template-columns:repeat(4,minmax(0,1fr));
+                                                                                gap:22px}
+                                                                                .games-main .tile-copy {
+                                                                                    padding:16px 30px 18px 16px}
+                                                                                    .games-main .tile-copy h4 {
+                                                                                        font-size:14px}
+                                                                                        .games-main .tile-copy p {
+                                                                                            font-size:10px}
+                                                                                            @media(max-width:900px) {
+                                                                                                .spotlight-copy {
+                                                                                                    padding:26px}
+                                                                                                    .spotlight-copy h2 {
+                                                                                                        font-size:32px}
+                                                                                                        .game-spotlight {
+                                                                                                            grid-template-columns:1fr 1.2fr}
+                                                                                                            .games-main .nav-item-container {
+                                                                                                                gap:16px;
+                                                                                                                grid-template-columns:repeat(3,minmax(0,1fr))}
+                                                                                                            }
+                                                                                                            @media(max-width:760px) {
+                                                                                                                .games-heading {
+                                                                                                                    padding-block:27px 23px}
+                                                                                                                    .games-heading>div {
+                                                                                                                        display:block}
+                                                                                                                        .games-heading h1 {
+                                                                                                                            font-size:32px;
+                                                                                                                            letter-spacing:-1.8px}
+                                                                                                                            .games-heading>div>p {
+                                                                                                                                text-align:left;
+                                                                                                                                font-size:11px;
+                                                                                                                                margin-top:10px}
+                                                                                                                                .games-heading>div>p br {
+                                                                                                                                    display:none}
+                                                                                                                                    .game-spotlight {
+                                                                                                                                        grid-template-columns:1fr}
+                                                                                                                                        .spotlight-art {
+                                                                                                                                            grid-row:1}
+                                                                                                                                            .spotlight-art img {
+                                                                                                                                                height:auto;
+                                                                                                                                                aspect-ratio:1.8;
+                                                                                                                                                object-fit:cover}
+                                                                                                                                                .art-note {
+                                                                                                                                                    bottom:13px;
+                                                                                                                                                    right:14px;
+                                                                                                                                                    font-size:10px;
+                                                                                                                                                    padding:7px 10px}
+                                                                                                                                                    .spotlight-copy {
+                                                                                                                                                        padding:21px 22px 25px}
+                                                                                                                                                        .spotlight-kicker {
+                                                                                                                                                            display:inline;
+                                                                                                                                                            margin-left:9px;
+                                                                                                                                                            font-size:10px}
+                                                                                                                                                            .spotlight-copy h2 {
+                                                                                                                                                                font-size:26px;
+                                                                                                                                                                margin:11px 0 9px;
+                                                                                                                                                                letter-spacing:-1px}
+                                                                                                                                                                .spotlight-copy h2 br {
+                                                                                                                                                                    display:none}
+                                                                                                                                                                    .spotlight-copy>p:not(.spotlight-kicker) {
+                                                                                                                                                                        font-size:11px}
+                                                                                                                                                                        .game-tags {
+                                                                                                                                                                            margin:12px 0 18px}
+                                                                                                                                                                            .spotlight-copy .button {
+                                                                                                                                                                                width:100%;
+                                                                                                                                                                                justify-content:space-between}
+                                                                                                                                                                                .catalog-note {
+                                                                                                                                                                                    display:none}
+                                                                                                                                                                                    .games-main>.nav-category {
+                                                                                                                                                                                        margin-top:27px;
+                                                                                                                                                                                        margin-bottom:40px}
+                                                                                                                                                                                        .games-main .nav-item-container {
+                                                                                                                                                                                            grid-template-columns:repeat(2,minmax(0,1fr));
+                                                                                                                                                                                            gap:14px 12px}
+                                                                                                                                                                                            .games-main .tile-copy {
+                                                                                                                                                                                                padding:12px 25px 14px 11px}
+                                                                                                                                                                                                .games-main .tile-copy h4 {
+                                                                                                                                                                                                    font-size:12px}
+                                                                                                                                                                                                    .games-main .tile-copy p {
+                                                                                                                                                                                                        font-size:9px}
+                                                                                                                                                                                                    }
