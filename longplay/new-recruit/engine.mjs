@@ -6,7 +6,7 @@ const flags=['kind','balance','learn','lead','build','business','trust','certifi
 export function fresh(name,gender){
  name=String(name).trim();if(name.length<1||name.length>12)throw Error('이름은 1~12자로 입력해 주세요.');
  if(!['male','female'].includes(gender))throw Error('캐릭터를 선택해 주세요.');
- return {version:1,name,gender,month:1,phase:'plan',stats:{work:18,expert:15,social:15},energy:85,stress:10,money:120,rank:0,flags:Object.fromEntries(flags.map(k=>[k,0])),burnouts:0,plan:['work','study','rest'],outfit:'daily',report:null,history:[],ending:null,revision:0};
+ return {version:2,name,gender,month:1,phase:'plan',stats:{work:18,expert:15,social:15},energy:85,stress:10,money:120,rank:0,flags:Object.fromEntries(flags.map(k=>[k,0])),burnouts:0,plan:[null,null,null],outfit:'daily',report:null,history:[],ending:null,revision:0};
 }
 export function season(month){return ['봄','여름','가을','겨울'][Math.floor((month-1)%12/3)];}
 export function dateLabel(s){return `${Math.floor((s.month-1)/12)+1}년 차 · ${(s.month-1)%12+1}개월째`;}
@@ -17,9 +17,10 @@ export function canChoose(s,choice){return !choice.need||Object.entries(choice.n
 export function next(s,action,arg){
  const n=structuredClone(s);n.revision++;
  if(action==='outfit'){if(!availableOutfits(n).includes(arg))throw Error('아직 열리지 않은 옷입니다.');n.outfit=arg;return n;}
- if(action==='plan'){if(n.phase!=='plan')throw Error('이번 달을 마친 뒤 일정을 바꿔 주세요.');if(!Array.isArray(arg)||arg.length!==3||arg.some(k=>!Object.hasOwn(ACTIONS,k)))throw Error('세 개의 일정을 골라 주세요.');n.plan=[...arg];return n;}
+ if(action==='plan'){if(n.phase!=='plan')throw Error('이번 달을 마친 뒤 일정을 바꿔 주세요.');if(!Array.isArray(arg)||arg.length!==3||arg.some(k=>k!==null&&!Object.hasOwn(ACTIONS,k)))throw Error('세 개의 일정을 골라 주세요.');n.plan=[...arg];return n;}
  if(action==='month'){
   if(n.phase!=='plan')throw Error('이미 진행한 달입니다. 화면의 이야기를 먼저 확인해 주세요.');
+  if(n.plan.some(k=>!Object.hasOwn(ACTIONS,k)))throw Error('빈칸 없이 일정 세 개를 모두 골라 주세요.');
   const before=snapshot(n),salary=210+n.rank*25,living=180;
   n.money+=salary-living;const steps=[];
   for(const key of n.plan){
@@ -47,7 +48,7 @@ export function next(s,action,arg){
  if(action==='continue'){
   if(n.phase!=='report')throw Error('이번 달의 기록을 먼저 확인해 주세요.');
   n.history.push({month:n.month,plan:n.report.steps.map(x=>x.key),eventChoice:n.report.eventChoice,stats:{...n.stats},rank:n.rank});
-  n.report=null;if(n.month===MONTHS)n.phase='ending';else {n.month++;n.phase='plan';}return n;
+  n.report=null;if(n.month===MONTHS)n.phase='ending';else {n.month++;n.phase='plan';n.plan=[null,null,null];}return n;
  }
  if(action==='ending'){
   if(n.phase!=='ending'||!eligibleEndings(n).includes(arg))throw Error('지금 선택할 수 없는 다음 장입니다.');n.ending=arg;n.phase='finished';return n;
@@ -67,12 +68,12 @@ export function eligibleEndings(s){
 export const ENDING_HINTS={leader:'실무 65 · 인맥 50 · 리더십 선택 5회',expert:'전문성 70 · 배움·자격 선택 합계 5회',career:'전문성 50 · 인맥 45 · 진로 탐색 3회',founder:'부업·사업 시도 10회 · 자금 250만 · 실무 40',balance:'휴식·균형 선택 12회 · 스트레스 55 이하 · 체력 45 이상',change:'모든 여정에서 선택할 수 있습니다'};
 export function validate(raw){
  const fail=()=>{throw Error('이 게임의 올바른 저장 파일이 아닙니다.');},int=(v,a,b)=>Number.isInteger(v)&&v>=a&&v<=b;
- if(!raw||raw.version!==1||typeof raw.name!=='string'||raw.name.trim().length<1||raw.name.length>12||!['male','female'].includes(raw.gender))fail();
+ if(!raw||![1,2].includes(raw.version)||typeof raw.name!=='string'||raw.name.trim().length<1||raw.name.length>12||!['male','female'].includes(raw.gender))fail();
  const n=structuredClone(raw);
  if(!int(n.month,1,36)||!['plan','event','report','ending','finished'].includes(n.phase)||!int(n.rank,0,3)||!int(n.energy,0,100)||!int(n.stress,0,100)||!int(n.money,0,100000)||!int(n.revision,0,1e9)||!int(n.burnouts,0,108))fail();
  if(!n.stats||Object.keys(n.stats).length!==3||['work','expert','social'].some(k=>!int(n.stats[k],0,100)))fail();
  if(!n.flags||Object.keys(n.flags).length!==flags.length||flags.some(k=>!int(n.flags[k],0,144)))fail();
- if(!Array.isArray(n.plan)||n.plan.length!==3||n.plan.some(k=>!Object.hasOwn(ACTIONS,k))||!availableOutfits(n).includes(n.outfit))fail();
+ if(!Array.isArray(n.plan)||n.plan.length!==3||n.plan.some(k=>!(n.version===2&&n.phase==='plan'&&k===null)&&!Object.hasOwn(ACTIONS,k))||!availableOutfits(n).includes(n.outfit))fail();
  if(!Array.isArray(n.history)||n.history.length!==(n.phase==='ending'||n.phase==='finished'?36:n.month-1))fail();
  n.history.forEach((h,i)=>{if(h.month!==i+1||!Array.isArray(h.plan)||h.plan.length!==3||h.plan.some(k=>!Object.hasOwn(ACTIONS,k))||!int(h.eventChoice,0,1)||!int(h.rank,0,3)||!h.stats||Object.keys(n.stats).some(k=>!int(h.stats[k],0,100)))fail();});
  if(['event','report'].includes(n.phase)){
@@ -85,5 +86,6 @@ export function validate(raw){
  }else if(n.report!==null)fail();
  if(['ending','finished'].includes(n.phase)&&n.month!==36)fail();
  if(n.phase==='finished'?!eligibleEndings(n).includes(n.ending):n.ending!==null)fail();
+ if(n.version===1){if(n.phase==='plan')n.plan=[null,null,null];n.version=2;}
  return n;
 }
