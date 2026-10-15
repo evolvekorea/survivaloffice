@@ -4,6 +4,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextButton = document.getElementById('newContentNext');
     const progress = document.getElementById('newContentProgress');
 
+    // The newest card is the single source for the home feature.
+    // Keep newContentTrack in newest-first publication order.
+    const latest = track?.querySelector('.new-content-card');
+    const feature = document.querySelector('.hero-feature');
+    if (latest && feature) {
+        const sourceImage = latest.querySelector('img');
+        const title = latest.querySelector('strong')?.textContent.trim();
+        const category = latest.querySelector('.content-type')?.textContent.trim();
+        const featureImage = feature.querySelector('img');
+        if (sourceImage && title && featureImage) {
+            feature.href = latest.href;
+            feature.setAttribute('aria-label', `최신 콘텐츠 ${title} 시작`);
+            featureImage.src = sourceImage.src;
+            featureImage.alt = sourceImage.alt;
+            feature.querySelector('h2').textContent = title;
+            feature.querySelector('.feature-caption div > span').textContent =
+                latest.dataset.featureDescription || category || '새로 나온 콘텐츠';
+        }
+    }
+
     if (!track || !prevButton || !nextButton || !progress) return;
 
     const getStep = () => {

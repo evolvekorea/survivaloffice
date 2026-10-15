@@ -248,16 +248,16 @@
        <changefreq>monthly</changefreq>
        <priority>0.6</priority>
    </url>    
-   <!-- story + 하위 페이지 -->
+   <!-- longplay + 하위 페이지 -->
    <url>
-       <loc>https://survivaloffice.com/story/</loc>
-       <lastmod>2026-09-29</lastmod>
+       <loc>https://survivaloffice.com/longplay/</loc>
+       <lastmod>2026-10-15</lastmod>
        <changefreq>weekly</changefreq>
        <priority>0.8</priority>
    </url>
    <url>
-       <loc>https://survivaloffice.com/story/office-zombie/</loc>
-       <lastmod>2026-09-29</lastmod>
+       <loc>https://survivaloffice.com/longplay/office-zombie/</loc>
+       <lastmod>2026-10-15</lastmod>
        <changefreq>monthly</changefreq>
        <priority>0.8</priority>
    </url>
@@ -268,7 +268,7 @@
        <priority>0.7</priority>
    </url>
    <url>
-       <loc>https://survivaloffice.com/rest/gladiator/</loc>
+       <loc>https://survivaloffice.com/longplay/gladiator/</loc>
        <lastmod>2026-10-15</lastmod>
        <changefreq>monthly</changefreq>
        <priority>0.7</priority>
