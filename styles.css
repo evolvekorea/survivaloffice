@@ -648,3 +648,19 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 *,*::before,*::after {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     transition:none!important}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 }
+
+
+/* Show two distinct latest games together, including on small screens. */
+.home-hero{grid-template-columns:.85fr 1.3fr;gap:36px}
+.hero-features{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;min-width:0}
+.hero-features .hero-feature{display:flex;flex-direction:column;min-width:0;border-radius:16px;background:#28483d}
+.hero-features .hero-feature>img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover}
+.hero-features .feature-caption{position:static;flex:1;background:#28483d;padding:15px 16px 18px;gap:8px}
+.hero-features .feature-caption h2{font-size:18px;line-height:1.5;margin:5px 0 0;letter-spacing:-.6px;word-break:keep-all;overflow-wrap:anywhere}
+.hero-features .feature-caption div>span{font-size:9px;letter-spacing:1px;color:#c7dacb}
+.hero-features .round-arrow{width:28px;height:28px;font-size:18px;flex-shrink:0}
+.hero-features .feature-sticker{left:12px;top:12px;font-size:9px;padding:5px 8px}
+.hero-features .feature-sticker span{padding-left:4px}
+@media(max-width:1050px){.home-hero{grid-template-columns:.8fr 1.2fr;gap:24px}.hero-features{gap:12px}.hero-features .feature-caption{padding:13px}.hero-features .feature-caption h2{font-size:16px}.hero-features .round-arrow{display:none}}
+@media(max-width:760px){.home-hero{grid-template-columns:1fr;gap:24px}.hero-features{gap:12px}.hero-features .hero-feature{border-radius:12px}.hero-features .feature-caption{padding:12px}.hero-features .feature-caption h2{font-size:15px}.hero-features .round-arrow{display:grid;width:25px;height:25px;font-size:16px}}
+@media(max-width:420px){.hero-features{gap:10px}.hero-features .feature-caption{padding:10px 11px 12px}.hero-features .feature-caption h2{font-size:13px;line-height:1.55}.hero-features .round-arrow{display:none}.hero-features .feature-sticker{left:9px;top:9px;font-size:8px;padding:4px 6px}}

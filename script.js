@@ -4,25 +4,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextButton = document.getElementById('newContentNext');
     const progress = document.getElementById('newContentProgress');
 
-    // The newest card is the single source for the home feature.
-    // Keep newContentTrack in newest-first publication order.
-    const latest = track?.querySelector('.new-content-card');
-    const feature = document.querySelector('.hero-feature');
-    if (latest && feature) {
+    // Keep the publication list newest-first; feature its first two games.
+    // Tests and tools remain in the slider without replacing game previews.
+    const latestGames = [...(track?.querySelectorAll('.new-content-card') || [])]
+        .filter(card => card.querySelector('.content-type.game, .content-type.story'))
+        .slice(0, 2);
+    document.querySelectorAll('.hero-features .hero-feature').forEach((feature, index) => {
+        const latest = latestGames[index];
+        if (!latest) return;
         const sourceImage = latest.querySelector('img');
         const title = latest.querySelector('strong')?.textContent.trim();
         const category = latest.querySelector('.content-type')?.textContent.trim();
         const featureImage = feature.querySelector('img');
         if (sourceImage && title && featureImage) {
             feature.href = latest.href;
-            feature.setAttribute('aria-label', `최신 콘텐츠 ${title} 시작`);
+            feature.setAttribute('aria-label', `최신 게임 ${title} 시작`);
             featureImage.src = sourceImage.src;
             featureImage.alt = sourceImage.alt;
             feature.querySelector('h2').textContent = title;
-            feature.querySelector('.feature-caption div > span').textContent =
-                latest.dataset.featureDescription || category || '새로 나온 콘텐츠';
+            feature.querySelector('.feature-caption div > span').textContent = category || '새 게임';
         }
-    }
+    });
 
     if (!track || !prevButton || !nextButton || !progress) return;
 
