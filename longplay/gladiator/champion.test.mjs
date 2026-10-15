@@ -54,9 +54,9 @@ test('corrupt multi-fighter HP, participants and results are rejected',()=>{
  const s=enter(offered(2,2));
  for(const mutate of [b=>b.units[0].maxHp=0,b=>b.frames[0].hp.a1=-1,b=>b.frames[0].actor='missing',b=>b.results[1].fighterId=1,b=>b.results[1].xpGain=-1,b=>b.frames[0].damage=-1]){const bad=structuredClone(s);mutate(bad.battle);assert.throws(()=>validate(bad));}
 });
-test('30th team win schedules champion in three days, refusal preserves rights and retries after nine days',()=>{
- let s=offered(2,1);s.schoolWins=29;for(const f of s.fighters){f.stats={strength:100,agility:100,stamina:100,skill:100};f.armor=4;f.tier=3;}
- s=enter(s);assert.ok(s.battle.win);s=act(s,'resolve');assert.equal(s.schoolWins,30);assert.equal(s.ending,null);assert.equal(s.nextOfferDay,s.day+3);
+test('30th consecutive team win schedules champion in three days, refusal preserves rights and retries after nine days',()=>{
+ let s=offered(2,1);s.schoolWins=39;s.schoolStreak=29;s.schoolBestStreak=29;for(const f of s.fighters){f.stats={strength:100,agility:100,stamina:100,skill:100};f.armor=4;f.tier=3;}
+ s=enter(s);assert.ok(s.battle.win);s=act(s,'resolve');assert.equal(s.schoolWins,40);assert.equal(s.schoolStreak,30);assert.equal(s.ending,null);assert.equal(s.nextOfferDay,s.day+3);
  s=elapse(s,DAY_MS*3);assert.ok(s.offer.champion);assert.equal(s.offer.allyCount,1);
  const day=s.day,rights=selected(s).declines;s=act(s,'decline');assert.equal(selected(s).declines,rights);assert.equal(s.championAfter,day+9);
  s=elapse(s,DAY_MS*3);assert.equal(s.offer.champion,false);
@@ -64,16 +64,16 @@ test('30th team win schedules champion in three days, refusal preserves rights a
  s=act(enter(s),'resolve');s=elapse(s,DAY_MS*3);assert.ok(s.offer.champion);validate(s);
 });
 test('champion victory produces persistent named ending, stops time and cannot pay twice',()=>{
- let s=named(25);s.schoolWins=30;const f=selected(s);f.stats={strength:100,agility:100,stamina:100,skill:100};f.tier=3;f.armor=4;
+ let s=named(25);s.schoolWins=30;s.schoolStreak=30;s.schoolBestStreak=30;const f=selected(s);f.stats={strength:100,agility:100,stamina:100,skill:100};f.tier=3;f.armor=4;
  s=elapse(s,DAY_MS*2);s=enter(s,'defend');assert.ok(s.battle.win);
  const reward=s.battle.reward,gold=s.gold;s=act(s,'resolve');
  assert.equal(s.gold,gold+reward);assert.equal(s.ending.schoolName,'황금 모래 훈련소');assert.equal(s.ending.championName,f.name);assert.equal(s.ending.wins,31);
  assert.deepEqual(validate(JSON.parse(JSON.stringify(s))),s);assert.strictEqual(elapse(s,DAY_MS*5),s);
  for(const action of ['resolve','train','nameSchool','pause','recruit'])assert.throws(()=>act(s,action,'test'));
 });
-test('champion loss does not end the game; replacement gladiators can try again',()=>{
- let s=named(2);s.schoolWins=30;s=elapse(s,DAY_MS*2);s=enter(s);assert.equal(s.battle.win,false);s=act(s,'resolve');assert.equal(s.ending,null);assert.equal(s.schoolWins,30);
- if(selected(s).dead)s=act(s,'successor');s=elapse(s,DAY_MS*3);assert.ok(s.offer.champion);validate(s);
+test('champion loss resets eligibility; replacement gladiators must build a new streak',()=>{
+ let s=named(2);s.schoolWins=30;s.schoolStreak=30;s.schoolBestStreak=30;s=elapse(s,DAY_MS*2);s=enter(s);assert.equal(s.battle.win,false);s=act(s,'resolve');assert.equal(s.ending,null);assert.equal(s.schoolWins,30);assert.equal(s.schoolLosses,1);assert.equal(s.schoolStreak,0);assert.equal(s.schoolBestStreak,30);
+ if(selected(s).dead)s=act(s,'successor');s=elapse(s,DAY_MS*3);assert.equal(s.offer.champion,false);validate(s);
 });
 test('a team can win while an individual is knocked out; injury and XP belong to each participant',()=>{
  let found;
@@ -102,4 +102,59 @@ test('actual v4 pending duel keeps precommitted payout, focused XP and replay po
  old.battle={fighterId:1,replayMs:2450,trainingAtEntry:'skill',win:true,dead:false,injury:0,reward:80,baseReward:80,bonusPercent:0,xpGain:160,fameGain:12,streakAfter:1,maxA:95,maxB:147,frames:[{a:77,b:0,dealt:147,taken:18}],tactic:'defend',opponent:'기존 상대',deathChance:.08};
  const s=validate(old);assert.deepEqual(s.battle,old.battle);assert.equal(s.dayProgressMs,7500);
  const done=act(s,'resolve');assert.equal(done.gold,180);assert.equal(done.schoolWins,1);assert.equal(selected(done).stats.skill,13);assert.equal(selected(done).stats.strength,12);validate(done);
+});
+
+test('lifetime wins alone never unlock the championship',()=>{
+ for(const streak of [0,1,29]){
+  const s=named(42);s.schoolWins=80;s.schoolLosses=9;s.schoolStreak=streak;s.schoolBestStreak=29;
+  const next=elapse(s,DAY_MS*2);assert.equal(next.offer.champion,false);validate(next);
+ }
+});
+test('a team defeat counts once, resets school streak and preserves best streak and individual losses',()=>{
+ let s=offered(2,2);s.schoolWins=48;s.schoolLosses=3;s.schoolStreak=29;s.schoolBestStreak=29;
+ s.offer.opponents.forEach(e=>e.power=10000);s=enter(s);assert.equal(s.battle.win,false);
+ const done=act(s,'resolve');assert.equal(done.schoolWins,48);assert.equal(done.schoolLosses,4);assert.equal(done.schoolStreak,0);assert.equal(done.schoolBestStreak,29);
+ assert.deepEqual(done.fighters.map(f=>f.matches-f.wins),[1,1,0]);assert.deepEqual(validate(done),done);assert.throws(()=>act(done,'resolve'));
+});
+test('declining an invitation is neither a loss nor a broken streak',()=>{
+ const s=offered();s.schoolWins=20;s.schoolStreak=12;s.schoolBestStreak=15;s.schoolLosses=3;
+ const done=act(s,'decline');assert.equal(done.schoolLosses,3);assert.equal(done.schoolStreak,12);validate(done);
+});
+function asV5(s){
+ s=structuredClone(s);s.version=5;
+ for(const key of ['schoolLosses','schoolStreak','schoolBestStreak','recordStartDay','legacyChampion'])delete s[key];
+ if(s.ending)for(const key of ['losses','schoolStreak','schoolBestStreak','recordStartDay'])delete s.ending[key];
+ return s;
+}
+function championReady(){
+ const s=named(25);s.schoolWins=40;s.schoolStreak=30;s.schoolBestStreak=30;selected(s).stats={strength:100,agility:100,stamina:100,skill:100};selected(s).armor=4;selected(s).tier=3;
+ return elapse(s,DAY_MS*2);
+}
+test('v5 migration preserves fighter records but starts unknown school streak/losses at the recorded update day',()=>{
+ const old=asV5(championReady());selected(old).wins=18;selected(old).matches=23;selected(old).streak=7;selected(old).bestStreak=9;
+ const s=validate(old);assert.equal(s.version,6);assert.equal(s.schoolWins,40);assert.equal(s.schoolStreak,0);assert.equal(s.schoolLosses,0);assert.equal(s.recordStartDay,s.day);assert.deepEqual(s.fighters,old.fighters);
+ assert.equal(s.offer,null);assert.equal(s.nextOfferDay,s.day+3);assert.deepEqual(validate(s),s);assert.equal(elapse(s,DAY_MS*3).offer.champion,false);
+});
+test('already committed v5 championship and completed ending survive the rule change',()=>{
+ const battle=enter(championReady(),'defend');assert.ok(battle.battle.win);
+ const old=asV5(battle);old.battle.deathChance=.35;
+ const migrated=validate(old);assert.deepEqual(migrated.battle,old.battle);assert.equal(migrated.legacyChampion,true);
+ const done=act(migrated,'resolve');assert.ok(done.ending);assert.equal(done.schoolWins,41);assert.equal(done.schoolStreak,1);validate(done);
+ const oldEnding=asV5(act(battle,'resolve')),ending=validate(oldEnding);assert.equal(ending.ending.championName,oldEnding.ending.championName);assert.equal(ending.ending.wins,oldEnding.ending.wins);assert.equal(ending.legacyChampion,true);validate(ending);
+});
+test('fatality rates increase to 60%/85%, with survivors injured and dead fighters receiving no XP',()=>{
+ const deaths=[];
+ for(const lethal of [false,true]){
+  let count=0;
+  for(let i=1;i<=600;i++){
+   const s=offered(1,1,Math.imul(i,2654435761)>>>0);s.offer.power=10000;s.offer.lethal=lethal;
+   const b=enter(s).battle;assert.equal(b.win,false);assert.equal(b.deathChance,lethal?.85:.6);
+   if(b.dead){count++;assert.equal(b.xpGain,0);}else assert.ok([2,4].includes(b.injury));
+  }
+  deaths.push(count/600);
+ }
+ assert.ok(deaths[0]>.54&&deaths[0]<.66);assert.ok(deaths[1]>.79&&deaths[1]<.91);assert.ok(deaths[1]>deaths[0]);
+});
+test('invalid school loss and streak saves are rejected',()=>{
+ for(const mutate of [s=>s.schoolLosses=-1,s=>s.schoolStreak=1,s=>s.schoolBestStreak=1,s=>s.recordStartDay=s.day+1,s=>s.legacyChampion=true]){const s=named(1);mutate(s);assert.throws(()=>validate(s));}
 });

@@ -17,3 +17,5 @@
 @media(max-width:700px){.campaign{padding:13px}.campaign>div:first-child{display:block}.campaign span{display:block;margin-top:6px}.team-hud{gap:14px;padding:12px}.unit-hp{grid-template-columns:1fr;font-size:10px}.unit-hp span{font-size:9px}.team-column>p{font-size:9px}.team-results>div{font-size:11px}.team-results span{font-size:10px}.ending-dialog{width:calc(100% - 16px);max-height:calc(100dvh - 16px)}.ending-top{padding:10px 12px;font-size:9px}.ending-body{padding:20px 16px}.ending-body h2{font-size:20px}.ending-body>p{font-size:12px}.ending-actions{gap:7px}.ending-actions button{font-size:11px;flex:1}.lineup label{min-height:50px}}
 
 @media(max-width:700px){.ending-actions{display:grid;grid-template-columns:1fr 1fr}.ending-actions .primary{grid-column:1/-1}}
+
+.campaign .campaign-record{font-size:12px;color:#e6d4ac;margin:10px 0;line-height:1.8}.roster-info .roster-meta{white-space:normal;overflow:visible;overflow-wrap:anywhere}

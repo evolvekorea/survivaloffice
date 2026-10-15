@@ -47,7 +47,7 @@ function recruit(id,generation=1) {
  return {id,name:names[(id-1)%names.length]+(id>8?' '+Math.ceil(id/8):''),generation,level:1,xp:0,training:'basic',streak:0,bestStreak:0,fame:0,wins:0,matches:0,weapon:'sword',tier:0,armor:0,declines:1,fatigue:0,injury:0,dead:false,stats:{strength:10,agility:10,stamina:10,skill:10}};
 }
 export function fresh(seed=Date.now()>>>0) {
- return {version:5,schoolWins:0,championAfter:0,ending:null,schoolName:'',seed,day:1,dayProgressMs:0,nextOfferDay:3,paused:false,gold:100,fame:0,facility:0,capacity:3,nextId:4,selectedId:1,fighters:[recruit(1),recruit(2),recruit(3)],offer:null,battle:null,history:['1일 · 검투사 3명과 함께 훈련소의 문을 열었습니다.'],fallen:[]};
+ return {version:6,schoolWins:0,schoolLosses:0,schoolStreak:0,schoolBestStreak:0,recordStartDay:0,legacyChampion:false,championAfter:0,ending:null,schoolName:'',seed,day:1,dayProgressMs:0,nextOfferDay:3,paused:false,gold:100,fame:0,facility:0,capacity:3,nextId:4,selectedId:1,fighters:[recruit(1),recruit(2),recruit(3)],offer:null,battle:null,history:['1일 · 검투사 3명과 함께 훈련소의 문을 열었습니다.'],fallen:[]};
 }
 export function selected(s) { return s.fighters.find(f=>f.id===s.selectedId); }
 // A read-only presentation object keeps shared resources separate from fighter saves.
@@ -60,7 +60,7 @@ export function facilityCost(s) { return s.facility<3?120+s.facility*120:0; }
 export function lodgingCost(s) { return s.capacity<MAX_ROSTER?150+(s.capacity-3)*75:0; }
 export function danger(s) { if(!s.offer)return '';const ratio=s.offer.power/Math.max(1,power(s));return ratio<.83?'유리':ratio<1.1?'대등':ratio<1.35?'위험':'매우 위험'; }
 function offer(s) {
- if(s.schoolWins>=30&&s.day>=s.championAfter){
+ if(s.schoolStreak>=30&&s.day>=s.championAfter){
   s.offer={kind:'human',name:'불패의 아우렐리안',power:280,weapon:'sword',tier:3,armor:4,reward:1500,lethal:true,champion:true,allyCount:1,enemyCount:1};
   note(s,'황금 월계관의 초대 · 챔피언 아우렐리안과의 결전이 잡혔습니다. 거절하고 더 준비해도 됩니다.');return;
  }
@@ -163,7 +163,7 @@ export function act(state,action,arg) {
   if(f.armor>=4)throw Error('최고 등급입니다.');
   spend(s,armorCost(f));f.armor++;note(s,f.name+' · '+ARMORS[f.armor]+' 구입');
  } else if(action==='decline') {
-  if(s.offer?.champion){s.championAfter=s.day+9;s.offer=null;s.nextOfferDay=s.day+3;note(s,'챔피언전 초대를 거절했습니다. 9일 뒤 다시 제안받습니다. 거절권은 유지됩니다.');return s;}
+  if(s.offer?.champion){s.championAfter=s.day+9;s.offer=null;s.nextOfferDay=s.day+3;note(s,'챔피언전 초대를 거절했습니다. 30연승을 유지하면 9일 뒤 다시 제안받습니다. 거절권은 유지됩니다.');return s;}
   if(!s.offer||!f.declines)throw Error('이 검투사의 거절권을 이미 사용했습니다.');
   f.declines=0;s.offer=null;note(s,f.name+'의 유일한 경기 거절권 사용');s.nextOfferDay=s.day+3;
  } else if(action==='fight') {
@@ -190,14 +190,18 @@ export function act(state,action,arg) {
    note(s,b.dead?combatant.name+' · 경기장에서 전사':combatant.name+' 패배 · '+b.injury+'일 부상 · '+b.reward+' G · '+b.xpGain+' EXP'+(levels?' · Lv.'+combatant.level+' 달성':''));
    if(b.dead)s.fallen.unshift({name:combatant.name,wins:combatant.wins,day:s.day});s.fallen=s.fallen.slice(0,20);
   }
-  if(b.win)s.schoolWins++;
+  recordSchoolResult(s,b.win);
   s.battle=null;s.offer=null;
   s.nextOfferDay=s.day+3;
  } else throw Error('알 수 없는 행동입니다.');
  return s;
 }
+function recordSchoolResult(s,win){
+ if(win){s.schoolWins++;s.schoolStreak++;s.schoolBestStreak=Math.max(s.schoolBestStreak,s.schoolStreak);}
+ else{s.schoolLosses++;s.schoolStreak=0;s.championAfter=0;}
+}
 function resolveTeam(s){
- const b=s.battle;s.gold+=b.reward;if(b.win)s.schoolWins++;
+ const b=s.battle;s.gold+=b.reward;recordSchoolResult(s,b.win);
  for(const r of b.results){
   const f=s.fighters.find(f=>f.id===r.fighterId),oldTitle=titleFor(f);
   f.matches++;f.fatigue=Math.min(100,f.fatigue+22);f.dead=r.dead;f.injury=r.injury;
@@ -208,12 +212,13 @@ function resolveTeam(s){
   if(titleFor(f)!==oldTitle)note(s,f.name+' 칭호 획득 · '+titleFor(f));
   if(r.dead)s.fallen.unshift({name:f.name,wins:f.wins,day:s.day});
  }
- s.fallen=s.fallen.slice(0,20);note(s,'경기 정산 · '+b.reward+' G · 훈련소 통산 '+s.schoolWins+'승');
+ s.fallen=s.fallen.slice(0,20);note(s,'경기 정산 · '+b.reward+' G · 훈련소 통산 '+s.schoolWins+'승 '+s.schoolLosses+'패 · 현재 '+s.schoolStreak+'연승');
  if(b.win&&b.champion){
   const f=selected(s);
-  s.ending={schoolName:s.schoolName,championName:f.name,day:s.day,wins:s.schoolWins,fame:s.fame,bestStreak:Math.max(...s.fighters.map(f=>f.bestStreak)),gold:s.gold,weapon:f.weapon,tier:f.tier,armor:f.armor};
+  s.ending={schoolName:s.schoolName,championName:f.name,day:s.day,wins:s.schoolWins,losses:s.schoolLosses,schoolStreak:s.schoolStreak,schoolBestStreak:s.schoolBestStreak,recordStartDay:s.recordStartDay,fame:s.fame,bestStreak:Math.max(...s.fighters.map(f=>f.bestStreak)),gold:s.gold,weapon:f.weapon,tier:f.tier,armor:f.armor};
   note(s,s.schoolName+' · 챔피언을 탄생시킨 훈련소로 역사에 이름을 남겼습니다.');
- }else if(b.win&&s.schoolWins===30)note(s,'통산 30승! 3일 뒤 챔피언전 초대가 도착합니다.');
+ }else if(b.win&&s.schoolStreak===30)note(s,'훈련소 30연승! 3일 뒤 챔피언전 초대가 도착합니다.');
+ if(!s.ending)s.legacyChampion=false;
  s.battle=null;s.offer=null;s.nextOfferDay=s.day+3;return s;
 }
 function checkFighter(f,withId=true) {
@@ -234,7 +239,7 @@ function checkBattle(s,f) {
  if(s.battle===null)return;
  const b=s.battle;
  if(b?.format==='teams'){checkTeamBattle(s);return;}
- if(!b||!s.offer||f.dead||typeof b.win!=='boolean'||typeof b.dead!=='boolean'||(b.win&&b.dead)||!integer(b.injury,0,4)||!integer(b.reward,0,10000000)||typeof b.opponent!=='string'||b.opponent.length>60||!['attack','defend','balanced'].includes(b.tactic)||![.08,.35].includes(b.deathChance)||!Number.isFinite(b.maxA)||!Number.isFinite(b.maxB)||b.maxA<=0||b.maxB<=0||b.maxA>1e7||b.maxB>1e7||!Array.isArray(b.frames)||!b.frames.length||b.frames.length>36||!b.frames.every(frame=>frame&&['a','b','dealt','taken'].every(k=>Number.isFinite(frame[k])&&frame[k]>=0&&frame[k]<=1e7)))throw Error('진행 중인 경기를 읽을 수 없습니다.');
+ if(!b||!s.offer||f.dead||typeof b.win!=='boolean'||typeof b.dead!=='boolean'||(b.win&&b.dead)||!integer(b.injury,0,4)||!integer(b.reward,0,10000000)||typeof b.opponent!=='string'||b.opponent.length>60||!['attack','defend','balanced'].includes(b.tactic)||![.08,.35,.6,.85].includes(b.deathChance)||!Number.isFinite(b.maxA)||!Number.isFinite(b.maxB)||b.maxA<=0||b.maxB<=0||b.maxA>1e7||b.maxB>1e7||!Array.isArray(b.frames)||!b.frames.length||b.frames.length>36||!b.frames.every(frame=>frame&&['a','b','dealt','taken'].every(k=>Number.isFinite(frame[k])&&frame[k]>=0&&frame[k]<=1e7)))throw Error('진행 중인 경기를 읽을 수 없습니다.');
 }
 function migrateLegacy(old) {
  checkCommon(old);checkFighter(old,false);checkBattle(old,old);
@@ -246,7 +251,7 @@ function migrateLegacy(old) {
  return s;
 }
 export function validate(input) {
- if(!input||![1,2,3,4,5].includes(input.version))throw Error('지원하지 않는 저장 파일입니다.');
+ if(!input||![1,2,3,4,5,6].includes(input.version))throw Error('지원하지 않는 저장 파일입니다.');
  const s=input.version===1?migrateLegacy(input):structuredClone(input);
  checkCommon(s);
  if(!integer(s.capacity,3,MAX_ROSTER)||!Array.isArray(s.fighters)||s.fighters.length<1||s.fighters.length>s.capacity)throw Error('숙소 정원이나 명단이 올바르지 않습니다.');
@@ -276,10 +281,21 @@ export function validate(input) {
   s.version=5;s.schoolWins=s.fighters.reduce((n,f)=>n+f.wins,0)+s.fallen.filter(old=>!s.fighters.some(f=>f.dead&&f.name===old.name&&f.wins===old.wins)).reduce((n,f)=>n+f.wins,0);
   s.championAfter=0;s.ending=null;s.dayProgressMs=Math.floor(s.dayProgressMs*1.5);
  }
+ if(input.version<6){
+  s.version=6;s.schoolLosses=0;s.schoolStreak=0;s.schoolBestStreak=0;
+  s.recordStartDay=s.schoolWins||s.fighters.some(f=>f.matches)?s.day:0;
+  s.legacyChampion=!!(s.ending||s.battle?.champion);
+  // Old saves have individual streaks, but no school-wide sequence of match outcomes.
+  // Do not sum individual team losses or mistake lifetime wins for consecutive wins.
+  if(s.offer?.champion&&!s.battle){s.offer=null;s.nextOfferDay=s.day+3;s.championAfter=0;}
+  if(s.ending)Object.assign(s.ending,{losses:0,schoolStreak:0,schoolBestStreak:0,recordStartDay:s.recordStartDay});
+  if(s.recordStartDay)note(s,'개인 전적 유지 · 훈련소 패배·연승은 이번 업데이트부터 집계합니다. 챔피언전 조건은 30연승입니다.');
+ }
+ if(!integer(s.schoolLosses,0,1000000)||!integer(s.schoolStreak,0,s.schoolWins)||!integer(s.schoolBestStreak,s.schoolStreak,s.schoolWins)||!integer(s.recordStartDay,0,s.day)||typeof s.legacyChampion!=='boolean'||(s.legacyChampion&&!s.ending&&!s.battle?.champion))throw Error('훈련소 승패·연승 기록이 손상되었습니다.');
  if(!integer(s.schoolWins,0,1000000)||!integer(s.championAfter,0,1000010))throw Error('훈련소 승리 기록이 손상되었습니다.');
  if(s.offer&&(s.offer.allyCount!==undefined||s.offer.enemyCount!==undefined)){
   const o=s.offer;
-  if(!integer(o.allyCount,1,3)||!integer(o.enemyCount,1,3)||typeof o.champion!=='boolean'||(o.champion&&(s.schoolWins<30||o.allyCount!==1||o.enemyCount!==1)))throw Error('경기 인원 정보가 손상되었습니다.');
+  if(!integer(o.allyCount,1,3)||!integer(o.enemyCount,1,3)||typeof o.champion!=='boolean'||(o.champion&&(s.schoolWins<30||(s.schoolStreak<30&&!s.legacyChampion)||o.allyCount!==1||o.enemyCount!==1)))throw Error('경기 인원 정보가 손상되었습니다.');
   if(o.opponents!==undefined){
    if(!Array.isArray(o.opponents)||o.opponents.length!==o.enemyCount)throw Error('상대 명단이 손상되었습니다.');
    for(const enemy of o.opponents){checkCommon({...s,offer:{...enemy,reward:o.reward,lethal:o.lethal}});if(!has(OPPONENTS,enemy.kind)||!has(TACTICS,enemy.tactic))throw Error('상대 전술이 손상되었습니다.');}
@@ -287,7 +303,7 @@ export function validate(input) {
  }
  if(s.ending!==null){
   const e=s.ending;
-  if(!e||s.battle||s.offer||s.schoolWins<31||e.schoolName!==s.schoolName||typeof e.championName!=='string'||!e.championName.length||e.championName.length>40||!integer(e.day,1,s.day)||e.wins!==s.schoolWins||!integer(e.fame,0,10000000)||!integer(e.gold,0,100000000)||!integer(e.bestStreak,0,100000)||!has(WEAPONS,e.weapon)||!integer(e.tier,0,3)||!integer(e.armor,0,4))throw Error('엔딩 기록이 손상되었습니다.');
+  if(!e||s.battle||s.offer||s.schoolWins<31||(!s.legacyChampion&&s.schoolStreak<31)||e.losses!==s.schoolLosses||e.schoolStreak!==s.schoolStreak||e.schoolBestStreak!==s.schoolBestStreak||e.recordStartDay!==s.recordStartDay||e.schoolName!==s.schoolName||typeof e.championName!=='string'||!e.championName.length||e.championName.length>40||!integer(e.day,1,s.day)||e.wins!==s.schoolWins||!integer(e.fame,0,10000000)||!integer(e.gold,0,100000000)||!integer(e.bestStreak,0,100000)||!has(WEAPONS,e.weapon)||!integer(e.tier,0,3)||!integer(e.armor,0,4))throw Error('엔딩 기록이 손상되었습니다.');
  }
  if(!integer(s.dayProgressMs,0,DAY_MS-1)||!integer(s.nextOfferDay,s.day+(s.offer?0:1),1000003)||typeof s.paused!=='boolean')throw Error('훈련소 시간 기록이 손상되었습니다.');
  if(typeof s.schoolName!=='string'||(s.schoolName!==''&&cleanName(s.schoolName)!==s.schoolName))throw Error('훈련소 이름이 올바르지 않습니다.');

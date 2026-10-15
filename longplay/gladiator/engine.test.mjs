@@ -75,7 +75,7 @@ test('death affects only combatant; others remain usable and successor inherits 
 });
 test('migrate version one without losing stats, gear, injuries, refusal, funds or fallen records',()=>{
  const old=legacy(),copy=structuredClone(old),s=validate(old);
- assert.equal(s.version,5);assert.equal(s.fighters.length,3);assert.equal(s.capacity,3);assert.equal(s.gold,245);
+ assert.equal(s.version,6);assert.equal(s.fighters.length,3);assert.equal(s.capacity,3);assert.equal(s.gold,245);
  for(const key of ['name','generation','wins','matches','weapon','tier','armor','declines','fatigue','injury','dead','stats'])assert.deepEqual(selected(s)[key],old[key]);
  for(const key of ['day','seed','gold','fame','facility','offer','fallen'])assert.deepEqual(s[key],old[key]);
  assert.ok(s.history.includes(old.history[0]));assert.deepEqual(old,copy);assert.deepEqual(validate(s),s);
@@ -170,14 +170,14 @@ test('beasts occur after first completed match, have distinct mechanics and surv
  }
  assert.deepEqual([...kinds].sort(),['human','lion','tiger']);
  const human=act(winning(0,'human'),'fight','balanced'),lion=act(winning(0,'lion'),'fight','balanced'),tiger=act(winning(0,'tiger'),'fight','balanced');
- assert.equal(lion.battle.maxB,human.battle.maxB*1.25);assert.equal(tiger.battle.xpGain,200);assert.equal(lion.battle.deathChance,.35);
+ assert.equal(lion.battle.maxB,human.battle.maxB*1.25);assert.equal(tiger.battle.xpGain,200);assert.equal(lion.battle.deathChance,.85);
  assert.deepEqual(validate(tiger).battle,tiger.battle);assert.deepEqual(validate(lion).battle,lion.battle);
 });
 test('version two saves preserve roster, gear and precommitted battle payouts',()=>{
  const old=asLegacy(act(winning(0),'fight','balanced'));old.version=2;delete old.schoolName;
  for(const f of old.fighters)for(const k of ['level','xp','focus','streak','bestStreak','fame'])delete f[k];
  for(const k of ['baseReward','bonusPercent','xpGain','fameGain','streakAfter'])delete old.battle[k];
- const migrated=validate(old);assert.equal(migrated.version,5);assert.equal(migrated.schoolName,'모래와 철 훈련소');
+ const migrated=validate(old);assert.equal(migrated.version,6);assert.equal(migrated.schoolName,'모래와 철 훈련소');
  assert.deepEqual(selected(migrated).stats,selected(old).stats);assert.deepEqual(migrated.battle.frames,old.battle.frames);
  assert.equal(migrated.battle.reward,old.battle.reward);assert.equal(migrated.battle.xpGain,0);
  const done=act(migrated,'resolve');assert.equal(selected(done).xp,0);assert.equal(done.gold,old.gold+old.battle.reward);validate(done);
@@ -227,7 +227,7 @@ test('version three migration keeps levels, XP, streaks and pending rewards, ass
  for(const key of ['dayProgressMs','nextOfferDay','paused'])delete old[key];
  for(const f of old.fighters){f.focus='skill';delete f.training;}
  delete old.battle.replayMs;delete old.battle.trainingAtEntry;
- const s=validate(old);assert.equal(s.version,5);assert.equal(s.dayProgressMs,0);assert.ok(s.fighters.every(f=>f.training==='basic'));
+ const s=validate(old);assert.equal(s.version,6);assert.equal(s.dayProgressMs,0);assert.ok(s.fighters.every(f=>f.training==='basic'));
  assert.equal(selected(s).xp,selected(old).xp);assert.equal(selected(s).streak,5);assert.equal(s.battle.reward,old.battle.reward);assert.equal(s.battle.trainingAtEntry,'skill');
  const done=act(s,'resolve');assert.equal(selected(done).stats.skill,selected(old).stats.skill+3);assert.throws(()=>act(done,'resolve'));validate(done);
 });

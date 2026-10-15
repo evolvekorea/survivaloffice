@@ -142,8 +142,9 @@ export function drawEnding(canvas,e){
  c.fillStyle='#fff2ce';c.font='bold '+(e.schoolName.length>13?29:36)+'px sans-serif';c.fillText(e.schoolName,450,279,780);
  c.font='18px sans-serif';c.fillStyle='#d4dac5';c.fillText('챔피언 '+e.championName+' · 모래 위에 남긴 불멸의 이름',450,319);
  c.fillStyle='#8d825c';c.fillRect(150,350,600,1);
- const items=[['통산 승리',e.wins+'승'],['함께한 날',e.day+'일'],['훈련소 명성',e.fame.toLocaleString()]];
- items.forEach(([label,value],i)=>{const x=245+i*205;c.fillStyle='#aeb79d';c.font='14px sans-serif';c.fillText(label,x,391);c.fillStyle='#ecd49b';c.font='bold 28px sans-serif';c.fillText(value,x,433);});
- c.fillStyle='#c1c8b2';c.font='16px sans-serif';c.fillText('작은 훈련장에서 시작된 이야기가, 경기장의 역사가 되었습니다.',450,490);
+ const items=[['승리 / 패배',e.wins+'승 '+e.losses+'패'],['함께한 날',e.day+'일'],['훈련소 명성',e.fame.toLocaleString()]];
+ items.forEach(([label,value],i)=>{const x=245+i*205;c.fillStyle='#aeb79d';c.font='14px sans-serif';c.fillText(label,x,391);c.fillStyle='#ecd49b';c.font='bold 26px sans-serif';c.fillText(value,x,433,190);});
+ c.fillStyle='#c1c8b2';c.font='16px sans-serif';c.fillText('훈련소 최고 '+e.schoolBestStreak+'연승 · 작은 훈련장의 이야기가 경기장의 역사가 되었습니다.',450,490,780);
+ if(e.recordStartDay){c.font='11px sans-serif';c.fillText('패배·훈련소 연승은 '+e.recordStartDay+'일 업데이트 이후 집계',450,513);}
  c.fillStyle='#9b9d85';c.font='13px sans-serif';c.fillText('모래와 철 · 검투사 키우기  |  survivaloffice.com',450,541);
 }

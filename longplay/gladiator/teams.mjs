@@ -1,3 +1,4 @@
+export const DEATH_CHANCE={regular:.6,lethal:.85};
 // Battle snapshots are committed at entry, so reloading never rerolls a match.
 export const TACTICS={balanced:{name:'균형',attack:1,received:1,crit:.08,description:'공격·방어 균형 · 치명타 8%'},attack:{name:'맹공',attack:1.23,received:1.2,crit:.14,description:'공격 +23% · 받는 피해 +20% · 치명타 14%'},defend:{name:'수비',attack:.85,received:.76,crit:.05,description:'공격 −15% · 받는 피해 −24% · 치명타 5%'}};
 export function simulateTeams(s,ids,tactic,{random,power,prize,battleXP,fameFor,WEAPONS}){
@@ -24,7 +25,7 @@ export function simulateTeams(s,ids,tactic,{random,power,prize,battleXP,fameFor,
   hp[target.key]=Math.max(0,hp[target.key]-damage);
   frames.push({actor:actor.key,target:target.key,damage,critical,hp:{...hp},a:sum('ally'),b:sum('enemy'),dealt:actor.side==='ally'?damage:0,taken:actor.side==='enemy'?damage:0});
  }
- const win=sum('enemy')<=0||(sum('ally')>0&&sum('ally')/maxA>=sum('enemy')/maxB),deathChance=o.lethal?.35:.08;
+ const win=sum('enemy')<=0||(sum('ally')>0&&sum('ally')/maxA>=sum('enemy')/maxB),deathChance=o.lethal?DEATH_CHANCE.lethal:DEATH_CHANCE.regular;
  const results=allies.map(f=>{
   // A knocked-out teammate still risks injury/death even when the team wins.
   const down=hp['a'+f.id]<=0,dead=(!win||down)&&random(s)<deathChance,injury=(!win||down)?(random(s)<.45?2:4):0;
@@ -36,7 +37,7 @@ export function simulateTeams(s,ids,tactic,{random,power,prize,battleXP,fameFor,
 }
 export function checkTeamBattle(s){
  const b=s.battle,fail=()=>{throw Error('다인전 저장 기록이 손상되었습니다.');},num=(v,min,max)=>Number.isFinite(v)&&v>=min&&v<=max,int=(v,min,max)=>Number.isInteger(v)&&num(v,min,max);
- if(!s.offer||!Array.isArray(b.units)||b.units.length<2||b.units.length>6||!Array.isArray(b.results)||!Array.isArray(b.frames)||!b.frames.length||b.frames.length>144||typeof b.champion!=='boolean'||!int(b.reward,0,10000000)||![.08,.35].includes(b.deathChance)||typeof b.opponent!=='string'||b.opponent.length>60)fail();
+ if(!s.offer||!Array.isArray(b.units)||b.units.length<2||b.units.length>6||!Array.isArray(b.results)||!Array.isArray(b.frames)||!b.frames.length||b.frames.length>144||typeof b.champion!=='boolean'||!int(b.reward,0,10000000)||![.08,.35,DEATH_CHANCE.regular,DEATH_CHANCE.lethal].includes(b.deathChance)||typeof b.opponent!=='string'||b.opponent.length>60)fail();
  const keys=b.units.map(u=>u.key),a=b.units.filter(u=>u.side==='ally'),e=b.units.filter(u=>u.side==='enemy');
  if(new Set(keys).size!==keys.length||a.length!==(s.offer.allyCount||1)||e.length!==(s.offer.enemyCount||1)||b.results.length!==a.length||a[0]?.fighterId!==s.selectedId)fail();
  for(const u of b.units)if(!['ally','enemy'].includes(u.side)||!['human','tiger','lion'].includes(u.kind)||typeof u.name!=='string'||u.name.length>60||!['sword','spear','axe'].includes(u.weapon)||!int(u.tier,0,3)||!int(u.armor,0,4)||!num(u.maxHp,1,1e7)||!num(u.power,1,2e6)||!num(u.agility,0,100)||!Object.hasOwn(TACTICS,u.tactic))fail();
