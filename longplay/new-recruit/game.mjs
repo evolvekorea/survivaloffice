@@ -26,6 +26,10 @@ function commit(action,arg){
  try{state=next(state,action,arg);save();render();return true;}catch(error){notice(error.message,true);for(const id of ['planError','storyError'])$(id).textContent=error.message;return false;}
 }
 function line(){if(state.phase==='finished')return '이제, 내 이야기는 다음 장으로.';if(state.energy<30)return '오늘은 조금 쉬어 가도 괜찮겠죠?';if(state.stress>=65)return '숨을 고르고, 다시 천천히 해볼래요.';if(state.month>=25)return '나답게 일하는 법을 조금 알 것 같아요.';if(state.month>=13)return '작년보다 익숙해진 내가 보여요.';return '서툴러도, 오늘 하나만 더 배워볼게요.';}
+function budgetCard(salary,living,label){
+ const scale=Math.max(salary,living),net=salary-living;
+ return `<section class="budget-card" aria-label="월급과 생활비"><div class="budget-title">매달 들어오고 나가는 돈 <span>${label}</span></div><div class="budget-figures"><div class="budget-income"><span><b aria-hidden="true">↗</b> 월급</span><strong>+${salary}<small>만</small></strong><div class="budget-track" aria-hidden="true"><i style="width:${salary/scale*100}%"></i></div></div><div class="budget-expense"><span><b aria-hidden="true">↘</b> 생활비</span><strong>−${living}<small>만</small></strong><div class="budget-track" aria-hidden="true"><i style="width:${living/scale*100}%"></i></div></div></div><div class="budget-net"><span>생활비를 빼면</span><strong>${net>=0?'+':'−'}${Math.abs(net)}<small>만 원</small></strong></div><p class="budget-caption">막대는 같은 금액 기준 · 일정·사건 수입과 지출은 별도</p></section>`;
+}
 function render(){
  $('setup').hidden=!!state;$('game').hidden=!state;$('exportSave').disabled=!state;
  $('saveStatus').textContent=storageFailed?'저장 불가 · 파일 내보내기 필요':corrupt?'저장 복구 필요':state?'● 이 기기에 저장됨':'이 기기에 자동 저장';
@@ -33,15 +37,25 @@ function render(){
  $('dateLabel').textContent=dateLabel(state);$('periodLabel').textContent=`${season(state.month)} · ${state.phase==='finished'?'36개월의 여정 완료':state.month+' / 36개월'}`;
  $('seasonIcon').textContent=({봄:'✿',여름:'☀',가을:'❧',겨울:'❄'})[season(state.month)];$('journeyFill').style.width=((state.phase==='finished'?36:state.month-1)/36*100)+'%';
  $('personName').textContent=state.name;$('personRank').textContent=rankLabel(state);$('personAge').textContent=`${24+Math.floor((state.month-1)/12)}세 · ${Math.floor((state.month-1)/12)+1}년 차의 기록`;
- $('stats').innerHTML=Object.entries(STATS).map(([k,label])=>`<div class="stat"><div><span>${label}</span><strong>${state.stats[k]}</strong></div><div class="meter" role="meter" aria-label="${label}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${state.stats[k]}"><i style="width:${state.stats[k]}%"></i></div></div>`).join('');
+ $('stats').innerHTML=Object.entries(STATS).map(([k,label])=>`<div class="stat stat-${k}"><div><span>${label}</span><strong>${state.stats[k]} <small>/ 100</small></strong></div><div class="meter" role="meter" aria-label="${label}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${state.stats[k]}"><i style="width:${state.stats[k]}%"></i></div></div>`).join('');
  $('energy').textContent=state.energy+' / 100';$('stress').textContent=state.stress+' / 100';$('energyFill').style.width=state.energy+'%';$('stressFill').style.width=state.stress+'%';$('money').textContent=state.money.toLocaleString()+'만 원';
+ $('energyMeter').setAttribute('aria-valuenow',state.energy);$('stressMeter').setAttribute('aria-valuenow',state.stress);
+ $('energyState').textContent=state.energy<30?'휴식 필요':'';$('stressState').textContent=state.stress>60?'높음':'낮을수록 좋아요';
+ $('energyMeter').classList.toggle('caution',state.energy<30);$('stressMeter').classList.toggle('caution',state.stress>60);
+ const reserve=Math.min(540,state.money),months=Math.floor(state.money/180*10)/10;
+ $('moneyFill').style.width=(reserve/540*100)+'%';$('moneyMeter').setAttribute('aria-valuenow',reserve);
+ $('moneyMeter').setAttribute('aria-valuetext',`${state.money.toLocaleString()}만 원, 생활비 약 ${months}개월분${state.money>=540?', 3개월 기준 충족':''}`);
+ $('moneyCoverage').textContent=`생활비 약 ${months}개월분${state.money>=540?' · 여유 자금 확보':''}`;
+
  $('room').innerHTML=room(state.month);$('characterImage').innerHTML=portrait(state);$('characterImage').setAttribute('aria-label',`${state.gender==='female'?'여성':'남성'} 캐릭터 ${state.name} · ${outfitNames[state.outfit]} · ${state.energy<30||state.stress>=65?'지친 표정':'차분한 미소'}`);$('characterLine').textContent=line();$('nameplate').textContent=state.name+'의 이야기';
  $('chapterLabel').textContent=state.month<13?'CHAPTER 01 · 모든 것이 처음인 날들':state.month<25?'CHAPTER 02 · 조금씩 나만의 속도로':'CHAPTER 03 · 내가 고른 내일';
  $('noteTitle').textContent=state.phase==='finished'?'이야기는 계속됩니다':'이번 달의 나에게';
  $('monthLine').textContent=state.phase==='finished'?'세 해의 기록을 돌아보고, 나만의 다음 장을 나눠보세요.':state.energy<30||state.stress>=65?'열심히 달려왔네요. 이번에는 쉬어 가는 시간을 넣어볼까요?':state.month<13?'처음부터 잘할 필요는 없어요. 배우고, 만나고, 쉬며 조금씩 자라나요.':'일은 익숙해졌지만 선택은 여전히 새롭죠. 내가 원하는 하루를 골라보세요.';
  $('currentPlan').innerHTML=state.plan.map((key,i)=>`<div><em>0${i+1}</em><span>${ACTIONS[key].name}</span></div>`).join('');
  $('planButton').hidden=state.phase!=='plan';$('resumeButton').hidden=state.phase==='plan';$('resumeButton').textContent=state.phase==='finished'?'나의 엔딩 다시 보기 →':state.phase==='ending'?'다음 장 선택하기 →':'이번 달 이야기 이어서 →';
- $('monthHint').textContent=state.phase==='plan'?`월급 ${210+state.rank*25}만 · 생활비 180만 · 진행할 때 정산`:'창을 닫거나 새로고침해도 같은 이야기로 이어집니다.';
+ const settled=state.phase!=='plan'&&state.report;
+ $('monthlyBudget').innerHTML=budgetCard(settled?state.report.salary:210+state.rank*25,settled?state.report.living:180,settled?'이번 달 정산 완료':'한 달 진행 시 정산');
+ $('monthHint').textContent='창을 닫거나 새로고침해도 같은 이야기로 이어집니다.';
 }
 function deltaText(changes){return Object.entries(changes).filter(([,v])=>v).map(([k,v])=>`${names[k]} ${v>0?'+':''}${v}${k==='money'?'만':''}`).join(' · ')||'변화 없음';}
 function drawPlanner(){
@@ -49,7 +63,8 @@ function drawPlanner(){
  $('slotHelp').textContent=(activeSlot+1)+'번째 시간을 바꿀 일정을 골라 주세요.';
  $('actionChoices').innerHTML=Object.entries(ACTIONS).map(([key,a])=>`<button class="action-choice" data-plan-action="${key}" aria-pressed="${draft[activeSlot]===key}"><span aria-hidden="true">${a.icon}</span><b>${a.name}</b><small>${a.desc}${key==='rest'?'':'<br>'+deltaText(Object.fromEntries(Object.entries(a.effect).filter(([k])=>k==='energy')))}</small></button>`).join('');
  const preview=next(next(state,'plan',draft),'month'),change=delta(snapshot(state),snapshot(preview));
- $('planPreview').textContent=`일정 후 예상 · ${deltaText(change)}. 월급 ${preview.report.salary}만 − 생활비 180만을 포함합니다. 사건 선택에 따라 추가로 달라집니다.${preview.report.steps.some(x=>x.key!==x.planned)?' 체력·스트레스·예산 때문에 일부 일정은 휴식으로 바뀝니다.':''}`;
+ $('planBudget').innerHTML=budgetCard(preview.report.salary,preview.report.living,'이번 달 정산 예정');
+ $('planPreview').textContent=`일정 후 예상 · ${deltaText(change)}. 위 고정 수입·지출을 포함한 변화입니다. 사건 선택에 따라 추가로 달라집니다.${preview.report.steps.some(x=>x.key!==x.planned)?' 체력·스트레스·예산 때문에 일부 일정은 휴식으로 바뀝니다.':''}`;
 }
 function openPlanner(){if(state?.phase!=='plan')return;draft=[...state.plan];activeSlot=0;$('planError').textContent='';drawPlanner();open('planDialog');}
 function choiceHint(c){const effects=deltaText(c.effect),need=c.need?Object.entries(c.need).map(([k,v])=>`${names[k]} ${v}${k==='money'?'만 원':''} 이상 필요`).join(' · '):'';return effects+(need?' / '+need:'');}
@@ -62,7 +77,7 @@ function showStory(){
   host.innerHTML=`<details class="report-finance"><summary>이번 달에 보낸 시간</summary>${state.report.steps.map(x=>`<p><strong>${ACTIONS[x.key].name}</strong><br>${esc(x.text)}</p>`).join('')}</details><p class="speaker">${e.speaker}</p><p class="story-body">${e.body}</p>${e.choices.map((c,i)=>`<button class="event-choice" data-choice="${i}" ${canChooseLocal(c)?'':'disabled'}>${c.label}<small>${choiceHint(c)}</small></button>`).join('')}`;
  }else if(state.phase==='report'){
   const r=state.report;$('storyTitle').textContent='또 한 달, 자라난 나';
-  host.innerHTML=`<div class="report-finance">월급 +${r.salary}만 · 생활비 −180만<br>이번 달 전체 변화: ${deltaText(delta(r.before,r.after))}</div>${r.steps.map((x,i)=>`<div class="report-step"><strong>0${i+1} · ${ACTIONS[x.key].name}${x.key!==x.planned?' (일정 조정)':''}</strong><p>${esc(x.text)}</p><small>${deltaText(x.delta)}</small></div>`).join('')}<p class="event-result">“${esc(r.eventText)}”</p>${r.review?`<div class="review"><strong>분기 평가 · ${r.review.score}점</strong><br>${r.review.promoted?'새로운 직급: '+rankLabel(state)+' · 다음 달부터 월급 인상':'내 속도로 경험을 쌓아가고 있습니다.'}${r.review.bonus?' · 성과금 '+r.review.bonus+'만 원':''}</div>`:''}<button class="primary" id="continueMonth">${state.month===36?'36개월의 다음 장으로':'다음 달로'} →</button>`;
+  host.innerHTML=`${budgetCard(r.salary,r.living,'이번 달 정산 완료')}<div class="report-finance">이번 달 전체 변화: ${deltaText(delta(r.before,r.after))}</div>${r.steps.map((x,i)=>`<div class="report-step"><strong>0${i+1} · ${ACTIONS[x.key].name}${x.key!==x.planned?' (일정 조정)':''}</strong><p>${esc(x.text)}</p><small>${deltaText(x.delta)}</small></div>`).join('')}<p class="event-result">“${esc(r.eventText)}”</p>${r.review?`<div class="review"><strong>분기 평가 · ${r.review.score}점</strong><br>${r.review.promoted?'새로운 직급: '+rankLabel(state)+' · 다음 달부터 월급 인상':'내 속도로 경험을 쌓아가고 있습니다.'}${r.review.bonus?' · 성과금 '+r.review.bonus+'만 원':''}</div>`:''}<button class="primary" id="continueMonth">${state.month===36?'36개월의 다음 장으로':'다음 달로'} →</button>`;
  }else{
   $('storyTitle').textContent='이제, 어떤 내일로 걸어갈까요?';
   host.innerHTML=`<p class="story-body">${esc(state.name)}님이 고른 하루들이 여기까지 이어졌습니다. 지금 열린 가능성 중, 가장 마음이 가는 다음 장을 골라 주세요.</p>${eligibleEndings(state).map(key=>`<button class="event-choice" data-ending="${key}"><b>${ENDINGS[key].title}</b><small>${ENDINGS[key].tag}</small></button>`).join('')}`;
