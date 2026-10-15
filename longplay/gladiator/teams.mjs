@@ -1,6 +1,6 @@
 export const DEATH_CHANCE={regular:.6,lethal:.85};
 // Battle snapshots are committed at entry, so reloading never rerolls a match.
-export const TACTICS={balanced:{name:'균형',attack:1,received:1,crit:.08,description:'공격·방어 균형 · 치명타 8%'},attack:{name:'맹공',attack:1.23,received:1.2,crit:.14,description:'공격 +23% · 받는 피해 +20% · 치명타 14%'},defend:{name:'수비',attack:.85,received:.76,crit:.05,description:'공격 −15% · 받는 피해 −24% · 치명타 5%'}};
+export const TACTICS={balanced:{name:'균형',attack:1,received:1,crit:.08,description:'공격·방어 균형 · 치명타 8%'},attack:{name:'맹공',attack:1.3,received:1.15,crit:.14,description:'공격 +30% · 받는 피해 +15% · 치명타 14%'},defend:{name:'수비',attack:.85,received:.76,crit:.05,description:'공격 −15% · 받는 피해 −24% · 치명타 5%'}};
 export function simulateTeams(s,ids,tactic,{random,power,prize,battleXP,fameFor,WEAPONS}){
  const o=s.offer,allies=ids.map(id=>s.fighters.find(f=>f.id===id)),enemyCount=o.enemyCount||1;
  const units=allies.map(f=>({key:'a'+f.id,side:'ally',fighterId:f.id,name:f.name,kind:'human',weapon:f.weapon,tier:f.tier,armor:f.armor,maxHp:65+f.stats.stamina*3+f.armor*7,power:power(f),agility:f.stats.agility,tactic}));
