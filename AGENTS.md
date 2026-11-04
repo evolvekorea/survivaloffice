@@ -14,6 +14,17 @@
 - If an equivalent snippet is already present in a new page or template, do not add a duplicate.
 - Keep the publisher ID, Analytics measurement ID, and ad slot ID exactly as written below.
 
+## New personality tests
+- Omit standalone test introduction and explanation sections. Keep the title, start button, question count, result interpretation, and search/share metadata.
+- Provide a dedicated KakaoTalk result sharing button using the existing site configuration.
+- Match the existing Candy personality test monetization layout: top AdSense slot 9705708704, bottom AdSense slot 6135096954, and the bottom Coupang Partners carousel with an affiliate disclosure. Initialize each ad once.
+
+## Search and sharing checks for new content
+- Pick a primary search phrase and closely related terms that accurately describe the content. Put the primary phrase naturally in the unique page title, main heading and catalog link text. Use related terms where useful in the meta description and actual questions, results or game text.
+- Do not add meta keywords, hidden keyword text, repeated variants, or an extra introduction to satisfy SEO.
+- Verify the public canonical URL matches Open Graph and sitemap, the page is discoverable through home and category links, robots rules permit crawling, and the share image and local assets resolve. Use an accurate image alt and page-specific sharing metadata.
+- Use test/commute-layer/ as the reference for the illustrated test flow, separate KakaoTalk sharing, top and bottom AdSense, and the bottom Coupang widget with disclosure.
+
 ## Public page registration
 
 - Whenever a new public page is created, register it in the repository root `index.html`.
