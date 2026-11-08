@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>소방 장비 짝맞추기: 90초 기억력 게임 | 서바이벌 오피스</title>
+<meta name="description" content="소방의 날을 맞아 즐기는 소방 장비 짝맞추기. 헬멧·장화·장갑 등 6쌍의 카드를 90초 안에 찾아보세요. 모바일과 PC에서 바로 하는 무료 기억력 미니게임.">
+<link rel="canonical" href="https://survivaloffice.com/rest/gear-match/">
+<meta property="og:type" content="website"><meta property="og:locale" content="ko_KR"><meta property="og:site_name" content="서바이벌 오피스"><meta property="og:title" content="소방 장비 짝맞추기"><meta property="og:description" content="90초 안에 소방 장비 6쌍을 찾아보세요. 직접 그린 장비 카드로 즐기는 무료 기억력 게임."><meta property="og:url" content="https://survivaloffice.com/rest/gear-match/">
+<!-- Google Adsense 코드 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6532882266109488" crossorigin="anonymous"></script><meta name="google-adsense-account" content="ca-pub-6532882266109488">
+<!-- Google Analytics 코드 --><script async src="https://www.googletagmanager.com/gtag/js?id=G-83W9F71F10"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-83W9F71F10');</script><meta property="og:image" content="https://survivaloffice.com/rest/gear-match/cover-illustrated.webp"><meta property="og:image:alt" content="따뜻한 장비실에서 소방 장비를 정리하는 두 소방관 일러스트"><meta property="og:image:width" content="1280"><meta property="og:image:height" content="853"><meta name="twitter:card" content="summary_large_image"><link rel="stylesheet" href="style.css?v=1">
+<script defer src="https://t1.kakaocdn.net/kakao_js_sdk/2.8.4/kakao.min.js" integrity="sha384-BGX7Wb16GmRFagri4bLJV2DgipVZaU2AI812GZtHtHzzDQJnfHasDXN5houxv45w" crossorigin="anonymous"></script>
+<script type="module" src="game.mjs?v=1"></script>
+</head><body>
+<nav aria-label="사이트 메뉴"><a href="/">서바이벌 오피스</a><a href="/rest/">미니게임</a><a href="/test/">테스트</a></nav>
+<main><div class="ad-container ad-top" aria-label="상단 광고"><ins class="adsbygoogle" style="display:block; min-height: 90px;" data-ad-client="ca-pub-6532882266109488" data-ad-slot="9705708704" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+
+<section class="panel" id="intro">
+<img class="cover" src="cover-illustrated.webp" width="1280" height="853" alt="따뜻한 장비실에서 소방 장비를 정리하는 두 소방관" fetchpriority="high">
+<div class="content"><p class="eyebrow">STATION MEMORY · 01</p><h1>소방 장비<br><em>짝맞추기</em></h1>
+<p class="instruction">카드 두 장을 뒤집어 같은 장비를 찾아보세요.</p>
+<button class="primary" id="start">90초 도전 시작 ↗</button><small>12장 · 6쌍 · 처음 2초는 미리보기</small><p id="best"></p></div>
+</section>
+<section class="panel play" id="play" hidden aria-label="짝맞추기 게임판">
+<header class="game-status"><div><small>남은 시간</small><strong id="time">90.0</strong></div><div><small>찾은 짝</small><strong id="pairs">0 / 6</strong></div><div><small>시도</small><strong id="moves">0</strong></div></header>
+<progress id="clock" max="90" value="90" aria-label="남은 시간"></progress>
+<p class="game-message" id="message" role="status">장비 위치를 기억해 주세요.</p>
+<div class="board" id="board" aria-label="장비 카드 12장"></div>
+<div class="game-actions"><button id="pause">잠시 멈추기</button><button id="reset">다시 준비</button></div>
+</section>
+<section class="panel content" id="result" hidden aria-labelledby="resultTitle">
+<p class="eyebrow">YOUR MEMORY RECORD</p><h2 id="resultTitle" tabindex="-1"></h2><p id="record"></p>
+<div class="share-actions"><button id="share-kakao" class="kakao-button">카카오톡 공유하기</button><button class="primary" id="share">기록 복사</button></div><p id="share-status" role="status"></p><textarea id="share-text" aria-label="복사할 기록" readonly hidden></textarea>
+<button class="quiet" id="again">한 번 더 도전하기</button><a href="/rest/">다른 미니게임 보기 →</a>
+</section>
+<div class="ad-container ad-bottom" aria-label="하단 광고"><ins class="adsbygoogle" style="display:block; min-height: 90px;" data-ad-client="ca-pub-6532882266109488" data-ad-slot="6135096954" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+<div class="coupang-ad" aria-label="쿠팡 파트너스 광고">
+<script src="https://ads-partners.coupang.com/g.js"></script>
+<script>
+if (window.PartnersCoupang?.G) {
+  new window.PartnersCoupang.G({ id: 810614, trackingCode: "AF4453761", subId: null, template: "carousel", width: String(Math.min(360, document.documentElement.clientWidth - 24)), height: "100" });
+}
+</script>
+<p>이 페이지는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+</div>
+<script>
+for (const unit of document.querySelectorAll('main ins.adsbygoogle[data-ad-slot]')) {
+  if (unit.dataset.adsbygoogleStatus) continue;
+  try { (window.adsbygoogle = window.adsbygoogle || []).push({}); }
+  catch (error) { console.warn('AdSense initialization deferred.', error); }
+}
+</script>
+</main><footer>© Survival Office</footer></body></html>
