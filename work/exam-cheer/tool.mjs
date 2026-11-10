@@ -22,8 +22,10 @@ const messages={
 };
 const labels={friend:'친구',family:'가족',teacher:'선생님',colleague:'동료',warm:'다정하게',plain:'담백하게',playful:'가볍게'};
 const $=id=>document.getElementById(id), field=$('message'),status=$('status');
+const preview=$('card-preview'), cardImage=$('card-image'), previewMessage=$('preview-message');
 let alternate=0;
 function updateCount(){
+ previewMessage.textContent=field.value.trim() || field.placeholder;
  $('count').value=field.value.length+' / 180';
  $('copy').disabled=$('save').disabled=!field.value.trim();
 }
@@ -34,6 +36,16 @@ function pick(){
  $('choice').textContent=labels[sender]+' · '+labels[tone];status.textContent='';updateCount();
 }
 for(const control of document.querySelectorAll('.options input'))control.addEventListener('change',()=>{alternate=0;pick();});
+function selectArtwork(){
+ const selected=document.querySelector('[name="card-art"]:checked');
+ cardImage.src='art-'+selected.value+'.webp';
+ cardImage.alt=selected.dataset.alt;
+ preview.style.setProperty('--card-accent',selected.dataset.accent);
+ status.textContent='';
+}
+for(const option of document.querySelectorAll('[name="card-art"]')){
+ option.addEventListener('change',selectArtwork);
+}
 $('alternate').onclick=()=>{alternate=1-alternate;pick();};
 field.addEventListener('input',()=>{status.textContent='';updateCount();});
 $('copy').onclick=async()=>{
@@ -62,9 +74,11 @@ function wrap(ctx,text,maxWidth){
 }
 $('save').onclick=async()=>{
  const text=field.value.trim();if(!text)return;
- const cover=$('cover');
+ const artwork=new Image();
+ artwork.src=cardImage.src;
+ const accent=preview.style.getPropertyValue('--card-accent');
  try{
-  await cover.decode();
+  await artwork.decode();
   const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');
   if(!ctx)throw Error('Canvas unavailable');
   const width=1080, margin=86, box=width-margin*2;
@@ -74,9 +88,9 @@ $('save').onclick=async()=>{
   const height=Math.max(1080,640+Math.ceil(lines.length*fontSize*1.5));
   canvas.width=width;canvas.height=height;
   ctx.fillStyle='#fff7e8';ctx.fillRect(0,0,width,height);
-  const cutHeight=cover.naturalWidth*476/width;
-  ctx.drawImage(cover,0,(cover.naturalHeight-cutHeight)*.43,cover.naturalWidth,cutHeight,0,0,width,476);
-  ctx.fillStyle='#235b5d';ctx.fillRect(0,476,width,10);
+  const cutHeight=artwork.naturalWidth*476/width;
+  ctx.drawImage(artwork,0,(artwork.naturalHeight-cutHeight)/2,artwork.naturalWidth,cutHeight,0,0,width,476);
+  ctx.fillStyle=accent;ctx.fillRect(0,476,width,10);
   ctx.font='700 26px '+font;ctx.fillText('수능 응원 카드',margin,550);
   ctx.fillStyle='#20323d';ctx.font='600 '+fontSize+'px '+font;
   lines.forEach((line,i)=>ctx.fillText(line,margin,613+i*fontSize*1.5));
@@ -96,3 +110,4 @@ $('kakao').onclick=()=>{
  }catch{$('share-status').textContent='카카오톡 공유를 열지 못했어요. 주소를 복사해 전해 주세요.';}
 };
 pick();
+selectArtwork();

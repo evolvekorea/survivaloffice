@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>수능 응원 문구 만들기 | 카드 저장·문구 복사 - 서바이벌 오피스</title>
-<meta name="description" content="친구, 가족, 선생님, 동료가 보내는 수능 응원 문구를 골라 보세요. 다정한 말, 담백한 인사, 가벼운 농담을 직접 고치고 카드 이미지로 저장하거나 복사할 수 있어요.">
+<meta name="description" content="친구, 가족, 선생님, 동료가 보낼 수능 응원 문구를 고르고 엿, 찹쌀떡, 포크, 휴지 그림을 더해 나만의 응원 카드로 저장해 보세요.">
 <link rel="canonical" href="https://survivaloffice.com/work/exam-cheer/">
 <meta property="og:type" content="website"><meta property="og:locale" content="ko_KR"><meta property="og:site_name" content="서바이벌 오피스"><meta property="og:title" content="수능 응원 문구 만들기"><meta property="og:description" content="수험생에게 전할 짧은 응원. 관계와 말투를 골라 문구를 만들고, 나만의 응원 카드로 저장하세요."><meta property="og:url" content="https://survivaloffice.com/work/exam-cheer/">
 <!-- Google Adsense 코드 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6532882266109488" crossorigin="anonymous"></script><meta name="google-adsense-account" content="ca-pub-6532882266109488">
-<!-- Google Analytics 코드 --><script async src="https://www.googletagmanager.com/gtag/js?id=G-83W9F71F10"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-83W9F71F10');</script><meta property="og:image" content="https://survivaloffice.com/work/exam-cheer/cover-illustrated.webp"><meta property="og:image:alt" content="책상 앞에서 응원 편지를 받는 수험생 일러스트"><meta property="og:image:width" content="1280"><meta property="og:image:height" content="853"><meta name="twitter:card" content="summary_large_image"><link rel="stylesheet" href="style.css?v=1">
+<!-- Google Analytics 코드 --><script async src="https://www.googletagmanager.com/gtag/js?id=G-83W9F71F10"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-83W9F71F10');</script><meta property="og:image" content="https://survivaloffice.com/work/exam-cheer/art-yeot.webp"><meta property="og:image:alt" content="수능 응원 선물로 준비한 호박색 엿과 붉은 보자기"><meta property="og:image:width" content="1280"><meta property="og:image:height" content="853"><meta name="twitter:card" content="summary_large_image"><link rel="stylesheet" href="style.css?v=2">
 <script defer src="https://t1.kakaocdn.net/kakao_js_sdk/2.8.4/kakao.min.js" integrity="sha384-BGX7Wb16GmRFagri4bLJV2DgipVZaU2AI812GZtHtHzzDQJnfHasDXN5houxv45w" crossorigin="anonymous"></script>
-<script type="module" src="tool.mjs?v=2"></script>
+<script type="module" src="tool.mjs?v=3"></script>
 </head>
 <body><nav aria-label="사이트 메뉴"><a href="/">서바이벌 오피스</a><a href="/work/" aria-current="page">생존키트</a><a href="/test/">테스트</a></nav>
 <main>
 <div class="ad-container ad-top" aria-label="상단 광고"><ins class="adsbygoogle" style="display:block; min-height: 90px;" data-ad-client="ca-pub-6532882266109488" data-ad-slot="9705708704" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
 
 <header class="hero panel">
-  <img id="cover" class="cover" src="cover-illustrated.webp" width="1280" height="853" alt="책상 앞에서 따뜻한 응원 편지를 건네받는 수험생" fetchpriority="high">
+  <img class="cover" src="art-yeot.webp" width="1280" height="853" alt="수능 응원 선물로 준비한 호박색 엿과 붉은 보자기" fetchpriority="high">
   <div class="hero-copy">
     <p class="eyebrow">SURVIVAL KIT <span aria-hidden="true">✦</span> LETTER STUDIO</p>
     <h1>수능 응원 문구 만들기</h1>
@@ -43,6 +43,35 @@
    <div class="draft-head"><label for="message">02 / 문구 다듬기</label><button type="button" id="alternate">다른 문구 ↻</button></div>
    <textarea id="message" maxlength="180" rows="5" placeholder="응원 문구를 입력해 주세요."></textarea>
    <div class="draft-meta"><span id="choice">친구 · 다정하게</span><output id="count" for="message">0 / 180</output></div>
+   <fieldset class="art-picker">
+     <legend>03 / 카드 그림 고르기</legend>
+     <div class="art-options">
+       <label>
+         <input type="radio" name="card-art" value="yeot" data-accent="#94432b" data-alt="붉은 보자기에 담긴 호박색 엿" checked>
+         <span class="art-option"><img src="thumb-yeot.webp" width="320" height="141" alt=""><strong>엿</strong><small>찰싹 붙어라</small></span>
+       </label>
+       <label>
+         <input type="radio" name="card-art" value="ricecake" data-accent="#286756" data-alt="녹색 접시에 담긴 하얀 찹쌀떡">
+         <span class="art-option"><img src="thumb-ricecake.webp" width="320" height="141" alt=""><strong>찹쌀떡</strong><small>딱 붙어라</small></span>
+       </label>
+       <label>
+         <input type="radio" name="card-art" value="fork" data-accent="#315a8e" data-alt="답안지의 동그라미를 가리키는 은색 포크">
+         <span class="art-option"><img src="thumb-fork.webp" width="320" height="141" alt=""><strong>포크</strong><small>정답만 콕콕</small></span>
+       </label>
+       <label>
+         <input type="radio" name="card-art" value="tissue" data-accent="#755385" data-alt="연보랏빛 책상 위로 부드럽게 풀리는 두루마리 휴지">
+         <span class="art-option"><img src="thumb-tissue.webp" width="320" height="141" alt=""><strong>휴지</strong><small>술술 풀어라</small></span>
+       </label>
+     </div>
+   </fieldset>
+   <figure id="card-preview" class="card-preview">
+     <figcaption>카드 미리보기</figcaption>
+     <img id="card-image" src="art-yeot.webp" width="1280" height="853" alt="붉은 보자기에 담긴 호박색 엿">
+     <div class="preview-copy">
+       <span>수능 응원 카드</span>
+       <p id="preview-message">응원 문구를 입력해 주세요.</p>
+     </div>
+   </figure>
    <div class="actions"><button type="button" class="primary" id="copy">문구 복사</button><button type="button" id="save">카드 이미지 저장</button></div>
    <p id="status" role="status"></p>
  </div>
