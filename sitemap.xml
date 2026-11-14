@@ -3,7 +3,7 @@
    <!-- 메인 페이지 -->
    <url>
        <loc>https://survivaloffice.com/</loc>
-       <lastmod>2026-11-12</lastmod>
+       <lastmod>2026-11-14</lastmod>
        <changefreq>daily</changefreq>
        <priority>1.0</priority>
    </url>
@@ -11,7 +11,7 @@
    <!-- rest + 하위 페이지 -->
    <url>
        <loc>https://survivaloffice.com/rest/</loc>
-       <lastmod>2026-11-08</lastmod>
+       <lastmod>2026-11-14</lastmod>
        <changefreq>monthly</changefreq>
        <priority>0.7</priority>
    </url>
@@ -308,5 +308,11 @@
        <lastmod>2026-11-10</lastmod>
        <changefreq>monthly</changefreq>
        <priority>0.7</priority>
+   </url>
+   <url>
+       <loc>https://survivaloffice.com/rest/apple-merge/</loc>
+       <lastmod>2026-11-14</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.6</priority>
    </url>
 </urlset>
