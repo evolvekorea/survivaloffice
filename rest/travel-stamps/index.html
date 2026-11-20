@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>여행 스탬프 네모로직 | 무료 숫자 퍼즐 - 서바이벌 오피스</title>
+  <meta name="description" content="가로세로 숫자를 읽고 칸을 채워 산, 여객선, 성문 여행 스탬프를 모으세요. 모바일에서도 즐기는 5×5 네모로직 퍼즐입니다.">
+  <link rel="canonical" href="https://survivaloffice.com/rest/travel-stamps/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:site_name" content="서바이벌 오피스">
+  <meta property="og:title" content="여행 스탬프 네모로직">
+  <meta property="og:description" content="가로세로 숫자를 풀어 여행 수첩에 스탬프 세 개를 모아 보세요.">
+  <meta property="og:url" content="https://survivaloffice.com/rest/travel-stamps/">
+  <meta property="og:image" content="https://survivaloffice.com/rest/travel-stamps/cover.webp">
+  <meta property="og:image:alt" content="산, 여객선, 성문 도장이 찍힌 여행 수첩">
+  <meta name="twitter:card" content="summary_large_image">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6532882266109488" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-6532882266109488">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-83W9F71F10"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-83W9F71F10');
+  </script>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./game.js"></script>
+</head>
+<body>
+  <nav aria-label="사이트 메뉴"><a href="/">서바이벌 오피스</a><a href="/rest/">미니게임</a></nav>
+  <main>
+    <div class="ad" aria-label="상단 광고"><ins class="adsbygoogle" style="display:block; min-height:90px" data-ad-client="ca-pub-6532882266109488" data-ad-slot="9705708704" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+    <section id="intro" class="paper cover">
+      <img src="./cover.webp" alt="산, 여객선, 성문 도장이 찍힌 여행 수첩" width="1200" height="800">
+      <div class="cover-copy">
+        <h1>여행 스탬프<br>네모로직</h1>
+        <p>숫자를 따라 칸을 채우고 여행 수첩에 스탬프 3&nbsp;개를 모아 보세요.</p>
+        <button id="start" class="primary">첫 스탬프 도전</button>
+      </div>
+    </section>
+    <section id="game" class="paper" hidden aria-labelledby="stage-title">
+      <header class="stage-heading">
+        <div><p id="progress"></p><h2 id="stage-title" tabindex="-1"></h2></div>
+        <button id="hint" type="button">힌트</button>
+      </header>
+      <p id="rules">숫자만큼 칸을 연달아 칠하세요. 숫자가 두 개면 덩어리 사이에 빈칸을 하나 이상 두세요.</p>
+      <div id="board" class="board" role="group" aria-label="5×5 네모로직" aria-describedby="rules"></div>
+      <div class="modes" role="group" aria-label="칸 선택 도구">
+        <button id="ink" aria-pressed="true">칠하기</button>
+        <button id="mark" aria-pressed="false">빈칸 표시 ×</button>
+      </div>
+      <p id="message" role="status"></p>
+      <div class="actions">
+        <button id="reset">이 판 초기화</button>
+        <button id="next" class="primary" hidden></button>
+      </div>
+    </section>
+    <section id="finish" class="paper" hidden aria-labelledby="finish-title">
+      <h2 id="finish-title" tabindex="-1">여행 수첩 완성!</h2>
+      <p>여행 스탬프 3개를 모두 모았어요.</p>
+      <div id="collection" class="collection"></div>
+      <div class="actions">
+        <button id="replay">다시 도전</button>
+        <button id="share" class="primary">결과 공유</button>
+      </div>
+      <p id="share-status" role="status"></p>
+      <a href="/rest/">다른 미니게임 보기</a>
+    </section>
+    <div class="ad" aria-label="하단 광고"><ins class="adsbygoogle" style="display:block; min-height:90px" data-ad-client="ca-pub-6532882266109488" data-ad-slot="6135096954" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+  </main>
+  <script>
+    for (const unit of document.querySelectorAll('main ins.adsbygoogle[data-ad-slot]')) {
+      if (unit.dataset.adsbygoogleStatus) continue;
+      try { (window.adsbygoogle = window.adsbygoogle || []).push({}); }
+      catch (error) { console.warn('AdSense initialization deferred.', error); }
+    }
+  </script>
+</body>
+</html>
