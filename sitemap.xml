@@ -3,7 +3,7 @@
    <!-- 메인 페이지 -->
    <url>
        <loc>https://survivaloffice.com/</loc>
-       <lastmod>2026-11-26</lastmod>
+       <lastmod>2026-11-27</lastmod>
        <changefreq>daily</changefreq>
        <priority>1.0</priority>
    </url>
@@ -99,9 +99,15 @@
       <!-- TEST + 하위 페이지 -->
    <url>
        <loc>https://survivaloffice.com/test/</loc>
-       <lastmod>2026-11-26</lastmod>
+       <lastmod>2026-11-27</lastmod>
        <changefreq>weekly</changefreq>
        <priority>0.5</priority>
+   </url>
+   <url>
+       <loc>https://survivaloffice.com/test/playlist-style/</loc>
+       <lastmod>2026-11-27</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.7</priority>
    </url>
    <url>
        <loc>https://survivaloffice.com/test/winter-travel/</loc>
